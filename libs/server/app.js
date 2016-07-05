@@ -1,8 +1,10 @@
-var express = require('express')
-var hogan = require('hogan-express')
+require('babel-core/register')
+
+import express from 'express'
+import hogan from 'hogan-express'
 
 // Express
-var app = express()
+const app = express()
 app.engine('html', hogan)
 app.set('views', __dirname + '/views')
 app.use('/', express.static(__dirname + '/../../public/'))
