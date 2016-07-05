@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import IntermediateState from './../components/IntermediateState/index.jsx';
+import Section from './../components/Section.jsx'
 
 // Pages
 export default React.createClass({
@@ -11,6 +12,7 @@ export default React.createClass({
   },
   getInitialState() {
     return {
+      isExpanded: false,
       lead: {},
       remaining: {}
     };
@@ -28,6 +30,11 @@ export default React.createClass({
       self.setState(data);
     } );
   },
+  expand() {
+    this.setState({
+      isExpanded: true
+    });
+  },
   render(){
     var url, leadHtml, sections = [];
     var lead = this.state.lead;
@@ -37,11 +44,22 @@ export default React.createClass({
     } else {
       url = '//' + this.props.lang + '.m.wikipedia.org/wiki/' + this.props.title;
       leadHtml = lead.sections.length ? lead.sections[0].text : '';
+      if ( this.state.isExpanded ) {
+        sections = this.state.remaining.sections.map( function ( sectionProps ) {
+          return <Section {...sectionProps} key={sectionProps.id}></Section>
+        } );
+      } else {
+        sections = [
+          (<hr/>),
+          (<a className='btn btn-default' onClick={this.expand}>Expand</a>)
+        ]
+      }
       return (
         <div>
           <h2 dangerouslySetInnerHTML={{ __html: this.state.lead.displaytitle}}></h2>
           <a className="btn btn-default btn-sm" href={url}>View on Wikipedia</a>
           <div dangerouslySetInnerHTML={{ __html: leadHtml}}></div>
+          {sections}
         </div>
       )
     }
