@@ -1,0 +1,13 @@
+{
+  "scripts": {
+    "node-server-dev": "NODE_ENV=development node libs/server/app.js",
+    "start": "npm run webpack-dev & npm run node-server-dev",
+    "webpack-dev": "webpack --content-base public/ --hot --inline"
+  },
+  "devDependencies": {
+    "express": "^4.14.0",
+    "hogan-express": "^0.5.2",
+    "webpack": "^1.13.1",
+    "webpack-dev-server": "^1.14.1"
+  }
+}
