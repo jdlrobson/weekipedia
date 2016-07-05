@@ -41,6 +41,7 @@ class Topic extends Component {
     var mins = parseInt( ( new Date() - new Date( this.props.start ) ) / 1000 / 60, 10 );
     var updated = parseInt( ( new Date() - new Date( this.props.updated || this.props.start ) ) / 1000 / 60, 10 );
     var speed = mins < 1 ? totalEdits : ( totalEdits / mins ).toFixed( 2 );
+    var url = '/' + this.props.wiki.replace( 'wiki', '' ) + '/wiki/' + encodeURIComponent( this.props.title );
 
     return (
       <div className="media">
@@ -50,7 +51,7 @@ class Topic extends Component {
         <div className="media-body">
           <p className="list-secondary-text">{speed} edits / minute [debug={this.props.score},{bias.toFixed(2)}]</p>
           <h3 className="media-heading">
-            {this.props.title}
+            <a href={url}>{this.props.title}</a>
           </h3>
           <p>
           <span className={'indicator ' + className} title={label}>&nbsp;</span> {totalEdits} edits ({this.props.anonEdits} anonymous) by {totalEditors} editors ({this.props.anons.length} anonymous) changing {this.props.bytesChanged} bytes with {this.props.reverts} reverts in {mins} minutes (updated {updated} mins ago).</p>

@@ -2,6 +2,12 @@ var fetch = require( 'isomorphic-fetch' );
 function Api() {}
 
 Api.prototype = {
+  getPage: function ( title, lang ) {
+    lang = lang || 'en';
+    return fetch( '/api/' + lang + '/' + title ).then( function ( resp ) {
+      return resp.json();
+    } );
+  },
   getTrending: function ( filter ) {
     var url = '/api/trending/';
     if ( filter ) {

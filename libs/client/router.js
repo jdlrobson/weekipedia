@@ -1,5 +1,6 @@
 import React from 'react'
 import Home from './pages/Home.jsx'
+import Page from './pages/Page.jsx'
 import api from './api.js'
 
 function matchRoute( path ) {
@@ -15,6 +16,24 @@ function matchRoute( path ) {
           children: [
             React.createElement(Home, {
               api: api
+            })
+          ]
+        }
+      }
+    ],
+    // View a page
+    [
+      /^\/([a-z]*)\/wiki\/(.*)|^\/wiki\/(.*)/,
+      function ( info ) {
+        var title = info[2] || info[3];
+        return {
+          title: '',
+          children: [
+            React.createElement(Page, {
+              key: 'page-' + title,
+              api: api,
+              lang: info[1] || 'en',
+              title: title
             })
           ]
         }

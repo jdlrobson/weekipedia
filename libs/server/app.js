@@ -4,6 +4,7 @@ import express from 'express'
 import hogan from 'hogan-express'
 import NodeCache from 'node-cache';
 import WikiSocketCollection from 'WikiSocketCollection'
+import fetch from 'isomorphic-fetch'
 
 // Express
 const app = express()
@@ -89,6 +90,21 @@ app.get('/api/trending/:wiki?',(req, res) => {
     res.send( responseText );
   } );
 } )
+
+app.get('/api/:lang/:title',(req, res, match) => {
+  // FIXME: Handle this better please. Use better API.
+  var lang = req.params.lang;
+  var url = 'https://' + lang + '.wikipedia.org/api/rest_v1/page/mobile-sections/' + encodeURIComponent( req.params.title );
+  fetch( url )
+    .then( function ( resp ) {
+      return resp.json();
+    } )
+    .then( function ( data ) {
+      res.status(200);
+      res.setHeader('Content-Type', 'application/json');
+      res.send( JSON.stringify( data ) );
+    } );
+} );
 
 app.get('*',(req, res) => {
   // use React Router
