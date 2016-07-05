@@ -1,0 +1,16 @@
+.indicator {
+  width: 16px;
+  background-size: 16px auto;
+  background-repeat: no-repeat;
+  line-height: 1;
+  display: inline-block;
+}
+.trend-icon-up {
+  background-image: url(positive.png);
+}
+.trend-icon-down {
+  background-image: url(negative.png);
+}
+.trend-icon-nochange {
+  background-image: url(neutral.png);
+}
