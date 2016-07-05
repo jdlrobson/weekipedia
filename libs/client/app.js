@@ -1,3 +1,6 @@
-document.body.textContent = 'hello';
+import './mediawiki-bootstrap.css'
+import './main.css'
+
+document.getElementById('app').textContent = 'hello';
 
 console.log('!!!');

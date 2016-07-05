@@ -12,6 +12,7 @@ module.exports = {
           loader: 'babel?presets[]=es2015',
           exclude: /node_modules/
         },
+        { test: /\.css$/, loader: 'style!css' }
       ]
     }
 };
