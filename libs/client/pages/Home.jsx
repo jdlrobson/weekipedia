@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import IntermediateState from './../components/IntermediateState/index.jsx';
-import Topic from './../components/Topic/index.jsx';
+import IntermediateState from './../components/IntermediateState';
+import Topic from './../components/Topic';
 
 // Pages
 export default React.createClass({

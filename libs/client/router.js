@@ -1,6 +1,6 @@
 import React from 'react'
-import Home from './pages/Home.jsx'
-import Page from './pages/Page.jsx'
+import Home from './pages/Home'
+import Page from './pages/Page'
 import api from './api.js'
 
 function matchRoute( path ) {

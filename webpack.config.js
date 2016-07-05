@@ -10,6 +10,9 @@ module.exports = {
     plugins: [
       new ExtractTextPlugin('style.css', { allChunks: true })
     ],
+    resolve: {
+      extensions: ['', 'index.js', '.js', '.jsx' ]
+    },
     module: {
       loaders: [
         {

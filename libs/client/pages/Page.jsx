@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import IntermediateState from './../components/IntermediateState/index.jsx';
-import Section from './../components/Section.jsx'
+import IntermediateState from './../components/IntermediateState';
+import Section from './../components/Section'
 
 // Pages
 export default React.createClass({
