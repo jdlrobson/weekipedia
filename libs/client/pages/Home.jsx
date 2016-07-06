@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import IntermediateState from './../components/IntermediateState';
 import TrendingCard from './../components/TrendingCard';
+import Article from './../containers/Article'
 
 // Pages
 export default React.createClass({
@@ -36,9 +37,9 @@ export default React.createClass({
         <IntermediateState></IntermediateState>
 
     return (
-      <div>
+      <Article title={this.props.title} tagline="The wiki in real time">
         {children}
-      </div>
+      </Article>
     )
   }
 })

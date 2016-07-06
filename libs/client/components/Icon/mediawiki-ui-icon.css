@@ -1,0 +1,36 @@
+/*
+https://en.wikipedia.org/w/load.php?debug=false&lang=en&modules=mediawiki.ui.icon&only=styles&debug=true
+*/
+.mw-ui-icon {
+  position: relative;
+  min-height: 1.5em;
+  min-width: 1.5em;
+}
+.mw-ui-icon.mw-ui-icon-element {
+  text-indent: -999px;
+  overflow: hidden;
+  width: 3.5em;
+  min-width: 3.5em;
+  max-width: 3.5em;
+}
+.mw-ui-icon.mw-ui-icon-element:before {
+  left: 0;
+  right: 0;
+  position: absolute;
+  margin: 0 1em;
+}
+.mw-ui-icon.mw-ui-icon-before:before,
+.mw-ui-icon.mw-ui-icon-element:before {
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+  background-size: 100% auto;
+  float: left;
+  display: block;
+  min-height: 1.5em;
+  content: '';
+}
+.mw-ui-icon.mw-ui-icon-before:before {
+  position: relative;
+  width: 1.5em;
+  margin-right: 1em;
+}

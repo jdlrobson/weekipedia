@@ -1,11 +1,15 @@
 import React, { Component } from 'react'
-import IntermediateState from './../components/IntermediateState';
-import Section from './../components/Section'
+import IntermediateState from './../../components/IntermediateState';
+import Section from './../../components/Section'
+import Article from './../../containers/Article'
+
+import './styles.css'
 
 // Pages
 export default React.createClass({
   getDefaultProps: function () {
     return {
+      parentContainer: null,
       api: null,
       lang: 'en'
     };
@@ -16,6 +20,10 @@ export default React.createClass({
       lead: {},
       remaining: {}
     };
+  },
+  updateTitle(title) {
+    window.location.title = title;
+    // eek?
   },
   // You want to load subscriptions not only when the component update but also when it gets mounted.
   componentWillMount(){
@@ -40,7 +48,11 @@ export default React.createClass({
     var lead = this.state.lead;
 
     if ( !lead.displaytitle ) {
-      return <IntermediateState></IntermediateState>
+      return (
+        <Article>
+          <IntermediateState></IntermediateState>
+        </Article>
+      )
     } else {
       url = '//' + this.props.lang + '.m.wikipedia.org/wiki/' + this.props.title;
       leadHtml = lead.sections.length ? lead.sections[0].text : '';
@@ -50,17 +62,17 @@ export default React.createClass({
         } );
       } else {
         sections = [
-          (<hr key={this.key + '-divider'}/>),
-          (<a key={this.key + '-expander'} className='btn btn-default' onClick={this.expand}>Expand</a>)
+          (<hr className="page-fold"/>),
+          (<a className='btn btn-default' onClick={this.expand}>Expand</a>),
+          (<a className="btn btn-default btn-sm" href={url}>View on Wikipedia</a>)
         ]
       }
+
       return (
-        <div>
-          <h2 dangerouslySetInnerHTML={{ __html: this.state.lead.displaytitle}}></h2>
-          <a className="btn btn-default btn-sm" href={url}>View on Wikipedia</a>
+        <Article title={this.state.lead.displaytitle} tagline={this.state.lead.description}>
           <div dangerouslySetInnerHTML={{ __html: leadHtml}}></div>
           {sections}
-        </div>
+        </Article>
       )
     }
   }

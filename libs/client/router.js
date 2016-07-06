@@ -12,9 +12,9 @@ function matchRoute( path ) {
       function( info ) {
         var filter = info[1] || '';
         return {
-          title: filter ? 'Hot (' + filter + ')' : 'Hot',
           children: [
             React.createElement(Home, {
+              title: filter ? 'Hot (' + filter + ')' : 'Hot',
               key: 'home-' + filter,
               api: api
             })
@@ -28,7 +28,6 @@ function matchRoute( path ) {
       function ( info ) {
         var title = info[2] || info[3];
         return {
-          title: '',
           children: [
             React.createElement(Page, {
               key: 'page-' + title,

@@ -1,1 +1,33 @@
-.container { margin-top: 12px; background: #fff; border-left: 1px black #aaa; }
+#mw-mf-viewport {
+  position: relative;
+  height: 100%;
+  font-family: 'Helvetica Neue','Helvetica','Nimbus Sans L','Arial','Liberation Sans',sans-serif;
+  line-height: 1.4;
+  color: #252525;
+  background: #fff;
+}
+
+#mw-mf-page-center {
+  min-height: 100%;
+  background-color: #fff;
+  transition: transform 0.25s ease-in-out,height 0s 0.5s;
+  width: 100%;
+  position: relative;
+}
+
+.pre-content,
+.content {
+  margin: 0 16px;
+  line-height: 1.65;
+  word-wrap: break-word;
+}
+
+@media (min-width: 62.5em) {
+  .header,
+  .pre-content,
+  .content {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 55.8em;
+  }
+}

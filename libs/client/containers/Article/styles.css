@@ -1,0 +1,15 @@
+.heading-holder .tagline {
+  color: #555555;
+  font-size: .85em;
+  margin: 7px 0 10px 0;
+}
+
+.heading-holder h1 {
+  border-bottom: none;
+  padding: 0 0 7px 0;
+  font-size: 2.6525em;
+  font-family: 'Linux Libertine','Georgia',' Times',serif;
+  line-height: 1.3;
+  word-wrap: break-word;
+  word-break: break-word;
+}
