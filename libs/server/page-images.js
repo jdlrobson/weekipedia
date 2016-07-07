@@ -11,7 +11,7 @@ function addPageImages( arr ) {
   arr.forEach( function (page) {
     titles.push(encodeURIComponent(page.title));
   });
-  var url = base + '?action=query&format=json&prop=pageimages&pilimit=50&titles='
+  var url = base + '?action=query&format=json&prop=pageimages&pilimit=50&pithumbsize=120&titles='
     + titles.join('|') + '&formatversion=2';
 
   return fetch( url ).then(function(resp) {
