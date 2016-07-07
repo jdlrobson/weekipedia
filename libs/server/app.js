@@ -24,8 +24,10 @@ const collection = new WikiSocketCollection( {
 } );
 
 function calcScore( q ) {
-  return ( ( ( q.edits - q.anonEdits - q.reverts ) + ( q.anonEdits * 0.1 ) ) / q.getBias() )
-    * ( q.contributors.length / 2 );
+  return ( ( q.edits - q.anonEdits - q.reverts ) + ( q.anonEdits * 0.2 ) )
+    / q.getBias()
+    * ( q.contributors.length / 2 )
+    * Math.pow(0.5, q.age() / (24 * 60));
 }
 
 function getSortedPages() {
