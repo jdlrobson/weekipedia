@@ -42,7 +42,7 @@ function annotate( p, filter, limit ) {
     if ( !item.wiki ) {
       item.wiki = 'enwiki';
     }
-    if ( i >= limit ) {
+    if ( res.length >= limit ) {
       return true;
     } else if ( filter && filter( item ) ) {
       var score =  calcScore( item );
