@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import IntermediateState from './../components/IntermediateState';
-import Topic from './../components/Topic';
+import TrendingCard from './../components/TrendingCard';
 
 // Pages
 export default React.createClass({
@@ -23,7 +23,7 @@ export default React.createClass({
     this.props.api.getTrending( this.props.filter ).then( function ( data ) {
       var topics = data.map( function ( item ) {
         item.key = item.id;
-        var obj = React.createElement(Topic, item);
+        var obj = React.createElement(TrendingCard, item);
          return obj;
       } );
       self.setState({ topics: topics });

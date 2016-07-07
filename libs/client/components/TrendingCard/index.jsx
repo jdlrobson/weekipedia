@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import './styles.css'
 
-class Topic extends Component {
+class TrendingCard extends Component {
   render(){
     var totalEdits = this.props.edits;
     var totalEditors = this.props.contributors.length + this.props.anons.length;
@@ -42,24 +42,28 @@ class Topic extends Component {
     var updated = parseInt( ( new Date() - new Date( this.props.updated || this.props.start ) ) / 1000 / 60, 10 );
     var speed = mins < 1 ? totalEdits : ( totalEdits / mins ).toFixed( 2 );
     var url = '/' + this.props.wiki.replace( 'wiki', '' ) + '/wiki/' + encodeURIComponent( this.props.title );
+    var styles = {
+      backgroundImage: this.props.thumbnail ?
+        'url(' + this.props.thumbnail.source + ')'
+        : 'none'
+    };
 
     return (
-      <div className="media">
-        <div className="media-left">
-          <img className="list-thumbnail"/>
-        </div>
-        <div className="media-body">
-          <p className="list-secondary-text">{speed} edits / minute [debug={this.props.score},{bias.toFixed(2)}]</p>
-          <h3 className="media-heading">
+      <div className="card">
+        <span className={'indicator ' + className} title={label}>&nbsp;</span>
+        <div className="card-thumb" style={styles}></div>
+        <div className="card-detail"
+          data-speed={speed} data-score={this.props.score}
+          data-tags={tags.join( ' | ' )} data-bias={bias.toFixed(2)}>
+          <h3>
             <a href={url}>{this.props.title}</a>
           </h3>
-          <p>
-          <span className={'indicator ' + className} title={label}>&nbsp;</span> {totalEdits} edits ({this.props.anonEdits} anonymous) by {totalEditors} editors ({this.props.anons.length} anonymous) changing {this.props.bytesChanged} bytes with {this.props.reverts} reverts in {mins} minutes (updated {updated} mins ago).</p>
-          <p>{tags.join( ' | ' )}</p>
+          <p className="card-extract">
+          {totalEdits} edits ({this.props.anonEdits} anonymous) by {totalEditors} editors ({this.props.anons.length} anonymous) changing {this.props.bytesChanged} bytes with {this.props.reverts} reverts in {mins} minutes (updated {updated} mins ago).</p>
         </div>
       </div>
     )
   }
 }
 
-export default Topic
+export default TrendingCard
