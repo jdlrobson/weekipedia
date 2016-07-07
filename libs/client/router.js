@@ -10,11 +10,12 @@ function matchRoute( path ) {
     [
       /^\/?$|\/hot\/(.*)$/,
       function( info ) {
-        var filter = info[1];
+        var filter = info[1] || '';
         return {
           title: filter ? 'Hot (' + filter + ')' : 'Hot',
           children: [
             React.createElement(Home, {
+              key: 'home-' + filter,
               api: api
             })
           ]

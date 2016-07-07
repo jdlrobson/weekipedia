@@ -50,8 +50,8 @@ export default React.createClass({
         } );
       } else {
         sections = [
-          (<hr/>),
-          (<a className='btn btn-default' onClick={this.expand}>Expand</a>)
+          (<hr key={this.key + '-divider'}/>),
+          (<a key={this.key + '-expander'} className='btn btn-default' onClick={this.expand}>Expand</a>)
         ]
       }
       return (
