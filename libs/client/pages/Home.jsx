@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import IntermediateState from './../components/IntermediateState';
 import TrendingCard from './../components/TrendingCard';
 import Article from './../containers/Article'
+import Content from './../containers/Content'
 
 // Pages
 export default React.createClass({
@@ -38,7 +39,7 @@ export default React.createClass({
 
     return (
       <Article title={this.props.title} tagline="The wiki in real time">
-        {children}
+        <Content>{children}</Content>
       </Article>
     )
   }

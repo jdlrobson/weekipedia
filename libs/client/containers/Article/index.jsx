@@ -19,9 +19,7 @@ class Article extends Component {
         <Content key="article-row-0" className="pre-content heading-holder">
           {header}
         </Content>
-        <Content key="article-row-1" className="content">
-          { this.props.children }
-        </Content>
+        {this.props.children}
       </div>
     )
   }

@@ -3,6 +3,7 @@ import IntermediateState from './../../components/IntermediateState';
 import Section from './../../components/Section'
 import Button from './../../components/Button'
 import Article from './../../containers/Article'
+import Content from './../../containers/Content'
 
 import './styles.css'
 import './tablet.css'
@@ -46,13 +47,15 @@ export default React.createClass({
     });
   },
   render(){
-    var url, leadHtml, sections = [];
-    var lead = this.state.lead;
+    var url, leadHtml,
+      sections = [],
+      btns = [],
+      lead = this.state.lead;
 
     if ( !lead.displaytitle ) {
       return (
         <Article>
-          <IntermediateState></IntermediateState>
+          <Content><IntermediateState></IntermediateState></Content>
         </Article>
       )
     } else {
@@ -63,16 +66,17 @@ export default React.createClass({
           return <Section {...sectionProps} key={sectionProps.id}></Section>
         } );
       } else {
-        sections = [
-          (<Button href={'#expanded=1'} label="Expand" onClick={this.expand}></Button>),
-          (<Button href={url} label="View on Wikipedia"></Button>)
-        ]
+        btns.push( <Button href={'#expanded=1'} label="Expand" onClick={this.expand}></Button> );
       }
+      btns.push(<Button href={url} label="View on Wikipedia"></Button>);
 
       return (
         <Article title={this.state.lead.displaytitle} tagline={this.state.lead.description}>
-          <div dangerouslySetInnerHTML={{ __html: leadHtml}}></div>
-          {sections}
+          <Content key="page-row-1" className="content">
+            <div dangerouslySetInnerHTML={{ __html: leadHtml}}></div>
+            {sections}
+          </Content>
+          <Content key="page-row-2" className="post-content">{btns}</Content>
         </Article>
       )
     }
