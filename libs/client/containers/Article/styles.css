@@ -13,3 +13,55 @@
   word-wrap: break-word;
   word-break: break-word;
 }
+
+/*
+CSS rules modified from https://en.wikipedia.org/w/load.php?debug=false&lang=en&modules=skins.minerva.content.styles&only=styles&debug=true
+*/
+.pre-content,
+.content,
+.post-content {
+  margin: 0 16px;
+}
+.content {
+  line-height: 1.65;
+  word-wrap: break-word;
+}
+
+/* Extracted from /*
+https://en.wikipedia.org/w/load.php?debug=false&lang=en&modules=skins.minerva.tablet.styles&only=styles&debug=true
+ */
+
+@media all and (min-width: 62.5em) {
+  #mw-mf-page-center .mw-mf-banner,
+  .banner-container,
+  .header,
+  .page-header-bar,
+  .content-header,
+  .overlay-header,
+  .content,
+  .overlay-content,
+  .content-unstyled,
+  .pre-content,
+  .post-content,
+  .content-overlay,
+  #mw-mf-page-center .pointer-overlay {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 55.8em;
+  }
+  .header {
+    max-width: 57.8em;
+  }
+}
+
+@media all and (min-width: 720px) {
+  .heading-holder {
+    padding: 20px 0;
+    position: relative;
+  }
+  #section_0 {
+    border-bottom: none;
+    padding: 0 0 7px 0;
+    font-size: 2.6525em;
+  }
+}

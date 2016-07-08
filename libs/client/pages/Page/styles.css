@@ -1,4 +1,365 @@
-.page-fold {
+/*
+CSS rules modified from https://en.wikipedia.org/w/load.php?debug=false&lang=en&modules=skins.minerva.content.styles&only=styles&debug=true
+
+* mw-mf-last-modified removed.
+* Rules concerning elements .pre-content, .content, .post-content moved to container
+*/
+html {
+  -webkit-text-size-adjust: none;
+  font-size: 100%;
+}
+body {
+  font-family: 'Helvetica Neue', 'Helvetica', 'Nimbus Sans L', 'Arial', 'Liberation Sans', sans-serif;
+  line-height: 1.4;
+  color: #252525;
+  background: #fff;
+}
+@media all and (max-width: 280px) {
+  body {
+    font-size: .8em;
+  }
+  .content {
+    margin: 0 12px;
+  }
+}
+.nomobile {
+  display: none !important;
+}
+.content .thumb {
+  margin: .6em 0;
+  /* bug 20030 */
+}
+.content .thumb .thumbinner {
+  margin: 0 auto;
+  max-width: 100% !important;
+}
+.content .thumb .thumbinner > div {
+  float: none !important;
+  width: auto !important;
+  clear: both !important;
+}
+.content .thumb .noresize {
+  width: 100%;
+  overflow-x: auto;
+}
+.content .thumb .noresize img {
+  max-width: none !important;
+}
+.content .thumbcaption {
+  margin: .5em 0 0;
+  font-size: .8em;
+  line-height: 1.5;
+  padding: 0 !important;
+  color: #555555;
+  width: auto !important;
+}
+.content .thumbborder {
+  border: 1px solid #cccccc;
+}
+.content img {
+  vertical-align: middle;
+}
+.content .floatright {
+  /* @noflip */
+  clear: right;
+  /* @noflip */
+  float: right;
+  /* @noflip */
+  margin: 0 0 .6em .6em;
+}
+.content .floatleft {
+  /* @noflip */
+  clear: left;
+  /* @noflip */
+  float: left;
+  /* @noflip */
+  margin: 0 .6em .6em 0;
+}
+.content a > img {
+  max-width: 100% !important;
+  height: auto !important;
+}
+.content div.magnify {
+  display: none;
+}
+.pre-content h1,
+.content h1,
+.content h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: 'Linux Libertine', 'Georgia', ' Times', serif;
+  line-height: 1.3;
+  word-wrap: break-word;
+  word-break: break-word;
+}
+.content h2,
+.content h3,
+.content h4,
+.content h5,
+.content h6 {
+  padding: 0.5em 0;
+}
+h1 {
+  font-size: 1.7em;
+}
+h2 {
+  font-size: 1.5em;
+}
+h3 {
+  font-size: 1.2em;
+  font-weight: bold;
+}
+h4 {
+  font-weight: bold;
+}
+blockquote {
+  font-family: 'Linux Libertine', 'Georgia', ' Times', serif;
+  font-size: 1.1em;
+  quotes: '\201C' '\201D';
+  padding: 1em 25px 1em 30px;
+  position: relative;
+  overflow: hidden;
+}
+blockquote:before {
+  content: open-quote;
+  font-size: 3em;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+blockquote:after {
+  content: close-quote;
+  font-size: 3em;
+  line-height: 1;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+}
+.content ol ol,
+.content ul ol,
+.content ol ul,
+.content ul ul {
+  margin-left: 1em;
+}
+.content ol li,
+.content ul li {
+  margin-bottom: 10px;
+}
+.content ol li:last-child,
+.content ul li:last-child {
+  margin-bottom: inherit;
+}
+.content ul {
+  list-style: square inside;
+}
+.content ul > li > ul {
+  list-style-type: disc;
+}
+.content ul > li > ul > li > ul {
+  list-style-type: circle;
+}
+.content ol {
+  list-style: decimal inside;
+}
+dl {
+  margin-left: 1em;
+}
+dl dt {
+  font-weight: bold;
+}
+.hlist > ul li,
+ul.hlist li {
+  display: inline-block;
+  margin-right: 8px;
+}
+a {
+  text-decoration: none;
+  color: #002bb8;
+}
+a:visited {
+  color: #5a3696;
+}
+a:active {
+  color: #faa700;
+}
+a:hover {
+  text-decoration: underline;
+}
+a.new,
+a.new:visited,
+a.new:hover {
+  color: #cc0000;
+}
+a.external {
+  background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAAVElEQVR42n3PgQkAIAhEUXdqJ3dqJ3e6IoTPUSQcgj4EQ5IlUiLE0Jil3PECXhcHGBhZ8kg4hwxAu3MZeCGeyFnAXp4hqNQPnt7QL0nADpD6wHccLvnAKksq8iiaAAAAAElFTkSuQmCC);
+  background-image: linear-gradient(transparent, transparent), url(data:image/svg+xml,%3C%3Fxml%20version%3D%221.0%22%20encoding%3D%22UTF-8%22%20standalone%3D%22no%22%3F%3E%0A%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2210%22%20height%3D%2210%22%3E%0A%20%20%20%20%3Cpath%20fill%3D%22%23fff%22%20stroke%3D%22%2306c%22%20d%3D%22M.5%203.518h5.982V9.5H.5z%22%2F%3E%0A%20%20%20%20%3Cpath%20d%3D%22M4.755-.16H9.99v5.39L8.417%206.774l-1.31-1.31L4.383%208.19%201.695%205.5l2.808-2.807-1.31-1.31z%22%20fill%3D%22%2306f%22%2F%3E%0A%20%20%20%20%3Cpath%20d%3D%22M8.984.845l.022%204.884L7.19%203.91l-2.882%202.88L3.08%205.567l2.882-2.88L4.112.833z%22%20fill%3D%22%23fff%22%2F%3E%0A%3C%2Fsvg%3E%0A);
+  background-repeat: no-repeat;
+  background-position: center right;
+  padding-right: 13px;
+}
+/* Plainlinks - this can be used to switch
+ * off special external link styling */
+.plainlinks a {
+  background: none !important;
+  padding: 0 !important;
+}
+.content p {
+  margin: .5em 0 1em 0;
+}
+strong,
+b {
+  font-weight: bold;
+}
+em,
+i {
+  font-style: italic;
+}
+code,
+pre {
+  font-family: monospace;
+  border: solid 1px #cccccc;
+  white-space: pre-wrap;
+}
+code {
+  padding: 0.2em 0.5em;
+}
+pre {
+  padding: 1em;
+}
+sup {
+  vertical-align: super;
+}
+sub {
+  vertical-align: sub;
+}
+sub,
+sup {
+  font-size: 0.75em;
+  line-height: 1;
+}
+.content table {
+  margin: 1em 0;
+  /* following 4 rules are needed for scrolling */
+  overflow: auto;
+  /* for browsers that don't support overflow-y */
+  overflow-y: hidden;
+  overflow-x: auto;
   display: block;
-  clear: both;
+  width: 100% !important;
+}
+.content table caption {
+  display: block;
+  text-align: left;
+}
+.content table.wikitable {
+  border: 1px solid #cccccc;
+}
+.content table.wikitable > tr > th,
+.content table.wikitable > tr > td,
+.content table.wikitable > * > tr > th,
+.content table.wikitable > * > tr > td {
+  border: 1px solid #cccccc;
+  padding: .2em;
+}
+.content table.wikitable > tr > th,
+.content table.wikitable > * > tr > th {
+  background-color: #eeeeee;
+}
+/*
+A file for css that corrects known rendering issues on known Wikimedia wikis.
+
+the following definitions exist to deal with certain inline styles
+present in wikitext.
+This file should not need to exist
+It will become redundant when the following RFC is resolved:
+https://www.mediawiki.org/wiki/Requests_for_comment/Allow_styling_in_templates
+
+FIXME: Review all of these hacks to see if they still apply.
+*/
+.content .tmbox,
+.content .ambox,
+.content #coordinates,
+.content .navbox,
+.content .vertical-navbox,
+.content .topicon,
+.content .metadata {
+  display: none !important;
+}
+.content table {
+  float: none !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+.content table.infobox {
+  font-size: 90%;
+  position: relative;
+  border: none;
+  margin-bottom: 2em;
+  text-align: left;
+  background-color: #f9f9f9;
+}
+.content table.infobox th,
+.content table.infobox td {
+  vertical-align: top;
+  border: none;
+  border-bottom: 1px solid #dddddd;
+  padding: .2em;
+}
+.content table.infobox tr:last-child th,
+.content table.infobox tr:last-child td {
+  border: none;
+}
+#filetoc,
+.mw-editsection {
+  display: none;
+}
+/* force portals to use a one column layout on mobile */
+.skin-minerva .portal-column-left-wide,
+.skin-minerva .portal-column-left,
+.skin-minerva .portal-column-right,
+.skin-minerva .portal-column-right-narrow {
+  float: none;
+  width: 100%;
+}
+.collapsible td {
+  width: auto !important;
+}
+/* bug 34878: Set an optimal width for a column.
+ * Makes sure that on small screens column-count is only honored if column-width hint is not violated.
+ * https://developer.mozilla.org/en-US/docs/CSS/column-width
+ */
+.references-column-count {
+  -moz-column-width: 35em;
+  -webkit-column-width: 35em;
+  column-width: 35em;
+}
+.references li:target {
+  background-color: #def;
+}
+.hatnote,
+.dablink,
+.rellink {
+  padding: 0 0 .6em 0;
+  color: #777777;
+  font-size: .8em;
+  font-style: italic;
+}
+.quotebox {
+  margin: 0 0 0.8em !important;
+  width: auto !important;
+}
+@media all and (max-width: 720px) {
+  .gallery .gallerybox {
+    width: 100% !important;
+  }
+  .gallery .gallerybox div {
+    width: 100% !important;
+  }
+  .content table.multicol > tbody > tr > td,
+  .content table.multicol > tr > td {
+    display: block !important;
+    width: auto !important;
+  }
 }

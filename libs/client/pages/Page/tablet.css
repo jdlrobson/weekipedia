@@ -1,0 +1,71 @@
+/*
+https://en.wikipedia.org/w/load.php?debug=false&lang=en&modules=skins.minerva.tablet.styles&only=styles&debug=true
+
+With removal of rules for #page-actions, .toc-mobile, .last-modified-bar, .mw-mf-banner, #footer, #mw-mf-last-modified
+Certain rules moved to containers.
+
+A file for css that optimises the Minerva skin on larger devices.
+*/
+@media all and (min-width: 720px) {
+  .content_block {
+    width: auto;
+    clear: none;
+  }
+  .pre-content,
+  .content,
+  .content-overlay,
+  .post-content {
+    max-width: 55.8em;
+    margin: 0 3.35em;
+  }
+  .content .thumb.tleft {
+    /* @noflip */
+    float: left;
+    /* @noflip */
+    clear: left;
+    /* @noflip */
+    margin-right: 1.4em;
+  }
+  .content .thumb.tright {
+    /* @noflip */
+    float: right;
+    /* @noflip */
+    clear: right;
+    /* @noflip */
+    margin-left: 1.4em;
+  }
+  .content blockquote {
+    padding-right: 35px;
+    padding-left: 40px;
+  }
+  .content table {
+    display: table;
+    width: auto !important;
+  }
+  .content table caption {
+    display: table-caption;
+  }
+  .content table tbody {
+    display: table-row-group;
+  }
+}
+
+/*
+A file for css that corrects known rendering issues on known Wikimedia wikis ON TABLETS
+Many of them correct hacks in place in common/hacks.less
+
+It will become redundant when the following RFC is resolved:
+https://www.mediawiki.org/wiki/Requests_for_comment/Allow_styling_in_templates
+
+FIXME: Review all of these hacks to see if they still apply.
+*/
+/* Tablet specific styling */
+@media all and (min-width: 720px) {
+  table.infobox {
+    margin: .5em 0 1em 35px !important;
+    max-width: 320px;
+    width: auto !important;
+    float: right !important;
+    clear: right !important;
+  }
+}

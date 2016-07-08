@@ -5,6 +5,7 @@ import Button from './../../components/Button'
 import Article from './../../containers/Article'
 
 import './styles.css'
+import './tablet.css'
 
 // Pages
 export default React.createClass({
@@ -63,7 +64,6 @@ export default React.createClass({
         } );
       } else {
         sections = [
-          (<hr className="page-fold"/>),
           (<Button href={'#expanded=1'} label="Expand" onClick={this.expand}></Button>),
           (<Button href={url} label="View on Wikipedia"></Button>)
         ]
