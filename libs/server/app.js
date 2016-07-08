@@ -109,6 +109,7 @@ app.get('/api/:lang/:title',(req, res, match) => {
       return resp.json();
     } )
     .then( function ( data ) {
+      // FIXME... the API endpoint doesn't return the last modifier username
       res.status(200);
       res.setHeader('Content-Type', 'application/json');
       res.send( JSON.stringify( data ) );

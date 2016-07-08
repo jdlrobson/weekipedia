@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import IntermediateState from './../../components/IntermediateState';
 import Section from './../../components/Section'
+import LastModifiedBar from './../../components/LastModifiedBar'
 import Button from './../../components/Button'
 import Article from './../../containers/Article'
 import Content from './../../containers/Content'
@@ -47,7 +48,7 @@ export default React.createClass({
     });
   },
   render(){
-    var url, leadHtml,
+    var lastModifiedBar, editor, url, leadHtml,
       sections = [],
       btns = [],
       lead = this.state.lead;
@@ -61,6 +62,7 @@ export default React.createClass({
     } else {
       url = '//' + this.props.lang + '.m.wikipedia.org/wiki/' + this.props.title;
       leadHtml = lead.sections.length ? lead.sections[0].text : '';
+
       if ( this.state.isExpanded ) {
         sections = this.state.remaining.sections.map( function ( sectionProps ) {
           return <Section {...sectionProps} key={sectionProps.id}></Section>
@@ -77,6 +79,8 @@ export default React.createClass({
             {sections}
           </Content>
           <Content key="page-row-2" className="post-content">{btns}</Content>
+          <LastModifiedBar lang={this.props.lang}
+            title={this.props.title} timestamp={lead.lastmodified} />
         </Article>
       )
     }

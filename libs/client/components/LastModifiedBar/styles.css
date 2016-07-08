@@ -1,0 +1,43 @@
+
+.last-modified-bar {
+  background-color: transparent;
+  display: block;
+  color: #666666;
+  transition: background-color 0.2s ease,color 0.2s ease;
+}
+
+.last-modified-bar > div {
+  padding: 5px 16px;
+  background-color: #eeeeee;
+  white-space: nowrap;
+  overflow: hidden;
+  -webkit-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+  display: block;
+  font-size: .9em;
+  margin-top: 1.5em;
+}
+
+.last-modified-bar a,
+.last-modified-bar a:visited {
+  color: #666;
+}
+
+.last-modified-bar a:nth-child( 2 ),
+.last-modified-bar a:visited:nth-child( 2 ) {
+  font-weight: bold;
+}
+
+@media (min-width: 720px) {
+  .last-modified-bar {
+    padding-left: 0;
+    padding-right: 0;
+    font-size: 1em;
+  }
+
+  .last-modified-bar div {
+    background-color: #eeeeee;
+    font-size: 0.9em;
+    padding: 5px 16px;
+  }
+}
