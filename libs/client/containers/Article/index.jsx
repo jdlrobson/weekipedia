@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import Content from './../../containers/Content'
 import './styles.css'
 
 // Main component
@@ -12,14 +13,15 @@ class Article extends Component {
     if ( tagline ) {
       header.push(<div className="tagline">{tagline}</div>)
     }
+
     return (
       <div className="mw-body">
-        <div className="pre-content heading-holder">
+        <Content key="article-row-0" className="pre-content heading-holder">
           {header}
-        </div>
-        <div className="content">
+        </Content>
+        <Content key="article-row-1" className="content">
           { this.props.children }
-        </div>
+        </Content>
       </div>
     )
   }

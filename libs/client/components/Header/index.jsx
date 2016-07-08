@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import Icon from './../Icon'
+import Content from './../../containers/Content'
 import './styles.css'
 import './icons.css'
 
@@ -8,11 +9,11 @@ class Header extends Component {
 
     return (
       <div className="header-container">
-        <div className="header">
+        <Content className="header">
           <div>
             <Icon glyph="mainmenu" href="/" label="Home"/>
           </div>
-        </div>
+        </Content>
       </div>
     )
   }

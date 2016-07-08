@@ -11,13 +11,6 @@ A file for css that optimises the Minerva skin on larger devices.
     width: auto;
     clear: none;
   }
-  .pre-content,
-  .content,
-  .content-overlay,
-  .post-content {
-    max-width: 55.8em;
-    margin: 0 3.35em;
-  }
   .content .thumb.tleft {
     /* @noflip */
     float: left;
