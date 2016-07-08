@@ -119,7 +119,7 @@ export default React.createClass({
             {sections}
           </Content>
           <Content key="page-row-2" className="post-content">{btns}</Content>
-          <LastModifiedBar lang={this.props.lang}
+          <LastModifiedBar editor={lead.lastmodifier} lang={this.props.lang}
             title={this.props.title} timestamp={lead.lastmodified} />
           {related}
         </Article>
