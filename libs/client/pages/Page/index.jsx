@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import IntermediateState from './../../components/IntermediateState';
 import Section from './../../components/Section'
+import Button from './../../components/Button'
 import Article from './../../containers/Article'
 
 import './styles.css'
@@ -63,8 +64,8 @@ export default React.createClass({
       } else {
         sections = [
           (<hr className="page-fold"/>),
-          (<a className='btn btn-default' onClick={this.expand}>Expand</a>),
-          (<a className="btn btn-default btn-sm" href={url}>View on Wikipedia</a>)
+          (<Button href={'#expanded=1'} label="Expand" onClick={this.expand}></Button>),
+          (<Button href={url} label="View on Wikipedia"></Button>)
         ]
       }
 
