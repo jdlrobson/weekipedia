@@ -13,7 +13,6 @@ import './tablet.css'
 export default React.createClass({
   getDefaultProps: function () {
     return {
-      parentContainer: null,
       api: null,
       lang: 'en'
     };
@@ -24,10 +23,6 @@ export default React.createClass({
       lead: {},
       remaining: {}
     };
-  },
-  updateTitle(title) {
-    window.location.title = title;
-    // eek?
   },
   // You want to load subscriptions not only when the component update but also when it gets mounted.
   componentWillMount(){
@@ -48,7 +43,7 @@ export default React.createClass({
     });
   },
   render(){
-    var lastModifiedBar, editor, url, leadHtml,
+    var url, leadHtml,
       sections = [],
       btns = [],
       lead = this.state.lead;
@@ -62,15 +57,14 @@ export default React.createClass({
     } else {
       url = '//' + this.props.lang + '.m.wikipedia.org/wiki/' + this.props.title;
       leadHtml = lead.sections.length ? lead.sections[0].text : '';
-
       if ( this.state.isExpanded ) {
         sections = this.state.remaining.sections.map( function ( sectionProps ) {
           return <Section {...sectionProps} key={sectionProps.id}></Section>
         } );
       } else {
-        btns.push( <Button href={'#expanded=1'} label="Expand" onClick={this.expand}></Button> );
+        btns.push(<Button key="article-expand" href="#expanded=1" label="Expand" onClick={this.expand}></Button>);
       }
-      btns.push(<Button href={url} label="View on Wikipedia"></Button>);
+      btns.push(<Button key="article-view" href={url} label="View on Wikipedia"></Button>);
 
       return (
         <Article title={this.state.lead.displaytitle} tagline={this.state.lead.description}>
