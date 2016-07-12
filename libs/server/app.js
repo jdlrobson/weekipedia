@@ -5,7 +5,7 @@ import hogan from 'hogan-express'
 import NodeCache from 'node-cache';
 import WikiSocketCollection from 'WikiSocketCollection'
 import fetch from 'isomorphic-fetch'
-import addPageImages from './page-images'
+import addProps from './prop-enricher'
 
 // Express
 const app = express()
@@ -87,7 +87,7 @@ app.get('/api/trending/:wiki?',(req, res) => {
       };
 
       results = annotate( getSortedPages(), fn, 50 );
-      addPageImages(results).then(function(results) {
+      addProps(results, ['pageimages']).then(function(results) {
         responseText = JSON.stringify( {
           results: results, ts: new Date()
         } );

@@ -1,6 +1,7 @@
 import fetch from 'isomorphic-fetch'
+import param from 'node-jquery-param'
 
-function addPageImages( arr ) {
+function propEnricher( arr, props ) {
   if ( arr.length > 50 ) {
     throw 'Too many items passed. Max limit is 50.';
   }
@@ -11,8 +12,15 @@ function addPageImages( arr ) {
   arr.forEach( function (page) {
     titles.push(encodeURIComponent(page.title));
   });
-  var url = base + '?action=query&format=json&prop=pageimages&pilimit=50&pithumbsize=120&titles='
-    + titles.join('|') + '&formatversion=2';
+  var params = {
+    prop: props.join('|')
+  };
+  if ( props.indexOf('pageimages') > -1 ) {
+    params.pilimit = 50;
+    params.pithumbsize = 120;
+  }
+  var url = base + '?action=query&format=json&titles='
+    + titles.join('|') + '&formatversion=2&' + param( params );
 
   return fetch( url ).then(function(resp) {
     return resp.json();
@@ -30,4 +38,4 @@ function addPageImages( arr ) {
   });
 }
 
-export default addPageImages;
+export default propEnricher
