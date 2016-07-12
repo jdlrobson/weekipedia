@@ -15,6 +15,7 @@ function matchRoute( path ) {
           children: [
             React.createElement(Home, {
               title: filter ? 'Hot (' + filter + ')' : 'Hot',
+              filter: filter,
               key: 'home-' + filter,
               api: api
             })
