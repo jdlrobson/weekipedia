@@ -47,6 +47,8 @@ class TrendingCard extends Component {
         'url(' + this.props.thumbnail.source + ')'
         : 'none'
     };
+    var description = this.props.terms && this.props.terms.description ?
+      this.props.terms.description[0] : '';
 
     return (
       <div className="card">
@@ -58,6 +60,7 @@ class TrendingCard extends Component {
           <h3>
             <a href={url}>{this.props.title}</a>
           </h3>
+          <p className="card-extract">{description}</p>
           <p className="card-extract">
           {totalEdits} edits ({this.props.anonEdits} anonymous) by {totalEditors} editors ({this.props.anons.length} anonymous) changing {this.props.bytesChanged} bytes with {this.props.reverts} reverts in {mins} minutes (updated {updated} mins ago).</p>
         </div>

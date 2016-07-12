@@ -87,7 +87,7 @@ app.get('/api/trending/:wiki?',(req, res) => {
       };
 
       results = annotate( getSortedPages(), fn, 50 );
-      addProps(results, ['pageimages']).then(function(results) {
+      addProps(results, ['pageimages','pageterms']).then(function(results) {
         responseText = JSON.stringify( {
           results: results, ts: new Date()
         } );

@@ -19,6 +19,9 @@ function propEnricher( arr, props ) {
     params.pilimit = 50;
     params.pithumbsize = 120;
   }
+  if ( props.indexOf('pageterms') > -1 ) {
+    params.wbptterms = 'description';
+  }
   var url = base + '?action=query&format=json&titles='
     + titles.join('|') + '&formatversion=2&' + param( params );
 
@@ -29,10 +32,14 @@ function propEnricher( arr, props ) {
     var pages = data.query.pages;
 
     pages.forEach(function(page){
-      index[page.title] = page.thumbnail;
+      index[page.title] = {};
+      index[page.title].terms = page.terms;
+      index[page.title].thumbnail = page.thumbnail;
     })
     arr.forEach(function(page){
-      page.thumbnail = index[page.title];
+      var obj = index[page.title]
+      page.thumbnail = obj.thumbnail;
+      page.terms = obj.terms;
     });
     return arr;
   });
