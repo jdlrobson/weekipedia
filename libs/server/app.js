@@ -51,10 +51,10 @@ function annotate( p, filter, limit ) {
       var score =  calcScore( item );
       var speed = item.editsPerMinute();
 
-      item.index = i + 1;
+      item.index = res.length + 1;
       if ( !item.bestIndex ) {
         item.bestIndex = item.index;
-      } else if ( item.index > item.bestIndex ) {
+      } else if ( item.index < item.bestIndex ) {
         item.bestIndex = item.index;
       }
       item.bias = item.getBias();
