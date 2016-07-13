@@ -24,18 +24,18 @@ const collection = new WikiSocketCollection( {
   minSpeed: 0.1
 } );
 
-function calcScore( q ) {
+function calcScore( q, hrs ) {
   return ( ( q.edits - q.anonEdits - q.reverts ) + ( q.anonEdits * 0.2 ) )
     / q.getBias()
     * ( q.contributors.length / 2 )
-    * Math.pow(0.5, q.age() / (5 * 60));
+    * Math.pow(0.5, q.age() / (hrs * 60));
 }
 
-function getSortedPages() {
+function getSortedPages( hrs ) {
   // FIXME: This should be cached for a fixed window e.g. 5 minutes?
   var p = collection.getPages();
   return p.sort( function ( q, r ) {
-    return calcScore( q ) > calcScore( r ) ? -1 : 1;
+    return calcScore( q, hrs ) > calcScore( r, hrs ) ? -1 : 1;
   } );
 }
 
@@ -72,10 +72,11 @@ function annotate( p, filter, limit ) {
   return res;
 }
 
-app.get('/api/trending/:wiki?',(req, res) => {
+app.get('/api/trending/:wiki?/:timeframe?',(req, res) => {
   var fn, results;
   var wiki = req.params.wiki || 'enwiki';
-  var cacheKey = 'trending/' + wiki;
+  var timeframe = parseFloat(req.params.timeframe) || 5;
+  var cacheKey = 'trending/' + wiki + '/' + timeframe;
 
   res.status(200);
   res.setHeader('Content-Type', 'application/json');
@@ -87,7 +88,7 @@ app.get('/api/trending/:wiki?',(req, res) => {
         return item.contributors.length > 1 && ( wiki === '*' || item.wiki === wiki );
       };
 
-      results = annotate( getSortedPages(), fn, 50 );
+      results = annotate( getSortedPages(timeframe), fn, 50 );
       addProps(results, ['pageimages','pageterms']).then(function(results) {
         responseText = JSON.stringify( {
           results: results, ts: new Date()
