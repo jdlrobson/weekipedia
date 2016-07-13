@@ -363,3 +363,7 @@ FIXME: Review all of these hacks to see if they still apply.
     width: auto !important;
   }
 }
+/* Additional rules */
+.post-content {
+  margin-top: 10px;
+}
