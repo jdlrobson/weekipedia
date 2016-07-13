@@ -7,6 +7,10 @@
   margin-top: -1px;
 }
 
+.header.content-container {
+  margin: 0;
+}
+
 .header > * {
   vertical-align: middle;
   display: table-cell;
