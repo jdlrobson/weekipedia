@@ -28,7 +28,7 @@ function calcScore( q ) {
   return ( ( q.edits - q.anonEdits - q.reverts ) + ( q.anonEdits * 0.2 ) )
     / q.getBias()
     * ( q.contributors.length / 2 )
-    * Math.pow(0.5, q.age() / (24 * 60));
+    * Math.pow(0.5, q.age() / (5 * 60));
 }
 
 function getSortedPages() {
@@ -83,7 +83,7 @@ app.get('/api/trending/:wiki?',(req, res) => {
     var responseText;
     if ( err || !responseText ) {
       fn = function ( item ) {
-        return wiki === '*' || item.wiki === wiki;
+        return item.contributors.length > 1 && ( wiki === '*' || item.wiki === wiki );
       };
 
       results = annotate( getSortedPages(), fn, 50 );
