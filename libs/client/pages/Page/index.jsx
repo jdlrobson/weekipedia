@@ -64,7 +64,7 @@ export default React.createClass({
           return <Section {...sectionProps} key={sectionProps.id}></Section>
         } );
       } else {
-        btns.push(<Button key="article-expand" href="#expanded=1" label="Expand" onClick={this.expand}></Button>);
+        sections.push(<Button key="article-expand" href="#expanded=1" label="Expand" onClick={this.expand}></Button>);
       }
       btns.push(<Button key="article-view" href={url} label="View on Wikipedia"></Button>);
 
