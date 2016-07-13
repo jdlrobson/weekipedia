@@ -8,7 +8,8 @@
 }
 
 .header.content-container {
-  margin: 0;
+  margin-left: 0;
+  margin-right: 0;
 }
 
 .header > * {
@@ -38,5 +39,9 @@
 @media (min-width: 62.5em) {
   .header {
     max-width: 57.8em;
+  }
+  .header.content-container {
+    margin-left: auto;
+    margin-right: auto;
   }
 }
