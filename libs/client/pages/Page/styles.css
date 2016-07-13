@@ -82,8 +82,7 @@ body {
 .content div.magnify {
   display: none;
 }
-.pre-content h1,
-.content h1,
+h1,
 .content h2,
 h3,
 h4,

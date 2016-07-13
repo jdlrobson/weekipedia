@@ -6,6 +6,8 @@ import Button from './../../components/Button'
 import Article from './../../containers/Article'
 import Content from './../../containers/Content'
 
+import utils from './../../utils'
+
 import './styles.css'
 import './tablet.css'
 
@@ -55,7 +57,7 @@ export default React.createClass({
         </Article>
       )
     } else {
-      url = '//' + this.props.lang + '.m.wikipedia.org/wiki/' + this.props.title;
+      url = utils.getAbsoluteUrl( this.props.title, this.props.lang );
       leadHtml = lead.sections.length ? lead.sections[0].text : '';
       if ( this.state.isExpanded ) {
         sections = this.state.remaining.sections.map( function ( sectionProps ) {

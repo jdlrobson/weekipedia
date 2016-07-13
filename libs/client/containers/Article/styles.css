@@ -4,7 +4,7 @@
   margin: 7px 0 10px 0;
 }
 
-.heading-holder h1 {
+.standard-page-heading h1 {
   border-bottom: none;
   padding: 0 0 7px 0;
   font-size: 2.6525em;
@@ -12,6 +12,15 @@
   line-height: 1.3;
   word-wrap: break-word;
   word-break: break-word;
+}
+
+.special-page-heading h1 {
+  font-family: 'Helvetica Neue','Helvetica','Nimbus Sans L','Arial','Liberation Sans',sans-serif;
+  padding: 0.5em 0;
+  text-align: center;
+  font-size: 1.25em;
+  font-weight: bold;
+  border: none;
 }
 
 /*
@@ -38,7 +47,10 @@ https://en.wikipedia.org/w/load.php?debug=false&lang=en&modules=skins.minerva.ta
     padding: 20px 0;
     position: relative;
   }
-  #section_0 {
+  .heading-holder.special-page-heading {
+    padding: 0;
+  }
+  .standard-page-heading h1 {
     border-bottom: none;
     padding: 0 0 7px 0;
     font-size: 2.6525em;

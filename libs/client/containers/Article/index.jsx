@@ -14,9 +14,11 @@ class Article extends Component {
       header.push(<div className="tagline">{tagline}</div>)
     }
 
+    var nsClass = this.props.isSpecialPage ? ' special-page-heading' : ' standard-page-heading';
+
     return (
       <div className="mw-body">
-        <Content key="article-row-0" className="pre-content heading-holder">
+        <Content key="article-row-0" className={"pre-content heading-holder" + nsClass}>
           {header}
         </Content>
         {this.props.children}

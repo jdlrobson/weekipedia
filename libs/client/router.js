@@ -1,6 +1,7 @@
 import React from 'react'
 import Home from './pages/Home'
 import Page from './pages/Page'
+import SpecialPage from './pages/SpecialPage'
 import api from './api.js'
 
 function matchRoute( path ) {
@@ -27,16 +28,32 @@ function matchRoute( path ) {
     [
       /^\/([a-z]*)\/wiki\/(.*)|^\/wiki\/(.*)/,
       function ( info ) {
-        var title = info[2] || info[3];
-        return {
-          children: [
-            React.createElement(Page, {
-              key: 'page-' + title,
-              api: api,
-              lang: info[1] || 'en',
-              title: title
-            })
-          ]
+        var title = info[2] || info[3],
+          titleSansPrefix = title.substr(title.indexOf( ':' ) + 1),
+          lang = info[1] || 'en';
+
+        // FIXME: i18n
+        if ( title.indexOf( 'Special:' ) === 0 ) {
+          return {
+            children: [
+              React.createElement(SpecialPage, {
+                key: 'page-' + titleSansPrefix,
+                lang: lang,
+                title: titleSansPrefix
+              })
+            ]
+          }
+        } else {
+          return {
+            children: [
+              React.createElement(Page, {
+                key: 'page-' + title,
+                api: api,
+                lang: lang,
+                title: title
+              })
+            ]
+          }
         }
       }
     ],
