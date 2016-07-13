@@ -3,9 +3,10 @@ import IntermediateState from './../../components/IntermediateState';
 import Section from './../../components/Section'
 import LastModifiedBar from './../../components/LastModifiedBar'
 import Button from './../../components/Button'
+import ErrorBox from './../../components/ErrorBox'
+
 import Article from './../../containers/Article'
 import Content from './../../containers/Content'
-
 import utils from './../../utils'
 
 import './styles.css'
@@ -23,6 +24,7 @@ export default React.createClass({
     return {
       isExpanded: false,
       lead: {},
+      error: false,
       remaining: {}
     };
   },
@@ -37,6 +39,8 @@ export default React.createClass({
     var self = this;
     this.props.api.getPage( this.props.title, this.props.lang ).then( function ( data ) {
       self.setState(data);
+    } ).catch( function () {
+      self.setState({ error: true });
     } );
   },
   expand() {
@@ -46,20 +50,26 @@ export default React.createClass({
   },
   render(){
     var url, leadHtml,
+      contentBody,
       sections = [],
       btns = [],
       lead = this.state.lead;
 
     if ( !lead.displaytitle ) {
+      contentBody = this.state.error ? <ErrorBox msg="This page does not exist."></ErrorBox>
+      : <IntermediateState></IntermediateState>;
+
       return (
         <Article>
-          <Content><IntermediateState></IntermediateState></Content>
+          <Content>{contentBody}</Content>
         </Article>
       )
     } else {
       url = utils.getAbsoluteUrl( this.props.title, this.props.lang );
       leadHtml = lead.sections.length ? lead.sections[0].text : '';
-      if ( this.state.isExpanded ) {
+      if ( this.state.error ) {
+        sections = [<ErrorBox msg="This page does not exist."></ErrorBox>];
+      } else if ( this.state.isExpanded ) {
         sections = this.state.remaining.sections.map( function ( sectionProps ) {
           return <Section {...sectionProps} key={sectionProps.id}></Section>
         } );

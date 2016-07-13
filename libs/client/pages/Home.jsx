@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import IntermediateState from './../components/IntermediateState';
 import TrendingCard from './../components/TrendingCard';
+import ErrorBox from './../components/ErrorBox';
+
 import Article from './../containers/Article'
 import Content from './../containers/Content'
 
@@ -13,7 +15,8 @@ export default React.createClass({
   },
   getInitialState() {
     return {
-      topics: []
+      error: false,
+      topics: null
     };
   },
   // You want to load subscriptions not only when the component update but also when it gets mounted.
@@ -29,13 +32,20 @@ export default React.createClass({
          return obj;
       } );
       self.setState({ topics: topics });
+    } ).catch( function () {
+      self.setState({ error: true });
     } );
   },
   render(){
     // show intermediate state if still loading, otherwise show list
-    var children = this.state.topics.length ?
-        (<div className="list-simple-group">{this.state.topics}</div>) :
-        <IntermediateState></IntermediateState>
+    var children;
+    if ( this.state.error ) {
+      children = (<ErrorBox msg="Nothing is trending right now."></ErrorBox>)
+    } else if ( this.state.topics ) {
+      children = (<div className="list-simple-group">{this.state.topics}</div>);
+    } else {
+      children = (<IntermediateState></IntermediateState>);
+    }
 
     return (
       <Article title={this.props.title} tagline="The wiki in real time">

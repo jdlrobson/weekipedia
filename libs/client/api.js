@@ -5,7 +5,11 @@ Api.prototype = {
   getPage: function ( title, lang ) {
     lang = lang || 'en';
     return fetch( '/api/' + lang + '/' + title ).then( function ( resp ) {
-      return resp.json();
+      if ( resp.status === 200 ) {
+        return resp.json();
+      } else {
+        throw Error(response.statusText);
+      }
     } );
   },
   getTrending: function ( filter ) {
@@ -14,7 +18,11 @@ Api.prototype = {
       url += filter;
     }
     return fetch( url ).then( function ( resp ) {
-      return resp.json();
+      if ( resp.status === 200 ) {
+        return resp.json();
+      } else {
+        throw Error(response.statusText);
+      }
     } ).then( function ( json ) {
       return json.results;
     } );

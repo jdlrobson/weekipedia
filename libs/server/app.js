@@ -78,7 +78,6 @@ app.get('/api/trending/:wiki?/:timeframe?',(req, res) => {
   var timeframe = parseFloat(req.params.timeframe) || 5;
   var cacheKey = 'trending/' + wiki + '/' + timeframe;
 
-  res.status(200);
   res.setHeader('Content-Type', 'application/json');
 
   shortLifeCache.get( cacheKey, function( err, responseText ) {
@@ -89,14 +88,23 @@ app.get('/api/trending/:wiki?/:timeframe?',(req, res) => {
       };
 
       results = annotate( getSortedPages(timeframe), fn, 50 );
-      addProps(results, ['pageimages','pageterms']).then(function(results) {
-        responseText = JSON.stringify( {
-          results: results, ts: new Date()
-        } );
-        shortLifeCache.set( cacheKey, responseText );
-        res.send( responseText );
-      })
+      if ( !results.length ) {
+        res.status(404);
+        res.send( JSON.stringify( {
+          msg: 'No results'
+        } ) );
+      } else {
+        addProps(results, ['pageimages','pageterms']).then(function(results) {
+          responseText = JSON.stringify( {
+            results: results, ts: new Date()
+          } );
+          shortLifeCache.set( cacheKey, responseText );
+          res.status(200);
+          res.send( responseText );
+        })
+      }
     } else {
+      res.status(200);
       res.send( responseText );
     }
   } );
@@ -108,11 +116,11 @@ app.get('/api/:lang/:title',(req, res, match) => {
   var url = 'https://' + lang + '.wikipedia.org/api/rest_v1/page/mobile-sections/' + encodeURIComponent( req.params.title );
   fetch( url )
     .then( function ( resp ) {
-      return resp.json();
+      return resp.status === 404 ? false : resp.json();
     } )
     .then( function ( data ) {
       // FIXME... the API endpoint doesn't return the last modifier username
-      res.status(200);
+      res.status( data ? 200 : 404 );
       res.setHeader('Content-Type', 'application/json');
       res.send( JSON.stringify( data ) );
     } );
