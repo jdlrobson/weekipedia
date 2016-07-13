@@ -5,10 +5,11 @@ class TrendingCard extends Component {
   render(){
     var totalEdits = this.props.edits;
     var totalEditors = this.props.contributors.length + this.props.anons.length;
-    var prevIndex = this.props.bestIndex;
+    var prevIndex = this.props.lastIndex;
     var curIndex = this.props.index;
     var label, className;
     var bias = this.props.bias || 1;
+
     if ( prevIndex ) {
       label = prevIndex - curIndex;
       if ( prevIndex === curIndex ) {

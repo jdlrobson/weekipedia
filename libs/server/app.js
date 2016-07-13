@@ -51,6 +51,7 @@ function annotate( p, filter, limit ) {
       var score =  calcScore( item );
       var speed = item.editsPerMinute();
 
+      item.lastIndex = item.index ? item.index : limit;
       item.index = res.length + 1;
       if ( !item.bestIndex ) {
         item.bestIndex = item.index;
