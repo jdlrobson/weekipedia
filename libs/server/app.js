@@ -2,9 +2,9 @@ require('babel-core/register')
 
 import express from 'express'
 import hogan from 'hogan-express'
-import fetch from 'isomorphic-fetch'
 
 import trending from './endpoints/trending'
+import page from './endpoints/page'
 import cachedResponse from './cached-response'
 
 // Express
@@ -25,22 +25,16 @@ app.get('/api/trending/:wiki?/:halflife?',(req, res) => {
 } )
 
 app.get('/api/:lang/:title',(req, res, match) => {
-  // FIXME: Handle this better please. Use better API.
+  var title = req.params.title;
   var lang = req.params.lang;
-  var url = 'https://' + lang + '.wikipedia.org/api/rest_v1/page/mobile-sections/' + encodeURIComponent( req.params.title );
-  fetch( url )
-    .then( function ( resp ) {
-      return resp.status === 404 ? false : resp.json();
-    } )
-    .then( function ( data ) {
-      // FIXME... the API endpoint doesn't return the last modifier username
-      res.status( data ? 200 : 404 );
-      res.setHeader('Content-Type', 'application/json');
-      res.send( JSON.stringify( data ) );
-    } );
+
+  cachedResponse( res, 'page/' + lang + '/' + title, function () {
+    return page( req.params.title, req.params.lang )
+  });
 } );
 
 app.get('*',(req, res) => {
+
   // use React Router
   res.status(200).render('index.html')
 })
