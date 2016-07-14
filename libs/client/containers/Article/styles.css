@@ -23,6 +23,34 @@
   border: none;
 }
 
+.footer.post-content {
+  padding: 2em 16px 1.5em 16px;
+  margin-top: 2em;
+  margin: 0 auto;
+  font-size: 0.9em;
+  clear: both;
+}
+
+.footer h2 {
+  display: inline;
+  font-weight: bold;
+  font-size: 1em;
+}
+
+.footer ul {
+  text-align: center;
+}
+
+.footer ul li {
+  line-height: 1.2;
+  padding: 0 0 .7em;
+}
+
+@media (min-width: 720px) {
+  #footer {
+    padding: 2em 3.35em 1.5em 3.35em;
+  }
+}
 /*
 CSS rules modified from https://en.wikipedia.org/w/load.php?debug=false&lang=en&modules=skins.minerva.content.styles&only=styles&debug=true
 */
