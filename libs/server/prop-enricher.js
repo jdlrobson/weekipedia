@@ -42,6 +42,9 @@ function propEnricher( arr, props ) {
       page.terms = obj.terms;
     });
     return arr;
+  }).catch( function ( err ) {
+    // Looks like the endpoint is down or no internet connection - so return original array
+    return arr;
   });
 }
 
