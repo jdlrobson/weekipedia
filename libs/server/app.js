@@ -2,10 +2,10 @@ require('babel-core/register')
 
 import express from 'express'
 import hogan from 'hogan-express'
-import NodeCache from 'node-cache';
 import fetch from 'isomorphic-fetch'
 
 import trending from './endpoints/trending'
+import cachedResponse from './cached-response'
 
 // Express
 const app = express()
@@ -14,33 +14,13 @@ app.set('views', __dirname + '/views')
 app.use('/', express.static(__dirname + '/../../public/'))
 app.set('port', (process.env.PORT || 3000))
 
-const shortLifeCache = new NodeCache( { stdTTL: 60 * 10, checkperiod: 60 * 10 } );
-
 app.get('/api/trending/:wiki?/:halflife?',(req, res) => {
   var wiki = req.params.wiki || 'enwiki';
   var halflife = parseFloat( req.params.halflife ) || 5;
   var cacheKey = 'trending/' + wiki + '/' + halflife;
 
-  res.setHeader('Content-Type', 'application/json');
-
-  shortLifeCache.get( cacheKey, function( err, responseText ) {
-    var responseText;
-    if ( err || !responseText ) {
-      trending( wiki, halflife ).then( function ( data ) {
-        responseText = JSON.stringify( data );
-        shortLifeCache.set( cacheKey, responseText );
-        res.status( 200 );
-        res.send( responseText );
-      }).catch( function () {
-        res.status( 404 );
-        res.send( JSON.stringify( {
-          msg: 'No results'
-        } ) );
-      });
-    } else {
-      res.status( 200 );
-      res.send( responseText );
-    }
+  cachedResponse( res, cacheKey, function() {
+    return trending( wiki, halflife );
   } );
 } )
 
