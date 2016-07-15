@@ -15,7 +15,7 @@ class Article extends Component {
       tagline = this.props.tagline;
 
     if ( tagline ) {
-      header.push(<div className="tagline">{tagline}</div>)
+      header.push(<div className="tagline" key="article-tagline">{tagline}</div>)
     }
 
     var nsClass = this.props.isSpecialPage ? ' special-page-heading' : ' standard-page-heading';
