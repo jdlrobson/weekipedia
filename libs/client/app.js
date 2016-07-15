@@ -5,4 +5,14 @@ import './main.css'
 import App from './containers/App'
 import matchRoute from './router.js'
 
-render(React.createElement(App,matchRoute(window.location.pathname)), document.getElementById('app'))
+function renderCurrentRoute() {
+  render( React.createElement( App,
+    matchRoute( window.location.pathname, window.location.hash ) ),
+    document.getElementById( 'app' )
+  )
+}
+
+if ( 'onhashchange' in window ) {
+  window.onhashchange = renderCurrentRoute;
+}
+renderCurrentRoute();

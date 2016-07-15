@@ -4,11 +4,49 @@ import Page from './pages/Page'
 import SpecialPage from './pages/SpecialPage'
 import api from './api.js'
 
-function matchRoute( path ) {
+var router = {
+  navigateTo: function ( path, hash ) {
+    if ( hash ) {
+      window.location.pathname = path;
+      window.location.hash = hash;
+    } else {
+      window.location.hash = path;
+      matchRoute();
+    }
+  }
+};
+
+function matchRouteInternal( routes, path ) {
   var chosenRoute;
+  routes.some( function ( route ) {
+    var res = path.match( route[0] );
+    if ( res ) {
+      chosenRoute = route[1](res);
+      chosenRoute.router = router;
+      return true;
+    }
+  } );
+  return chosenRoute;
+}
+
+function matchFragment( fragment ) {
+	var chosenRoute;
   var routes = [
-    // Home page / Hot
+    // no fragment
     [
+      /(.*)/,
+      function ( info ) {
+        return {}
+      }
+    ]
+  ];
+  return matchRouteInternal( routes, fragment );
+}
+
+function matchRoute( path, fragment ) {
+  var routes = [
+    [
+      // Home page / Hot
       /^\/?$|\/hot\/(.*)$/,
       function( info ) {
         var filter = info[1] || '';
@@ -69,14 +107,9 @@ function matchRoute( path ) {
     ]
   ];
 
-  routes.some( function ( route ) {
-    var res = path.match( route[0] );
-    if ( res ) {
-      chosenRoute = route[1](res);
-      return true;
-    }
-  } );
-  return chosenRoute;
+  var route = matchRouteInternal( routes, path || window.location.pathname );
+  var fragmentRoute = matchFragment( fragment || window.location.hash );
+  return Object.assign( {}, route, fragmentRoute );
 }
 
 export default matchRoute
