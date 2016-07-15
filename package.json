@@ -1,8 +1,11 @@
 {
   "scripts": {
+    "start": "npm run compile & npm run node-server",
+    "dev": "npm run compile:watch & npm run node-server-dev",
+    "node-server": "NODE_ENV=production node app.js",
     "node-server-dev": "NODE_ENV=development node app.js",
-    "start": "npm run webpack-dev & npm run node-server-dev",
-    "webpack-dev": "webpack --content-base public/ --hot --inline"
+    "compile:watch": "NODE_ENV=development webpack --watch",
+    "compile": "webpack --content-base public/"
   },
   "babel": {
     "presets": [
