@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 
+import SectionContent from './SectionContent'
+
 class Section extends Component {
   render(){
     var hLevel = this.props.toclevel + 1;
@@ -9,7 +11,7 @@ class Section extends Component {
     return (
       <div>
         {heading}
-        <div dangerouslySetInnerHTML={{ __html: this.props.text}}></div>
+        <SectionContent text={this.props.text}></SectionContent>
       </div>
     )
   }

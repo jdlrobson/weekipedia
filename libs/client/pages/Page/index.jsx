@@ -1,4 +1,6 @@
 import React, { Component } from 'react'
+
+import SectionContent from './../../components/SectionContent'
 import IntermediateState from './../../components/IntermediateState';
 import Section from './../../components/Section'
 import LastModifiedBar from './../../components/LastModifiedBar'
@@ -81,7 +83,7 @@ export default React.createClass({
       return (
         <Article title={this.state.lead.displaytitle} tagline={this.state.lead.description}>
           <Content key="page-row-1" className="content">
-            <div dangerouslySetInnerHTML={{ __html: leadHtml}}></div>
+            <SectionContent text={leadHtml}></SectionContent>
             {sections}
           </Content>
           <Content key="page-row-2" className="post-content">{btns}</Content>
