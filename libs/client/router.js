@@ -60,7 +60,7 @@ function matchRoute( path, fragment ) {
             React.createElement(Home, {
               title: 'Hot',
               halflife: args[1],
-              wiki: args[0],
+              wiki: args[0] || 'enwiki',
               key: 'home-' + filter,
               api: api
             })
