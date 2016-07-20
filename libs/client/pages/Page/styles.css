@@ -168,11 +168,6 @@ dl {
 dl dt {
   font-weight: bold;
 }
-.hlist > ul li,
-ul.hlist li {
-  display: inline-block;
-  margin-right: 8px;
-}
 a {
   text-decoration: none;
   color: #002bb8;

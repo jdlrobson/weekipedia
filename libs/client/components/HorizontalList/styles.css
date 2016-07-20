@@ -1,0 +1,9 @@
+.hlist > ul li,
+ul.hlist li {
+  display: inline-block;
+  margin-right: 8px;
+}
+
+.hlist {
+  padding-bottom: 8px;
+}

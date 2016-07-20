@@ -53,11 +53,14 @@ function matchRoute( path, fragment ) {
       /^\/?$|\/hot\/(.*)$/,
       function( info ) {
         var filter = info[1] || '';
+        var args = filter = filter.split( '/' );
+
         return {
           children: [
             React.createElement(Home, {
-              title: filter ? 'Hot (' + filter + ')' : 'Hot',
-              filter: filter,
+              title: 'Hot',
+              halflife: args[1],
+              wiki: args[0],
               key: 'home-' + filter,
               api: api
             })

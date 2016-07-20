@@ -1,4 +1,6 @@
 import React, { Component } from 'react'
+
+import HorizontalList from './../components/HorizontalList'
 import IntermediateState from './../components/IntermediateState';
 import TrendingCard from './../components/TrendingCard';
 import ErrorBox from './../components/ErrorBox';
@@ -10,7 +12,8 @@ import Content from './../containers/Content'
 export default React.createClass({
   getDefaultProps: function () {
     return {
-      filter: ''
+      wiki: 'enwiki',
+      halflife: null,
     };
   },
   getInitialState() {
@@ -25,7 +28,8 @@ export default React.createClass({
   },
   load() {
     var self = this;
-    this.props.api.getTrending( this.props.filter ).then( function ( data ) {
+
+    this.props.api.getTrending( this.props.wiki, this.props.halflife ).then( function ( data ) {
       var topics = data.map( function ( item ) {
         item.key = item.id;
         var obj = React.createElement(TrendingCard, item);
@@ -39,6 +43,8 @@ export default React.createClass({
   render(){
     // show intermediate state if still loading, otherwise show list
     var children;
+    var wiki = this.props.wiki;
+
     if ( this.state.error ) {
       children = (<ErrorBox msg="Nothing is trending right now."></ErrorBox>)
     } else if ( this.state.topics ) {
@@ -49,7 +55,14 @@ export default React.createClass({
 
     return (
       <Article title={this.props.title} tagline="The wiki in real time">
-        <Content>{children}</Content>
+        <Content>
+          <HorizontalList>
+            <a href={'/hot/' + wiki }>by hour</a>
+            <a href={'/hot/' + wiki +'/48'}>by day</a>
+            <a href={'/hot/' + wiki +'/84'}>by week</a>
+          </HorizontalList>
+          {children}
+        </Content>
       </Article>
     )
   }

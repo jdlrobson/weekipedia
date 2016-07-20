@@ -12,10 +12,13 @@ Api.prototype = {
       }
     } );
   },
-  getTrending: function ( filter ) {
+  getTrending: function ( wiki, halflife ) {
     var url = '/api/trending/';
-    if ( filter ) {
-      url += filter;
+    if ( wiki ) {
+      url += wiki;
+    }
+    if ( halflife ) {
+      url += '/' + halflife;
     }
     return fetch( url ).then( function ( resp ) {
       if ( resp.status === 200 ) {
