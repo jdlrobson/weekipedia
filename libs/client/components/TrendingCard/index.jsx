@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import './styles.css'
 
+import Card from './../Card'
+
 class TrendingCard extends Component {
   render(){
     var totalEdits = this.props.edits;
@@ -42,7 +44,6 @@ class TrendingCard extends Component {
     var mins = parseInt( ( new Date() - new Date( this.props.start ) ) / 1000 / 60, 10 );
     var updated = parseInt( ( new Date() - new Date( this.props.updated || this.props.start ) ) / 1000 / 60, 10 );
     var speed = mins < 1 ? totalEdits : ( totalEdits / mins ).toFixed( 2 );
-    var url = '/' + this.props.wiki.replace( 'wiki', '' ) + '/wiki/' + encodeURIComponent( this.props.title );
     var styles = {
       backgroundImage: this.props.thumbnail ?
         'url(' + this.props.thumbnail.source + ')'
@@ -51,22 +52,17 @@ class TrendingCard extends Component {
     var description = this.props.terms && this.props.terms.description ?
       this.props.terms.description[0] : '';
 
+    var indicator = (<span className={'indicator ' + className} title={label}>&nbsp;</span>);
+
     return (
-      <div className="card">
-        <span className={'indicator ' + className} title={label}>&nbsp;</span>
-        <div className="card-thumb" style={styles}></div>
-        <div className="card-detail"
+      <Card indicator={indicator} thumbnail={this.props.thumbnail} title={this.props.title} wiki={this.props.wiki}>
+        <span>{description}</span>
+        <span>{totalEdits} edits ({this.props.anonEdits} anonymous) by {totalEditors} editors ({this.props.anons.length} anonymous) changing {this.props.bytesChanged} bytes with {this.props.reverts} reverts in {mins} minutes (updated {updated} mins ago).</span>
+        <span
           data-speed={speed} data-score={this.props.score}
-          data-tags={tags.join( ' | ' )} data-bias={bias.toFixed(2)}>
-          <h3>
-            <a href={url}>{this.props.title}</a>
-          </h3>
-          <p className="card-extract">{description}</p>
-          <p className="card-extract">
-          {totalEdits} edits ({this.props.anonEdits} anonymous) by {totalEditors} editors ({this.props.anons.length} anonymous) changing {this.props.bytesChanged} bytes with {this.props.reverts} reverts in {mins} minutes (updated {updated} mins ago).</p>
-        </div>
-      </div>
-    )
+          data-tags={tags.join( ' | ' )} data-bias={bias.toFixed(2)}></span>
+      </Card>
+    );
   }
 }
 
