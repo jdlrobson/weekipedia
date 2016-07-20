@@ -21,7 +21,7 @@ function matchRouteInternal( routes, path ) {
   routes.some( function ( route ) {
     var res = path.match( route[0] );
     if ( res ) {
-      chosenRoute = route[1](res);
+      chosenRoute = route[1](res, router);
       chosenRoute.router = router;
       return true;
     }
