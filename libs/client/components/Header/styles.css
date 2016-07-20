@@ -16,6 +16,7 @@
   vertical-align: middle;
   display: table-cell;
 }
+
 .header > div {
   width: 3.35em;
   position: relative;
@@ -27,6 +28,15 @@
 
 .header-container {
   background-color: #f2f2f2;
+  border-bottom: 1px solid transparent;
+}
+
+.header-container.position-fixed {
+  left: 0;
+  right: 0;
+  position: fixed;
+  top: 0;
+  border-bottom-color: #dddddd;
 }
 
 /* search form */

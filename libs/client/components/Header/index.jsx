@@ -6,17 +6,25 @@ import './icons.css'
 
 class Header extends Component {
   render(){
+    var suffix = this.props.fixed ? ' position-fixed' : '';
 
     return (
-      <div className="header-container">
+      <div className={"header-container" + suffix}>
         <Content className="header">
           <div>
-            <Icon glyph="mainmenu" href="/" label="Home"/>
+            {this.props.primaryIcon}
           </div>
         </Content>
       </div>
     )
   }
 }
+
+Header.defaultProps = {
+  fixed: false,
+  primaryIcon: (
+    <Icon glyph="mainmenu" href="/" label="Home"/>
+  )
+};
 
 export default Header
