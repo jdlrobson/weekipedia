@@ -5,6 +5,9 @@ import SpecialPage from './pages/SpecialPage'
 import api from './api.js'
 
 var router = {
+  back: function () {
+    window.history.back();
+  },
   navigateTo: function ( path, hash ) {
     if ( hash ) {
       window.location.pathname = path;
