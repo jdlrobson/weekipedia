@@ -67,7 +67,7 @@ function annotate( p, filter, limit ) {
 function trending( wiki, halflife ) {
   return new Promise( function ( resolve, reject ) {
     var fn = function ( item ) {
-      return item.contributors.length > 1 && ( wiki === '*' || item.wiki === wiki );
+      return item.contributors.length + item.anons.length > 2 && ( wiki === '*' || item.wiki === wiki );
     };
     var results = annotate( getSortedPages( halflife ), fn, 50 );
     if ( !results.length ) {
