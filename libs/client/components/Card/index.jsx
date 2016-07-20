@@ -3,14 +3,15 @@ import './styles.css'
 
 class Card extends Component {
   render(){
-    var url = '/' + this.props.wiki.replace( 'wiki', '' ) + '/wiki/' + encodeURIComponent( this.props.title );
+    var title = this.props.title;
+    var url = '/' + this.props.wiki.replace( 'wiki', '' ) + '/wiki/' + encodeURIComponent( title );
     var styles = {
       backgroundImage: this.props.thumbnail ?
         'url(' + this.props.thumbnail.source + ')'
         : 'none'
     };
-    var extracts = this.props.children.map( function ( item ) {
-      return (<p className="card-extract">{item}</p>);
+    var extracts = this.props.children.map( function ( item, i ) {
+      return (<p className="card-extract" key={'card-extract-' + title + '-' + i}>{item}</p>);
     });
 
     return (
