@@ -6,6 +6,8 @@ import hogan from 'hogan-express'
 import trending from './endpoints/trending'
 import random from './endpoints/random'
 import page from './endpoints/page'
+import nearby from './endpoints/nearby'
+
 import cachedResponse from './cached-response'
 
 // Express
@@ -27,6 +29,12 @@ app.get('/api/trending/:wiki?/:halflife?',(req, res) => {
 app.get('/api/random/:lang/',(req, res, match) => {
   return cachedResponse( res, null, function () {
     return random( req.params.lang );
+  } );
+} );
+
+app.get('/api/nearby/:lang/:latitude,:longitude',(req, res, match) => {
+  return cachedResponse( res, req.url, function () {
+    return nearby( req.params.latitude, req.params.longitude, req.params.lang );
   } );
 } );
 

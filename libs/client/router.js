@@ -4,6 +4,7 @@ import Home from './pages/Home'
 import Page from './pages/Page'
 import SpecialPage from './pages/SpecialPage'
 import Random from './pages/Random'
+import Nearby from './pages/Nearby'
 
 import api from './api.js'
 
@@ -62,6 +63,27 @@ function matchRoute( path, fragment ) {
               key: 'page-special-random',
               api: api
             })
+          ]
+        }
+      }
+    ],
+    // Nearby
+    [
+      /^\/wiki\/Special:Nearby\/?(.*)$/,
+      function( info ) {
+        var props = {
+          key: 'page-special-nearby',
+          api: api
+        };
+        if ( info[1] ) {
+          var coords = info[1].split( ',' );
+          props.latitude = coords[0];
+          props.longitude = coords[1];
+        }
+
+        return {
+          children: [
+            React.createElement(Nearby, props)
           ]
         }
       }
