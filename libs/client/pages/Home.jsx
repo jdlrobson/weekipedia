@@ -7,6 +7,7 @@ import ErrorBox from './../components/ErrorBox';
 
 import Article from './../containers/Article'
 import Content from './../containers/Content'
+import CardList from './../containers/CardList'
 
 // Pages
 export default React.createClass({
@@ -32,8 +33,7 @@ export default React.createClass({
     this.props.api.getTrending( this.props.wiki, this.props.halflife ).then( function ( data ) {
       var topics = data.map( function ( item ) {
         item.key = item.id;
-        var obj = React.createElement(TrendingCard, item);
-         return obj;
+        return React.createElement(TrendingCard, item);
       } );
       self.setState({ topics: topics });
     } ).catch( function () {
@@ -48,7 +48,7 @@ export default React.createClass({
     if ( this.state.error ) {
       children = (<ErrorBox msg="Nothing is trending right now."></ErrorBox>)
     } else if ( this.state.topics ) {
-      children = (<div className="list-simple-group">{this.state.topics}</div>);
+      children = (<CardList cards={this.state.topics} />);
     } else {
       children = (<IntermediateState></IntermediateState>);
     }

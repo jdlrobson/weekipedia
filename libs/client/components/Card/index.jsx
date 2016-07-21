@@ -10,6 +10,8 @@ class Card extends Component {
         'url(' + this.props.thumbnail.source + ')'
         : 'none'
     };
+    var description = this.props.terms && this.props.terms.description ?
+      this.props.terms.description[0] : '';
     var extracts = this.props.children.map( function ( item, i ) {
       return (<p className="card-extract" key={'card-extract-' + title + '-' + i}>{item}</p>);
     });
@@ -22,6 +24,7 @@ class Card extends Component {
           <h3>
             <a href={url}>{this.props.title}</a>
           </h3>
+          <p className="card-extract"><span>{description}</span></p>
           {extracts}
         </div>
       </div>
@@ -30,8 +33,9 @@ class Card extends Component {
 }
 
 Card.defaultProps = {
-  extracts: [],
-  children: []
+  children: [],
+  terms: null,
+  thumbnail: null
 };
 
 export default Card

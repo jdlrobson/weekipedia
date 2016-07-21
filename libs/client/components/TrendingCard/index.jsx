@@ -49,14 +49,10 @@ class TrendingCard extends Component {
         'url(' + this.props.thumbnail.source + ')'
         : 'none'
     };
-    var description = this.props.terms && this.props.terms.description ?
-      this.props.terms.description[0] : '';
-
     var indicator = (<span className={'indicator ' + className} title={label}>&nbsp;</span>);
 
     return (
-      <Card indicator={indicator} thumbnail={this.props.thumbnail} title={this.props.title} wiki={this.props.wiki}>
-        <span>{description}</span>
+      <Card indicator={indicator} thumbnail={this.props.thumbnail} title={this.props.title} wiki={this.props.wiki} terms={this.props.terms}>
         <span>{totalEdits} edits ({this.props.anonEdits} anonymous) by {totalEditors} editors ({this.props.anons.length} anonymous) changing {this.props.bytesChanged} bytes with {this.props.reverts} reverts in {mins} minutes (updated {updated} mins ago).</span>
         <span
           data-speed={speed} data-score={this.props.score}
