@@ -1,3 +1,6 @@
+.heading-holder {
+  padding: 20px 0 25px;
+}
 .heading-holder .tagline {
   color: #555555;
   font-size: .85em;
@@ -7,7 +10,7 @@
 .standard-page-heading h1 {
   border-bottom: none;
   padding: 0 0 7px 0;
-  font-size: 2.6525em;
+  font-size: 1.7em;
   font-family: 'Linux Libertine','Georgia',' Times',serif;
   line-height: 1.3;
   word-wrap: break-word;
