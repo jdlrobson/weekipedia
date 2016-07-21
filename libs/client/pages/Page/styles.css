@@ -3,6 +3,7 @@ CSS rules modified from https://en.wikipedia.org/w/load.php?debug=false&lang=en&
 
 * mw-mf-last-modified removed.
 * Rules concerning elements .pre-content, .content, .post-content moved to container
+* figure and figcaption rules added
 */
 html {
   -webkit-text-size-adjust: none;
@@ -25,26 +26,32 @@ body {
 .nomobile {
   display: none !important;
 }
+.content figure,
 .content .thumb {
   margin: .6em 0;
   /* bug 20030 */
 }
+.content figure .thumbinner,
 .content .thumb .thumbinner {
   margin: 0 auto;
   max-width: 100% !important;
 }
+.content figure .thumbinner > div,
 .content .thumb .thumbinner > div {
   float: none !important;
   width: auto !important;
   clear: both !important;
 }
+.content figure .noresize,
 .content .thumb .noresize {
   width: 100%;
   overflow-x: auto;
 }
+.content figure .noresize img,
 .content .thumb .noresize img {
   max-width: none !important;
 }
+.content figcaption,
 .content .thumbcaption {
   margin: .5em 0 0;
   font-size: .8em;

@@ -11,6 +11,7 @@ A file for css that optimises the Minerva skin on larger devices.
     width: auto;
     clear: none;
   }
+  .mw-halign-left,
   .content .thumb.tleft {
     /* @noflip */
     float: left;
@@ -19,6 +20,7 @@ A file for css that optimises the Minerva skin on larger devices.
     /* @noflip */
     margin-right: 1.4em;
   }
+  .mw-halign-right,
   .content .thumb.tright {
     /* @noflip */
     float: right;
