@@ -17,9 +17,8 @@ app.set('port', (process.env.PORT || 3000))
 app.get('/api/trending/:wiki?/:halflife?',(req, res) => {
   var wiki = req.params.wiki || 'enwiki';
   var halflife = parseFloat( req.params.halflife ) || 5;
-  var cacheKey = 'trending/' + wiki + '/' + halflife;
 
-  cachedResponse( res, cacheKey, function() {
+  cachedResponse( res, req.url, function() {
     return trending( wiki, halflife );
   } );
 } )
@@ -28,7 +27,7 @@ app.get('/api/:lang/:title',(req, res, match) => {
   var title = req.params.title;
   var lang = req.params.lang;
 
-  cachedResponse( res, 'page/' + lang + '/' + title, function () {
+  cachedResponse( res, req.url, function () {
     return page( req.params.title, req.params.lang )
   });
 } );
