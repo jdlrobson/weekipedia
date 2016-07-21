@@ -21,10 +21,7 @@ class Header extends Component {
 }
 
 Header.defaultProps = {
-  fixed: false,
-  primaryIcon: (
-    <Icon glyph="mainmenu" href="/" label="Home"/>
-  )
+  fixed: false
 };
 
 export default Header

@@ -14,3 +14,37 @@
   width: 100%;
   position: relative;
 }
+
+nav {
+  width: 240px;
+  background-color: #333333;
+  float: left;
+  font-size: 90%;
+  min-height: 100%;
+  position: absolute;
+  z-index: 0;
+  visibility: hidden;
+}
+
+.navigation-enabled {
+  overflow: hidden;
+  min-height: 100%;
+  transition: transform 0.25s ease-in-out;
+}
+
+.primary-navigation-enabled #mw-mf-page-center {
+  left: 0 !important;
+  transform: translate(240px,0);
+  background: #fff;
+  position: absolute;
+  height: 100%;
+  border-left: solid 1px #000;
+  box-shadow: -1px 0 3px 0 rgba(0,0,0,0.3);
+}
+
+.primary-navigation-enabled nav {
+  position: static;
+  -webkit-backface-visibility: hidden;
+  transition: none;
+  visibility: visible;
+}

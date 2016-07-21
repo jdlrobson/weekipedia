@@ -1,0 +1,61 @@
+.menu {
+  box-sizing: border-box;
+}
+
+.menu ul {
+  padding-bottom: 22px;
+}
+
+.menu ul li {
+  position: relative;
+  font-size: 1.2em;
+  border-top: 1px solid #666666;
+  margin-top: -1px;
+  background-color: #444444;
+}
+
+nav ul li a {
+  color: #fff;
+  display: block;
+  padding: 12px 10px 12px 15px;
+}
+
+nav ul li a:hover {
+	background-color: #555;
+	box-shadow: inset 4px 0 0 0 #347bff;
+	text-decoration: none;
+}
+
+.menu ul li:first-child {
+  border-top: 0;
+}
+
+.menu ul li a:hover,
+.menu ul li a:visited,
+.menu ul li a:active {
+  text-decoration: none;
+}
+
+
+.menu ul li a:visited,
+.menu ul li a:active {
+  color: #fff;
+}
+
+.menu .hlist li {
+  font-size: 0.8em;
+  margin: 0;
+  border: 0;
+  background-color: transparent;
+}
+
+nav ul.hlist li a {
+  color: #cccccc;
+  border: 0;
+  padding: .7em 12px;
+  margin-left: 0;
+}
+
+nav ul.hlist li a:hover {
+  box-shadow: none;
+}
