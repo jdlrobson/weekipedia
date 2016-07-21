@@ -12,6 +12,15 @@ Api.prototype = {
       }
     } );
   },
+  fetch: function ( path ) {
+    return fetch( path ).then( function ( resp ) {
+      if ( resp.status === 200 ) {
+        return resp.json();
+      } else {
+        throw Error(response.statusText);
+      }
+    } );
+  },
   getTrending: function ( wiki, halflife ) {
     var url = '/api/trending/';
     if ( wiki ) {
@@ -20,13 +29,7 @@ Api.prototype = {
     if ( halflife ) {
       url += '/' + halflife;
     }
-    return fetch( url ).then( function ( resp ) {
-      if ( resp.status === 200 ) {
-        return resp.json();
-      } else {
-        throw Error(response.statusText);
-      }
-    } ).then( function ( json ) {
+    return this.fetch( url ).then( function ( json ) {
       return json.results;
     } );
   }
