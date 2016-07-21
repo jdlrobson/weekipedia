@@ -1,7 +1,10 @@
 import React from 'react'
+
 import Home from './pages/Home'
 import Page from './pages/Page'
 import SpecialPage from './pages/SpecialPage'
+import Random from './pages/Random'
+
 import api from './api.js'
 
 var router = {
@@ -48,6 +51,21 @@ function matchFragment( fragment ) {
 
 function matchRoute( path, fragment ) {
   var routes = [
+    // Random
+    [
+      /^\/wiki\/Special:Random$/,
+      function( info ) {
+
+        return {
+          children: [
+            React.createElement(Random, {
+              key: 'page-special-random',
+              api: api
+            })
+          ]
+        }
+      }
+    ],
     [
       // Home page / Hot
       /^\/?$|\/hot\/(.*)$/,

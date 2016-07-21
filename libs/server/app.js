@@ -4,6 +4,7 @@ import express from 'express'
 import hogan from 'hogan-express'
 
 import trending from './endpoints/trending'
+import random from './endpoints/random'
 import page from './endpoints/page'
 import cachedResponse from './cached-response'
 
@@ -22,6 +23,12 @@ app.get('/api/trending/:wiki?/:halflife?',(req, res) => {
     return trending( wiki, halflife );
   } );
 } )
+
+app.get('/api/random/:lang/',(req, res, match) => {
+  return cachedResponse( res, null, function () {
+    return random( req.params.lang );
+  } );
+} );
 
 app.get('/api/page/:lang/:title',(req, res, match) => {
   var title = req.params.title;

@@ -1,3 +1,7 @@
-.mw-ui-icon-home-invert:before, .mw-ui-icon-mf-home-invert:before {
+.mw-ui-icon-mf-home-invert:before {
   background-image: linear-gradient(transparent,transparent),url(data:image/svg+xml,%3C%3Fxml%20version%3D%221.0%22%3F%3E%0A%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2248%22%20height%3D%2248%22%20viewBox%3D%220%200%2048%2048%22%3E%3Cg%20fill%3D%22%23FFFFFF%22%3E%3Cpath%20xmlns%3Adefault%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20d%3D%22M20%2040V28h8v12h10V24h6L24%206%204%2024h6v16z%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E%0A)
+}
+
+.mw-ui-icon-mf-random-invert:before {
+  background-image: linear-gradient(transparent,transparent),url(data:image/svg+xml,%3C%3Fxml%20version%3D%221.0%22%3F%3E%0A%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2048%2048%22%20width%3D%2248%22%20height%3D%2248%22%3E%3Cg%20fill%3D%22%23FFFFFF%22%3E%3Cpath%20xmlns%3Adefault%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20d%3D%22M36%204H4v32c0%204.267%203.475%208%208%208h32V12c0-4.525-3.742-8-8-8zM13.327%2036c-2.138%200-4-1.862-4-4s1.862-4%204-4%204%201.862%204%204-1.862%204-4%204zm0-16c-2.138%200-4-1.862-4-4s1.862-4%204-4%204%201.862%204%204-1.862%204-4%204zM24%2028c-2.138%200-4-1.862-4-4s1.862-4%204-4%204%201.862%204%204-1.862%204-4%204zm10.664%208c-2.139%200-4-1.862-4-4s1.861-4%204-4c2.138%200%204%201.862%204%204s-1.862%204-4%204zm0-16c-2.139%200-4-1.862-4-4s1.861-4%204-4c2.138%200%204%201.862%204%204s-1.862%204-4%204z%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E%0A);
 }

@@ -14,6 +14,9 @@ class MainMenu extends Component {
           <li>
             <Icon glyph="mf-home-invert" href="/" label="Home" type="before"/>
           </li>
+          <li>
+            <Icon glyph="mf-random-invert" href="/wiki/Special:Random" label="Random" type="before"/>
+          </li>
         </ul>
         <HorizontalList>
           <a href="//github.com/jdlrobson/weekipedia">About Weekipedia</a>
