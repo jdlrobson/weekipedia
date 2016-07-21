@@ -23,7 +23,7 @@ app.get('/api/trending/:wiki?/:halflife?',(req, res) => {
   } );
 } )
 
-app.get('/api/:lang/:title',(req, res, match) => {
+app.get('/api/page/:lang/:title',(req, res, match) => {
   var title = req.params.title;
   var lang = req.params.lang;
 

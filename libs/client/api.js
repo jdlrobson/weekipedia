@@ -4,7 +4,7 @@ function Api() {}
 Api.prototype = {
   getPage: function ( title, lang ) {
     lang = lang || 'en';
-    return fetch( '/api/' + lang + '/' + title ).then( function ( resp ) {
+    return fetch( '/api/page/' + lang + '/' + title ).then( function ( resp ) {
       if ( resp.status === 200 ) {
         return resp.json();
       } else {
