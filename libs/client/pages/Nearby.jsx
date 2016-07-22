@@ -75,7 +75,7 @@ export default React.createClass({
       var south = lat - 1 / 69;
       var east = lng + 1 / 69;
       var west = lng - 1 / 69;
-      var baseUrl = '/wiki/Special:Nearby/';
+      var baseUrl = '/' + this.props.lang + '/wiki/Special:Nearby/';
 
       return (
         <CardListPage apiEndpoint={endpoint}

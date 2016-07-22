@@ -54,13 +54,16 @@ function matchRoute( path, fragment ) {
   var routes = [
     // Random
     [
-      /^\/wiki\/Special:Random$/,
+      /^\/([a-z]*)\/wiki\/Special:Random\/?(.*)|^\/wiki\/Special:Random$/,
       function( info ) {
+        var lang = info[1] || 'en';
 
         return {
+          lang: lang,
           children: [
             React.createElement(Random, {
               key: 'page-special-random',
+              lang: lang,
               api: api
             })
           ]
@@ -69,19 +72,22 @@ function matchRoute( path, fragment ) {
     ],
     // Nearby
     [
-      /^\/wiki\/Special:Nearby\/?(.*)$/,
+      /^\/([a-z]*)\/wiki\/Special:Nearby\/?(.*)|^\/wiki\/Special:Nearby\/?(.*)$/,
       function( info ) {
         var props = {
           key: 'page-special-nearby',
           api: api
         };
-        if ( info[1] ) {
-          var coords = info[1].split( ',' );
+        var lang = info[1] || 'en';
+        if ( info[2] ) {
+          var coords = info[2].split( ',' );
           props.latitude = coords[0];
           props.longitude = coords[1];
         }
+        props.lang = lang
 
         return {
+          lang: lang,
           children: [
             React.createElement(Nearby, props)
           ]
@@ -119,6 +125,7 @@ function matchRoute( path, fragment ) {
         // FIXME: i18n
         if ( title.indexOf( 'Special:' ) === 0 ) {
           return {
+            lang: lang,
             children: [
               React.createElement(SpecialPage, {
                 key: 'page-' + titleSansPrefix,
@@ -129,6 +136,7 @@ function matchRoute( path, fragment ) {
           }
         } else {
           return {
+            lang: lang,
             children: [
               React.createElement(Page, {
                 key: 'page-' + title,
@@ -146,6 +154,7 @@ function matchRoute( path, fragment ) {
       /(.*)/,
       function ( info ) {
         return {
+          lang: lang,
           title: '404 - Page Not Found',
           children: React.DOM.p({},'The path ' + info[1] + ' is not the path you are looking for.')
         }

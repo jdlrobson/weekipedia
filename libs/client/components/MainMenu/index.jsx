@@ -8,6 +8,8 @@ import './icons.css'
 
 class MainMenu extends Component {
   render(){
+    var langPrefix = '/' + this.props.lang;
+
     return (
       <div className="menu">
         <ul>
@@ -15,10 +17,12 @@ class MainMenu extends Component {
             <Icon glyph="mf-home-invert" href="/" label="Home" type="before"/>
           </li>
           <li>
-            <Icon glyph="mf-random-invert" href="/wiki/Special:Random" label="Random" type="before"/>
+            <Icon glyph="mf-random-invert" href={langPrefix + '/wiki/Special:Random'}
+              label="Random" type="before"/>
           </li>
           <li>
-            <Icon glyph="mf-nearby-invert" href="/wiki/Special:Nearby" label="Nearby" type="before"/>
+            <Icon glyph="mf-nearby-invert" href={langPrefix + '/wiki/Special:Nearby'}
+              label="Nearby" type="before"/>
           </li>
         </ul>
         <HorizontalList>
@@ -29,5 +33,8 @@ class MainMenu extends Component {
     )
   }
 }
+MainMenu.defaultProps = {
+  lang: 'en'
+};
 
 export default MainMenu

@@ -13,6 +13,11 @@ export default React.createClass({
       isMenuOpen: false
     }
   },
+  getDefaultProps() {
+    return {
+      lang: 'en'
+    };
+  },
   closePrimaryNav( ev ){
     this.setState({ isMenuOpen: false });
   },
@@ -31,7 +36,7 @@ export default React.createClass({
     return (
       <div id="mw-mf-viewport" className={navigationClasses}>
         <nav id="mw-mf-page-left">
-          <MainMenu />
+          <MainMenu lang={this.props.lang}/>
         </nav>
         <div id="mw-mf-page-center" onClick={this.closePrimaryNav}>
           <Header key="header-bar" primaryIcon={icon}></Header>
