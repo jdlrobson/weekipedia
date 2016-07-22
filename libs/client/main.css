@@ -3,3 +3,12 @@ html,
 body {
   height: 100%;
 }
+
+/* Reset */
+input {
+  border: 0;
+  font: inherit;
+  font-size: 100%;
+  vertical-align: baseline;
+  background: none;
+}

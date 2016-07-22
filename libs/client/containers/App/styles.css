@@ -48,3 +48,13 @@ nav {
   transition: none;
   visibility: visible;
 }
+
+.overlay-enabled #mw-mf-page-center {
+  height: 100%;
+  overflow: hidden;
+  display: block;
+}
+
+.overlay-enabled #mw-mf-page-center > * {
+  display: none;
+}

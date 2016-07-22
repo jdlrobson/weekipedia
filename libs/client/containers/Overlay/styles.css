@@ -1,0 +1,45 @@
+.mw-ui-icon-close:before {
+  background-image: linear-gradient(transparent,transparent),url(data:image/svg+xml,%3Csvg%20id%3D%22Layer_1%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%3E%0A%20%20%20%20%3Cg%3E%0A%20%20%20%20%20%20%20%20%3Cg%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Cg%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cpath%20d%3D%22M4.983%201.606l17.465%2017.466-2.97%202.97L2.014%204.575z%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Fg%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3Cg%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%3Cpath%20d%3D%22M19.407%201.605l2.97%202.97L4.914%2022.042l-2.97-2.97z%22%2F%3E%0A%20%20%20%20%20%20%20%20%20%20%20%20%3C%2Fg%3E%0A%20%20%20%20%20%20%20%20%3C%2Fg%3E%0A%20%20%20%20%3C%2Fg%3E%0A%3C%2Fsvg%3E%0A)
+}
+
+.overlay {
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background: #fff;
+  z-index: 1;
+  padding-top: 3.35em;
+  z-index: 1;
+}
+
+.overlay .header {
+  display: table;
+  width: 100%;
+  border-spacing: 0;
+  border-collapse: collapse;
+  height: 3.35em;
+  white-space: nowrap;
+  border-top: 1px solid #cccccc;
+  margin-top: -1px;
+}
+
+.overlay .header-container {
+  left: 0;
+  background-color: #f2f2f2;
+  top: 0;
+  border-bottom: 1px solid transparent;
+  border-bottom-color: #dddddd;
+  right: 0;
+  width: 100%;
+  z-index: 2;
+  position: fixed !important;
+  z-index: 2;
+}
+
+@media (max-width: 768px) {
+  .overlay .content-container {
+    margin: 0;
+  }
+}

@@ -1,5 +1,7 @@
 import React from 'react'
 
+import SearchOverlay from './overlays/SearchOverlay'
+
 import Home from './pages/Home'
 import Page from './pages/Page'
 import SpecialPage from './pages/SpecialPage'
@@ -36,9 +38,22 @@ function matchRouteInternal( routes, path ) {
   return chosenRoute;
 }
 
-function matchFragment( fragment ) {
+function matchFragment( fragment, mainRoute ) {
 	var chosenRoute;
   var routes = [
+    // Search Overlay
+    [
+      /#\/search$/,
+      function ( info ) {
+        return {
+          overlay: React.createElement(SearchOverlay, {
+            lang: mainRoute.lang,
+            router: mainRoute.router,
+            api: api
+          })
+        }
+      },
+    ],
     // no fragment
     [
       /(.*)/,
@@ -163,7 +178,7 @@ function matchRoute( path, fragment ) {
   ];
 
   var route = matchRouteInternal( routes, path || window.location.pathname );
-  var fragmentRoute = matchFragment( fragment || window.location.hash );
+  var fragmentRoute = matchFragment( fragment || window.location.hash, route );
   return Object.assign( {}, route, fragmentRoute );
 }
 
