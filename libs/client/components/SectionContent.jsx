@@ -16,6 +16,10 @@ class SectionContent extends Component {
           ev.preventDefault();
           props.router.navigateTo( '#/media/' + match[1] );
         }
+      } else {
+        var href = link.getAttribute( 'href' ) || '';
+        props.router.navigateTo( href );
+        ev.preventDefault();
       }
     }
 

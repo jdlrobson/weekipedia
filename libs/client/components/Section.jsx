@@ -7,7 +7,6 @@ class Section extends Component {
     var hLevel = this.props.toclevel + 1;
     var hMethod = React.DOM['h' + hLevel];
     var heading = hMethod.call(React.DOM, {},this.props.line);
-
     return (
       <div>
         {heading}

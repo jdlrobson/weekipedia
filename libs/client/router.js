@@ -1,4 +1,5 @@
 import React from 'react'
+import EventEmitter from 'events'
 
 var routes = [
   // no fragment
@@ -20,7 +21,12 @@ var routes = [
   ]
 ];
 
+const events = new EventEmitter();
+
 var router = {
+  on: function ( eventName, handler ) {
+    events.on( eventName, handler );
+  },
   back: function () {
     window.history.back();
   },
@@ -30,16 +36,35 @@ var router = {
   },
   matchRoute: matchRoute,
   navigateTo: function ( path, hash, useReplaceState ) {
-    if ( hash !== undefined ) {
+    var currentPath = window.location.pathname + window.location.search,
+      state = {
+        scrollY: window.scrollY
+      };
+
+    if ( hash === undefined ) {
+      hash = path.split( '#' );
+      path = hash[0];
+      hash = hash[1] || '';
+    }
+    if ( path ) {
       if ( useReplaceState ) {
         // TODO: older browser support
-        window.history.replaceState( {}, null, path );
+        history.replaceState( {}, null, path );
       } else {
-        window.location.pathname = path;
+        // replace the existing state with information about the scroll position
+        history.replaceState( state, null, currentPath );
+        // navigate to new page
+        history.pushState( {}, null, path );
       }
-      window.location.hash = hash;
-    } else {
-      window.location.hash = path;
+      events.emit( 'onpushstate' );
+    }
+    if ( hash ) {
+      if ( window.location.hash ) {
+        history.replaceState( {}, null, hash );
+        events.emit( 'onreplacestate' );
+      } else {
+        window.location.hash = hash;
+      }
     }
   }
 };

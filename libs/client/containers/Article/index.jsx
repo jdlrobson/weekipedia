@@ -4,6 +4,12 @@ import './styles.css'
 
 // Main component
 class Article extends Component {
+  componentDidUpdate() {
+    // If given update scroll position on container
+    if ( this.props.scrollY ) {
+      window.scrollTo( 0, this.props.scrollY );
+    }
+  }
   render(){
     var header = this.props.title ?
       [ <h1 key="article-title"

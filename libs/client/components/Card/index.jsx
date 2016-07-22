@@ -1,7 +1,16 @@
 import React, { Component } from 'react'
+import ReactDOM from 'react-dom'
+
 import './styles.css'
 
 class Card extends Component {
+  navigateTo(ev) {
+    var href = ReactDOM.findDOMNode( this ).querySelector( 'a' ).getAttribute( 'href' );
+    if ( href ) {
+      ev.preventDefault();
+      this.props.router.navigateTo( href );
+    }
+  }
   render(){
     var title = this.props.title;
     var url = '/' + this.props.wiki.replace( 'wiki', '' ) + '/wiki/' + encodeURIComponent( title );
@@ -17,7 +26,7 @@ class Card extends Component {
     });
 
     return (
-      <div className="card">
+      <div className="card" onClick={this.navigateTo.bind(this)}>
         {this.props.indicator}
         <div className="card-thumb" style={styles}></div>
         <div className="card-detail">

@@ -20,10 +20,12 @@ routes.concat( overlayRoutes ).forEach( function ( args ) {
   router.addRoute.apply( router, args );
 } );
 
-function renderCurrentRoute() {
+function renderCurrentRoute( ev ) {
+  var props = Object.assign( {}, globalProps, ev ? ev.state : {} );
+
   render(
     React.createElement( App,
-      router.matchRoute( window.location.pathname, window.location.hash, globalProps )
+      router.matchRoute( window.location.pathname, window.location.hash, props )
     ),
     document.getElementById( 'app' )
   )
@@ -32,4 +34,11 @@ function renderCurrentRoute() {
 if ( 'onhashchange' in window ) {
   window.onhashchange = renderCurrentRoute;
 }
+
+if ( 'onpopstate' in window ) {
+  window.onpopstate = renderCurrentRoute;
+  router.on( 'onpushstate', renderCurrentRoute );
+  router.on( 'onreplacestate', renderCurrentRoute );
+}
+
 renderCurrentRoute();
