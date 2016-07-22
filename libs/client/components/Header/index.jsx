@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import Icon from './../Icon'
+
 import Content from './../../containers/Content'
+
 import './styles.css'
 import './icons.css'
 
@@ -14,6 +16,9 @@ class Header extends Component {
           <div>
             {this.props.primaryIcon}
           </div>
+          <div className='main'>
+            {this.props.main}
+          </div>
         </Content>
       </div>
     )
@@ -21,7 +26,9 @@ class Header extends Component {
 }
 
 Header.defaultProps = {
-  fixed: false
+  fixed: false,
+  main: null,
+  primaryIcon: null
 };
 
 export default Header

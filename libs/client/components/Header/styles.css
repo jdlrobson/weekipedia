@@ -39,11 +39,10 @@
   border-bottom-color: #dddddd;
 }
 
-/* search form */
-.header > form {
-  width: auto;
+.header > div.main {
+  width: 100%;
   vertical-align: middle;
-  padding: .15em 0;
+  padding: .15em 1em .15em 0;
 }
 
 @media (min-width: 62.5em) {
