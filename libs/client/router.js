@@ -20,7 +20,6 @@ var router = {
       window.location.hash = hash;
     } else {
       window.location.hash = path;
-      matchRoute();
     }
   }
 };
