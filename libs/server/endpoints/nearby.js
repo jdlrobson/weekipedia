@@ -1,10 +1,7 @@
-import fetch from 'isomorphic-fetch'
-import param from 'node-jquery-param'
+import mwApi from './mwApi'
 
 export default function ( latitude, longitude, lang, ns ) {
   var params = {
-    action: 'query',
-    format: 'json',
     colimit: 'max',
     prop: 'coordinates|pageterms|pageimages',
     generator: 'geosearch',
@@ -13,21 +10,8 @@ export default function ( latitude, longitude, lang, ns ) {
     ggslimit: 50,
     pithumbsize: 120,
     pilimit: 50,
-    ggscoord: latitude + '|' + longitude,
-    formatversion: 2
+    ggscoord: latitude + '|' + longitude
   };
 
-  var url = 'https://' + lang + '.wikipedia.org/w/api.php?' + param( params );
-  console.log(url);
-  return fetch( url )
-    .then( function ( resp ) {
-     if ( resp.status === 200 ) {
-       return resp.json();
-     } else {
-       throw Error( resp.status );
-     }
-    } )
-    .then( function ( json ) {
-      return json.query ? json.query.pages : [];
-    } );
+  return mwApi( lang, params );
 };
