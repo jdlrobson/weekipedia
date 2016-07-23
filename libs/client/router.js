@@ -1,5 +1,6 @@
 import React from 'react'
 
+import ImageOverlay from './overlays/ImageOverlay'
 import SearchOverlay from './overlays/SearchOverlay'
 
 import Home from './pages/Home'
@@ -40,6 +41,20 @@ function matchRouteInternal( routes, path ) {
 function matchFragment( fragment, mainRoute ) {
 	var chosenRoute;
   var routes = [
+    // Image Overlay
+    [
+      /#\/media\/(.*)$/,
+      function ( info ) {
+        return {
+          overlay: React.createElement( ImageOverlay, {
+            router: mainRoute.router,
+            title: info[1],
+            lang: mainRoute.lang,
+            api: api
+          } )
+        }
+      }
+    ],
     // Search Overlay
     [
       /#\/search$/,
@@ -153,6 +168,7 @@ function matchRoute( path, fragment ) {
             lang: lang,
             children: [
               React.createElement(Page, {
+                router: router,
                 key: 'page-' + title,
                 api: api,
                 lang: lang,

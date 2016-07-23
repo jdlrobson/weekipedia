@@ -11,7 +11,7 @@ class Section extends Component {
     return (
       <div>
         {heading}
-        <SectionContent text={this.props.text}></SectionContent>
+        <SectionContent {...this.props} text={this.props.text}></SectionContent>
       </div>
     )
   }

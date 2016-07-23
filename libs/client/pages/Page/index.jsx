@@ -55,6 +55,7 @@ export default React.createClass({
       contentBody,
       sections = [],
       btns = [],
+      self = this,
       lead = this.state.lead;
 
     if ( !lead.displaytitle ) {
@@ -73,7 +74,7 @@ export default React.createClass({
         sections = [<ErrorBox msg="This page does not exist."></ErrorBox>];
       } else if ( this.state.isExpanded ) {
         sections = this.state.remaining.sections.map( function ( sectionProps ) {
-          return <Section {...sectionProps} key={sectionProps.id}></Section>
+          return <Section {...self.props} {...sectionProps} key={sectionProps.id}></Section>
         } );
       } else {
         sections.push(<Button key="article-expand" href="#expanded=1" label="Expand" onClick={this.expand}></Button>);
@@ -83,7 +84,7 @@ export default React.createClass({
       return (
         <Article title={this.state.lead.displaytitle} tagline={this.state.lead.description}>
           <Content key="page-row-1" className="content">
-            <SectionContent text={leadHtml}></SectionContent>
+            <SectionContent {...this.props} text={leadHtml}></SectionContent>
             {sections}
           </Content>
           <Content key="page-row-2" className="post-content">{btns}</Content>
