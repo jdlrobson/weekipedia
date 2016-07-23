@@ -71,68 +71,51 @@ https://en.wikipedia.org/w/load.php?debug=false&lang=en&modules=mediawiki.ui.but
   margin-left: auto;
   margin-right: auto;
 }
-.mw-ui-button.mw-ui-progressive,
 .mw-ui-button.mw-ui-primary {
   background: #347bff;
   color: #fff;
   border: 1px solid #347bff;
   text-shadow: 0 1px rgba(0, 0, 0, 0.1);
 }
-.mw-ui-button.mw-ui-progressive:hover,
 .mw-ui-button.mw-ui-primary:hover {
   background-color: #2962cc;
 }
-.mw-ui-button.mw-ui-progressive:focus,
 .mw-ui-button.mw-ui-primary:focus {
   border-color: #ffffff;
   box-shadow: inset 0 0 0 1px #347bff, inset 0 0 0 2px #ffffff;
   outline-width: 0;
 }
-.mw-ui-button.mw-ui-progressive:focus::-moz-focus-inner,
 .mw-ui-button.mw-ui-primary:focus::-moz-focus-inner {
   border-color: transparent;
   padding: 0;
 }
-.mw-ui-button.mw-ui-progressive:active,
 .mw-ui-button.mw-ui-primary:active,
-.mw-ui-button.mw-ui-progressive.is-on,
 .mw-ui-button.mw-ui-primary.is-on,
-.mw-ui-button.mw-ui-progressive.mw-ui-checked,
 .mw-ui-button.mw-ui-primary.mw-ui-checked {
   background-color: #2962cc;
   box-shadow: none;
 }
-.mw-ui-button.mw-ui-progressive:disabled,
 .mw-ui-button.mw-ui-primary:disabled {
   background-color: #dddddd;
   border-color: #dddddd;
 }
-.mw-ui-button.mw-ui-progressive:disabled:hover,
 .mw-ui-button.mw-ui-primary:disabled:hover,
-.mw-ui-button.mw-ui-progressive:disabled:active,
 .mw-ui-button.mw-ui-primary:disabled:active,
-.mw-ui-button.mw-ui-progressive:disabled.mw-ui-checked,
 .mw-ui-button.mw-ui-primary:disabled.mw-ui-checked {
   box-shadow: none;
 }
-.mw-ui-button.mw-ui-progressive.mw-ui-quiet,
 .mw-ui-button.mw-ui-primary.mw-ui-quiet {
   color: #555555;
 }
-.mw-ui-button.mw-ui-progressive.mw-ui-quiet:hover,
 .mw-ui-button.mw-ui-primary.mw-ui-quiet:hover,
-.mw-ui-button.mw-ui-progressive.mw-ui-quiet:focus,
 .mw-ui-button.mw-ui-primary.mw-ui-quiet:focus {
   background-color: transparent;
   color: #347bff;
 }
-.mw-ui-button.mw-ui-progressive.mw-ui-quiet:active,
 .mw-ui-button.mw-ui-primary.mw-ui-quiet:active,
-.mw-ui-button.mw-ui-progressive.mw-ui-quiet.mw-ui-checked,
 .mw-ui-button.mw-ui-primary.mw-ui-quiet.mw-ui-checked {
   color: #2962cc;
 }
-.mw-ui-button.mw-ui-progressive.mw-ui-quiet:disabled,
 .mw-ui-button.mw-ui-primary.mw-ui-quiet:disabled {
   color: #cccccc;
 }
