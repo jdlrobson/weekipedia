@@ -8,6 +8,7 @@ import search from './endpoints/search'
 import random from './endpoints/random'
 import page from './endpoints/page'
 import nearby from './endpoints/nearby'
+import file from './endpoints/file'
 
 import cachedResponse from './cached-response'
 

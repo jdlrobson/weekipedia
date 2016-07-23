@@ -11,7 +11,6 @@ export default function ( lang, params ) {
   var url = 'https://' + lang + '.wikipedia.org/w/api.php?'
     + param( Object.assign( {}, baseParams, params ) );
 
-    console.log(url);
   return fetch( url )
     .then( function ( resp ) {
      if ( resp.status === 200 ) {
