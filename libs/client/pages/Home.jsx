@@ -56,7 +56,7 @@ export default React.createClass({
     return (
       <Article title={this.props.title} tagline="The wiki in real time">
         <Content>
-          <HorizontalList>
+          <HorizontalList isSeparated="1">
             <a href={'/hot/' + wiki }>by hour</a>
             <a href={'/hot/' + wiki +'/48'}>by day</a>
             <a href={'/hot/' + wiki +'/84'}>by week</a>

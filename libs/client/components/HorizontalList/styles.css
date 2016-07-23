@@ -7,3 +7,13 @@ ul.hlist li {
 .hlist {
   padding-bottom: 8px;
 }
+
+.hlist.separated li:after {
+  content: '•';
+  padding-left: 8px;
+  display: inline-block;
+}
+
+.hlist li:last-child:after {
+  content: '';
+}
