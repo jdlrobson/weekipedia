@@ -11,15 +11,31 @@ class Overlay extends Component {
     this.props.router.back();
   }
   render(){
-    var icon = (<Icon glyph='close' onClick={this.onClose.bind(this)}/>);
+    var header;
+    var overlayClass = 'overlay';
+
+    if ( this.props.isLightBox ) {
+      header = (
+        <div className="lightbox-header">
+          <Icon glyph='close-gray' className="close" onClick={this.onClose.bind(this)}/>
+        </div>);
+      overlayClass += ' lightbox';
+    } else {
+      var icon = (<Icon glyph='close' onClick={this.onClose.bind(this)}/>);
+      header = <Header fixed="1" primaryIcon={icon} router={this.props.router}
+        main={this.props.header}></Header>;
+    }
 
     return (
-      <div className="overlay">
-        <Header fixed="1" primaryIcon={icon} router={this.props.router}
-          main={this.props.header}></Header>
+      <div className={overlayClass}>
+        {header}
         {this.props.children}
       </div>
     )
   }
 }
+Overlay.defaultProps = {
+  isLightBox: false
+};
+
 export default Overlay

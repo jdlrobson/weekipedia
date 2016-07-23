@@ -5,7 +5,9 @@ https://en.wikipedia.org/w/load.php?debug=false&lang=en&modules=mediawiki.ui.ico
   position: relative;
   min-height: 1.5em;
   min-width: 1.5em;
+  display: inline-block;
 }
+
 .mw-ui-icon.mw-ui-icon-element {
   text-indent: -999px;
   overflow: hidden;
