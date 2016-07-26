@@ -7,13 +7,13 @@ class SectionContent extends Component {
     var props = this.props;
 
     function navigateTo( ev ) {
-          ev.preventDefault();
       var link = ev.currentTarget;
       var childNode = link.firstChild;
       if ( childNode && childNode.nodeName === 'IMG' ) {
         var href = link.getAttribute( 'href' ) || '';
         var match = href.match( /\/wiki\/File\:(.*)/ );
         if ( match && match[1] ) {
+          ev.preventDefault();
           props.router.navigateTo( '#/media/' + match[1] );
         }
       }
