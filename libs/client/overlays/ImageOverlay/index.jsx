@@ -28,19 +28,29 @@ export default React.createClass({
     var route = '/api/file/' + this.props.lang + '/' + w + ',' + h + '/' + encodeURIComponent( this.props.title );
     var self = this;
 
-    this.props.api.fetch( route ).then( function ( img ) {
-      self.setState( { img: img } );
+    this.props.api.fetch( route ).then( function ( imgData ) {
+      var img = new Image();
+      function updateState() {
+        self.setState( { img: imgData } );
+      }
+
+      img.addEventListener( 'load', updateState );
+      img.addEventListener( 'complete', updateState );
+      img.src = imgData.thumburl;
     } );
   },
   render(){
-    var content, footer, meta,
+    var content, footer, meta, isLandscape,
       licenseUrl = '', licenseName = '',
       description = '', artist = '',
       img = this.state.img;
     if ( img ) {
+      isLandscape = img.thumbwidth > img.thumbheight;
       var imgStyle = {
-        width: img.thumbwidth,
-        height: img.thumbheight
+        maxHeight: this.state.height,
+        maxWidth: this.state.width,
+        width: isLandscape ? 'auto' : img.thumbwidth,
+        height: isLandscape ? img.thumbheight : 'auto'
       }
       content = <img src={img.thumburl} style={imgStyle} />;
       if ( img.extmetadata ) {

@@ -26,6 +26,7 @@
   color: #777777;
   margin-top: .5em;
   line-height: 1.4;
+  box-sizing: border-box;
 }
 
 .lightbox .mw-ui-button {
