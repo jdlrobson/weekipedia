@@ -36,8 +36,10 @@ export default React.createClass({
     this.props.api.fetch( this.props.apiEndpoint ).then( function ( data ) {
       var cards = [];
       data.forEach( function ( item ) {
+        var props;
         item.key = item.pageid;
         item.wiki = self.props.lang;
+        item.router = self.props.router;
         cards.push( React.createElement( Card, item ) );
       } );
       self.setState({ cards : cards });

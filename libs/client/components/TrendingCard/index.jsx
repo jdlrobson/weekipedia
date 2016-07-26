@@ -5,6 +5,7 @@ import Card from './../Card'
 
 class TrendingCard extends Component {
   render(){
+    var props = this.props;
     var totalEdits = this.props.edits;
     var totalEditors = this.props.contributors.length + this.props.anons.length;
     var prevIndex = this.props.lastIndex;
@@ -52,7 +53,7 @@ class TrendingCard extends Component {
     var indicator = (<span className={'indicator ' + className} title={label}>&nbsp;</span>);
 
     return (
-      <Card indicator={indicator} thumbnail={this.props.thumbnail} title={this.props.title} wiki={this.props.wiki} terms={this.props.terms}>
+      <Card {...props} indicator={indicator} thumbnail={this.props.thumbnail}>
         <span>{totalEdits} edits ({this.props.anonEdits} anonymous) by {totalEditors} editors ({this.props.anons.length} anonymous) changing {this.props.bytesChanged} bytes with {this.props.reverts} reverts in {mins} minutes (updated {updated} mins ago).</span>
         <span
           data-speed={speed} data-score={this.props.score}

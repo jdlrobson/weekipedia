@@ -78,9 +78,7 @@ export default React.createClass({
       var baseUrl = '/' + this.props.lang + '/wiki/Special:Nearby/';
 
       return (
-        <CardListPage apiEndpoint={endpoint}
-          api={this.props.api}
-          lang={this.props.lang}
+        <CardListPage {...this.props} apiEndpoint={endpoint}
           title='Nearby' tagline="Pages that are near you">
           <Content className="post-content">Explore 1 mile:
             <HorizontalList>

@@ -92,6 +92,7 @@ function matchRoute( path, fragment ) {
           children: [
             React.createElement(Random, {
               key: 'page-special-random',
+              router: router,
               lang: lang,
               api: api
             })
@@ -104,6 +105,7 @@ function matchRoute( path, fragment ) {
       /^\/([a-z]*)\/wiki\/Special:Nearby\/?(.*)|^\/wiki\/Special:Nearby\/?(.*)$/,
       function( info ) {
         var props = {
+          router: router,
           key: 'page-special-nearby',
           api: api
         };
@@ -133,6 +135,7 @@ function matchRoute( path, fragment ) {
         return {
           children: [
             React.createElement(Home, {
+              router: router,
               title: 'Hot',
               halflife: args[1],
               wiki: args[0] || 'enwiki',

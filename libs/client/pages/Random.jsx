@@ -26,9 +26,7 @@ export default React.createClass({
   },
   render(){
     return (
-      <CardListPage apiEndpoint={'/api/random/' + this.props.lang}
-        api={this.props.api}
-        lang={this.props.lang}
+      <CardListPage {...this.props} apiEndpoint={'/api/random/' + this.props.lang}
         title='Random' tagline="Random pages from across the wiki">
       <Content className="post-content">
         Nothing of interest? <a href="/wiki/Special:Random">Try again</a>.

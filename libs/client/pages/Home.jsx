@@ -13,6 +13,7 @@ import CardList from './../containers/CardList'
 export default React.createClass({
   getDefaultProps: function () {
     return {
+      router: null,
       wiki: 'enwiki',
       halflife: null,
     };
@@ -29,11 +30,12 @@ export default React.createClass({
   },
   load() {
     var self = this;
+    var props = this.props;
 
     this.props.api.getTrending( this.props.wiki, this.props.halflife ).then( function ( data ) {
       var topics = data.map( function ( item ) {
         item.key = item.id;
-        return React.createElement(TrendingCard, item);
+        return React.createElement( TrendingCard, Object.assign( {}, props, item ) );
       } );
       self.setState({ topics: topics });
     } ).catch( function () {

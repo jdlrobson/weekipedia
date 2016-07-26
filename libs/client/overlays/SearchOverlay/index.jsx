@@ -31,7 +31,7 @@ export default React.createClass({
         data.forEach( function ( item ) {
           item.key = item.pageid;
           item.wiki = self.props.lang;
-          cards.push( React.createElement( Card, item ) );
+          cards.push( React.createElement( Card, Object.assign( {}, self.props, item ) ) );
         } );
         self.setState({
           cards: cards
