@@ -8,8 +8,11 @@ export default React.createClass({
     this.props.onSearch( ev.currentTarget.value );
   },
   componentDidMount: function(){
+    var input = ReactDOM.findDOMNode( this );
     if ( this.props.focusOnRender ) {
-      ReactDOM.findDOMNode( this ).focus();
+      input.focus();
+      // show keyboard
+      input.click();
     }
   },
   render() {
