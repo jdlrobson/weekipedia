@@ -1,25 +1,30 @@
 var fetch = require( 'isomorphic-fetch' );
-function Api() {}
+function Api() {
+  this.cache = {};
+}
 
 Api.prototype = {
+  fetch: function ( url ) {
+    var promise,
+      cache = this.cache;
+
+    if ( cache[url] ) {
+      return cache[url];
+    } else {
+      promise = fetch( url ).then( function ( resp ) {
+        if ( resp.status === 200 ) {
+          cache[url] = promise;
+          return resp.json();
+        } else {
+          throw Error( response.statusText );
+        }
+      } );
+      return promise;
+    }
+  },
   getPage: function ( title, lang ) {
     lang = lang || 'en';
-    return fetch( '/api/page/' + lang + '/' + title ).then( function ( resp ) {
-      if ( resp.status === 200 ) {
-        return resp.json();
-      } else {
-        throw Error(response.statusText);
-      }
-    } );
-  },
-  fetch: function ( path ) {
-    return fetch( path ).then( function ( resp ) {
-      if ( resp.status === 200 ) {
-        return resp.json();
-      } else {
-        throw Error(response.statusText);
-      }
-    } );
+    return this.fetch( '/api/page/' + lang + '/' + title );
   },
   getTrending: function ( wiki, halflife ) {
     var url = '/api/trending/';
