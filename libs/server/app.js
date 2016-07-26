@@ -14,10 +14,23 @@ import cachedResponse from './cached-response'
 
 // Express
 const app = express()
+const https = process.env.USE_HTTPS;
+
 app.engine('html', hogan)
 app.set('views', __dirname + '/views')
 app.use('/', express.static(__dirname + '/../../public/'))
 app.set('port', (process.env.PORT || 3000))
+
+if ( https ) {
+  app.enable('trust proxy');
+  app.use(function (req, res, next) {
+    if ( https && !req.secure ) {
+      res.redirect('https://' + req.headers.host + req.url);
+    } else {
+      next();
+    }
+  });
+}
 
 app.get('/api/trending/:wiki?/:halflife?',(req, res) => {
   var wiki = req.params.wiki || 'enwiki';
