@@ -26,6 +26,7 @@ export default React.createClass({
     return {
       isExpanded: false,
       lead: {},
+      errorMsg: 'This page does not exist.',
       error: false,
       remaining: {}
     };
@@ -42,7 +43,7 @@ export default React.createClass({
     this.props.api.getPage( this.props.title, this.props.lang ).then( function ( data ) {
       self.setState(data);
     } ).catch( function () {
-      self.setState({ error: true });
+      self.setState({ error: true, errorMsg: e });
     } );
   },
   expand() {
@@ -59,7 +60,7 @@ export default React.createClass({
       lead = this.state.lead;
 
     if ( !lead.displaytitle ) {
-      contentBody = this.state.error ? <ErrorBox msg="This page does not exist."></ErrorBox>
+      contentBody = this.state.error ? <ErrorBox msg={this.state.errorMsg}></ErrorBox>
       : <IntermediateState></IntermediateState>;
 
       return (
