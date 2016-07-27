@@ -1,19 +1,38 @@
 import React from 'react'
 
-import ImageOverlay from './overlays/ImageOverlay'
-import SearchOverlay from './overlays/SearchOverlay'
+var routes = [
+  // 404
+  [
+    /(.*)/,
+    function ( info, props ) {
+      return Object.assign( {}, props, {
+        title: '404 - Page Not Found',
+        children: React.DOM.p({},'The path ' + info[1] + ' is not the path you are looking for.')
+      } )
+    }
+  ]
+];
 
-import Home from './pages/Home'
-import Page from './pages/Page'
-import SpecialPage from './pages/SpecialPage'
-import Random from './pages/Random'
-import Nearby from './pages/Nearby'
-
-import api from './api.js'
+var fragmentRoutes = [
+  // no fragment
+  [
+    /(.*)/,
+    function ( info ) {
+      return {}
+    }
+  ]
+];
 
 var router = {
   back: function () {
     window.history.back();
+  },
+  addFragmentRoute: function ( regExp, handler ) {
+    fragmentRoutes.unshift( [ regExp, handler ] );
+  },
+  addRoute: function ( regExp, handler ) {
+    // new routes get added to front
+    routes.unshift( [ regExp, handler ] );
   },
   matchRoute: matchRoute,
   navigateTo: function ( path, hash ) {
@@ -26,178 +45,31 @@ var router = {
   }
 };
 
-function matchRouteInternal( routes, path ) {
+function matchRouteInternal( routes, path, props ) {
   var chosenRoute;
+  props = props || {};
+  props.router = router;
   routes.some( function ( route ) {
     var res = path.match( route[0] );
     if ( res ) {
-      chosenRoute = route[1](res, router);
-      chosenRoute.router = router;
+      chosenRoute = route[1]( res, props );
       return true;
     }
   } );
   return chosenRoute;
 }
 
-function matchFragment( fragment, mainRoute ) {
-	var chosenRoute;
-  var routes = [
-    // Image Overlay
-    [
-      /#\/media\/(.*)$/,
-      function ( info ) {
-        return {
-          overlay: React.createElement( ImageOverlay, {
-            router: mainRoute.router,
-            title: info[1],
-            lang: mainRoute.lang,
-            api: api
-          } )
-        }
-      }
-    ],
-    // Search Overlay
-    [
-      /#\/search$/,
-      function ( info ) {
-        return {
-          overlay: React.createElement(SearchOverlay, {
-            lang: mainRoute.lang,
-            router: mainRoute.router,
-            api: api
-          })
-        }
-      },
-    ],
-    // no fragment
-    [
-      /(.*)/,
-      function ( info ) {
-        return {}
-      }
-    ]
-  ];
-  return matchRouteInternal( routes, fragment );
+function matchFragment( fragment, props ) {
+  return matchRouteInternal( fragmentRoutes, fragment, props );
 }
 
-function matchRoute( path, fragment ) {
-  var routes = [
-    // Random
-    [
-      /^\/([a-z]*)\/wiki\/Special:Random\/?(.*)|^\/wiki\/Special:Random$/,
-      function( info ) {
-        var lang = info[1] || 'en';
+function matchRoute( path, fragment, props ) {
+  var route = matchRouteInternal( routes, path || window.location.pathname, props );
+  var childProps = Object.assign( {}, route );
+  // avoid chaos
+  delete childProps.children;
 
-        return {
-          lang: lang,
-          children: [
-            React.createElement(Random, {
-              key: 'page-special-random',
-              router: router,
-              lang: lang,
-              api: api
-            })
-          ]
-        }
-      }
-    ],
-    // Nearby
-    [
-      /^\/([a-z]*)\/wiki\/Special:Nearby\/?(.*)|^\/wiki\/Special:Nearby\/?(.*)$/,
-      function( info ) {
-        var props = {
-          router: router,
-          key: 'page-special-nearby',
-          api: api
-        };
-        var lang = info[1] || 'en';
-        if ( info[2] ) {
-          var coords = info[2].split( ',' );
-          props.latitude = coords[0];
-          props.longitude = coords[1];
-        }
-        props.lang = lang
-
-        return {
-          lang: lang,
-          children: [
-            React.createElement(Nearby, props)
-          ]
-        }
-      }
-    ],
-    [
-      // Home page / Hot
-      /^\/?$|\/hot\/(.*)$/,
-      function( info ) {
-        var filter = info[1] || '';
-        var args = filter = filter.split( '/' );
-
-        return {
-          children: [
-            React.createElement(Home, {
-              router: router,
-              title: 'Hot',
-              halflife: args[1],
-              wiki: args[0] || 'enwiki',
-              key: 'home-' + filter,
-              api: api
-            })
-          ]
-        }
-      }
-    ],
-    // View a page
-    [
-      /^\/([a-z]*)\/wiki\/(.*)|^\/wiki\/(.*)/,
-      function ( info ) {
-        var title = info[2] || info[3],
-          titleSansPrefix = title.substr(title.indexOf( ':' ) + 1),
-          lang = info[1] || 'en';
-
-        // FIXME: i18n
-        if ( title.indexOf( 'Special:' ) === 0 ) {
-          return {
-            lang: lang,
-            children: [
-              React.createElement(SpecialPage, {
-                key: 'page-' + titleSansPrefix,
-                lang: lang,
-                title: titleSansPrefix
-              })
-            ]
-          }
-        } else {
-          return {
-            lang: lang,
-            children: [
-              React.createElement(Page, {
-                router: router,
-                key: 'page-' + title,
-                api: api,
-                lang: lang,
-                title: title
-              })
-            ]
-          }
-        }
-      }
-    ],
-    // 404
-    [
-      /(.*)/,
-      function ( info ) {
-        return {
-          lang: lang,
-          title: '404 - Page Not Found',
-          children: React.DOM.p({},'The path ' + info[1] + ' is not the path you are looking for.')
-        }
-      }
-    ]
-  ];
-
-  var route = matchRouteInternal( routes, path || window.location.pathname );
-  var fragmentRoute = matchFragment( fragment || window.location.hash, route );
+  var fragmentRoute = matchFragment( fragment || window.location.hash, childProps );
   return Object.assign( {}, route, fragmentRoute );
 }
 

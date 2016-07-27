@@ -5,9 +5,30 @@ import './main.css'
 import App from './containers/App'
 import router from './router.js'
 
+import routes from './routes.js'
+import overlayRoutes from './routesOverlays.js'
+
+import api from './api.js'
+
+var globalProps = {
+  api: api,
+  router: router
+};
+
+// register all the routes
+routes.forEach( function ( args ) {
+  router.addRoute.apply( router, args );
+} );
+// register all the routes
+overlayRoutes.forEach( function ( args ) {
+  router.addFragmentRoute.apply( router, args );
+} );
+
 function renderCurrentRoute() {
-  render( React.createElement( App,
-    router.matchRoute( window.location.pathname, window.location.hash ) ),
+  render(
+    React.createElement( App,
+      router.matchRoute( window.location.pathname, window.location.hash, globalProps )
+    ),
     document.getElementById( 'app' )
   )
 }
