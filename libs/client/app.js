@@ -16,12 +16,8 @@ var globalProps = {
 };
 
 // register all the routes
-routes.forEach( function ( args ) {
+routes.concat( overlayRoutes ).forEach( function ( args ) {
   router.addRoute.apply( router, args );
-} );
-// register all the routes
-overlayRoutes.forEach( function ( args ) {
-  router.addFragmentRoute.apply( router, args );
 } );
 
 function renderCurrentRoute() {

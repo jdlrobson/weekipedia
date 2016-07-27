@@ -1,6 +1,13 @@
 import React from 'react'
 
 var routes = [
+  // no fragment
+  [
+    /^#(.*)/,
+    function ( info ) {
+      return {}
+    }
+  ],
   // 404
   [
     /(.*)/,
@@ -13,22 +20,9 @@ var routes = [
   ]
 ];
 
-var fragmentRoutes = [
-  // no fragment
-  [
-    /(.*)/,
-    function ( info ) {
-      return {}
-    }
-  ]
-];
-
 var router = {
   back: function () {
     window.history.back();
-  },
-  addFragmentRoute: function ( regExp, handler ) {
-    fragmentRoutes.unshift( [ regExp, handler ] );
   },
   addRoute: function ( regExp, handler ) {
     // new routes get added to front
@@ -54,13 +48,14 @@ function matchRouteInternal( routes, path, props ) {
     if ( res ) {
       chosenRoute = route[1]( res, props );
       return true;
+    } else {
     }
   } );
   return chosenRoute;
 }
 
 function matchFragment( fragment, props ) {
-  return matchRouteInternal( fragmentRoutes, fragment, props );
+  return matchRouteInternal( routes, fragment, props );
 }
 
 function matchRoute( path, fragment, props ) {
@@ -68,8 +63,9 @@ function matchRoute( path, fragment, props ) {
   var childProps = Object.assign( {}, route );
   // avoid chaos
   delete childProps.children;
+  delete childProps.key;
 
-  var fragmentRoute = matchFragment( fragment || window.location.hash, childProps );
+  var fragmentRoute = matchFragment( fragment || window.location.hash || '#', childProps );
   return Object.assign( {}, route, fragmentRoute );
 }
 
