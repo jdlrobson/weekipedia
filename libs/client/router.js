@@ -29,9 +29,14 @@ var router = {
     routes.unshift( [ regExp, handler ] );
   },
   matchRoute: matchRoute,
-  navigateTo: function ( path, hash ) {
-    if ( hash ) {
-      window.location.pathname = path;
+  navigateTo: function ( path, hash, useReplaceState ) {
+    if ( hash !== undefined ) {
+      if ( useReplaceState ) {
+        // TODO: older browser support
+        window.history.replaceState( {}, null, path );
+      } else {
+        window.location.pathname = path;
+      }
       window.location.hash = hash;
     } else {
       window.location.hash = path;

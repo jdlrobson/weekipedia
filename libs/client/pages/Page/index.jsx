@@ -40,6 +40,9 @@ export default React.createClass({
   },
   load() {
     var self = this;
+    if ( window.location.search.indexOf( 'expanded=1' ) > -1 ) {
+      this.setState( { isExpanded: true } );
+    }
     this.props.api.getPage( this.props.title, this.props.lang ).then( function ( data ) {
       self.setState(data);
     } ).catch( function () {
@@ -47,9 +50,10 @@ export default React.createClass({
     } );
   },
   expand() {
-    this.setState({
+     this.props.router.navigateTo( window.location.pathname + '?expanded=1', '', true );
+     this.setState({
       isExpanded: true
-    });
+    } );
   },
   render(){
     var url, leadHtml,
@@ -78,7 +82,7 @@ export default React.createClass({
           return <Section {...self.props} {...sectionProps} key={sectionProps.id}></Section>
         } );
       } else {
-        sections.push(<Button key="article-expand" href="#expanded=1" label="Expand" onClick={this.expand}></Button>);
+        sections.push(<Button key="article-expand" label="Expand" onClick={this.expand}></Button>);
       }
       btns.push(<Button key="article-view" href={url} label="View on Wikipedia"></Button>);
 
