@@ -14,6 +14,7 @@
   background-color: #444444;
 }
 
+nav ul li a.mw-ui-icon,
 nav ul li a {
   color: #fff;
   display: block;
