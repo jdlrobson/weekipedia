@@ -15,6 +15,7 @@ var router = {
   back: function () {
     window.history.back();
   },
+  matchRoute: matchRoute,
   navigateTo: function ( path, hash ) {
     if ( hash ) {
       window.location.pathname = path;
@@ -200,4 +201,4 @@ function matchRoute( path, fragment ) {
   return Object.assign( {}, route, fragmentRoute );
 }
 
-export default matchRoute
+export default router
