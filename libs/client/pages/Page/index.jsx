@@ -87,7 +87,7 @@ export default React.createClass({
       btns.push(<Button key="article-view" href={url} label="View on Wikipedia"></Button>);
 
       return (
-        <Article title={this.state.lead.displaytitle} tagline={this.state.lead.description}>
+        <Article {...this.props} title={this.state.lead.displaytitle} tagline={this.state.lead.description}>
           <Content key="page-row-1" className="content">
             <SectionContent {...this.props} text={leadHtml}></SectionContent>
             {sections}

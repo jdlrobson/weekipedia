@@ -60,7 +60,7 @@ export default React.createClass({
     }
 
     return (
-      <Article title={this.props.title} tagline={this.props.tagline}>
+      <Article {...this.props}>
         <Content>{children}</Content>
         {this.props.children}
       </Article>
