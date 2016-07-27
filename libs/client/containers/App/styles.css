@@ -55,6 +55,3 @@ nav {
   display: block;
 }
 
-.overlay-enabled #mw-mf-page-center > * {
-  display: none;
-}

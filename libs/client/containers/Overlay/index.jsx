@@ -1,4 +1,6 @@
 import React, { Component } from 'react'
+import ReactDOM from 'react-dom'
+
 import './styles.css'
 
 import Icon from './../../components/Icon'
@@ -8,16 +10,32 @@ import Header from './../../components/Header'
 
 class Overlay extends Component {
   onClose(){
-    this.props.router.back();
+    if ( this.props.onExit ) {
+      this.props.onExit();
+    } else {
+      this.props.router.back();
+    }
+  }
+  componentDidMount() {
+    var node = ReactDOM.findDOMNode( this );
+    setTimeout( function () {
+      node.className += ' visible';
+    }, 0 );
   }
   render(){
     var header;
-    var overlayClass = 'overlay' + ( this.props.className ? ' ' + this.props.className : '' );
+    var baseClass = this.props.isDrawer ? 'drawer' : 'overlay visible'
+    var overlayClass = baseClass +
+      ( this.props.className ? ' ' + this.props.className : '' );
+    var closeIconGray = <Icon glyph='close-gray'
+      className="close" onClick={this.onClose.bind(this)}/>;
 
-    if ( this.props.isLightBox ) {
+    if ( this.props.isDrawer ) {
+      header = closeIconGray;
+    } else if ( this.props.isLightBox ) {
       header = (
         <div className="lightbox-header">
-          <Icon glyph='close-gray' className="close" onClick={this.onClose.bind(this)}/>
+         {closeIconGray}
         </div>);
       overlayClass += ' lightbox';
     } else {
@@ -35,7 +53,8 @@ class Overlay extends Component {
   }
 }
 Overlay.defaultProps = {
-  isLightBox: false
+  isLightBox: false,
+  isDrawer: false
 };
 
 export default Overlay

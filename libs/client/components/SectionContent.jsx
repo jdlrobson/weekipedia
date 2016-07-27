@@ -9,7 +9,13 @@ class SectionContent extends Component {
     function navigateTo( ev ) {
       var link = ev.currentTarget;
       var childNode = link.firstChild;
-      if ( childNode && childNode.nodeName === 'IMG' ) {
+      var parentNode = link.parentNode;
+      if ( parentNode.className === 'mw-ref' ) {
+        ev.preventDefault();
+        ev.stopPropagation();
+        props.router.navigateTo( null,
+          '#/ref/' + link.getAttribute( 'href' ).substr( 1 ), true );
+      } else if ( childNode && childNode.nodeName === 'IMG' ) {
         var href = link.getAttribute( 'href' ) || '';
         var match = href.match( /\/wiki\/File\:(.*)/ );
         if ( match && match[1] ) {

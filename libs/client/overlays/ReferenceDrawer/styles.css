@@ -1,0 +1,32 @@
+.references-drawer {
+  font-size: 1em;
+  background-color: #111111;
+  color: #cccccc;
+  overflow-y: auto;
+  padding: 20px;
+  max-height: 160px;
+}
+
+.references-drawer a {
+  background-image: none;
+  color: #5880c0;
+}
+
+.references-drawer .reference-text {
+  line-height: 1.4;
+  float: left;
+}
+
+.references-drawer .cite {
+  padding-bottom: 20px;
+}
+
+.references-drawer .cite .text {
+  color: #888888;
+  cursor: default;
+  letter-spacing: .2em;
+  font-size: 0.75em;
+  padding-top: .25em;
+  text-transform: uppercase;
+  display: inline-block;
+}

@@ -1,4 +1,6 @@
 import React, { Component } from 'react'
+import ReactDOM from 'react-dom'
+
 import './styles.css'
 
 import MainMenu from './../../components/MainMenu'
@@ -11,16 +13,33 @@ import SearchForm from './../../components/SearchForm'
 export default React.createClass({
   getInitialState() {
     return {
-      isMenuOpen: false
+      isMenuOpen: false,
+      isOverlayEnabled: false
     }
   },
   getDefaultProps() {
     return {
-      lang: 'en'
+      lang: 'en',
+      isOverlayFullScreen: true,
+      isOverlayEnabled: false
     };
+  },
+  componentWillReceiveProps( nextProps ) {
+    this.setState( { isOverlayEnabled: nextProps.overlay } );
+  },
+  componentWillMount() {
+    this.setState( { isOverlayEnabled: this.props.overlay } );
+  },
+  closeOverlay() {
+    var node;
+    // If an overlay is open
+    if ( this.state.isOverlayEnabled ) {
+      this.setState( { isOverlayEnabled: false } );
+    }
   },
   closePrimaryNav( ev ){
     this.setState({ isMenuOpen: false });
+    this.closeOverlay();
   },
   openPrimaryNav( ev ){
     this.setState({ isMenuOpen: true });
@@ -41,8 +60,23 @@ export default React.createClass({
       onClick={this.openPrimaryNav}/>;
     var shield = this.state.isMenuOpen ? <TransparentShield /> : null;
 
-    if ( this.props.overlay ) {
-      navigationClasses += 'overlay-enabled';
+    var overlay;
+
+    if ( this.state.isOverlayEnabled ) {
+      if ( this.props.overlayProps ) {
+        overlay = React.createElement( this.props.overlay,
+          this.props.isOverlayFullScreen ? this.props.overlayProps :
+          Object.assign( {}, this.props.overlayProps, {
+            onExit: this.closeOverlay
+          } )
+        );
+      } else {
+        overlay = this.props.overlay;
+      }
+    }
+
+    if ( overlay ) {
+      navigationClasses += this.props.isOverlayFullScreen ? 'overlay-enabled' : '';
     }
 
     return (
@@ -56,7 +90,7 @@ export default React.createClass({
           { this.props.children }
           {shield}
         </div>
-        { this.props.overlay }
+        { overlay }
       </div>
     )
   }

@@ -2,8 +2,23 @@ import React from 'react'
 
 import ImageOverlay from './overlays/ImageOverlay'
 import SearchOverlay from './overlays/SearchOverlay'
+import ReferenceDrawer from './overlays/ReferenceDrawer'
 
 export default [
+  // Reference
+  [
+    /^#\/ref\/(.*)$/,
+    function ( info, props ) {
+      var overlayProps = Object.assign( {}, props, {
+        refId: info[1]
+      } );
+      return Object.assign( {}, props, {
+        isOverlayFullScreen: false,
+        overlay: ReferenceDrawer,
+        overlayProps: overlayProps
+      } );
+    }
+  ],
   // Image Overlay
   [
     /^#\/media\/(.*)$/,

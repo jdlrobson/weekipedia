@@ -49,6 +49,7 @@ export default [
           )
         ];
       } else {
+        props.title = decodeURIComponent( title );
         props.children = [
           React.createElement( Page,
             Object.assign( {}, props, {

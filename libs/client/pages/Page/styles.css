@@ -221,12 +221,16 @@ code {
 pre {
   padding: 1em;
 }
+
+.mw-ref,
 sup {
   vertical-align: super;
 }
 sub {
   vertical-align: sub;
 }
+
+.mw-ref,
 sub,
 sup {
   font-size: 0.75em;
