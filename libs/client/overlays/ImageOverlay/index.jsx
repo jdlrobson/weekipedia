@@ -49,8 +49,8 @@ export default React.createClass({
       var imgStyle = {
         maxHeight: this.state.height,
         maxWidth: this.state.width,
-        width: isLandscape ? 'auto' : img.thumbwidth,
-        height: isLandscape ? img.thumbheight : 'auto'
+        width: 'auto',
+        height: 'auto'
       }
       content = <img src={img.thumburl} style={imgStyle} />;
       if ( img.extmetadata ) {
