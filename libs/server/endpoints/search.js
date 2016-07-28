@@ -14,4 +14,4 @@ export default function ( lang, term, ns ) {
   };
 
   return mwApi( lang, params );
-};
+}

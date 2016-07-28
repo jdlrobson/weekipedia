@@ -18,7 +18,7 @@ const https = process.env.USE_HTTPS;
 
 app.engine('html', hogan)
 app.set('views', __dirname + '/views')
-app.use('/', express.static(__dirname + '/../../public/'))
+app.use('/', express.static( __dirname + '/../../public/' ) )
 app.set('port', (process.env.PORT || 3000))
 
 if ( https ) {
@@ -41,35 +41,32 @@ app.get('/api/trending/:wiki?/:halflife?',(req, res) => {
   } );
 } )
 
-app.get('/api/random/:lang/',(req, res, match) => {
+app.get('/api/random/:lang/',(req, res) => {
   return cachedResponse( res, null, function () {
     return random( req.params.lang );
   } );
 } );
 
-app.get('/api/file/:lang/:width,:height/:title/',(req, res, match) => {
+app.get('/api/file/:lang/:width,:height/:title/',(req, res) => {
   return cachedResponse( res, null, function () {
     var p = req.params;
     return file( p.lang, p.title, p.width, p.height );
   } );
 } );
 
-app.get('/api/search/:lang/:term',(req, res, match) => {
+app.get('/api/search/:lang/:term',(req, res) => {
   return cachedResponse( res, null, function () {
     return search( req.params.lang, req.params.term );
   } );
 } );
 
-app.get('/api/nearby/:lang/:latitude,:longitude',(req, res, match) => {
+app.get('/api/nearby/:lang/:latitude,:longitude',(req, res) => {
   return cachedResponse( res, req.url, function () {
     return nearby( req.params.latitude, req.params.longitude, req.params.lang );
   } );
 } );
 
-app.get('/api/page/:lang/:title',(req, res, match) => {
-  var title = req.params.title;
-  var lang = req.params.lang;
-
+app.get('/api/page/:lang/:title',(req, res) => {
   cachedResponse( res, req.url, function () {
     return page( req.params.title, req.params.lang )
   });

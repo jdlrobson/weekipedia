@@ -1,0 +1,20 @@
+{
+  "globals": {
+    "__dirname": true,
+    "process": true,
+    "console": true,
+    "require": true
+  },
+
+  "asi": true,
+  "esversion": 6,
+  "browser": true,
+  "curly": true,
+  "eqeqeq": true,
+  "forin": false,
+  "onevar": true,
+  "trailing": true,
+  "undef" : true,
+  "unused": true,
+  "supernew": true
+}

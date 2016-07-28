@@ -2,8 +2,8 @@ import fetch from 'isomorphic-fetch'
 
 export default function ( title, lang ) {
   // FIXME: Handle this better please. Use better API.
-  var url = 'https://' + lang + '.wikipedia.org/api/rest_v1/page/mobile-sections/'
-    + encodeURIComponent( title );
+  var url = 'https://' + lang + '.wikipedia.org/api/rest_v1/page/mobile-sections/' +
+    encodeURIComponent( title );
 
   return fetch( url )
     .then( function ( resp ) {
@@ -13,4 +13,4 @@ export default function ( title, lang ) {
         throw Error( resp.status );
       }
     } );
-};
+}

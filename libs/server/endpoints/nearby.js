@@ -14,4 +14,4 @@ export default function ( latitude, longitude, lang, ns ) {
   };
 
   return mwApi( lang, params );
-};
+}

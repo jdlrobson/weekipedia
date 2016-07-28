@@ -16,4 +16,4 @@ export default function ( lang, title, width, height ) {
       throw new Error( 'Unable to find file' );
     }
   } );
-};
+}

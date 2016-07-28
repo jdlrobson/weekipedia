@@ -8,7 +8,7 @@ function respond( res, method ) {
     res.status( 200 );
     res.send( responseText );
     return responseText;
-  }).catch( function (a) {
+  }).catch( function () {
     res.status( 404 );
     res.send( JSON.stringify( {
       msg: '404'
@@ -23,7 +23,6 @@ function cachedResponse( res, cacheKey, method ){
     respond( res, method );
   } else {
     shortLifeCache.get( cacheKey, function( err, responseText ) {
-      var responseText;
       if ( err || !responseText ) {
         respond( res, method ).then( function ( newResponseText ) {
           shortLifeCache.set( cacheKey, newResponseText );

@@ -1,5 +1,4 @@
 import WikiSocketCollection from 'WikiSocketCollection'
-import fetch from 'isomorphic-fetch'
 
 import addProps from './../prop-enricher'
 
@@ -13,10 +12,10 @@ const collection = new WikiSocketCollection( {
 } );
 
 function calcScore( q, hrs ) {
-  return ( ( q.edits - q.anonEdits - q.reverts ) + ( q.anonEdits * 0.2 ) )
-    / q.getBias()
-    * ( q.contributors.length / 2 )
-    * Math.pow( 0.5, q.age() / ( hrs * 60 ) );
+  return ( ( q.edits - q.anonEdits - q.reverts ) + ( q.anonEdits * 0.2 ) ) /
+    q.getBias() *
+    ( q.contributors.length / 2 ) *
+    Math.pow( 0.5, q.age() / ( hrs * 60 ) );
 }
 
 function getSortedPages( hrs ) {
@@ -29,7 +28,7 @@ function getSortedPages( hrs ) {
 
 function annotate( p, filter, limit ) {
   var res = [];
-  p.some( function ( item, i ) {
+  p.some( function ( item ) {
     if ( !item.wiki ) {
       item.wiki = 'enwiki';
     }

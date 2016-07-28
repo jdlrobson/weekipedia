@@ -4,7 +4,7 @@ var routes = [
   // no fragment
   [
     /^#(.*)/,
-    function ( info ) {
+    function () {
       return {}
     }
   ],

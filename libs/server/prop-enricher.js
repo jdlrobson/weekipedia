@@ -22,8 +22,8 @@ function propEnricher( arr, props ) {
   if ( props.indexOf('pageterms') > -1 ) {
     params.wbptterms = 'description';
   }
-  var url = base + '?action=query&format=json&titles='
-    + titles.join('|') + '&formatversion=2&' + param( params );
+  var url = base + '?action=query&format=json&titles=' +
+    titles.join('|') + '&formatversion=2&' + param( params );
 
   return fetch( url ).then(function(resp) {
     return resp.json();
@@ -42,7 +42,7 @@ function propEnricher( arr, props ) {
       page.terms = obj.terms;
     });
     return arr;
-  }).catch( function ( err ) {
+  }).catch( function () {
     // Looks like the endpoint is down or no internet connection - so return original array
     return arr;
   });

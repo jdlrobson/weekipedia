@@ -1,4 +1,5 @@
-var fetch = require( 'isomorphic-fetch' );
+import fetch from 'isomorphic-fetch'
+
 function Api() {
   this.cache = {};
 }
@@ -16,7 +17,7 @@ Api.prototype = {
           cache[url] = promise;
           return resp.json();
         } else {
-          throw Error( response.statusText );
+          throw Error( resp.statusText );
         }
       } );
       return promise;

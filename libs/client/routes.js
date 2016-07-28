@@ -12,7 +12,7 @@ export default [
     /^\/?$|^\/hot\/(.*)$/,
     function( info, props ) {
       var filter = info[1] || '';
-      var args = filter = filter.split( '/' );
+      var args = filter.split( '/' );
 
       return Object.assign( {}, props, {
         children: [

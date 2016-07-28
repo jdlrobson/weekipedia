@@ -8,8 +8,8 @@ export default function ( lang, params ) {
     formatversion: 2
   };
 
-  var url = 'https://' + lang + '.wikipedia.org/w/api.php?'
-    + param( Object.assign( {}, baseParams, params ) );
+  var url = 'https://' + lang + '.wikipedia.org/w/api.php?' +
+    param( Object.assign( {}, baseParams, params ) );
 
   return fetch( url )
     .then( function ( resp ) {
@@ -22,4 +22,4 @@ export default function ( lang, params ) {
     .then( function ( json ) {
       return json.query ? json.query.pages : [];
     } );
-};
+}
