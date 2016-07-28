@@ -3,7 +3,7 @@
   background-color: transparent;
   display: block;
   color: #666666;
-  transition: background-color 0.2s ease,color 0.2s ease;
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 .last-modified-bar > div {

@@ -14,7 +14,6 @@ https://en.wikipedia.org/w/load.php?debug=false&lang=en&modules=mediawiki.ui.but
   -moz-box-sizing: border-box;
   box-sizing: border-box;
   -webkit-appearance: none;
-  *display: inline;
   zoom: 1;
   vertical-align: middle;
   background: #ffffff;
@@ -31,6 +30,7 @@ https://en.wikipedia.org/w/load.php?debug=false&lang=en&modules=mediawiki.ui.but
   border-color: #ffffff;
   box-shadow: inset 0 0 0 1px #ffffff, inset 0 0 0 2px #ffffff;
   outline-width: 0;
+  background-color: #cccccc;
 }
 .mw-ui-button:focus::-moz-focus-inner {
   border-color: transparent;
@@ -47,18 +47,13 @@ https://en.wikipedia.org/w/load.php?debug=false&lang=en&modules=mediawiki.ui.but
 .mw-ui-button:visited {
   color: #555555;
 }
-.mw-ui-button:focus {
-  background-color: #cccccc;
-}
-.mw-ui-button:disabled {
-  color: #cccccc;
-}
 .mw-ui-button:disabled:hover,
 .mw-ui-button:disabled:active {
   background: #ffffff;
   box-shadow: none;
 }
 .mw-ui-button:disabled {
+  color: #cccccc;
   text-shadow: none;
   cursor: default;
 }
@@ -225,6 +220,7 @@ https://en.wikipedia.org/w/load.php?debug=false&lang=en&modules=mediawiki.ui.but
 .mw-ui-button.mw-ui-quiet:focus {
   background-color: transparent;
   color: #555555;
+  box-shadow: none;
 }
 .mw-ui-button.mw-ui-quiet:active,
 .mw-ui-button.mw-ui-quiet.mw-ui-checked {
@@ -232,10 +228,6 @@ https://en.wikipedia.org/w/load.php?debug=false&lang=en&modules=mediawiki.ui.but
 }
 .mw-ui-button.mw-ui-quiet:disabled {
   color: #cccccc;
-}
-.mw-ui-button.mw-ui-quiet:hover,
-.mw-ui-button.mw-ui-quiet:focus {
-  box-shadow: none;
 }
 .mw-ui-button.mw-ui-quiet:active,
 .mw-ui-button.mw-ui-quiet:disabled {

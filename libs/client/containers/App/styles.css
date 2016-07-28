@@ -1,7 +1,7 @@
 #mw-mf-viewport {
   position: relative;
   height: 100%;
-  font-family: 'Helvetica Neue','Helvetica','Nimbus Sans L','Arial','Liberation Sans',sans-serif;
+  font-family: 'Helvetica Neue', 'Helvetica', 'Nimbus Sans L', 'Arial', 'Liberation Sans', sans-serif;
   line-height: 1.4;
   color: #252525;
   background: #fff;
@@ -10,7 +10,7 @@
 #mw-mf-page-center {
   min-height: 100%;
   background-color: #fff;
-  transition: transform 0.25s ease-in-out,height 0s 0.5s;
+  transition: transform 0.25s ease-in-out, height 0s 0.5s;
   width: 100%;
   position: relative;
 }
@@ -34,12 +34,12 @@ nav {
 
 .primary-navigation-enabled #mw-mf-page-center {
   left: 0 !important;
-  transform: translate(240px,0);
+  transform: translate(240px, 0);
   background: #fff;
   position: absolute;
   height: 100%;
   border-left: solid 1px #000;
-  box-shadow: -1px 0 3px 0 rgba(0,0,0,0.3);
+  box-shadow: -1px 0 3px 0 rgba(0, 0, 0, 0.3);
 }
 
 .primary-navigation-enabled nav {

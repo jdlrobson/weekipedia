@@ -15,14 +15,6 @@ body {
   color: #252525;
   background: #fff;
 }
-@media all and (max-width: 280px) {
-  body {
-    font-size: .8em;
-  }
-  .content {
-    margin: 0 12px;
-  }
-}
 .nomobile {
   display: none !important;
 }
@@ -249,6 +241,9 @@ sup {
   overflow-x: auto;
   display: block;
   width: 100% !important;
+  float: none !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
 }
 .content table caption {
   display: block;
@@ -288,15 +283,10 @@ FIXME: Review all of these hacks to see if they still apply.
 .content .metadata {
   display: none !important;
 }
-.content table {
-  float: none !important;
-  margin-left: 0 !important;
-  margin-right: 0 !important;
-}
 .content table.infobox {
   font-size: 90%;
   position: relative;
-  border: none;
+  border: 0;
   margin-bottom: 2em;
   text-align: left;
   background-color: #f9f9f9;
@@ -304,13 +294,13 @@ FIXME: Review all of these hacks to see if they still apply.
 .content table.infobox th,
 .content table.infobox td {
   vertical-align: top;
-  border: none;
+  border: 0;
   border-bottom: 1px solid #dddddd;
   padding: .2em;
 }
 .content table.infobox tr:last-child th,
 .content table.infobox tr:last-child td {
-  border: none;
+  border: 0;
 }
 #filetoc,
 .mw-editsection {
@@ -351,6 +341,16 @@ FIXME: Review all of these hacks to see if they still apply.
   margin: 0 0 0.8em !important;
   width: auto !important;
 }
+
+@media all and (max-width: 280px) {
+  body {
+    font-size: .8em;
+  }
+  .content {
+    margin: 0 12px;
+  }
+}
+
 @media all and (max-width: 720px) {
   .gallery .gallerybox {
     width: 100% !important;

@@ -1,12 +1,12 @@
 .card {
-  background-color: white;
+  background-color: '#fff';
   box-sizing: border-box;
   flex: 1 0 auto;
   margin: 0;
   height: 80px;
   position: relative;
   width: 100%;
-  border: 1px solid rgba(0,0,0,0.2);
+  border: 1px solid rgba(0, 0, 0, 0.2);
 }
 
 .card .indicator {
