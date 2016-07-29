@@ -47,6 +47,18 @@
   padding: .15em 1em .15em 0;
 }
 
+.header .main h2 {
+  display: table;
+  width: 100%;
+  font-size: 1em;
+}
+
+.header .main h2 > * {
+  width: 1em;
+  display: table-cell;
+  padding-right: 0.4em;
+}
+
 @media (min-width: 62.5em) {
   .header {
     max-width: 57.8em;

@@ -100,6 +100,10 @@ export default React.createClass({
       } else {
         sections.push(<Button key="article-expand" label="Expand" onClick={this.expand}></Button>);
       }
+      if ( this.state.lead.languagecount > 0 ) {
+        btns.push(<Button key="lang-view" href="#/languages"
+          label="Read in another language"></Button>);
+      }
       btns.push(<Button key="article-view" href={url} label="View on Wikipedia"></Button>);
 
       if ( this.state.related ) {

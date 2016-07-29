@@ -1,0 +1,27 @@
+.link-list li {
+  background-color: #fff;
+  padding: 0;
+}
+
+.link-list li strong {
+  color: #000;
+  font-weight: bold;
+  display: block;
+}
+
+.link-list li a:hover {
+  text-decoration: none;
+}
+
+.link-list li span,
+.link-list li strong {
+  font-size: 0.9em;
+}
+
+.link-list li a {
+  border-top: solid 1px #eeeeee;
+  cursor: pointer;
+  display: block;
+  padding: 0.75em 1em;
+  color: #666666;
+}

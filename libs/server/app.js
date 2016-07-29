@@ -12,6 +12,7 @@ import related from './endpoints/related'
 import random from './endpoints/random'
 import page from './endpoints/page'
 import nearby from './endpoints/nearby'
+import languages from './endpoints/languages'
 import file from './endpoints/file'
 
 import cachedResponse from './cached-response'
@@ -132,6 +133,12 @@ app.get('/api/page/:lang/:title',(req, res) => {
 app.get('/api/visits/:lang/',(req, res) => {
   cachedResponse( res, req.url, function () {
     return visits( req.params.lang )
+  } );
+} );
+
+app.get('/api/page-languages/:lang/:title',(req, res) => {
+  cachedResponse( res, req.url, function () {
+    return languages( req.params.title, req.params.lang );
   });
 } );
 
@@ -145,4 +152,3 @@ app.listen(app.get('port'))
 
 console.info('==> Server is listening in ' + process.env.NODE_ENV + ' mode')
 console.info('==> Go to http://localhost:%s', app.get('port'))
-

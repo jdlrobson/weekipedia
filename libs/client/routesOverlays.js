@@ -1,6 +1,7 @@
 import React from 'react'
 
 import ImageOverlay from './overlays/ImageOverlay'
+import LanguageOverlay from './overlays/LanguageOverlay'
 import SearchOverlay from './overlays/SearchOverlay'
 import ReferenceDrawer from './overlays/ReferenceDrawer'
 
@@ -30,6 +31,15 @@ export default [
         overlay: React.createElement( ImageOverlay, overlayProps )
       }
     }
+  ],
+  // Languages
+  [
+    /^#\/languages$/,
+    function ( info, props ) {
+      return {
+        overlay: React.createElement( LanguageOverlay, props )
+      }
+    },
   ],
   // Search Overlay
   [
