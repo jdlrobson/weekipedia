@@ -12,7 +12,7 @@ class Overlay extends Component {
   }
   render(){
     var header;
-    var overlayClass = 'overlay';
+    var overlayClass = 'overlay' + ( this.props.className ? ' ' + this.props.className : '' );
 
     if ( this.props.isLightBox ) {
       header = (
