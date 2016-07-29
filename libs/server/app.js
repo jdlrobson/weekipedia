@@ -34,7 +34,7 @@ if ( https ) {
 
 app.get('/api/trending/:wiki?/:halflife?',(req, res) => {
   var wiki = req.params.wiki || 'enwiki';
-  var halflife = parseFloat( req.params.halflife ) || 5;
+  var halflife = parseFloat( req.params.halflife ) || 2;
 
   cachedResponse( res, req.url, function() {
     return trending( wiki, halflife );
