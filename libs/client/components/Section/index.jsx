@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-import SectionContent from './SectionContent'
+import SectionContent from './../SectionContent'
 
 class Section extends Component {
   render(){
