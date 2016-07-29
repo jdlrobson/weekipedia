@@ -17,7 +17,7 @@ export default React.createClass({
   },
   render() {
     return (
-      <input className="search" ref="input" onClick={this.props.onClick}
+      <input className="search" placeholder={this.props.placeholder} ref="input" onClick={this.props.onClick}
         onKeyUp={this.onDoSearch}/>
     )
   }
