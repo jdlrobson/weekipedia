@@ -1,13 +1,15 @@
 import React, { Component } from 'react'
 
-import HorizontalList from './../components/HorizontalList'
-import IntermediateState from './../components/IntermediateState';
-import TrendingCard from './../components/TrendingCard';
-import ErrorBox from './../components/ErrorBox';
+import HorizontalList from './../../components/HorizontalList'
+import IntermediateState from './../../components/IntermediateState';
+import TrendingCard from './../../components/TrendingCard';
+import ErrorBox from './../../components/ErrorBox';
 
-import Article from './../containers/Article'
-import Content from './../containers/Content'
-import CardList from './../containers/CardList'
+import Article from './../../containers/Article';
+import Content from './../../containers/Content';
+import CardList from './../../containers/CardList';
+
+import './styles.css';
 
 // Pages
 export default React.createClass({
@@ -45,8 +47,16 @@ export default React.createClass({
   render(){
     // show intermediate state if still loading, otherwise show list
     var children;
+    var halflife = this.props.halflife;
     var wiki = this.props.wiki;
-
+    var hrClass = '', dayClass = '', wkClass = '';
+    if ( halflife === '48' ) {
+      dayClass = 'active';
+    } else if ( halflife == '84' ) {
+      wkClass = 'active';
+    } else {
+      hrClass = 'active';
+    }
     if ( this.state.error ) {
       children = (<ErrorBox msg="Nothing is trending right now."></ErrorBox>)
     } else if ( this.state.topics ) {
@@ -58,10 +68,10 @@ export default React.createClass({
     return (
       <Article {...this.props} tagline="The wiki in real time">
         <Content>
-          <HorizontalList isSeparated="1">
-            <a href={'/hot/' + wiki }>by hour</a>
-            <a href={'/hot/' + wiki +'/48'}>by day</a>
-            <a href={'/hot/' + wiki +'/84'}>by week</a>
+          <HorizontalList isSeparated="1" className="nav-list">
+            <a href={'/hot/' + wiki } className={hrClass}>by hour</a>
+            <a href={'/hot/' + wiki +'/48'} className={dayClass}>by day</a>
+            <a href={'/hot/' + wiki +'/84'} className={wkClass}>by week</a>
           </HorizontalList>
           {children}
         </Content>
