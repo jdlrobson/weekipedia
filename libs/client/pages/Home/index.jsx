@@ -4,6 +4,7 @@ import HorizontalList from './../../components/HorizontalList'
 import IntermediateState from './../../components/IntermediateState';
 import TrendingCard from './../../components/TrendingCard';
 import ErrorBox from './../../components/ErrorBox';
+import PushButton from './../../components/PushButton';
 
 import Article from './../../containers/Article';
 import Content from './../../containers/Content';
@@ -20,6 +21,7 @@ const OFFLINE_ERROR = 'You do not have an internet connection';
 export default React.createClass({
   getDefaultProps: function () {
     return {
+      isBetaMode: false,
       router: null,
       wiki: 'enwiki',
       halflife: HALF_LIFE_DAYS
@@ -35,6 +37,9 @@ export default React.createClass({
   // You want to load subscriptions not only when the component update but also when it gets mounted.
   componentWillMount(){
     this.load();
+    if ( window.location.search.indexOf( 'beta=' ) > -1 ) {
+      this.setState( { isBetaMode: true } );
+    }
   },
   load() {
     var self = this;
@@ -55,7 +60,7 @@ export default React.createClass({
   },
   render(){
     // show intermediate state if still loading, otherwise show list
-    var children;
+    var children, footer;
     var wiki = this.props.wiki;
     var links = [];
     var halflife = this.props.halflife;
@@ -83,6 +88,13 @@ export default React.createClass({
       children = (<IntermediateState></IntermediateState>);
     }
 
+    if ( this.state.isBetaMode ) {
+      footer = (
+        <Content className="post-content">
+          <PushButton api={this.props.api} />
+        </Content>
+      );
+    }
     return (
       <Article {...this.props} tagline="The wiki in real time" isSpecialPage="1">
         <Content className="pre-content-special">
@@ -93,6 +105,7 @@ export default React.createClass({
         <Content>
           {children}
         </Content>
+        {footer}
       </Article>
     )
   }

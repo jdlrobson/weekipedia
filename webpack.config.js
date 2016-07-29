@@ -3,7 +3,8 @@ var ExtractTextPlugin = require('extract-text-webpack-plugin')
 module.exports = {
     entry: {
       main: "./libs/client/app.js",
-      sw: "./libs/workers/service-worker.js"
+      sw: "./libs/workers/service-worker.js",
+      push: "./libs/workers/web-push.js"
     },
     output: {
       path: __dirname + '/public/',

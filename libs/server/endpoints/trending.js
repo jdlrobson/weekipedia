@@ -40,12 +40,6 @@ function annotate( p, filter, limit ) {
       }
       item.bias = item.getBias();
       item.score = score;
-      // Mark trending ones as safe until end of lifespan
-      // Note: a speed of 0.2 after 5 minutes is equivalent to 1 edit every minute.
-      if ( speed > 0.2 && item.bias < 0.75 && item.age() > 5 && item.contributors.length > 2 ) {
-        console.log( 'Marked', item.title, 'as safe');
-        collection.markSafe( item.id );
-      }
       res.push( item );
     }
   } );

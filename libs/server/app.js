@@ -10,6 +10,7 @@ import subscribe from './endpoints/subscribe'
 import search from './endpoints/search'
 import related from './endpoints/related'
 import random from './endpoints/random'
+import webPushTrend from './endpoints/web-push-trend.js'
 import page from './endpoints/page'
 import nearby from './endpoints/nearby'
 import languages from './endpoints/languages'
@@ -95,6 +96,12 @@ app.post('/api/web-push/unsubscribe', function( req, res ) {
     subscribe.remove( req.body.browser, req.body.feature, req.body.token );
     res.send( 'OK' );
   }
+} );
+
+app.get('/api/web-push/service/trending/',(req, res) => {
+  cachedResponse( res, req.url, function() {
+    return webPushTrend();
+  } );
 } );
 
 // Get routes
