@@ -44,7 +44,7 @@ var router = {
     if ( hash === undefined ) {
       hash = path.split( '#' );
       path = hash[0];
-      hash = hash[1] || '';
+      hash = hash[1] ? '#' + hash[1] : '';
     }
     if ( path ) {
       if ( useReplaceState ) {
