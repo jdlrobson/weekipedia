@@ -32,16 +32,8 @@ export default React.createClass({
   },
   load() {
     var self = this;
-
-    this.props.api.fetch( this.props.apiEndpoint ).then( function ( data ) {
-      var cards = [];
-      data.forEach( function ( item ) {
-        var props;
-        item.key = item.pageid;
-        item.wiki = self.props.lang;
-        item.router = self.props.router;
-        cards.push( React.createElement( Card, item ) );
-      } );
+    var props = { lang: this.props.lang, router: this.props.router };
+    this.props.api.fetchCards( this.props.apiEndpoint, props ).then( function ( cards ) {
       self.setState({ cards : cards });
     } ).catch( function () {
       self.setState({ error: true });
