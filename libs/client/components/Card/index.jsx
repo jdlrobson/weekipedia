@@ -13,7 +13,7 @@ class Card extends Component {
   }
   render(){
     var title = this.props.title;
-    var url = '/' + this.props.wiki.replace( 'wiki', '' ) + '/wiki/' + encodeURIComponent( title );
+    var url = '/' + this.props.lang + '/wiki/' + encodeURIComponent( title );
     var styles = {
       backgroundImage: this.props.thumbnail ?
         'url(' + this.props.thumbnail.source + ')'

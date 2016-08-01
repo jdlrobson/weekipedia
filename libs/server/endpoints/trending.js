@@ -31,6 +31,9 @@ function annotate( p, filter, limit ) {
   p.some( function ( item ) {
     if ( !item.wiki ) {
       item.wiki = 'enwiki';
+      item.lang = 'en';
+    } else if ( !item.lang ) {
+      item.lang = item.wiki.replace( 'wiki', '' )
     }
     if ( res.length >= limit ) {
       return true;
