@@ -5,6 +5,7 @@ import hogan from 'hogan-express'
 
 import trending from './endpoints/trending'
 import search from './endpoints/search'
+import related from './endpoints/related'
 import random from './endpoints/random'
 import page from './endpoints/page'
 import nearby from './endpoints/nearby'
@@ -51,6 +52,12 @@ app.get('/api/file/:lang/:width,:height/:title/',(req, res) => {
   return cachedResponse( res, null, function () {
     var p = req.params;
     return file( p.lang, p.title, p.width, p.height );
+  } );
+} );
+
+app.get('/api/related/:lang/:title',(req, res) => {
+  return cachedResponse( res, null, function () {
+    return related( req.params.lang, req.params.title );
   } );
 } );
 
