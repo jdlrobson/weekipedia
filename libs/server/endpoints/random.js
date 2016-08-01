@@ -1,14 +1,16 @@
 import mwApi from './mwApi'
 
+const number_articles = 48;
+
 export default function ( lang, ns ) {
   var params = {
     prop: 'pageterms|pageimages',
     generator: 'random',
     wbptterms: 'description',
     pithumbsize: 120,
-    pilimit: 50,
+    pilimit: number_articles,
     grnnamespace: ns || 0,
-    grnlimit: 50
+    grnlimit: number_articles
   };
 
   return mwApi( lang, params );

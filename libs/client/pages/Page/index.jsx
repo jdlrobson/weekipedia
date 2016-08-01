@@ -101,7 +101,7 @@ export default React.createClass({
       if ( this.state.related ) {
         related = <Content key="page-row-related" className="post-content">
           <h2>Read more</h2>
-          <CardList cards={this.state.related} />
+          <CardList unordered="1" cards={this.state.related} />
         </Content>;
       }
       return (

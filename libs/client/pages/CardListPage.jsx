@@ -54,7 +54,7 @@ export default React.createClass({
       children = (<ErrorBox msg="Something went wrong when trying to render the list. Please refresh and try again."></ErrorBox>)
     } else if ( this.state.cards ) {
       children = this.state.cards.length ?
-        (<CardList cards={this.state.cards} />) : this.props.emptyMessage;
+        (<CardList {...this.props} cards={this.state.cards} />) : this.props.emptyMessage;
     } else {
       children = (<IntermediateState></IntermediateState>);
     }
