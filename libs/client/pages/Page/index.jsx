@@ -8,6 +8,7 @@ import Button from './../../components/Button'
 import ErrorBox from './../../components/ErrorBox'
 
 import Article from './../../containers/Article'
+import CardList from './../../containers/CardList'
 import Content from './../../containers/Content'
 import utils from './../../utils'
 
@@ -24,6 +25,7 @@ export default React.createClass({
   },
   getInitialState() {
     return {
+      related: null,
       isExpanded: false,
       lead: {},
       errorMsg: 'This page does not exist.',
@@ -38,6 +40,15 @@ export default React.createClass({
   componentWillReceiveProps(nextProps){
     this.load();
   },
+  loadRelatedArticles() {
+    var self = this;
+    var endpoint = '/api/related/' + this.props.lang + '/' + this.props.title;
+    this.props.api.fetchCards( endpoint, this.props ).then( function ( cards ) {
+      self.setState( {
+        related: cards
+      } );
+    } );
+  },
   load() {
     var self = this;
     if ( window.location.search.indexOf( 'expanded=1' ) > -1 ) {
@@ -45,6 +56,7 @@ export default React.createClass({
     }
     this.props.api.getPage( this.props.title, this.props.lang ).then( function ( data ) {
       self.setState(data);
+      self.loadRelatedArticles();
     } ).catch( function () {
       self.setState({ error: true, errorMsg: e });
     } );
@@ -56,7 +68,7 @@ export default React.createClass({
     } );
   },
   render(){
-    var url, leadHtml,
+    var url, leadHtml, related,
       contentBody,
       sections = [],
       btns = [],
@@ -86,6 +98,12 @@ export default React.createClass({
       }
       btns.push(<Button key="article-view" href={url} label="View on Wikipedia"></Button>);
 
+      if ( this.state.related ) {
+        related = <Content key="page-row-related" className="post-content">
+          <h2>Read more</h2>
+          <CardList cards={this.state.related} />
+        </Content>;
+      }
       return (
         <Article {...this.props} title={this.state.lead.displaytitle} tagline={this.state.lead.description}>
           <Content key="page-row-1" className="content">
@@ -95,6 +113,7 @@ export default React.createClass({
           <Content key="page-row-2" className="post-content">{btns}</Content>
           <LastModifiedBar lang={this.props.lang}
             title={this.props.title} timestamp={lead.lastmodified} />
+          {related}
         </Article>
       )
     }

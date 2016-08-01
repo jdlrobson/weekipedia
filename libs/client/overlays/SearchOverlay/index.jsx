@@ -23,19 +23,16 @@ export default React.createClass({
     }
   },
   onSearch( term ){
+    var endpoint;
     var self = this;
     if ( term ) {
       this.setState( { isSearching: true } );
-      this.props.api.fetch( '/api/search/' + this.props.lang + '/' + encodeURIComponent( term ) ).then( function ( data ) {
-        var cards = [];
-        data.forEach( function ( item ) {
-          item.key = item.pageid;
-          cards.push( React.createElement( Card, Object.assign( {}, self.props, item ) ) );
-        } );
+      endpoint = '/api/search/' + this.props.lang + '/' + encodeURIComponent( term );
+      this.props.api.fetchCards( endpoint, this.props ).then( function ( cards ) {
         self.setState({
-          cards: cards
-        });
-        self.setState( { isSearching: false } );
+          cards: cards,
+          isSearching: false
+        } );
       } );
     } else {
       this.setState( { cards: [] } );

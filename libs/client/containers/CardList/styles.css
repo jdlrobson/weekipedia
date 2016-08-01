@@ -1,0 +1,30 @@
+@media (min-width: 720px) {
+  .card-list {
+    border-top: 0;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: flex-start;
+    font-size: 1em;
+    list-style: none;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .card-list .card {
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    margin-right: 10px;
+    width: 30%;
+  }
+
+  .card-list .card:first-child {
+    border-radius: 2px 2px 0 0;
+  }
+  .card-list .card,
+  .card-list .card:first-child,
+  .card-list .card:last-child {
+    border-radius: 2px;
+  }
+  .card-list .card + .card {
+    border: 1px solid rgba(0, 0, 0, 0.2);
+  }
+}

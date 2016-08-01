@@ -1,4 +1,6 @@
+import React from 'react'
 import fetch from 'isomorphic-fetch'
+import Card from './components/Card'
 
 function Api() {
   this.cache = {};
@@ -6,6 +8,20 @@ function Api() {
 }
 
 Api.prototype = {
+  fetchCards: function ( url, props ) {
+    return this.fetch( url ).then( function ( data ) {
+      var cards = [];
+      if ( data.length ) {
+        data.forEach( function ( item ) {
+          item.key = item.pageid;
+          cards.push( React.createElement( Card, Object.assign( {}, props, item ) ) );
+        } );
+        return cards;
+      } else {
+        return null;
+      }
+    } );
+  },
   fetch: function ( url ) {
     var promise,
       cache = this.cache;

@@ -372,3 +372,13 @@ FIXME: Review all of these hacks to see if they still apply.
 .post-content {
   margin-top: 10px;
 }
+
+.post-content h2 {
+  border-bottom: 0;
+  font-size: .8em;
+  font-weight: normal;
+  color: #999999;
+  padding-bottom: 0.5em;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
