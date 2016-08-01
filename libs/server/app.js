@@ -32,9 +32,9 @@ if ( https ) {
   });
 }
 
-app.get('/api/trending/:wiki?/:halflife?',(req, res) => {
-  var wiki = req.params.wiki || 'enwiki';
-  var halflife = parseFloat( req.params.halflife ) || 2;
+app.get('/api/trending/:wiki/:halflife',(req, res) => {
+  var wiki = req.params.wiki;
+  var halflife = parseFloat( req.params.halflife );
 
   cachedResponse( res, req.url, function() {
     return trending( wiki, halflife );

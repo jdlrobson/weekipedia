@@ -17,7 +17,7 @@ export default React.createClass({
     return {
       router: null,
       wiki: 'enwiki',
-      halflife: null,
+      halflife: '18'
     };
   },
   getInitialState() {
@@ -50,7 +50,7 @@ export default React.createClass({
     var halflife = this.props.halflife;
     var wiki = this.props.wiki;
     var hrClass = '', dayClass = '', wkClass = '';
-    if ( halflife === '48' ) {
+    if ( halflife === '18' ) {
       dayClass = 'active';
     } else if ( halflife == '84' ) {
       wkClass = 'active';
@@ -69,8 +69,8 @@ export default React.createClass({
       <Article {...this.props} tagline="The wiki in real time">
         <Content>
           <HorizontalList isSeparated="1" className="nav-list">
-            <a href={'/hot/' + wiki } className={hrClass}>by hour</a>
-            <a href={'/hot/' + wiki +'/48'} className={dayClass}>by day</a>
+            <a href={'/hot/' + wiki + '/2'} className={hrClass}>by hour</a>
+            <a href={'/hot/' + wiki +'/18'} className={dayClass}>by day</a>
             <a href={'/hot/' + wiki +'/84'} className={wkClass}>by week</a>
           </HorizontalList>
           {children}

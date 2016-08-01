@@ -70,13 +70,8 @@ Api.prototype = {
     }
   },
   getTrending: function ( wiki, halflife ) {
-    var url = '/api/trending/';
-    if ( wiki ) {
-      url += wiki;
-    }
-    if ( halflife ) {
-      url += '/' + halflife;
-    }
+    var url = '/api/trending/' + wiki + '/' + halflife;
+
     return this.fetch( url ).then( function ( json ) {
       return json.results;
     } );
