@@ -11,13 +11,17 @@ import CardList from './../../containers/CardList';
 
 import './styles.css';
 
+const HALF_LIFE_HOURS = '2';
+const HALF_LIFE_DAYS = '10';
+const HALF_LIFE_WEEKS = '36';
+
 // Pages
 export default React.createClass({
   getDefaultProps: function () {
     return {
       router: null,
       wiki: 'enwiki',
-      halflife: '18'
+      halflife: HALF_LIFE_DAYS
     };
   },
   getInitialState() {
@@ -47,15 +51,24 @@ export default React.createClass({
   render(){
     // show intermediate state if still loading, otherwise show list
     var children;
-    var halflife = this.props.halflife;
     var wiki = this.props.wiki;
+    var links = [];
+    var halflife = this.props.halflife;
     var hrClass = '', dayClass = '', wkClass = '';
-    if ( halflife === '18' ) {
+    if ( halflife === HALF_LIFE_DAYS ) {
       dayClass = 'active';
-    } else if ( halflife == '84' ) {
+    } else if ( halflife == HALF_LIFE_WEEKS ) {
       wkClass = 'active';
-    } else {
+    } else if ( halflife === HALF_LIFE_HOURS ) {
       hrClass = 'active';
+    }
+    links = [
+      <a href={'/hot/' + wiki + '/' + HALF_LIFE_HOURS} className={hrClass}>by hour</a>,
+      <a href={'/hot/' + wiki +'/' + HALF_LIFE_DAYS} className={dayClass}>by day</a>,
+      <a href={'/hot/' + wiki +'/' + HALF_LIFE_WEEKS} className={wkClass}>by week</a>
+    ];
+    if ( !hrClass && !dayClass && !wkClass ) {
+      link.push( <a href={'/hot/' + wiki +'/' + halflife} className='active'>custom</a> );
     }
     if ( this.state.error ) {
       children = (<ErrorBox msg="Nothing is trending right now."></ErrorBox>)
@@ -69,9 +82,7 @@ export default React.createClass({
       <Article {...this.props} tagline="The wiki in real time">
         <Content>
           <HorizontalList isSeparated="1" className="nav-list">
-            <a href={'/hot/' + wiki + '/2'} className={hrClass}>by hour</a>
-            <a href={'/hot/' + wiki +'/18'} className={dayClass}>by day</a>
-            <a href={'/hot/' + wiki +'/84'} className={wkClass}>by week</a>
+            {links}
           </HorizontalList>
           {children}
         </Content>
