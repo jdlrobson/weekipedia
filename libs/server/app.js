@@ -3,6 +3,7 @@ require('babel-core/register')
 import express from 'express'
 import hogan from 'hogan-express'
 
+import visits from './endpoints/visits'
 import trending from './endpoints/trending'
 import search from './endpoints/search'
 import related from './endpoints/related'
@@ -76,6 +77,12 @@ app.get('/api/nearby/:lang/:latitude,:longitude',(req, res) => {
 app.get('/api/page/:lang/:title',(req, res) => {
   cachedResponse( res, req.url, function () {
     return page( req.params.title, req.params.lang )
+  });
+} );
+
+app.get('/api/visits/:lang/',(req, res) => {
+  cachedResponse( res, req.url, function () {
+    return visits( req.params.lang )
   });
 } );
 

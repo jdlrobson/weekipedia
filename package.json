@@ -30,6 +30,7 @@
     "isomorphic-fetch": "^2.2.1",
     "node-cache": "^3.2.1",
     "node-jquery-param": "0.0.2",
+    "pageviews": "^1.1.0",
     "react": "^15.2.0",
     "react-dom": "^15.2.0",
     "style-loader": "^0.13.1",
