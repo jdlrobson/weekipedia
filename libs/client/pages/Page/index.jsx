@@ -57,8 +57,8 @@ export default React.createClass({
     this.props.api.getPage( this.props.title, this.props.lang ).then( function ( data ) {
       self.setState(data);
       self.loadRelatedArticles();
-    } ).catch( function () {
-      self.setState({ error: true, errorMsg: e });
+    } ).catch( function ( e ) {
+      self.setState({ error: true, errorMsg: e.toString() });
     } );
   },
   expand() {
