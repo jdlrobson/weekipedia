@@ -22,9 +22,9 @@ export default function ( lang ) {
 
   return pageviews.getTopPageviews( {
     project: lang + '.wikipedia',
-    year: yesterday.getFullYear(),
-    month: yesterday.getMonth() + 1,
-    day: yesterday.getDate(),
+    year: yesterday.getUTCFullYear(),
+    month: yesterday.getUTCMonth() + 1,
+    day: yesterday.getUTCDate(),
     limit: 50
   } ).then(function( result ) {
     result.items[0].articles.forEach( function ( item ) {
