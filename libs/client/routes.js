@@ -3,6 +3,7 @@ import React from 'react'
 import Home from './pages/Home'
 import Page from './pages/Page'
 import SpecialPage from './pages/SpecialPage'
+import MostRead from './pages/MostRead'
 import Random from './pages/Random'
 import Nearby from './pages/Nearby'
 
@@ -59,6 +60,23 @@ export default [
           )
         ];
       }
+      return props;
+    }
+  ],
+  // Random
+  [
+    /^\/([a-z]*)\/wiki\/Special:MostRead\/?(.*)|^\/wiki\/Special:MostRead$/,
+    function( info, props ) {
+      var lang = info[1] || 'en';
+      props.lang = lang;
+
+      props.children = [
+        React.createElement( MostRead,
+          Object.assign( {}, props, {
+            key: 'page-special-most-read'
+          } )
+        )
+      ];
       return props;
     }
   ],
