@@ -20,6 +20,8 @@ A file for css that optimises the Minerva skin on larger devices.
     /* @noflip */
     margin-right: 1.4em;
   }
+
+  .content .mw-default-size,
   .mw-halign-right,
   .content .thumb.tright {
     /* @noflip */
