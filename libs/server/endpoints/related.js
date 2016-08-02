@@ -9,7 +9,7 @@ export default function ( lang, title ) {
     generator: 'search',
     gsrnamespace: 0,
     gsrlimit: 3,
-    gsrsearch: 'morelike:' + encodeURIComponent( title )
+    gsrsearch: 'morelike:' + title
   };
 
   return mwApi( lang, params );
