@@ -8,6 +8,16 @@ function Api() {
 }
 
 Api.prototype = {
+  post: function ( url, data ) {
+    return fetch( url, {
+      method: 'post',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify( data )
+    } );
+  },
   fetchCards: function ( url, props ) {
     return this.fetch( url ).then( function ( data ) {
       var cards = [];
