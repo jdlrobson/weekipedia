@@ -31,7 +31,7 @@ export default [
   ],
   // View a page
   [
-    /^\/([a-z]*)\/wiki\/(.*)|^\/wiki\/(.*)/,
+    /^\/([a-z\-]*)\/wiki\/(.*)|^\/wiki\/(.*)/,
     function ( info, props ) {
       var title = info[2] || info[3],
         titleSansPrefix = title.substr(title.indexOf( ':' ) + 1),
@@ -65,7 +65,7 @@ export default [
   ],
   // Random
   [
-    /^\/([a-z]*)\/wiki\/Special:MostRead\/?(.*)|^\/wiki\/Special:MostRead$/,
+    /^\/([a-z\-]*)\/wiki\/Special:MostRead\/?(.*)|^\/wiki\/Special:MostRead$/,
     function( info, props ) {
       var lang = info[1] || 'en';
       props.lang = lang;
@@ -82,7 +82,7 @@ export default [
   ],
   // Random
   [
-    /^\/([a-z]*)\/wiki\/Special:Random\/?(.*)|^\/wiki\/Special:Random$/,
+    /^\/([a-z\-]*)\/wiki\/Special:Random\/?(.*)|^\/wiki\/Special:Random$/,
     function( info, props ) {
       var lang = info[1] || 'en';
       props.lang = lang;
@@ -99,7 +99,7 @@ export default [
   ],
   // Nearby
   [
-    /^\/([a-z]*)\/wiki\/Special:Nearby\/?(.*)|^\/wiki\/Special:Nearby\/?(.*)$/,
+    /^\/([a-z\-]*)\/wiki\/Special:Nearby\/?(.*)|^\/wiki\/Special:Nearby\/?(.*)$/,
     function( info, props ) {
       var lang = info[1] || 'en';
 
