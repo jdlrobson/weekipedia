@@ -1,11 +1,15 @@
 .card-list {
-  box-shadow: 0 3px 3px 0 rgba(117,117,117,0.3);
+  box-shadow: 0 3px 3px 0 rgba(117, 117, 117, 0.3);
 }
 .card ~ .card {
   border-top: 0;
 }
 
 @media (min-width: 720px) {
+  .card-list {
+    box-shadow: none;
+  }
+
   .card-list-unordered {
     border-top: 0;
     display: flex;
