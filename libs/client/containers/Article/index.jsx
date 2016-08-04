@@ -14,15 +14,23 @@ class Article extends Component {
     }
   }
   render(){
-    var header = this.props.title ?
-      [ <h1 key="article-title"
-        id="section_0" dangerouslySetInnerHTML={{ __html: this.props.title}}></h1> ] : [],
+    var switcher,
+      header = [],
       license = {
         url: '//creativecommons.org/licenses/by-sa/3.0/',
         name: 'CC BY-SA 3.0'
-      }, switcher,
+      },
       tagline = this.props.tagline;
 
+    if ( this.props.actions ) {
+      header.push( <HorizontalList className="page-actions">{this.props.actions}</HorizontalList> );
+    }
+    if ( this.props.title ) {
+      header.push(
+        <h1 key="article-title"
+        id="section_0" dangerouslySetInnerHTML={{ __html: this.props.title}}></h1>
+      );
+    }
     if ( tagline ) {
       header.push(<div className="tagline" key="article-tagline">{tagline}</div>)
     }
@@ -57,5 +65,8 @@ class Article extends Component {
     )
   }
 }
+Article.props = {
+  actions: []
+};
 
 export default Article

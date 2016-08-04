@@ -1,3 +1,17 @@
+.page-actions {
+  position: absolute;
+  float: none;
+  bottom: 0;
+  width: 100%;
+  border-top: 1px solid #eeeeee;
+  border-bottom: 1px solid #cccccc;
+  padding: 0.5em 0;
+}
+
+.page-actions > :first-child {
+  margin-right: -1em;
+}
+
 .heading-holder {
   padding: 20px 0 25px;
 }
@@ -82,6 +96,13 @@ https://en.wikipedia.org/w/load.php?debug=false&lang=en&modules=skins.minerva.ta
 }
 
 @media all and (min-width: 720px) {
+  .page-actions {
+    position: initial;
+    float: right;
+    width: auto;
+    border: 0;
+    margin: 0 0 1em 1em;
+  }
   .heading-holder {
     padding: 20px 0;
     position: relative;

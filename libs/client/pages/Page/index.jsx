@@ -5,6 +5,7 @@ import IntermediateState from './../../components/IntermediateState';
 import Section from './../../components/Section'
 import LastModifiedBar from './../../components/LastModifiedBar'
 import Button from './../../components/Button'
+import Icon from './../../components/Icon'
 import ErrorBox from './../../components/ErrorBox'
 
 import Article from './../../containers/Article'
@@ -13,6 +14,7 @@ import Content from './../../containers/Content'
 
 import './styles.css'
 import './tablet.css'
+import './icons.css'
 
 // Pages
 export default React.createClass({
@@ -81,6 +83,7 @@ export default React.createClass({
       contentBody,
       sections = [],
       btns = [],
+      actions = [],
       self = this,
       lang = this.props.lang,
       title = this.props.title,
@@ -107,10 +110,12 @@ export default React.createClass({
       } else {
         sections.push(<Button key="article-expand" label="Expand" onClick={this.expand}></Button>);
       }
-      if ( this.state.lead.languagecount > 0 ) {
-        btns.push(<Button key="lang-view" href="#/languages"
-          label="Read in another language"></Button>);
-      }
+
+      actions.push(<Icon key="lang-view" href="#/languages"
+        glyph="language-switcher"
+        disabled={this.state.lead.languagecount === 0}
+        label="Read in another language"></Icon>);
+
       if ( namespace === 0 ) {
         btns.push(<Button key="article-talk" href={'/' + lang + '/wiki/Talk:' + title }
           label="Talk"></Button>);
@@ -123,7 +128,7 @@ export default React.createClass({
         </Content>;
       }
       return (
-        <Article {...this.props} title={this.state.lead.displaytitle} tagline={this.state.lead.description}>
+        <Article {...this.props} actions={actions} title={this.state.lead.displaytitle} tagline={this.state.lead.description}>
           <Content key="page-row-1" className="content">
             <SectionContent {...this.props} text={leadHtml}></SectionContent>
             {sections}
