@@ -1,6 +1,4 @@
 // FIXME: Package as npm module - this is code from MediaWiki core.
-'use strict';
-
 /**
  * Library for storing device specific information. It should be used for storing simple
  * strings and is not suitable for storing large chunks of data.

@@ -3,6 +3,7 @@
     "__dirname": true,
     "process": true,
     "console": true,
+    "module": true,
     "require": true
   },
 
