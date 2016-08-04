@@ -38,7 +38,7 @@ export default React.createClass({
     this.load();
   },
   componentWillReceiveProps(nextProps){
-    this.load();
+    this.load( nextProps.title, nextProps.lang );
   },
   loadRelatedArticles() {
     var self = this;
@@ -49,12 +49,16 @@ export default React.createClass({
       } );
     } );
   },
-  load() {
+  load( title, lang ) {
     var self = this;
+    title = title || this.props.title;
+    lang = lang || this.props.lang;
+
     if ( window.location.search.indexOf( 'expanded=1' ) > -1 ) {
       this.setState( { isExpanded: true } );
     }
-    this.props.api.getPage( this.props.title, this.props.lang ).then( function ( data ) {
+    this.setState( { lead: {} } );
+    this.props.api.getPage( title, lang ).then( function ( data ) {
       self.setState(data);
       self.loadRelatedArticles();
     } ).catch( function ( e ) {
