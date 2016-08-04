@@ -1,0 +1,29 @@
+.indicator {
+  float: left;
+  margin-top: 0.7em;
+  font-size: 0.4em;
+}
+
+
+.section h2 {
+  cursor: pointer;
+  width: 100%;
+  border-bottom: solid 1px #e2e3e4;
+  margin-bottom: 0.5em;
+}
+
+.section > div {
+  display: none;
+}
+
+.open-block > div {
+  display: block;
+}
+
+.open-block .indicator {
+  transform: scaleY(-1);
+}
+
+.mw-ui-icon-arrow {
+  background-image: linear-gradient(transparent, transparent), url(data:image/svg+xml,%3C%3Fxml%20version%3D%221.0%22%20encoding%3D%22UTF-8%22%20standalone%3D%22no%22%3F%3E%0A%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%20-407%2024%2024%22%3E%0A%20%20%20%20%3Cg%20id%3D%22g4%22%3E%0A%20%20%20%20%20%20%20%20%3Cpath%20d%3D%22M21.348-401.268q.94%200%201.61.668l.92.922-11.858%2011.86L.198-399.66l.922-.94q.65-.686%201.59-.686.94%200%201.61.668l7.718%207.7%207.7-7.682q.67-.668%201.61-.668z%22%20id%3D%22path6%22%20fill%3D%22currentColor%22%2F%3E%0A%20%20%20%20%3C%2Fg%3E%0A%3C%2Fsvg%3E%0A);
+}
