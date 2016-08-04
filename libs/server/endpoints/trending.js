@@ -1,15 +1,5 @@
-import WikiSocketCollection from 'WikiSocketCollection'
-
 import addProps from './../prop-enricher'
-
-const collection = new WikiSocketCollection( {
-  id: 'mysocket',
-  project: '*.wikipedia.org',
-  minPurgeTime: 20,
-  maxLifespan: ( 60 * 24 ) * 7,
-  maxInactivity: ( 60 * 24 ) * 7,
-  minSpeed: 0.1
-} );
+import collection from './../collection'
 
 function calcScore( q, hrs ) {
   return ( ( q.edits - q.anonEdits - q.reverts ) + ( q.anonEdits * 0.2 ) ) /
