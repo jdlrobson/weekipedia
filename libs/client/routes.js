@@ -7,6 +7,8 @@ import MostRead from './pages/MostRead'
 import Random from './pages/Random'
 import Nearby from './pages/Nearby'
 
+import utils from './utils'
+
 export default [
   [
     // Home page / Hot
@@ -38,6 +40,8 @@ export default [
         lang = info[1] || 'en';
 
       props.lang = lang;
+      props.mobileUrl = utils.getAbsoluteUrl( title, lang, 'm.wikipedia.org' );
+      props.desktopUrl = utils.getAbsoluteUrl( title, lang, 'wikipedia.org' );
 
       // FIXME: i18n
       if ( title.indexOf( 'Special:' ) === 0 ) {

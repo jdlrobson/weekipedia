@@ -10,7 +10,6 @@ import ErrorBox from './../../components/ErrorBox'
 import Article from './../../containers/Article'
 import CardList from './../../containers/CardList'
 import Content from './../../containers/Content'
-import utils from './../../utils'
 
 import './styles.css'
 import './tablet.css'
@@ -98,7 +97,6 @@ export default React.createClass({
         </Article>
       )
     } else {
-      url = utils.getAbsoluteUrl( title, lang );
       leadHtml = lead.sections.length ? lead.sections[0].text : '';
       if ( this.state.error ) {
         sections = [<ErrorBox msg="This page does not exist."></ErrorBox>];
@@ -117,7 +115,6 @@ export default React.createClass({
         btns.push(<Button key="article-talk" href={'/' + lang + '/wiki/Talk:' + title }
           label="Talk"></Button>);
       }
-      btns.push(<Button key="article-view" href={url} label="View on Wikipedia"></Button>);
 
       if ( this.state.related ) {
         related = <Content key="page-row-related" className="post-content">

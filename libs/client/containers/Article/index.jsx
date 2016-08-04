@@ -1,4 +1,7 @@
 import React, { Component } from 'react'
+
+import HorizontalList from './../../components/HorizontalList'
+
 import Content from './../../containers/Content'
 import './styles.css'
 
@@ -17,13 +20,22 @@ class Article extends Component {
       license = {
         url: '//creativecommons.org/licenses/by-sa/3.0/',
         name: 'CC BY-SA 3.0'
-      },
+      }, switcher,
       tagline = this.props.tagline;
 
     if ( tagline ) {
       header.push(<div className="tagline" key="article-tagline">{tagline}</div>)
     }
 
+    if ( this.props.mobileUrl ) {
+      switcher = (
+        <HorizontalList>
+          <span>WebApp</span>
+          <a href={this.props.mobileUrl}>Mobile</a>
+          <a href={this.props.desktopUrl}>Desktop</a>
+        </HorizontalList>
+      );
+    }
     var nsClass = this.props.isSpecialPage ? ' special-page-heading' : ' standard-page-heading';
 
     return (
@@ -34,7 +46,10 @@ class Article extends Component {
         {this.props.children}
         <Content key="footer" className="post-content footer">
           <ul className="footer-info">
-            <li><h2>Weekipedia</h2></li>
+            <li>
+              <h2>Weekipedia</h2>
+              {switcher}
+            </li>
             <li>Content is available under <a className="external" rel="nofollow" href={license.url}>{license.name}</a> unless otherwise noted.</li>
           </ul>
         </Content>

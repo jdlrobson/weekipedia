@@ -47,6 +47,11 @@
   text-align: center;
 }
 
+.footer-info .hlist {
+  display: inline-block;
+  margin-left: 8px;
+}
+
 .footer ul li {
   line-height: 1.2;
   padding: 0 0 .7em;
