@@ -59,6 +59,10 @@ export default React.createClass({
     }
     this.setState( { lead: {} } );
     this.props.api.getPage( title, lang ).then( function ( data ) {
+      // If talk page auto expand
+      if ( data.lead.ns % 2 === 1 ) {
+        self.setState( { isExpanded: true } );
+      }
       self.setState(data);
       self.loadRelatedArticles();
     } ).catch( function ( e ) {
@@ -72,12 +76,15 @@ export default React.createClass({
     } );
   },
   render(){
-    var url, leadHtml, related,
+    var url, leadHtml, related, talkUrl,
       contentBody,
       sections = [],
       btns = [],
       self = this,
-      lead = this.state.lead;
+      lang = this.props.lang,
+      title = this.props.title,
+      lead = this.state.lead,
+      namespace = this.state.lead.ns;
 
     if ( !lead.displaytitle ) {
       contentBody = this.state.error ? <ErrorBox msg={this.state.errorMsg}></ErrorBox>
@@ -89,7 +96,7 @@ export default React.createClass({
         </Article>
       )
     } else {
-      url = utils.getAbsoluteUrl( this.props.title, this.props.lang );
+      url = utils.getAbsoluteUrl( title, lang );
       leadHtml = lead.sections.length ? lead.sections[0].text : '';
       if ( this.state.error ) {
         sections = [<ErrorBox msg="This page does not exist."></ErrorBox>];
@@ -103,6 +110,10 @@ export default React.createClass({
       if ( this.state.lead.languagecount > 0 ) {
         btns.push(<Button key="lang-view" href="#/languages"
           label="Read in another language"></Button>);
+      }
+      if ( namespace === 0 ) {
+        btns.push(<Button key="article-talk" href={'/' + lang + '/wiki/Talk:' + title }
+          label="Talk"></Button>);
       }
       btns.push(<Button key="article-view" href={url} label="View on Wikipedia"></Button>);
 
