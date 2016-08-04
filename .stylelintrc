@@ -9,6 +9,7 @@
     "color-hex-length": null,
     "media-query-parentheses-space-inside": null,
     "function-parentheses-space-inside": null,
+    "selector-max-specificity": "1,2,0",
     "no-descending-specificity": null
 	}
 }

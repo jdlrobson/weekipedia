@@ -1,4 +1,5 @@
 /* stylelint-disable selector-no-id */
+/* stylelint-disable selector-max-specificity */
 html,
 #app,
 body {

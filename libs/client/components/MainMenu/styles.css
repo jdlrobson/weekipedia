@@ -31,14 +31,14 @@ nav ul li a:hover {
   border-top: 0;
 }
 
-.menu ul li a:hover,
-.menu ul li a:visited,
-.menu ul li a:active {
+.menu ul a:hover,
+.menu ul a:visited,
+.menu ul a:active {
   text-decoration: none;
 }
 
-.menu ul li a:visited,
-.menu ul li a:active {
+.menu ul a:visited,
+.menu ul a:active {
   color: #fff;
 }
 
@@ -56,6 +56,6 @@ nav ul.hlist li a {
   margin-left: 0;
 }
 
-nav ul.hlist li a:hover {
+nav .hlist a:hover {
   box-shadow: none;
 }

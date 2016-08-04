@@ -18,33 +18,24 @@ body {
 .nomobile {
   display: none !important;
 }
-.content figure,
-.content .thumb {
+figure,
+.thumb {
   margin: .6em 0;
   /* bug 20030 */
 }
-.content figure .thumbinner,
-.content .thumb .thumbinner {
+figure .thumbinner,
+.thumb .thumbinner {
   margin: 0 auto;
   max-width: 100% !important;
 }
-.content figure .thumbinner > div,
-.content .thumb .thumbinner > div {
+.thumbinner > div {
   float: none !important;
   width: auto !important;
   clear: both !important;
 }
-.content figure .noresize,
-.content .thumb .noresize {
-  width: 100%;
-  overflow-x: auto;
-}
-.content figure .noresize img,
-.content .thumb .noresize img {
-  max-width: none !important;
-}
-.content figcaption,
-.content .thumbcaption {
+
+figcaption,
+.thumbcaption {
   margin: .5em 0 0;
   font-size: .8em;
   line-height: 1.5;
@@ -52,13 +43,13 @@ body {
   color: #555555;
   width: auto !important;
 }
-.content .thumbborder {
+.thumbborder {
   border: 1px solid #cccccc;
 }
-.content img {
+img {
   vertical-align: middle;
 }
-.content .floatright {
+.floatright {
   /* @noflip */
   clear: right;
   /* @noflip */
@@ -66,7 +57,7 @@ body {
   /* @noflip */
   margin: 0 0 .6em .6em;
 }
-.content .floatleft {
+.floatleft {
   /* @noflip */
   clear: left;
   /* @noflip */
@@ -74,11 +65,11 @@ body {
   /* @noflip */
   margin: 0 .6em .6em 0;
 }
-.content a > img {
+a > img {
   max-width: 100% !important;
   height: auto !important;
 }
-.content div.magnify {
+div.magnify {
   display: none;
 }
 h1,
@@ -145,8 +136,8 @@ blockquote:after {
 .content ul li {
   margin-bottom: 10px;
 }
-.content ol li:last-child,
-.content ul li:last-child {
+ol li:last-child,
+ul li:last-child {
   margin-bottom: inherit;
 }
 .content ul {
@@ -155,10 +146,10 @@ blockquote:after {
 .content ul > li > ul {
   list-style-type: disc;
 }
-.content ul > li > ul > li > ul {
+.content ul > ul > ul {
   list-style-type: circle;
 }
-.content ol {
+ol {
   list-style: decimal inside;
 }
 dl {
@@ -236,7 +227,7 @@ sup {
   font-size: 0.75em;
   line-height: 1;
 }
-.content table {
+table {
   margin: 1em 0;
   /* following 4 rules are needed for scrolling */
   overflow: auto;
@@ -249,22 +240,22 @@ sup {
   margin-left: 0 !important;
   margin-right: 0 !important;
 }
-.content table caption {
+table caption {
   display: block;
   text-align: left;
 }
-.content table.wikitable {
+table.wikitable {
   border: 1px solid #cccccc;
 }
-.content table.wikitable > tr > th,
-.content table.wikitable > tr > td,
-.content table.wikitable > * > tr > th,
-.content table.wikitable > * > tr > td {
+table.wikitable > tr > th,
+table.wikitable > tr > td,
+table.wikitable > * > tr > th,
+table.wikitable > * > tr > td {
   border: 1px solid #cccccc;
   padding: .2em;
 }
-.content table.wikitable > tr > th,
-.content table.wikitable > * > tr > th {
+table.wikitable > tr > th,
+table.wikitable > * > tr > th {
   background-color: #eeeeee;
 }
 /*
@@ -278,15 +269,15 @@ https://www.mediawiki.org/wiki/Requests_for_comment/Allow_styling_in_templates
 
 FIXME: Review all of these hacks to see if they still apply.
 */
-.content .tmbox,
-.content .ambox,
-.content .navbox,
-.content .vertical-navbox,
-.content .topicon,
-.content .metadata {
+.tmbox,
+.ambox,
+.navbox,
+.vertical-navbox,
+.topicon,
+.metadata {
   display: none !important;
 }
-.content table.infobox {
+.infobox {
   font-size: 90%;
   position: relative;
   border: 0;
@@ -294,15 +285,15 @@ FIXME: Review all of these hacks to see if they still apply.
   text-align: left;
   background-color: #f9f9f9;
 }
-.content table.infobox th,
-.content table.infobox td {
+.infobox th,
+.infobox td {
   vertical-align: top;
   border: 0;
   border-bottom: 1px solid #dddddd;
   padding: .2em;
 }
-.content table.infobox tr:last-child th,
-.content table.infobox tr:last-child td {
+.infobox tr:last-child th,
+.infobox tr:last-child td {
   border: 0;
 }
 /* force portals to use a one column layout on mobile */
@@ -357,8 +348,8 @@ FIXME: Review all of these hacks to see if they still apply.
   .gallery .gallerybox div {
     width: 100% !important;
   }
-  .content table.multicol > tbody > tr > td,
-  .content table.multicol > tr > td {
+  table.multicol > tbody > tr > td,
+  table.multicol > tr > td {
     display: block !important;
     width: auto !important;
   }

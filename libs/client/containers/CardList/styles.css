@@ -25,17 +25,6 @@
     border: 1px solid rgba(0, 0, 0, 0.2);
     margin: 0 10px 10px 0;
     width: 30%;
-  }
-
-  .card-list-unordered .card:first-child {
-    border-radius: 2px 2px 0 0;
-  }
-  .card-list-unordered .card,
-  .card-list-unordered .card:first-child,
-  .card-list-unordered .card:last-child {
     border-radius: 2px;
-  }
-  .card-list-unordered .card + .card {
-    border: 1px solid rgba(0, 0, 0, 0.2);
   }
 }
