@@ -1,8 +1,8 @@
 import fetch from 'isomorphic-fetch'
 
-export default function ( title, lang ) {
+export default function ( title, lang, project ) {
   // FIXME: Handle this better please. Use better API.
-  var url = 'https://' + lang + '.wikipedia.org/api/rest_v1/page/mobile-sections/' +
+  var url = 'https://' + lang + '.' + project + '.org/api/rest_v1/page/mobile-sections/' +
     encodeURIComponent( title );
 
   return fetch( url )

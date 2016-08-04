@@ -40,8 +40,8 @@ export default [
         lang = info[1] || 'en';
 
       props.lang = lang;
-      props.mobileUrl = utils.getAbsoluteUrl( title, lang, 'm.wikipedia.org' );
-      props.desktopUrl = utils.getAbsoluteUrl( title, lang, 'wikipedia.org' );
+      props.mobileUrl = utils.getAbsoluteUrl( title, lang, 'm.' + props.project + '.org' );
+      props.desktopUrl = utils.getAbsoluteUrl( title, lang, props.project + '.org' );
 
       // FIXME: i18n
       if ( title.indexOf( 'Special:' ) === 0 ) {

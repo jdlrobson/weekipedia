@@ -1,6 +1,6 @@
 import mwApi from './mwApi'
 
-export default function ( lang, title ) {
+export default function ( lang, title, project ) {
   var params = {
     prop: 'pageterms|pageimages',
     wbptterms: 'description',
@@ -12,6 +12,6 @@ export default function ( lang, title ) {
     gsrsearch: 'morelike:' + title
   };
 
-  return mwApi( lang, params );
+  return mwApi( lang, params, project );
 }
 

@@ -1,6 +1,6 @@
 import mwApi from './mwApi'
 
-export default function ( lang, term, ns ) {
+export default function ( lang, term, ns, project ) {
   var params = {
     prop: 'pageterms|pageimages|pageprops',
     ppprop: 'displaytitle',
@@ -13,5 +13,5 @@ export default function ( lang, term, ns ) {
     gpsnamespace: ns || 0
   };
 
-  return mwApi( lang, params );
+  return mwApi( lang, params, project );
 }

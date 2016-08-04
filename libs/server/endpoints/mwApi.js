@@ -1,14 +1,15 @@
 import fetch from 'isomorphic-fetch'
 import param from 'node-jquery-param'
 
-export default function ( lang, params ) {
+export default function ( lang, params, project ) {
   var baseParams = {
     action: 'query',
     format: 'json',
     formatversion: 2
   };
+  project = project || 'wikipedia';
 
-  var url = 'https://' + lang + '.wikipedia.org/w/api.php?' +
+  var url = 'https://' + lang + '.' + project + '.org/w/api.php?' +
     param( Object.assign( {}, baseParams, params ) );
 
   return fetch( url )

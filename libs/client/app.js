@@ -14,7 +14,8 @@ import mwStorage from './mediawiki-storage'
 var globalProps = {
   api: api,
   router: router,
-  storage: mwStorage
+  storage: mwStorage,
+  project: process.env.PROJECT || 'wikipedia'
 };
 
 // register all the routes

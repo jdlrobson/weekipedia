@@ -1,6 +1,6 @@
 import mwApi from './mwApi'
 
-export default function ( title, lang ) {
+export default function ( title, lang, project ) {
   var params = {
     meta: 'siteinfo',
     siprop: 'general',
@@ -11,7 +11,7 @@ export default function ( title, lang ) {
     llinlanguagecode: lang
   };
 
-  return mwApi( lang, params ).then( function ( pages ) {
+  return mwApi( lang, params, project ).then( function ( pages ) {
     return pages.length ? pages[0].langlinks || [] : [];
   } );
 }

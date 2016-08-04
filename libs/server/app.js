@@ -17,6 +17,9 @@ import file from './endpoints/file'
 
 import cachedResponse from './cached-response'
 
+const project = process.env.PROJECT || 'wikipedia';
+
+console.log( 'Init for project', project );
 // Express
 const app = express()
 const https = process.env.USE_HTTPS;
@@ -89,56 +92,56 @@ app.get('/api/trending/:wiki/:halflife',(req, res) => {
   var halflife = parseFloat( req.params.halflife );
 
   cachedResponse( res, req.url, function() {
-    return trending( wiki, halflife );
+    return trending( wiki, halflife, project );
   } );
 } )
 
 app.get('/api/random/:lang/',(req, res) => {
   return cachedResponse( res, null, function () {
-    return random( req.params.lang );
+    return random( req.params.lang, 0, project );
   } );
 } );
 
 app.get('/api/file/:lang/:width,:height/:title/',(req, res) => {
   return cachedResponse( res, null, function () {
     var p = req.params;
-    return file( p.lang, p.title, p.width, p.height );
+    return file( p.lang, p.title, p.width, p.height, project );
   } );
 } );
 
 app.get('/api/related/:lang/:title',(req, res) => {
   return cachedResponse( res, null, function () {
-    return related( req.params.lang, req.params.title );
+    return related( req.params.lang, req.params.title, project );
   } );
 } );
 
 app.get('/api/search/:lang/:term',(req, res) => {
   return cachedResponse( res, null, function () {
-    return search( req.params.lang, req.params.term );
+    return search( req.params.lang, req.params.term, 0, project );
   } );
 } );
 
 app.get('/api/nearby/:lang/:latitude,:longitude',(req, res) => {
   return cachedResponse( res, req.url, function () {
-    return nearby( req.params.latitude, req.params.longitude, req.params.lang );
+    return nearby( req.params.latitude, req.params.longitude, req.params.lang, 0, project );
   } );
 } );
 
 app.get('/api/page/:lang/:title',(req, res) => {
   cachedResponse( res, req.url, function () {
-    return page( req.params.title, req.params.lang )
+    return page( req.params.title, req.params.lang, project )
   });
 } );
 
 app.get('/api/visits/:lang/',(req, res) => {
   cachedResponse( res, req.url, function () {
-    return visits( req.params.lang )
+    return visits( req.params.lang, project )
   } );
 } );
 
 app.get('/api/page-languages/:lang/:title',(req, res) => {
   cachedResponse( res, req.url, function () {
-    return languages( req.params.title, req.params.lang );
+    return languages( req.params.title, req.params.lang, project );
   });
 } );
 

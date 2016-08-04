@@ -1,6 +1,6 @@
 import mwApi from './mwApi'
 
-export default function ( latitude, longitude, lang, ns ) {
+export default function ( latitude, longitude, lang, ns, project ) {
   var params = {
     colimit: 'max',
     prop: 'coordinates|pageterms|pageimages',
@@ -13,5 +13,5 @@ export default function ( latitude, longitude, lang, ns ) {
     ggscoord: latitude + '|' + longitude
   };
 
-  return mwApi( lang, params );
+  return mwApi( lang, params, project );
 }

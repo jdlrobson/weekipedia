@@ -2,7 +2,7 @@ import mwApi from './mwApi'
 
 const number_articles = 48;
 
-export default function ( lang, ns ) {
+export default function ( lang, ns, project ) {
   var params = {
     prop: 'pageterms|pageimages',
     generator: 'random',
@@ -13,5 +13,5 @@ export default function ( lang, ns ) {
     grnlimit: number_articles
   };
 
-  return mwApi( lang, params );
+  return mwApi( lang, params, project );
 }

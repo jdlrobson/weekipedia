@@ -1,6 +1,6 @@
 import mwApi from './mwApi'
 
-export default function ( lang, title, width, height ) {
+export default function ( lang, title, width, height, project ) {
   var params = {
     titles: title.indexOf( 'File:' ) > -1 ? title : 'File:' + title,
     prop: 'imageinfo',
@@ -9,7 +9,7 @@ export default function ( lang, title, width, height ) {
     iirurlheight: height
   };
 
-  return mwApi( lang, params ).then( function ( data ) {
+  return mwApi( lang, params, project ).then( function ( data ) {
     if ( data[0] && data[0].imageinfo ) {
       return data[0].imageinfo[0];
     } else {

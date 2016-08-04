@@ -1,13 +1,15 @@
 import fetch from 'isomorphic-fetch'
 import param from 'node-jquery-param'
 
-function propEnricher( arr, props ) {
+function propEnricher( arr, props, lang, project ) {
+  lang = lang || 'en';
+  project = project || 'wikipedia';
+
   if ( arr.length > 50 ) {
     throw 'Too many items passed. Max limit is 50.';
   }
 
-  // TODO: Support for multi-languages
-  var base = 'https://en.wikipedia.org/w/api.php';
+  var base = 'https://' + lang + '.' + project + '.org/w/api.php';
   var titles = [];
   arr.forEach( function (page) {
     titles.push(encodeURIComponent(page.title));

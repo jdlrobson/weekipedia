@@ -1,8 +1,9 @@
 import WikiSocketCollection from 'WikiSocketCollection'
+const project = process.env.PROJECT || 'wikipedia';
 
 const collection = new WikiSocketCollection( {
   id: 'mysocket',
-  project: '*.wikipedia.org',
+  project: '*.' + project + '.org',
   minPurgeTime: 20,
   maxLifespan: ( 60 * 24 ) * 7,
   maxInactivity: ( 60 * 24 ) * 7,

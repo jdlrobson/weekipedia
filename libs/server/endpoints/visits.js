@@ -13,7 +13,7 @@ function isBlacklisted( title ) {
   return blacklisted;
 }
 
-export default function ( lang ) {
+export default function ( lang, project ) {
   var results = {};
   var today = new Date();
   var day = ( 24 * 60 * 60 * 1000 );
@@ -21,7 +21,7 @@ export default function ( lang ) {
   var beforeYesterday = new Date( yesterday - day );
 
   return pageviews.getTopPageviews( {
-    project: lang + '.wikipedia',
+    project: lang + '.' + project,
     year: yesterday.getUTCFullYear(),
     month: yesterday.getUTCMonth() + 1,
     day: yesterday.getUTCDate(),
@@ -33,7 +33,7 @@ export default function ( lang ) {
       }
     } );
     return pageviews.getTopPageviews( {
-      project: lang + '.wikipedia',
+      project: lang + '.' + project,
       year: beforeYesterday.getFullYear(),
       month: beforeYesterday.getMonth() + 1,
       day: beforeYesterday.getDate(),
@@ -54,7 +54,7 @@ export default function ( lang ) {
       }
     }
 
-    return addProps( pages, [ 'pageimages','pageterms' ] )
+    return addProps( pages, [ 'pageimages','pageterms' ], lang, project )
   } ).then( function ( pages ) {
     return pages.sort( function ( a, b ) {
       if ( !a.delta ) {

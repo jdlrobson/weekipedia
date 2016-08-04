@@ -14,7 +14,7 @@ export default React.createClass({
     };
   },
   render(){
-    var url = utils.getAbsoluteUrl( 'Special:' + this.props.title, this.props.lang );
+    var url = utils.getAbsoluteUrl( 'Special:' + this.props.title, this.props.lang, 'm.' + this.props.project + '.org' );
     var children = this.props.children ?
       this.props.children : (
         <div>Special pages are currently not supported.
