@@ -9,10 +9,12 @@ import routes from './routes.js'
 import overlayRoutes from './routesOverlays.js'
 
 import api from './api.js'
+import mwStorage from './mediawiki-storage'
 
 var globalProps = {
   api: api,
-  router: router
+  router: router,
+  storage: mwStorage
 };
 
 // register all the routes
