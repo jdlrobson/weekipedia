@@ -59,8 +59,10 @@ export default React.createClass({
     }
     this.setState( { lead: {} } );
     this.props.api.getPage( title, lang ).then( function ( data ) {
-      // If talk page auto expand
-      if ( data.lead.ns % 2 === 1 ) {
+      var ns = data.lead.ns;
+
+      // If talk page or user page auto expand
+      if ( ns % 2 === 1 || ns === 2 ) {
         self.setState( { isExpanded: true } );
       }
       self.setState(data);
