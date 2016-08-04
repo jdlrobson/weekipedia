@@ -2,9 +2,11 @@ require('babel-core/register')
 
 import express from 'express'
 import hogan from 'hogan-express'
+import bodyParser from 'body-parser'
 
 import visits from './endpoints/visits'
 import trending from './endpoints/trending'
+import subscribe from './endpoints/subscribe'
 import search from './endpoints/search'
 import related from './endpoints/related'
 import random from './endpoints/random'
@@ -17,6 +19,9 @@ import cachedResponse from './cached-response'
 // Express
 const app = express()
 const https = process.env.USE_HTTPS;
+const manifest = {
+  gcm_sender_id: process.env.GCM_SENDER_ID
+};
 
 app.engine('html', hogan)
 app.set('views', __dirname + '/views')
@@ -33,6 +38,50 @@ if ( https ) {
     }
   });
 }
+
+function checkReqParams( req, res, required ) {
+  var missing = [];
+  required.forEach( function ( param ) {
+    if ( req.body && req.body[param] === undefined ) {
+      missing.push( param );
+    }
+  } );
+  if ( missing.length ) {
+    res.status( 400 );
+    res.send( 'The following parameters are required: ' + missing.join( ',' ) );
+    return false;
+  } else {
+    return true;
+  }
+}
+
+app.use(bodyParser.json()); // support json encoded bodies
+app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
+  extended: true
+}));
+
+app.post('/api/web-push/subscribe', function( req, res ) {
+  if ( checkReqParams( req, res, [ 'feature', 'token', 'browser' ] ) ) {
+    res.status( 200 );
+    subscribe.add( req.body.browser, req.body.feature, req.body.token );
+    res.send( 'OK' );
+  }
+} );
+
+app.post('/api/web-push/unsubscribe', function( req, res ) {
+  if ( checkReqParams( req, res, [ 'feature', 'token', 'browser' ] ) ) {
+    res.status( 200 );
+    subscribe.remove( req.body.browser, req.body.feature, req.body.token );
+    res.send( 'OK' );
+  }
+} );
+
+// Get routes
+
+app.get('/manifest.json',(req, res) => {
+  res.setHeader('Content-Type', 'application/json');
+  res.send( JSON.stringify( manifest ) );
+} );
 
 app.get('/api/trending/:wiki/:halflife',(req, res) => {
   var wiki = req.params.wiki;
