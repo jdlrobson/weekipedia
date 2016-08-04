@@ -1,9 +1,8 @@
-.indicator {
+.section .indicator {
   float: left;
   margin-top: 0.7em;
   font-size: 0.4em;
 }
-
 
 .section h2 {
   cursor: pointer;
