@@ -8,6 +8,10 @@ CSS rules modified from https://en.wikipedia.org/w/load.php?debug=false&lang=en&
   clear: both;
 }
 
+.pre-content-special {
+  text-align: center;
+}
+
 /* Extracted from /*
 https://en.wikipedia.org/w/load.php?debug=false&lang=en&modules=skins.minerva.tablet.styles&only=styles&debug=true
  */

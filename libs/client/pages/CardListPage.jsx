@@ -8,6 +8,8 @@ import Content from './../containers/Content'
 import Article from './../containers/Article'
 import CardList from './../containers/CardList'
 
+import SpecialPage from './SpecialPage'
+
 // Pages
 export default React.createClass({
   getDefaultProps: function () {
@@ -52,7 +54,7 @@ export default React.createClass({
     }
 
     return (
-      <Article {...this.props}>
+      <Article {...this.props} isSpecialPage="1">
         <Content>{children}</Content>
         {this.props.children}
       </Article>

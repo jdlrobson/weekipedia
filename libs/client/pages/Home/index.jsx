@@ -79,11 +79,13 @@ export default React.createClass({
     }
 
     return (
-      <Article {...this.props} tagline="The wiki in real time">
-        <Content>
+      <Article {...this.props} tagline="The wiki in real time" isSpecialPage="1">
+        <Content className="pre-content-special">
           <HorizontalList isSeparated="1" className="nav-list">
             {links}
           </HorizontalList>
+        </Content>
+        <Content>
           {children}
         </Content>
       </Article>

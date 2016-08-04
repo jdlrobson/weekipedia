@@ -26,6 +26,10 @@
   border: 0;
 }
 
+.special-page-heading .tagline {
+  text-align: center;
+}
+
 .footer.post-content {
   padding: 2em 16px 1.5em 16px;
   margin: 2em auto 0;
