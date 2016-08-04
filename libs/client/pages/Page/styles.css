@@ -280,7 +280,6 @@ FIXME: Review all of these hacks to see if they still apply.
 */
 .content .tmbox,
 .content .ambox,
-.content #coordinates,
 .content .navbox,
 .content .vertical-navbox,
 .content .topicon,
@@ -305,10 +304,6 @@ FIXME: Review all of these hacks to see if they still apply.
 .content table.infobox tr:last-child th,
 .content table.infobox tr:last-child td {
   border: 0;
-}
-#filetoc,
-.mw-editsection {
-  display: none;
 }
 /* force portals to use a one column layout on mobile */
 .skin-minerva .portal-column-left-wide,

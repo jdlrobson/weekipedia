@@ -53,7 +53,7 @@
 }
 
 @media (min-width: 720px) {
-  #footer {
+  .footer {
     padding: 2em 3.35em 1.5em 3.35em;
   }
 }
