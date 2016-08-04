@@ -13,7 +13,9 @@
 }
 
 .heading-holder {
-  padding: 20px 0 25px;
+  position: relative;
+  padding: 20px 0 3.1em;
+  overflow: hidden;
 }
 .heading-holder .tagline {
   color: #555555;
@@ -105,7 +107,6 @@ https://en.wikipedia.org/w/load.php?debug=false&lang=en&modules=skins.minerva.ta
   }
   .heading-holder {
     padding: 20px 0;
-    position: relative;
   }
   .heading-holder.special-page-heading {
     padding: 0;
