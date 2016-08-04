@@ -24,6 +24,10 @@ class SectionContent extends Component {
         }
       } else {
         var href = link.getAttribute( 'href' ) || '';
+        // FIXME: Workaround for #5
+        if ( href.substr( 0, 5 ) === '/wiki' ) {
+          href = '/' + props.lang + href;
+        }
         props.router.navigateTo( href );
         ev.preventDefault();
       }
