@@ -1,4 +1,4 @@
-import './styles.css'
+import './styles.less'
 import React, { Component } from 'react'
 
 export default (props) => (

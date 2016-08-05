@@ -16,7 +16,7 @@ const staticAssets = [
   '/home-icon.png',
   '/manifest.json',
   '/main-bundle.js',
-  '/style.css',
+  '/style.less',
   '/wiki/Special:SplashScreen'
 ]
 

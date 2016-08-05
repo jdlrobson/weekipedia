@@ -7,7 +7,7 @@ import Content from './../../containers/Content'
 import ArticleFooter from './ArticleFooter'
 import ArticleHeader from './ArticleHeader'
 
-import './styles.css'
+import './styles.less'
 
 // Main component
 class Article extends Component {

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import './styles.css'
+import './styles.less'
 
 const IntermediateState = (props) => (
     <div className="pending">{props.msg || 'Loading'}</div>

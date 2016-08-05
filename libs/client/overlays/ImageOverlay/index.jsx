@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-import './styles.css'
+import './styles.less'
 
 import Overlay from './../../containers/Overlay'
 

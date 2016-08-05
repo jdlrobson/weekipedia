@@ -1,7 +1,7 @@
 import React from 'react'
 import { render } from 'react-dom'
-import 'reset-css/reset.css'
-import './main.css'
+import 'reset-css/reset.less'
+import './main.less'
 import App from './containers/App'
 import router from './router.js'
 

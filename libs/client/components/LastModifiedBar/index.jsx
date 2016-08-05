@@ -1,6 +1,6 @@
 import React from 'react'
 import timeago from 'timeago'
-import './styles.css'
+import './styles.less'
 import Content from './../../containers/Content'
 
 export default ({ editor, lang, title, timestamp }) => {

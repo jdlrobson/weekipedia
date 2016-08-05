@@ -12,9 +12,9 @@ import Article from './../../containers/Article'
 import CardList from './../../containers/CardList'
 import Content from './../../containers/Content'
 
-import './styles.css'
-import './tablet.css'
-import './icons.css'
+import './styles.less'
+import './tablet.less'
+import './icons.less'
 
 const OFFLINE_ERROR_MESSAGE = 'You need an internet connection to view this page';
 

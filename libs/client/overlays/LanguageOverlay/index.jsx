@@ -10,7 +10,7 @@ import Panel from './../../components/Panel'
 import IntermediateState from './../../components/IntermediateState';
 import SearchInput from './../../components/SearchInput'
 
-import './styles.css'
+import './styles.less'
 
 export default React.createClass({
   getInitialState() {

@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 
 import Overlay from './../../containers/Overlay'
 
-import './styles.css'
+import './styles.less'
 
 export default React.createClass({
   render(){

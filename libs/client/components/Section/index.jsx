@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 import Icon from './../Icon'
 import SectionContent from './../SectionContent'
 
-import './styles.css'
+import './styles.less'
 
 class Section extends Component {
   constructor(props) {

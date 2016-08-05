@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 
-import './styles.css'
+import './styles.less'
 
 class Card extends Component {
   navigateTo(ev) {

@@ -9,7 +9,7 @@ import Article from './../../containers/Article';
 import Content from './../../containers/Content';
 import CardList from './../../containers/CardList';
 
-import './styles.css';
+import './styles.less';
 
 const HALF_LIFE_HOURS = '2';
 const HALF_LIFE_DAYS = '10';

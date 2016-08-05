@@ -18,7 +18,8 @@ module.exports = function ( grunt ) {
         syntax: 'less'
       },
       all: [
-        'libs/**/*.css'
+        'libs/**/*.css',
+        'libs/**/*.less'
       ]
     }
   } );

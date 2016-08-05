@@ -29,7 +29,8 @@ module.exports = {
           exclude: /node_modules/
         },
         { test: /\.(gif|png|jpg)$/, loader: 'url?limit=25000' },
-        { test: /\.css$/, loader: ExtractTextPlugin.extract('style', 'css') }
+        { test: /\.css$/, loader: ExtractTextPlugin.extract('style', 'css') },
+        { test: /\.less$/, loader: ExtractTextPlugin.extract('style', 'css!less') }
       ]
     }
 };

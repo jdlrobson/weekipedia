@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 
-import './styles.css'
+import './styles.less'
 
 import Icon from './../../components/Icon'
 import Header from './../../components/Header'

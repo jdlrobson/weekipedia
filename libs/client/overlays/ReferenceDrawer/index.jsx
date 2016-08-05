@@ -6,8 +6,8 @@ import Icon from './../../components/Icon'
 
 import Overlay from './../../containers/Overlay'
 
-import './styles.css'
-import './icons.css'
+import './styles.less'
+import './icons.less'
 
 export default React.createClass({
   getInitialState() {

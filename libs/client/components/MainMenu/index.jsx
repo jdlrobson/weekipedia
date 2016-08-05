@@ -3,8 +3,8 @@ import React, { Component } from 'react'
 import Icon from './../Icon'
 import HorizontalList from './../HorizontalList'
 
-import './styles.css'
-import './icons.css'
+import './styles.less'
+import './icons.less'
 
 class MainMenu extends Component {
   render(){

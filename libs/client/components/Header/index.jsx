@@ -3,8 +3,8 @@ import Icon from './../Icon'
 
 import Content from './../../containers/Content'
 
-import './styles.css'
-import './icons.css'
+import './styles.less'
+import './icons.less'
 
 class Header extends Component {
   render(){

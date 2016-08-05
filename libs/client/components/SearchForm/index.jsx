@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 
 import SearchInput from './../SearchInput'
 
-import './styles.css'
+import './styles.less'
 
 export default (props) => (
   <form className="search-form">

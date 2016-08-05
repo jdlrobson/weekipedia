@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import './styles.css'
+import './styles.less'
 
 const Content = (props) => (
     <div className={'content-container ' + ( props.className ? props.className : '' ) }>{props.children}</div>
