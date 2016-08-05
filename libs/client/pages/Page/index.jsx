@@ -104,7 +104,7 @@ export default React.createClass({
   },
   render(){
     var url, leadHtml, related, talkUrl,
-      contentBody,
+      contentBody, iconProps = {},
       sections = [],
       btns = [],
       actions = [],
@@ -133,10 +133,17 @@ export default React.createClass({
         sections.push(<Button key="article-expand" label="Expand" onClick={this.expand}></Button>);
       }
 
-      actions.push(<Icon key="lang-view" href="#/languages"
-        glyph="language-switcher"
-        disabled={this.state.lead.languagecount === 0}
-        label="Read in another language"></Icon>);
+      iconProps = {
+        key: 'lang-view',
+        glyph: 'language-switcher',
+        label: 'Read in another language'
+      };
+      if ( this.state.lead.languagecount === 0 ) {
+        iconProps.className = 'disabled';
+      } else {
+        iconProps.href = '#/languages';
+      }
+      actions.push(<Icon {...iconProps} />);
 
       if ( namespace === 0 ) {
         btns.push(<Button key="article-talk" href={'/' + lang + '/wiki/Talk:' + title }
