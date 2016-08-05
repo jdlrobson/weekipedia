@@ -9,11 +9,14 @@ import Icon from './../../components/Icon'
 import TransparentShield from './../../components/TransparentShield'
 import SearchForm from './../../components/SearchForm'
 
+import Toast from './../../overlays/Toast'
+
 // Main component
 export default React.createClass({
   getInitialState() {
     return {
       isMenuOpen: false,
+      notification: '',
       isOverlayEnabled: false
     }
   },
@@ -36,6 +39,7 @@ export default React.createClass({
     if ( this.state.isOverlayEnabled ) {
       this.setState( { isOverlayEnabled: false } );
     }
+    this.setState( { notification: null } );
   },
   closePrimaryNav( ev ){
     this.setState({ isMenuOpen: false });
@@ -45,6 +49,18 @@ export default React.createClass({
     this.setState({ isMenuOpen: true });
     ev.preventDefault();
     ev.stopPropagation();
+  },
+  showNotification( msg ) {
+    var self = this;
+    this.setState( {
+      notification: msg
+    } );
+    clearTimeout( this.pendingToast );
+    this.pendingToast = setTimeout( function () {
+      self.setState( {
+        notification: null
+      } );
+    }, 5000 );
   },
   onClickSearch(ev){
     this.props.router.navigateTo( '#/search' );
@@ -60,7 +76,7 @@ export default React.createClass({
       onClick={this.openPrimaryNav}/>;
     var shield = this.state.isMenuOpen ? <TransparentShield /> : null;
 
-    var overlay;
+    var overlay, toast;
 
     if ( this.state.isOverlayEnabled ) {
       if ( this.props.overlayProps ) {
@@ -79,6 +95,16 @@ export default React.createClass({
       navigationClasses += this.props.isOverlayFullScreen ? 'overlay-enabled' : '';
     }
 
+    if ( this.state.notification ) {
+     toast = <Toast>{this.state.notification}</Toast>;
+    }
+
+    // clone each child and pass them the notifier
+    const children = React.Children.map( this.props.children, ( child ) => React.cloneElement( child, {
+         showNotification: this.showNotification
+       } )
+    );
+
     return (
       <div id="mw-mf-viewport" className={navigationClasses}>
         <nav id="mw-mf-page-left">
@@ -87,10 +113,11 @@ export default React.createClass({
         <div id="mw-mf-page-center" onClick={this.closePrimaryNav}>
           <Header key="header-bar" primaryIcon={icon}
             main={searchForm}></Header>
-          { this.props.children }
+          {children}
           {shield}
         </div>
         { overlay }
+        { toast }
       </div>
     )
   }
