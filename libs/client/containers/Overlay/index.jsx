@@ -31,7 +31,7 @@ class Overlay extends Component {
       className="close" onClick={this.onClose.bind(this)}/>;
 
     if ( this.props.isDrawer ) {
-      header = closeIconGray;
+      header = null;
     } else if ( this.props.isLightBox ) {
       header = (
         <div className="lightbox-header">
