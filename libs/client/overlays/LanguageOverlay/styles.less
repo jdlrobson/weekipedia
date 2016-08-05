@@ -1,7 +1,9 @@
+@import './../../globals.less';
+
 /* Lang overlay component */
 .language-overlay,
 .language-overlay .overlay-content {
-  background-color: #eeeeee;
+  background-color: @language-overlay-bg-color;
 }
 
 .language-overlay input {
@@ -15,7 +17,7 @@
   padding: 2em 1em 0.5em;
   text-transform: uppercase;
   font-size: 0.85em;
-  color: #777777;
+  color: @language-overlay-list-header-color;
 }
 
 .language-overlay .list-header span {

@@ -1,7 +1,9 @@
+@import './../../globals.less';
+
 .references-drawer {
   font-size: 1em;
-  background-color: #111111;
-  color: #cccccc;
+  background-color: @reference-drawer-bg-color;
+  color: @reference-drawer-heading-color;
   overflow-y: auto;
   padding: 20px;
   max-height: 160px;
@@ -9,7 +11,7 @@
 
 .references-drawer a {
   background-image: none;
-  color: #5880c0;
+  color: @reference-drawer-link-color;
 }
 
 .references-drawer .reference-text {
@@ -22,7 +24,7 @@
 }
 
 .references-drawer .text {
-  color: #888888;
+  color: @reference-drawer-text-color;
   cursor: default;
   letter-spacing: .2em;
   font-size: 0.75em;
