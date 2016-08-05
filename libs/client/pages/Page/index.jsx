@@ -95,7 +95,7 @@ export default React.createClass({
           subsections: []
         } );
       } else {
-        curSection.subsections.push( <Section {...self.props} {...sectionProps} key={id} /> );
+        curSection.subsections.push( <Section {...self.props} {...sectionProps} key={id} isCollapsible={false} /> );
       }
     } );
     // push the last one

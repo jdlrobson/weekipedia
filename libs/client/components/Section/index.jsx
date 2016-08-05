@@ -13,14 +13,19 @@ class Section extends Component {
     };
   }
   onToggle() {
-    this.setState( { isOpen: !this.state.isOpen } );
+    if ( this.props.isCollapsible ) {
+      this.setState( { isOpen: !this.state.isOpen } );
+    }
   }
   render(){
     var hLevel = this.props.toclevel + 1;
     var hMethod = React.DOM['h' + hLevel];
-    var headingText = <span dangerouslySetInnerHTML={{ __html: this.props.line}} />
-    var icon = <Icon glyph="arrow" className="indicator" />
-    var heading = hMethod.call(React.DOM, { onClick: this.onToggle.bind(this) }, [ icon, headingText ] );
+    var headingChildren = [ <span dangerouslySetInnerHTML={{ __html: this.props.line}} /> ];
+
+    if ( this.props.isCollapsible ) {
+      headingChildren.unshift( <Icon glyph="arrow" className="indicator" /> );
+    }
+    var heading = hMethod.call(React.DOM, { onClick: this.onToggle.bind(this) }, headingChildren );
     return (
       <div className={ this.state.isOpen ? 'section open-block' : 'section' }>
         {heading}
@@ -30,7 +35,11 @@ class Section extends Component {
     )
   }
 }
-Section.props = {
+Section.propTypes = {
+  isCollapsible: React.PropTypes.bool
+};
+Section.defaultProps = {
+  isCollapsible: true,
   subsections: []
 };
 
