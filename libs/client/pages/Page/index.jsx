@@ -141,6 +141,10 @@ export default React.createClass({
       };
       if ( this.state.lead.languagecount === 0 ) {
         iconProps.className = 'disabled';
+        iconProps.onClick = function ( ev ) {
+          ev.stopPropagation();
+          self.props.showNotification( 'This page is not available in other languages.' );
+        };
       } else {
         iconProps.href = '#/languages';
       }
