@@ -1,12 +1,9 @@
+/* globals clients, caches, skipWaiting */
 const version = process.env.OFFLINE_VERSION
 
 import {
   precache, router, cacheFirst, networkOnly, options
 } from 'sw-toolbox'
-
-let {
-  caches, addEventListener, skipWaiting, clients
-} = global
 
 options.cache.name = 'weekipedia-' + version
 
@@ -30,7 +27,7 @@ staticAssets.forEach((asset) => router.get(asset, cacheFirst))
 router.get('/api/(.*)', networkOnly)
 
 // Serve any other url with the shell
-router.get('/(.*)', (request, values) => caches.match('/wiki/Special:SplashScreen'))
+router.get('/(.*)', () => caches.match('/wiki/Special:SplashScreen'))
 
 // Rest of calls go to network
 router.default = networkOnly
