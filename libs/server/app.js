@@ -24,6 +24,23 @@ console.log( 'Init for project', project );
 const app = express()
 const https = process.env.USE_HTTPS;
 const manifest = {
+  name: 'Weekipedia',
+  short_name: 'Weekipedia',
+  start_url: './',
+  display: 'standalone',
+  icons: [
+    {
+      src: '/home-icon.png',
+      sizes: '48x48',
+      type: 'image/png'
+    },
+    {
+      src: '/home-icon.png',
+      sizes: '192x192',
+      type: 'image/png'
+    }
+  ],
+  theme_color: 'white',
   gcm_sender_id: process.env.GCM_SENDER_ID
 };
 
