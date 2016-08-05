@@ -2,6 +2,7 @@ import React from 'react'
 
 import Home from './pages/Home'
 import Page from './pages/Page'
+import SplashScreen from './pages/SplashScreen'
 import SpecialPage from './pages/SpecialPage'
 import MostRead from './pages/MostRead'
 import Random from './pages/Random'
@@ -78,6 +79,23 @@ export default [
         React.createElement( MostRead,
           Object.assign( {}, props, {
             key: 'page-special-most-read'
+          } )
+        )
+      ];
+      return props;
+    }
+  ],
+  // Splash
+  [
+    /^\/([a-z\-]*)\/wiki\/Special:SplashScreen|^\/wiki\/Special:SplashScreen$/,
+    function( info, props ) {
+      var lang = info[1] || 'en';
+      props.lang = lang;
+
+      props.children = [
+        React.createElement( SplashScreen,
+          Object.assign( {}, props, {
+            key: 'page-special-splash'
           } )
         )
       ];

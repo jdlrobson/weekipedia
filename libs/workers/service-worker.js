@@ -1,6 +1,4 @@
-// Keeps the file changing every time we bump the app version.
-// Will re-fetch this script, re-install the SW and re-cache the assets.
-console.log('Service worker version', global.__VERSION__)
+const version = process.env.OFFLINE_VERSION
 
 import {
   precache, router, cacheFirst, networkOnly, options
@@ -10,7 +8,7 @@ let {
   caches, addEventListener, skipWaiting, clients
 } = global
 
-options.cache.name = 'weekipedia'
+options.cache.name = 'weekipedia-' + version
 
 // Keep in sync with asset names needed for offline in
 // webpack/base.webpack.config.js
@@ -19,7 +17,7 @@ const staticAssets = [
   '/manifest.json',
   '/main-bundle.js',
   '/style.css',
-  '/shell'
+  '/wiki/Special:SplashScreen'
 ]
 
 // Prefetch static assets

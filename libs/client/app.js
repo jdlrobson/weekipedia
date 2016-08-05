@@ -10,6 +10,7 @@ import overlayRoutes from './routesOverlays.js'
 
 import api from './api.js'
 import mwStorage from './mediawiki-storage'
+import initOffline from './offline'
 
 var globalProps = {
   api: api,
@@ -45,3 +46,6 @@ if ( 'onpopstate' in window ) {
 }
 
 renderCurrentRoute();
+if ( process.env.OFFLINE_VERSION ) {
+  initOffline();
+}

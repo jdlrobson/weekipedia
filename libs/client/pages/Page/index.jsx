@@ -16,6 +16,8 @@ import './styles.css'
 import './tablet.css'
 import './icons.css'
 
+const OFFLINE_ERROR_MESSAGE = 'You need an internet connection to view this page';
+
 // Pages
 export default React.createClass({
   getDefaultProps: function () {
@@ -69,7 +71,8 @@ export default React.createClass({
       self.setState(data);
       self.loadRelatedArticles();
     } ).catch( function ( e ) {
-      self.setState({ error: true, errorMsg: e.toString() });
+      var msg = error.message.indexOf( 'Failed to fetch' ) > -1 ? OFFLINE_ERROR_MESSAGE : e.toString();
+      self.setState({ error: true, errorMsg: msg });
     } );
   },
   expand() {

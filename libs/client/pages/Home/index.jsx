@@ -14,6 +14,7 @@ import './styles.css';
 const HALF_LIFE_HOURS = '2';
 const HALF_LIFE_DAYS = '10';
 const HALF_LIFE_WEEKS = '36';
+const OFFLINE_ERROR = 'You do not have an internet connection';
 
 // Pages
 export default React.createClass({
@@ -27,6 +28,7 @@ export default React.createClass({
   getInitialState() {
     return {
       error: false,
+      errorMsg: 'Nothing is trending right now.',
       topics: null
     };
   },
@@ -44,7 +46,10 @@ export default React.createClass({
         return React.createElement( TrendingCard, Object.assign( {}, props, item ) );
       } );
       self.setState({ topics: topics });
-    } ).catch( function () {
+    } ).catch( function ( error ) {
+      if ( error.message.indexOf( 'Failed to fetch' ) > -1 ) {
+        self.setState({ errorMsg: OFFLINE_ERROR });
+      }
       self.setState({ error: true });
     } );
   },
@@ -71,7 +76,7 @@ export default React.createClass({
       link.push( <a href={'/hot/' + wiki +'/' + halflife} className='active'>custom</a> );
     }
     if ( this.state.error ) {
-      children = (<ErrorBox msg="Nothing is trending right now."></ErrorBox>)
+      children = (<ErrorBox msg={this.state.errorMsg}></ErrorBox>)
     } else if ( this.state.topics ) {
       children = (<CardList cards={this.state.topics} />);
     } else {
