@@ -1,11 +1,13 @@
 var ExtractTextPlugin = require('extract-text-webpack-plugin')
 
 module.exports = {
-    entry: "./libs/client/app.js",
+    entry: {
+      main: "./libs/client/app.js"
+    },
     output: {
-      path: __dirname + '/public/dist',
-      filename: "bundle.js",
-      publicPath: "/dist/"
+      path: __dirname + '/public/',
+      filename: "[name]-bundle.js",
+      publicPath: "/"
     },
     plugins: [
       new ExtractTextPlugin('style.css', { allChunks: true })

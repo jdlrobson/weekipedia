@@ -1,3 +1,5 @@
 db_collection/
+public/*-bundle.js
+public/style.css
 public/dist/*
 node_modules/
