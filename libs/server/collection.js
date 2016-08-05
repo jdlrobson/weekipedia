@@ -1,4 +1,4 @@
-import WikiSocketCollection from 'WikiSocketCollection'
+import WikiSocketCollection from 'wikitrender'
 const project = process.env.PROJECT || 'wikipedia';
 
 const collection = new WikiSocketCollection( {
