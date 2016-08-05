@@ -20,10 +20,10 @@ class Section extends Component {
   render(){
     var hLevel = this.props.toclevel + 1;
     var hMethod = React.DOM['h' + hLevel];
-    var headingChildren = [ <span dangerouslySetInnerHTML={{ __html: this.props.line}} /> ];
+    var headingChildren = [ <span dangerouslySetInnerHTML={{ __html: this.props.line}} key={"section-heading-span-" + this.props.id} /> ];
 
     if ( this.props.isCollapsible ) {
-      headingChildren.unshift( <Icon glyph="arrow" className="indicator" /> );
+      headingChildren.unshift( <Icon glyph="arrow" className="indicator" key={"section-heading-toggle-" + this.props.id} /> );
     }
     var heading = hMethod.call(React.DOM, { onClick: this.onToggle.bind(this) }, headingChildren );
     return (

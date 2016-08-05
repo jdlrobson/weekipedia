@@ -23,7 +23,7 @@ class Article extends Component {
       tagline = this.props.tagline;
 
     if ( this.props.actions ) {
-      header.push( <HorizontalList className="page-actions">{this.props.actions}</HorizontalList> );
+      header.push( <HorizontalList className="page-actions" key="page-actions">{this.props.actions}</HorizontalList> );
     }
     if ( this.props.title ) {
       header.push(
