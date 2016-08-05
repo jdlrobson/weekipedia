@@ -165,7 +165,12 @@ app.get('/api/page-languages/:lang/:title',(req, res) => {
 app.get('*',(req, res) => {
 
   // use React Router
-  res.status(200).render('index.html')
+  res.status(200).render('index.html', {
+    config: JSON.stringify( {
+      PROJECT: process.env.PROJECT,
+      OFFLINE_VERSION: process.env.OFFLINE_VERSION
+    } )
+  })
 })
 
 app.listen(app.get('port'))

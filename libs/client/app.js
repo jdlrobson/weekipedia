@@ -12,11 +12,13 @@ import api from './api.js'
 import mwStorage from './mediawiki-storage'
 import initOffline from './offline'
 
+var config = JSON.parse( document.body.getAttribute( 'data-config' ) || '{}' );
+
 var globalProps = {
   api: api,
   router: router,
   storage: mwStorage,
-  project: process.env.PROJECT || 'wikipedia'
+  project: config.PROJECT || 'wikipedia'
 };
 
 // register all the routes
@@ -46,6 +48,6 @@ if ( 'onpopstate' in window ) {
 }
 
 renderCurrentRoute();
-if ( process.env.OFFLINE_VERSION ) {
+if ( config.OFFLINE_VERSION ) {
   initOffline();
 }
