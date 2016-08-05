@@ -25,9 +25,13 @@ class Section extends Component {
       <div className={ this.state.isOpen ? 'section open-block' : 'section' }>
         {heading}
         <SectionContent {...this.props} text={this.props.text}></SectionContent>
+        {this.props.subsections}
       </div>
     )
   }
 }
+Section.props = {
+  subsections: []
+};
 
 export default Section

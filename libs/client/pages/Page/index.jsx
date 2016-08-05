@@ -73,10 +73,34 @@ export default React.createClass({
     } );
   },
   expand() {
-     this.props.router.navigateTo( window.location.pathname + '?expanded=1', '', true );
-     this.setState({
+    this.props.router.navigateTo( window.location.pathname + '?expanded=1', '', true );
+    this.setState({
       isExpanded: true
     } );
+  },
+  getSections() {
+    var sections = [];
+    var allSections = this.state.remaining.sections;
+    var topLevelSection = allSections[0].toclevel;
+    var curSection;
+
+    allSections.forEach( function ( sectionProps ) {
+      var id = sectionProps.id;
+      if ( sectionProps.toclevel === topLevelSection ) {
+        if ( curSection ) {
+          sections.push( <Section {...curSection } /> );
+        }
+        curSection = Object.assign( {}, self.props, sectionProps, {
+          key: id,
+          subsections: []
+        } );
+      } else {
+        curSection.subsections.push( <Section {...self.props} {...sectionProps} key={id} /> );
+      }
+    } );
+    // push the last one
+    sections.push( <Section {...curSection } /> );
+    return sections;
   },
   render(){
     var url, leadHtml, related, talkUrl,
@@ -104,9 +128,7 @@ export default React.createClass({
       if ( this.state.error ) {
         sections = [<ErrorBox msg="This page does not exist."></ErrorBox>];
       } else if ( this.state.isExpanded ) {
-        sections = this.state.remaining.sections.map( function ( sectionProps ) {
-          return <Section {...self.props} {...sectionProps} key={sectionProps.id}></Section>
-        } );
+        sections = this.getSections();
       } else {
         sections.push(<Button key="article-expand" label="Expand" onClick={this.expand}></Button>);
       }
