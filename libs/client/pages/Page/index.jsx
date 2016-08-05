@@ -83,6 +83,7 @@ export default React.createClass({
     var allSections = this.state.remaining.sections;
     var topLevelSection = allSections[0].toclevel;
     var curSection;
+    var self = this;
 
     allSections.forEach( function ( sectionProps ) {
       var id = sectionProps.id;
