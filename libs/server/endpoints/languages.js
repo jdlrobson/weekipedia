@@ -6,6 +6,7 @@ export default function ( title, lang, project ) {
     siprop: 'general',
     prop: 'langlinks',
     lllimit: 'max',
+    redirects: '1',
     titles: title,
     llprop: 'url|autonym|langname',
     llinlanguagecode: lang
