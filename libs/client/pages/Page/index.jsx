@@ -70,6 +70,7 @@ export default React.createClass({
       }
       self.setState(data);
       self.loadRelatedArticles();
+      self.props.hijackLinks();
     } ).catch( function ( e ) {
       var msg = error.message.indexOf( 'Failed to fetch' ) > -1 ? OFFLINE_ERROR_MESSAGE : e.toString();
       self.setState({ error: true, errorMsg: msg });

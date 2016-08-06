@@ -27,11 +27,22 @@ export default React.createClass({
       isOverlayEnabled: false
     };
   },
+  mountChildren( props ) {
+    // clone each child and pass them the notifier
+    var children = React.Children.map( props.children, ( child ) => React.cloneElement( child, {
+        showNotification: this.showNotification,
+        hijackLinks: this.hijackLinks
+      } )
+    );
+    this.setState( { children: children } );
+  },
   componentWillReceiveProps( nextProps ) {
     this.setState( { isOverlayEnabled: nextProps.overlay } );
+    this.mountChildren( nextProps )
   },
   componentWillMount() {
     this.setState( { isOverlayEnabled: this.props.overlay } );
+    this.mountChildren( this.props );
   },
   hijackLinks(){
     var links = ReactDOM.findDOMNode( this ).querySelectorAll( 'a' );
@@ -137,13 +148,6 @@ export default React.createClass({
      toast = <Toast>{this.state.notification}</Toast>;
     }
 
-    // clone each child and pass them the notifier
-    const children = React.Children.map( this.props.children, ( child ) => React.cloneElement( child, {
-        showNotification: this.showNotification,
-        hijackLinks: this.hijackLinks
-      } )
-    );
-
     return (
       <div id="mw-mf-viewport" className={navigationClasses}>
         <nav id="mw-mf-page-left">
@@ -152,7 +156,7 @@ export default React.createClass({
         <div id="mw-mf-page-center" onClick={this.closePrimaryNav}>
           <Header key="header-bar" primaryIcon={icon}
             main={searchForm}></Header>
-          {children}
+          {this.state.children}
           {shield}
         </div>
         { overlay }
