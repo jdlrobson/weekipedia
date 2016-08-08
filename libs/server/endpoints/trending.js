@@ -16,7 +16,7 @@ function getSortedPages( hrs ) {
   } );
 }
 
-function annotate( p, filter, limit ) {
+function annotate( p, filter, limit, hrs ) {
   var res = [];
   p.some( function ( item ) {
     if ( !item.wiki ) {
@@ -28,7 +28,7 @@ function annotate( p, filter, limit ) {
     if ( res.length >= limit ) {
       return true;
     } else if ( filter && filter( item ) ) {
-      var score =  calcScore( item );
+      var score =  calcScore( item, hrs );
       var speed = item.editsPerMinute();
 
       item.lastIndex = item.index ? item.index : limit;
@@ -59,7 +59,7 @@ function trending( wiki, halflife, project ) {
     var fn = function ( item ) {
       return item.contributors.length + item.anons.length > 2 && ( wiki === '*' || item.wiki === wiki );
     };
-    var results = annotate( getSortedPages( halflife ), fn, 50 );
+    var results = annotate( getSortedPages( halflife ), fn, 50, halflife );
     if ( !results.length ) {
       reject();
     } else {
