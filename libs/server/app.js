@@ -145,6 +145,12 @@ app.get('/api/search/:lang/:term',(req, res) => {
   } );
 } );
 
+app.get('/api/search-full/:lang/:term',(req, res) => {
+  return cachedResponse( res, null, function () {
+    return search( req.params.lang, req.params.term, 0, project, true );
+  } );
+} );
+
 app.get('/api/nearby/:lang/:latitude,:longitude',(req, res) => {
   return cachedResponse( res, req.url, function () {
     return nearby( req.params.latitude, req.params.longitude, req.params.lang, 0, project );
