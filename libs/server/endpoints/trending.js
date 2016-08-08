@@ -9,11 +9,17 @@ function calcScore( q, hrs ) {
     Math.pow( 0.5, q.age() / ( hrs * 60 ) );
 }
 
-function getSortedPages( hrs ) {
-  // FIXME: This should be cached for a fixed window e.g. 5 minutes?
+function scorePages( halflife ) {
   var p = collection.getPages();
-  return p.sort( function ( q, r ) {
-    return calcScore( q, hrs ) > calcScore( r, hrs ) ? -1 : 1;
+  p.forEach( function ( item ) {
+    item.score = calcScore( item, halflife );
+  } );
+  return p;
+}
+
+function sortScoredPages( pages ) {
+  return pages.sort( function ( q, r ) {
+    return q.score > r.score ? -1 : 1;
   } );
 }
 
@@ -26,7 +32,7 @@ function annotate( p, filter, limit, hrs ) {
     } else if ( !item.lang ) {
       item.lang = item.wiki.replace( 'wiki', '' )
     }
-    item.score = calcScore( item, hrs );
+
     if ( res.length >= limit ) {
       return true;
     } else if ( filter && filter( item ) ) {
@@ -57,7 +63,9 @@ function trending( wiki, halflife, project ) {
     var fn = function ( item ) {
       return item.contributors.length + item.anons.length > 2 && ( wiki === '*' || item.wiki === wiki ) && item.score > 0;
     };
-    var results = annotate( getSortedPages( halflife ), fn, 50, halflife );
+
+    var pages = scorePages( halflife );
+    var results = annotate( sortScoredPages( pages ), fn, 50 );
     if ( !results.length ) {
       reject();
     } else {
