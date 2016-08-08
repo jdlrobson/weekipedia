@@ -2,7 +2,7 @@ import addProps from './../prop-enricher'
 import collection from './../collection'
 
 function calcScore( q, hrs ) {
-  return ( ( q.edits - q.anonEdits - ( q.reverts * 2 ) ) + ( q.anonEdits * 0.2 ) ) /
+  return ( ( q.edits - q.anonEdits - q.reverts ) + ( q.anonEdits * 0.2 ) ) /
     q.getBias() *
     ( q.contributors.length / 2 ) *
     Math.pow( 0.5, q.age() / ( hrs * 60 ) );
