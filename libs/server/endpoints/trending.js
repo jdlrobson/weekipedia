@@ -2,7 +2,8 @@ import addProps from './../prop-enricher'
 import collection from './../collection'
 
 function calcScore( q, hrs ) {
-  return ( ( q.edits - q.anonEdits - q.reverts ) + ( q.anonEdits * 0.2 ) ) /
+  const MIN_EDITS = 8;
+  return ( ( q.edits - q.anonEdits - q.reverts - MIN_EDITS ) + ( q.anonEdits * 0.2 ) ) /
     q.getBias() *
     ( q.contributors.length / 2 ) *
     Math.pow( 0.5, q.age() / ( hrs * 60 ) );
@@ -25,12 +26,10 @@ function annotate( p, filter, limit, hrs ) {
     } else if ( !item.lang ) {
       item.lang = item.wiki.replace( 'wiki', '' )
     }
+    item.score = calcScore( item, hrs );
     if ( res.length >= limit ) {
       return true;
     } else if ( filter && filter( item ) ) {
-      var score =  calcScore( item, hrs );
-      var speed = item.editsPerMinute();
-
       item.lastIndex = item.index ? item.index : limit;
       item.index = res.length + 1;
       if ( !item.bestIndex ) {
@@ -39,7 +38,6 @@ function annotate( p, filter, limit, hrs ) {
         item.bestIndex = item.index;
       }
       item.bias = item.getBias();
-      item.score = score;
       res.push( item );
     }
   } );
@@ -57,7 +55,7 @@ function trending( wiki, halflife, project ) {
 
   return new Promise( function ( resolve, reject ) {
     var fn = function ( item ) {
-      return item.contributors.length + item.anons.length > 2 && ( wiki === '*' || item.wiki === wiki );
+      return item.contributors.length + item.anons.length > 2 && ( wiki === '*' || item.wiki === wiki ) && item.score > 0;
     };
     var results = annotate( getSortedPages( halflife ), fn, 50, halflife );
     if ( !results.length ) {
