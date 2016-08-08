@@ -22,25 +22,40 @@ export default React.createClass({
       lang: 'en'
     }
   },
+  showResults( endpoint ) {
+    var self = this;
+    this.props.api.fetchCards( endpoint, this.props ).then( function ( cards ) {
+      self.setState({
+        cards: cards,
+        isSearching: false
+      } );
+    } );
+  },
+  onSearchSubmit( term ) {
+    var endpoint;
+    if ( term ) {
+      this.setState( { isSearching: true } );
+      endpoint = '/api/search-full/' + this.props.lang + '/' + encodeURIComponent( term );
+      alert( endpoint );
+      this.showResults( endpoint );
+    } else {
+      this.setState( { cards: [] } );
+    }
+  },
   onSearch( term ){
     var endpoint;
     var self = this;
     if ( term ) {
       this.setState( { isSearching: true } );
       endpoint = '/api/search/' + this.props.lang + '/' + encodeURIComponent( term );
-      this.props.api.fetchCards( endpoint, this.props ).then( function ( cards ) {
-        self.setState({
-          cards: cards,
-          isSearching: false
-        } );
-      } );
+      this.showResults( endpoint );
     } else {
       this.setState( { cards: [] } );
     }
   },
   render(){
     var main = <SearchForm
-      onSearch={this.onSearch} focusOnRender="1"></SearchForm>;
+      onSearch={this.onSearch} onSearchSubmit={this.onSearchSubmit} focusOnRender="1"></SearchForm>;
 
     var state = this.state;
     var content = state.isSearching ? <IntermediateState msg="Searching" />
