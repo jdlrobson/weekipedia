@@ -5,7 +5,7 @@ const MIN_BYTES_CHANGED = 100;
 
 function calcScore( q, hrs ) {
   const MIN_EDITS = 8;
-  return ( ( q.edits - q.anonEdits - q.reverts - MIN_EDITS ) + ( q.anonEdits * 0.2 ) ) /
+  return ( (-2 * q.volatileFlags ) + ( q.edits - q.anonEdits - q.reverts - MIN_EDITS ) + ( q.anonEdits * 0.2 ) ) /
     q.getBias() *
     ( q.contributors.length / 2 ) *
     Math.pow( 0.5, q.age() / ( hrs * 60 ) );
