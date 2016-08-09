@@ -12,6 +12,7 @@ export default function ( lang, params, project ) {
   var url = 'https://' + lang + '.' + project + '.org/w/api.php?' +
     param( Object.assign( {}, baseParams, params ) );
 
+    console.log(url);
   return fetch( url )
     .then( function ( resp ) {
      if ( resp.status === 200 ) {
@@ -21,6 +22,12 @@ export default function ( lang, params, project ) {
      }
     } )
     .then( function ( json ) {
-      return json.query ? json.query.pages : [];
+      if ( json.query && json.query.pages ) {
+        return json.query.pages;
+      } else if ( params.meta ){
+        return json.query[params.meta];
+      } else {
+        return [];
+      }
     } );
 }
