@@ -25,7 +25,7 @@ function sortScoredPages( pages ) {
   } );
 }
 
-function annotate( p, filter, limit, hrs ) {
+function annotate( p, filter, limit ) {
   var res = [];
   p.some( function ( item ) {
     if ( !item.wiki ) {
@@ -63,9 +63,9 @@ function trending( wiki, halflife, project ) {
 
   return new Promise( function ( resolve, reject ) {
     var fn = function ( item ) {
-      return item.contributors.length + item.anons.length > 2 && ( wiki === '*' || item.wiki === wiki )
-        && item.bytesChanged > MIN_BYTES_CHANGED
-        && item.score > 0;
+      return item.contributors.length + item.anons.length > 2 && ( wiki === '*' || item.wiki === wiki ) &&
+        item.bytesChanged > MIN_BYTES_CHANGED &&
+        item.score > 0;
     };
 
     var pages = scorePages( halflife );

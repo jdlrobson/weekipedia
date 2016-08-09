@@ -1,9 +1,9 @@
-/* globals self */
+/* globals global, clients */
 let {
   self
 } = global;
 
-self.addEventListener( 'push', function( ev ) {
+self.addEventListener( 'push', function() {
   var icon = 'https://en.m.wikipedia.org/static/apple-touch/wikipedia.png';
   var tag = 'wikimedia-editor-notification';
 
@@ -17,6 +17,7 @@ self.addEventListener( 'push', function( ev ) {
       var page = results.page;
       self.registration.showNotification( page.title + " is trending on Wikipedia", {
         icon: page.thumbnail ? page.thumbnail.source : icon,
+        tag: tag,
         data: 'https://trending.wmflabs.org/' + lang + '/wiki/' + page.title + '?referrer=push'
       } );
     } );
