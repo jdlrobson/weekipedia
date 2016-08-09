@@ -10,7 +10,7 @@ import Nearby from './pages/Nearby'
 
 import utils from './utils'
 
-export default [
+var routes = [
   [
     // Home page / Hot
     /^\/?$|^\/hot\/(.*)$/,
@@ -67,78 +67,44 @@ export default [
       }
       return props;
     }
-  ],
-  // Random
-  [
-    /^\/([a-z\-]*)\/wiki\/Special:MostRead\/?(.*)|^\/wiki\/Special:MostRead$/,
-    function( info, props ) {
+  ]
+];
+function addSpecialPage( title, Class, handler ) {
+  routes.push( [
+    new RegExp( '^\/([a-z\-]*)\/wiki\/Special:' + title + '\/?(.*)|^\/wiki\/' + title + '$' ),
+    function ( info, props ) {
       var lang = info[1] || 'en';
       props.lang = lang;
 
       props.children = [
-        React.createElement( MostRead,
+        React.createElement( Class,
           Object.assign( {}, props, {
-            key: 'page-special-most-read'
+            key: 'page-special-' + title
           } )
         )
       ];
-      return props;
+
+      return handler ? handler( info, props ) : props;
     }
-  ],
-  // Splash
-  [
-    /^\/([a-z\-]*)\/wiki\/Special:SplashScreen|^\/wiki\/Special:SplashScreen$/,
+  ] );
+}
+
+function initSpecialPages() {
+  addSpecialPage( 'MostRead', MostRead );
+  addSpecialPage( 'SplashScreen', SplashScreen );
+  addSpecialPage( 'Random', Random );
+  addSpecialPage( 'Nearby', Nearby,
     function( info, props ) {
-      var lang = info[1] || 'en';
-      props.lang = lang;
-
-      props.children = [
-        React.createElement( SplashScreen,
-          Object.assign( {}, props, {
-            key: 'page-special-splash'
-          } )
-        )
-      ];
-      return props;
-    }
-  ],
-  // Random
-  [
-    /^\/([a-z\-]*)\/wiki\/Special:Random\/?(.*)|^\/wiki\/Special:Random$/,
-    function( info, props ) {
-      var lang = info[1] || 'en';
-      props.lang = lang;
-
-      props.children = [
-        React.createElement( Random,
-          Object.assign( {}, props, {
-            key: 'page-special-random'
-          } )
-        )
-      ];
-      return props;
-    }
-  ],
-  // Nearby
-  [
-    /^\/([a-z\-]*)\/wiki\/Special:Nearby\/?(.*)|^\/wiki\/Special:Nearby\/?(.*)$/,
-    function( info, props ) {
-      var lang = info[1] || 'en';
-
-      props.key = 'page-special-nearby';
-
       if ( info[2] ) {
         var coords = info[2].split( ',' );
         props.latitude = coords[0];
         props.longitude = coords[1];
       }
-      props.lang = lang
-
-      return Object.assign( {}, props, {
-        children: [
-          React.createElement( Nearby, props )
-        ]
-      } );
+      return props;
     }
-  ]
-];
+  );
+}
+
+initSpecialPages();
+
+export default routes;
