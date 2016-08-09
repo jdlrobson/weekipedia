@@ -83,6 +83,9 @@ export default React.createClass({
   componentDidMount(){
     this.hijackLinks();
   },
+  componentDidUpdate(){
+    this.hijackLinks();
+  },
   closeOverlay() {
     // If an overlay is open
     if ( this.state.isOverlayEnabled ) {
