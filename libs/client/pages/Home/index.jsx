@@ -73,12 +73,12 @@ export default React.createClass({
       hrClass = 'active';
     }
     links = [
-      <a href={'/hot/' + wiki + '/' + HALF_LIFE_HOURS} className={hrClass}>by hour</a>,
-      <a href={'/hot/' + wiki +'/' + HALF_LIFE_DAYS} className={dayClass}>by day</a>,
-      <a href={'/hot/' + wiki +'/' + HALF_LIFE_WEEKS} className={wkClass}>by week</a>
+      <a href={'/hot/' + wiki + '/' + HALF_LIFE_HOURS} className={hrClass} key='hot-filter-1'>by hour</a>,
+      <a href={'/hot/' + wiki +'/' + HALF_LIFE_DAYS} className={dayClass} key='hot-filter-2'>by day</a>,
+      <a href={'/hot/' + wiki +'/' + HALF_LIFE_WEEKS} className={wkClass} key='hot-filter-3'>by week</a>
     ];
     if ( !hrClass && !dayClass && !wkClass ) {
-      links.push( <a href={'/hot/' + wiki +'/' + halflife} className='active'>custom</a> );
+      links.push( <a href={'/hot/' + wiki +'/' + halflife} className='active' key='hot-filter-4'>custom</a> );
     }
     if ( this.state.error ) {
       children = (<ErrorBox msg={this.state.errorMsg}></ErrorBox>)
