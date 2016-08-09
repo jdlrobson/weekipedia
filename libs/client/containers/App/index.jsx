@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import ReactDOM from 'react-dom'
 
 import './styles.less'
@@ -49,6 +49,7 @@ export default React.createClass({
     var props = this.props;
 
     function navigateTo( ev ) {
+      var href, match;
       var link = ev.currentTarget;
       var childNode = link.firstChild;
       var parentNode = link.parentNode;
@@ -58,14 +59,14 @@ export default React.createClass({
         props.router.navigateTo( null,
           '#/ref/' + link.getAttribute( 'href' ).substr( 1 ), true );
       } else if ( childNode && childNode.nodeName === 'IMG' ) {
-        var href = link.getAttribute( 'href' ) || '';
-        var match = href.match( /\/wiki\/File\:(.*)/ );
+        href = link.getAttribute( 'href' ) || '';
+        match = href.match( /\/wiki\/File\:(.*)/ );
         if ( match && match[1] ) {
           ev.preventDefault();
           props.router.navigateTo( '#/media/' + match[1] );
         }
       } else {
-        var href = link.getAttribute( 'href' ) || '';
+        href = link.getAttribute( 'href' ) || '';
         // FIXME: Workaround for #5
         if ( href.substr( 0, 5 ) === '/wiki' ) {
           href = '/' + props.lang + href;
@@ -83,14 +84,13 @@ export default React.createClass({
     this.hijackLinks();
   },
   closeOverlay() {
-    var node;
     // If an overlay is open
     if ( this.state.isOverlayEnabled ) {
       this.setState( { isOverlayEnabled: false } );
     }
     this.setState( { notification: null } );
   },
-  closePrimaryNav( ev ){
+  closePrimaryNav(){
     this.setState({ isMenuOpen: false });
     this.closeOverlay();
   },
@@ -111,7 +111,7 @@ export default React.createClass({
       } );
     }, 5000 );
   },
-  onClickSearch(ev){
+  onClickSearch(){
     this.props.router.navigateTo( '#/search' );
   },
   render(){

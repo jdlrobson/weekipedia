@@ -1,12 +1,6 @@
-import React, { Component } from 'react'
-
-import IntermediateState from './../components/IntermediateState';
-import Card from './../components/Card';
-import ErrorBox from './../components/ErrorBox';
+import React from 'react'
 
 import Content from './../containers/Content'
-import Article from './../containers/Article'
-import CardList from './../containers/CardList'
 
 import CardListPage from './CardListPage'
 

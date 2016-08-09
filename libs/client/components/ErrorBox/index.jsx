@@ -1,5 +1,6 @@
+import React from 'react'
+
 import './styles.less'
-import React, { Component } from 'react'
 
 const ErrorBox = (props) => {
   return <div className="errorbox">{props.msg}</div>

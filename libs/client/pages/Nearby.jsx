@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 
 import ErrorBox from './../components/ErrorBox';
 import IntermediateState from './../components/IntermediateState';
@@ -6,7 +6,6 @@ import HorizontalList from './../components/HorizontalList'
 
 import Content from './../containers/Content'
 
-import Random from './Random'
 import CardListPage from './CardListPage'
 
 // Pages

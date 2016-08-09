@@ -1,12 +1,9 @@
-import React, { Component } from 'react'
+import React from 'react'
 
 import ErrorBox from './../components/ErrorBox';
-import IntermediateState from './../components/IntermediateState';
-import HorizontalList from './../components/HorizontalList'
 
 import Content from './../containers/Content'
 
-import Random from './Random'
 import CardListPage from './CardListPage'
 
 // Pages
@@ -22,9 +19,6 @@ export default React.createClass({
     };
   },
   render(){
-    var lat = this.state.latitude;
-    var lng = this.state.longitude;
-
     if ( this.state.error ) {
       return (<Content><ErrorBox msg="Something went wrong when trying to get most read."></ErrorBox></Content>)
     } else {

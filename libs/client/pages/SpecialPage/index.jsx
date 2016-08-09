@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import Article from './../../containers/Article'
 import Content from './../../containers/Content'
 

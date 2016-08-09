@@ -1,5 +1,6 @@
+import React from 'react'
+
 import './mediawiki-ui-button.css'
-import React, { Component } from 'react'
 
 const Button = (props) => {
   var modifiers = props.isPrimary ? 'mw-ui-primary' : '';

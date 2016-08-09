@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 
 import HorizontalList from './../../components/HorizontalList'
 import IntermediateState from './../../components/IntermediateState';
@@ -67,7 +67,7 @@ export default React.createClass({
     var hrClass = '', dayClass = '', wkClass = '';
     if ( halflife === HALF_LIFE_DAYS ) {
       dayClass = 'active';
-    } else if ( halflife == HALF_LIFE_WEEKS ) {
+    } else if ( halflife === HALF_LIFE_WEEKS ) {
       wkClass = 'active';
     } else if ( halflife === HALF_LIFE_HOURS ) {
       hrClass = 'active';
@@ -78,7 +78,7 @@ export default React.createClass({
       <a href={'/hot/' + wiki +'/' + HALF_LIFE_WEEKS} className={wkClass}>by week</a>
     ];
     if ( !hrClass && !dayClass && !wkClass ) {
-      link.push( <a href={'/hot/' + wiki +'/' + halflife} className='active'>custom</a> );
+      links.push( <a href={'/hot/' + wiki +'/' + halflife} className='active'>custom</a> );
     }
     if ( this.state.error ) {
       children = (<ErrorBox msg={this.state.errorMsg}></ErrorBox>)

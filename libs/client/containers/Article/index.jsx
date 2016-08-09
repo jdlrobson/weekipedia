@@ -1,9 +1,5 @@
 import React, { Component } from 'react'
 
-import HorizontalList from './../../components/HorizontalList'
-
-import Content from './../../containers/Content'
-
 import ArticleFooter from './ArticleFooter'
 import ArticleHeader from './ArticleHeader'
 

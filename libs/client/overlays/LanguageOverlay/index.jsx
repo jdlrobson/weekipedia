@@ -1,11 +1,9 @@
-import React, { Component } from 'react'
+import React from 'react'
 
 import Overlay from './../../containers/Overlay'
 import Content from './../../containers/Content'
-import CardList from './../../containers/CardList'
 import LinkList from './../../containers/LinkList'
 
-import Card from './../../components/Card'
 import Panel from './../../components/Panel'
 import IntermediateState from './../../components/IntermediateState';
 import SearchInput from './../../components/SearchInput'
@@ -91,7 +89,7 @@ export default React.createClass({
     var state = this.state;
     var content, prefLang, preferredLangs, otherLangs;
 
-    function mapLanguage( language, i ) {
+    function mapLanguage( language ) {
       var code = language.lang;
       return (
         <a href={'/' + code + '/wiki/' + language.title.replace( /\//gi, '%2F' ) }

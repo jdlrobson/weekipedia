@@ -1,10 +1,9 @@
-import React, { Component } from 'react'
+import React from 'react'
 
 import Overlay from './../../containers/Overlay'
 import Content from './../../containers/Content'
 import CardList from './../../containers/CardList'
 
-import Card from './../../components/Card'
 import IntermediateState from './../../components/IntermediateState';
 import SearchForm from './../../components/SearchForm'
 
@@ -36,7 +35,6 @@ export default React.createClass({
     if ( term ) {
       this.setState( { isSearching: true } );
       endpoint = '/api/search-full/' + this.props.lang + '/' + encodeURIComponent( term );
-      alert( endpoint );
       this.showResults( endpoint );
     } else {
       this.setState( { cards: [] } );
@@ -44,7 +42,6 @@ export default React.createClass({
   },
   onSearch( term ){
     var endpoint;
-    var self = this;
     if ( term ) {
       this.setState( { isSearching: true } );
       endpoint = '/api/search/' + this.props.lang + '/' + encodeURIComponent( term );

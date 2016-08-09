@@ -1,6 +1,6 @@
 import './styles.less'
-import React, { Component } from 'react'
+import React from 'react'
 
-export default (props) => (
+export default () => (
   <div className="transparent-shield cloaked-element"></div>
 )

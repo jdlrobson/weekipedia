@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 
 import Button from './../../components/Button';
 
@@ -81,7 +81,7 @@ export default React.createClass({
       feature: this.props.serviceName
     } ).then( function () {
       self.setState( { isLoading: false, isEnabled: action === 'subscribe' } );
-    } ).catch( function ( e ) {
+    } ).catch( function () {
       self.setState( { isError: true } );
     } );
   },
@@ -102,7 +102,7 @@ export default React.createClass({
         self.setState( { subscription: subscription } );
       } ).then( function () {
         self.doAction( 'subscribe' );
-      } ).catch( function ( e ) {
+      } ).catch( function () {
         self.setState( { isError: true, isBlocked: Notification.permission === 'denied' } );
       } );
     }

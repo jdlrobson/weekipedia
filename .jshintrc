@@ -4,11 +4,12 @@
     "process": true,
     "console": true,
     "module": true,
-    "require": true
+    "require": true,
+    "ServiceWorkerRegistration": true
   },
 
   "asi": true,
-  "esversion": 6,
+  "esnext": true,
   "browser": true,
   "curly": true,
   "eqeqeq": true,

@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import './styles.less'
 
 import Card from './../Card'
 
@@ -45,11 +44,7 @@ class TrendingCard extends Component {
     var mins = parseInt( ( new Date() - new Date( this.props.start ) ) / 1000 / 60, 10 );
     var updated = parseInt( ( new Date() - new Date( this.props.updated || this.props.start ) ) / 1000 / 60, 10 );
     var speed = mins < 1 ? totalEdits : ( totalEdits / mins ).toFixed( 2 );
-    var styles = {
-      backgroundImage: this.props.thumbnail ?
-        'url(' + this.props.thumbnail.source + ')'
-        : 'none'
-    };
+
     var indicator = (<span className={'indicator ' + className} title={label}>&nbsp;</span>);
 
     return (

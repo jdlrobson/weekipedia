@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 
 import SectionContent from './../../components/SectionContent'
 import IntermediateState from './../../components/IntermediateState';
@@ -71,8 +71,8 @@ export default React.createClass({
       self.setState(data);
       self.loadRelatedArticles();
       self.props.hijackLinks();
-    } ).catch( function ( e ) {
-      var msg = error.message.indexOf( 'Failed to fetch' ) > -1 ? OFFLINE_ERROR_MESSAGE : e.toString();
+    } ).catch( function ( error ) {
+      var msg = error.message.indexOf( 'Failed to fetch' ) > -1 ? OFFLINE_ERROR_MESSAGE : error.toString();
       self.setState({ error: true, errorMsg: msg });
     } );
   },
@@ -108,7 +108,7 @@ export default React.createClass({
     return sections;
   },
   render(){
-    var url, leadHtml, related, talkUrl,
+    var leadHtml, related,
       contentBody, iconProps = {},
       sections = [],
       btns = [],
