@@ -1,6 +1,8 @@
 import addProps from './../prop-enricher'
 import collection from './../collection'
 
+const MIN_BYTES_CHANGED = 100;
+
 function calcScore( q, hrs ) {
   const MIN_EDITS = 8;
   return ( ( q.edits - q.anonEdits - q.reverts - MIN_EDITS ) + ( q.anonEdits * 0.2 ) ) /
@@ -61,7 +63,9 @@ function trending( wiki, halflife, project ) {
 
   return new Promise( function ( resolve, reject ) {
     var fn = function ( item ) {
-      return item.contributors.length + item.anons.length > 2 && ( wiki === '*' || item.wiki === wiki ) && item.score > 0;
+      return item.contributors.length + item.anons.length > 2 && ( wiki === '*' || item.wiki === wiki )
+        && item.bytesChanged > MIN_BYTES_CHANGED
+        && item.score > 0;
     };
 
     var pages = scorePages( halflife );
