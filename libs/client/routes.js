@@ -71,7 +71,7 @@ var routes = [
 ];
 function addSpecialPage( title, Class, handler ) {
   routes.push( [
-    new RegExp( '^\/([a-z\-]*)\/wiki\/Special:' + title + '\/?(.*)|^\/wiki\/' + title + '$' ),
+    new RegExp( '^\/([a-z\-]*)\/wiki\/Special:' + title + '\/?(.*)|^\/wiki\/Special:' + title + '$' ),
     function ( info, props ) {
       var lang = info[1] || 'en';
       props.lang = lang;
