@@ -151,7 +151,7 @@ export default React.createClass({
     return (
       <div id="mw-mf-viewport" className={navigationClasses}>
         <nav id="mw-mf-page-left">
-          <MainMenu lang={this.props.lang}/>
+          <MainMenu lang={this.props.lang} onItemClick={this.closePrimaryNav}/>
         </nav>
         <div id="mw-mf-page-center" onClick={this.closePrimaryNav}>
           <Header key="header-bar" primaryIcon={icon}
