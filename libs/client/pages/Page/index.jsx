@@ -124,6 +124,7 @@ export default React.createClass({
       children = [],
       lang = this.props.lang,
       title = this.props.title,
+      displayTitle = this.state.lead.displaytitle || decodeURIComponent( title.replace( /_/gi, ' ' ) ),
       lead = this.state.lead,
       tagline = lead.description,
       namespace = this.state.lead.ns;
@@ -163,7 +164,7 @@ export default React.createClass({
     }
 
     return (
-      <Article {...this.props} actions={actions} title={this.state.lead.displaytitle} tagline={tagline}>
+      <Article {...this.props} actions={actions} title={displayTitle} tagline={tagline}>
         <Content key="page-row-1" className="content">
           <SectionContent {...this.props} text={leadHtml}></SectionContent>
           {sections}
