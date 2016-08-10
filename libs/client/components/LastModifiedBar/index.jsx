@@ -1,7 +1,6 @@
 import React from 'react'
 import timeago from 'timeago'
 import './styles.less'
-import Content from './../../containers/Content'
 
 export default ({ editor, lang, title, timestamp }) => {
   const isAnon = editor && editor.name ? false : true;
@@ -19,10 +18,10 @@ export default ({ editor, lang, title, timestamp }) => {
   }
 
   return (
-    <Content className={'post-content last-modified-bar'}>
+    <div className="last-modified-bar">
       <div>
         <a href={historyUrl}>{historyText}</a>{text}{editorElement}
       </div>
-    </Content>
+    </div>
   )
 }

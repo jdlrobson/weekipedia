@@ -1,16 +1,15 @@
 import React from 'react'
 
+import PageFooter from './../../components/PageFooter'
 import SectionContent from './../../components/SectionContent'
 import IntermediateState from './../../components/IntermediateState';
 import Section from './../../components/Section'
-import LastModifiedBar from './../../components/LastModifiedBar'
 import Button from './../../components/Button'
 import ErrorBox from './../../components/ErrorBox'
 import LanguageIcon from './../../components/LanguageIcon'
 
 import Article from './../../containers/Article'
 import Content from './../../containers/Content'
-import ReadMore from './../../containers/ReadMore'
 
 import './styles.less'
 import './tablet.less'
@@ -29,7 +28,6 @@ export default React.createClass({
   },
   getInitialState() {
     return {
-      related: null,
       isExpanded: false,
       lead: {
         languagecount: 0
@@ -46,15 +44,6 @@ export default React.createClass({
   },
   componentWillReceiveProps(nextProps){
     this.load( nextProps.title, nextProps.lang );
-  },
-  loadRelatedArticles() {
-    var self = this;
-    var endpoint = '/api/related/' + this.props.lang + '/' + this.props.title;
-    this.props.api.fetchCards( endpoint, this.props ).then( function ( cards ) {
-      self.setState( {
-        related: cards
-      } );
-    } );
   },
   load( title, lang ) {
     var self = this;
@@ -73,7 +62,6 @@ export default React.createClass({
         self.setState( { isExpanded: true } );
       }
       self.setState(data);
-      self.loadRelatedArticles();
       self.props.hijackLinks();
     } ).catch( function ( error ) {
       var msg = error.message.toString();
@@ -117,17 +105,13 @@ export default React.createClass({
     return sections;
   },
   render(){
-    var leadHtml,
+    var leadHtml, footer,
       sections = [],
-      btns = [],
       actions = [],
-      children = [],
-      lang = this.props.lang,
       title = this.props.title,
       displayTitle = this.state.lead.displaytitle || decodeURIComponent( title.replace( /_/gi, ' ' ) ),
       lead = this.state.lead,
-      tagline = lead.description,
-      namespace = this.state.lead.ns;
+      tagline = lead.description;
 
     leadHtml = lead.sections && lead.sections.length ? lead.sections[0].text : '';
     if ( leadHtml ) {
@@ -136,6 +120,8 @@ export default React.createClass({
       } else {
         sections.push(<Button key="article-expand" label="Expand" onClick={this.expand}></Button>);
       }
+      footer = <PageFooter {...this.props} lastmodified={lead.lastmodified}
+        lastmodifier={lead.lastmodifier} namespace={this.state.lead.ns} />;
     } else {
       if ( this.state.error ) {
         sections.push( <ErrorBox msg={this.state.errorMsg} key="article-error" /> );
@@ -148,28 +134,13 @@ export default React.createClass({
       showNotification={this.props.showNotification}
       disabled={this.state.lead.languagecount === 0} />);
 
-    if ( namespace === 0 ) {
-      btns.push(<Button key="article-talk" href={'/' + lang + '/wiki/Talk:' + title }
-        label="Talk"></Button>);
-    }
-
-    if ( leadHtml ) {
-      children.push( <Content key="page-row-2" className="post-content" key="article-secondary-actions">{btns}</Content> );
-      children.push( <LastModifiedBar editor={lead.lastmodifier} lang={this.props.lang}
-        title={this.props.title} timestamp={lead.lastmodified} /> );
-
-      if ( this.state.related ) {
-        children.push( <ReadMore cards={this.state.related} key="article-read-more" /> );
-      }
-    }
-
     return (
       <Article {...this.props} actions={actions} title={displayTitle} tagline={tagline}>
         <Content key="page-row-1" className="content">
           <SectionContent {...this.props} text={leadHtml}></SectionContent>
           {sections}
         </Content>
-        {children}
+        {footer}
       </Article>
     )
   }

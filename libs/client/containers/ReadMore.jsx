@@ -1,13 +1,12 @@
 import React from 'react'
 
-import Content from './Content'
 import CardList from './CardList'
 
 const ReadMore = (props) => (
-  <Content key="page-row-related" className="post-content">
+  <div className="container-read-more">
     <h2>Read more</h2>
     <CardList unordered="1" cards={props.cards} />
-  </Content>
+  </div>
 )
 
 export default ReadMore
