@@ -5,8 +5,8 @@ import IntermediateState from './../../components/IntermediateState';
 import Section from './../../components/Section'
 import LastModifiedBar from './../../components/LastModifiedBar'
 import Button from './../../components/Button'
-import Icon from './../../components/Icon'
 import ErrorBox from './../../components/ErrorBox'
+import LanguageIcon from './../../components/LanguageIcon'
 
 import Article from './../../containers/Article'
 import Content from './../../containers/Content'
@@ -113,11 +113,10 @@ export default React.createClass({
   },
   render(){
     var leadHtml, related, registered,
-      contentBody, iconProps = {},
+      contentBody,
       sections = [],
       btns = [],
       actions = [],
-      self = this,
       lang = this.props.lang,
       title = this.props.title,
       lead = this.state.lead,
@@ -143,21 +142,9 @@ export default React.createClass({
         sections.push(<Button key="article-expand" label="Expand" onClick={this.expand}></Button>);
       }
 
-      iconProps = {
-        key: 'lang-view',
-        glyph: 'language-switcher',
-        label: 'Read in another language'
-      };
-      if ( this.state.lead.languagecount === 0 ) {
-        iconProps.className = 'disabled';
-        iconProps.onClick = function ( ev ) {
-          ev.stopPropagation();
-          self.props.showNotification( 'This page is not available in other languages.' );
-        };
-      } else {
-        iconProps.href = '#/languages';
-      }
-      actions.push(<Icon {...iconProps} />);
+      actions.push(<LanguageIcon
+        showNotification={this.props.showNotification}
+        disabled={this.state.lead.languagecount === 0} />);
 
       if ( namespace === 0 ) {
         btns.push(<Button key="article-talk" href={'/' + lang + '/wiki/Talk:' + title }
