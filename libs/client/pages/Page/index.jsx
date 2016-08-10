@@ -9,8 +9,8 @@ import Icon from './../../components/Icon'
 import ErrorBox from './../../components/ErrorBox'
 
 import Article from './../../containers/Article'
-import CardList from './../../containers/CardList'
 import Content from './../../containers/Content'
+import ReadMore from './../../containers/ReadMore'
 
 import './styles.less'
 import './tablet.less'
@@ -170,10 +170,7 @@ export default React.createClass({
       }
 
       if ( this.state.related ) {
-        related = <Content key="page-row-related" className="post-content">
-          <h2>Read more</h2>
-          <CardList unordered="1" cards={this.state.related} />
-        </Content>;
+        related = <ReadMore cards={this.state.related} />;
       }
 
       return (
