@@ -18,6 +18,9 @@ import './icons.less'
 
 const OFFLINE_ERROR_MESSAGE = 'You need an internet connection to view this page';
 
+const MONTHS = ['January','February','March','April','May','June',
+  'July','August','September','October','November','December'];
+
 // Pages
 export default React.createClass({
   getDefaultProps: function () {
@@ -31,6 +34,7 @@ export default React.createClass({
       related: null,
       isExpanded: false,
       lead: {},
+      user: {},
       errorMsg: 'This page does not exist.',
       error: false,
       remaining: {}
@@ -108,7 +112,7 @@ export default React.createClass({
     return sections;
   },
   render(){
-    var leadHtml, related,
+    var leadHtml, related, registered,
       contentBody, iconProps = {},
       sections = [],
       btns = [],
@@ -117,6 +121,7 @@ export default React.createClass({
       lang = this.props.lang,
       title = this.props.title,
       lead = this.state.lead,
+      tagline = lead.description,
       namespace = this.state.lead.ns;
 
     if ( !lead.displaytitle ) {
@@ -157,6 +162,11 @@ export default React.createClass({
       if ( namespace === 0 ) {
         btns.push(<Button key="article-talk" href={'/' + lang + '/wiki/Talk:' + title }
           label="Talk"></Button>);
+      } else if ( namespace === 2 ) {
+        if ( this.state.user.registration ) {
+          registered = new Date( this.state.user.registration );
+          tagline = 'Member since ' + MONTHS[ registered.getMonth() ] + ', ' + registered.getFullYear();
+        }
       }
 
       if ( this.state.related ) {
@@ -165,8 +175,9 @@ export default React.createClass({
           <CardList unordered="1" cards={this.state.related} />
         </Content>;
       }
+
       return (
-        <Article {...this.props} actions={actions} title={this.state.lead.displaytitle} tagline={this.state.lead.description}>
+        <Article {...this.props} actions={actions} title={this.state.lead.displaytitle} tagline={tagline}>
           <Content key="page-row-1" className="content">
             <SectionContent {...this.props} text={leadHtml}></SectionContent>
             {sections}
