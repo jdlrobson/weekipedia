@@ -17,6 +17,7 @@ import './tablet.less'
 import './icons.less'
 
 const OFFLINE_ERROR_MESSAGE = 'You need an internet connection to view this page';
+const NOT_FOUND_MESSAGE = 'This page does not exist.';
 
 // Pages
 export default React.createClass({
@@ -30,9 +31,11 @@ export default React.createClass({
     return {
       related: null,
       isExpanded: false,
-      lead: {},
+      lead: {
+        languagecount: 0
+      },
       user: {},
-      errorMsg: 'This page does not exist.',
+      errorMsg: NOT_FOUND_MESSAGE,
       error: false,
       remaining: {}
     };
@@ -73,7 +76,12 @@ export default React.createClass({
       self.loadRelatedArticles();
       self.props.hijackLinks();
     } ).catch( function ( error ) {
-      var msg = error.message.indexOf( 'Failed to fetch' ) > -1 ? OFFLINE_ERROR_MESSAGE : error.toString();
+      var msg = error.message.toString();
+      if ( msg.indexOf( 'Failed to fetch' ) > -1 ) {
+        msg = OFFLINE_ERROR_MESSAGE;
+      } else if ( msg.indexOf( 'Not Found' ) > -1 ) {
+        msg = NOT_FOUND_MESSAGE;
+      }
       self.setState({ error: true, errorMsg: msg });
     } );
   },
@@ -109,61 +117,59 @@ export default React.createClass({
     return sections;
   },
   render(){
-    var leadHtml, related,
-      contentBody,
+    var leadHtml,
       sections = [],
       btns = [],
       actions = [],
+      children = [],
       lang = this.props.lang,
       title = this.props.title,
       lead = this.state.lead,
       tagline = lead.description,
       namespace = this.state.lead.ns;
 
-    if ( !lead.displaytitle ) {
-      contentBody = this.state.error ? <ErrorBox msg={this.state.errorMsg}></ErrorBox>
-      : <IntermediateState></IntermediateState>;
-
-      return (
-        <Article>
-          <Content>{contentBody}</Content>
-        </Article>
-      )
-    } else {
-      leadHtml = lead.sections.length ? lead.sections[0].text : '';
-      if ( this.state.error ) {
-        sections = [<ErrorBox msg="This page does not exist."></ErrorBox>];
-      } else if ( this.state.isExpanded ) {
+    leadHtml = lead.sections && lead.sections.length ? lead.sections[0].text : '';
+    if ( leadHtml ) {
+      if ( this.state.isExpanded ) {
         sections = this.getSections();
       } else {
         sections.push(<Button key="article-expand" label="Expand" onClick={this.expand}></Button>);
       }
-
-      actions.push(<LanguageIcon
-        showNotification={this.props.showNotification}
-        disabled={this.state.lead.languagecount === 0} />);
-
-      if ( namespace === 0 ) {
-        btns.push(<Button key="article-talk" href={'/' + lang + '/wiki/Talk:' + title }
-          label="Talk"></Button>);
+    } else {
+      if ( this.state.error ) {
+        sections.push( <ErrorBox msg={this.state.errorMsg} key="article-error" /> );
+      } else {
+        sections.push( <IntermediateState key="article-loading" /> );
       }
+    }
+
+    actions.push(<LanguageIcon key="article-page-action-language"
+      showNotification={this.props.showNotification}
+      disabled={this.state.lead.languagecount === 0} />);
+
+    if ( namespace === 0 ) {
+      btns.push(<Button key="article-talk" href={'/' + lang + '/wiki/Talk:' + title }
+        label="Talk"></Button>);
+    }
+
+    if ( leadHtml ) {
+      children.push( <Content key="page-row-2" className="post-content" key="article-secondary-actions">{btns}</Content> );
+      children.push( <LastModifiedBar editor={lead.lastmodifier} lang={this.props.lang}
+        title={this.props.title} timestamp={lead.lastmodified} /> );
 
       if ( this.state.related ) {
-        related = <ReadMore cards={this.state.related} />;
+        children.push( <ReadMore cards={this.state.related} key="article-read-more" /> );
       }
-
-      return (
-        <Article {...this.props} actions={actions} title={this.state.lead.displaytitle} tagline={tagline}>
-          <Content key="page-row-1" className="content">
-            <SectionContent {...this.props} text={leadHtml}></SectionContent>
-            {sections}
-          </Content>
-          <Content key="page-row-2" className="post-content">{btns}</Content>
-          <LastModifiedBar editor={lead.lastmodifier} lang={this.props.lang}
-            title={this.props.title} timestamp={lead.lastmodified} />
-          {related}
-        </Article>
-      )
     }
+
+    return (
+      <Article {...this.props} actions={actions} title={this.state.lead.displaytitle} tagline={tagline}>
+        <Content key="page-row-1" className="content">
+          <SectionContent {...this.props} text={leadHtml}></SectionContent>
+          {sections}
+        </Content>
+        {children}
+      </Article>
+    )
   }
 } );
