@@ -120,6 +120,12 @@ app.get('/api/trending/:wiki/:halflife',(req, res) => {
   } );
 } )
 
+app.get('/api/trending-debug/:wiki/:title',(req, res) => {
+  cachedResponse( res, req.url, function() {
+    return trending( req.params.wiki, 0.1, project, req.params.title );
+  } );
+} )
+
 app.get('/api/random/:lang/',(req, res) => {
   return cachedResponse( res, null, function () {
     return random( req.params.lang, 0, project );

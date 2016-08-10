@@ -56,14 +56,16 @@ function annotate( p, filter, limit ) {
  * @param {String} wiki name of wiki to generate a list of trending articles for
  * @param {Float} halflife in hours at which pages become less trending
  * @param {String} project e.g. wikipedia or wikivoyage
+ * @param {String} [title] for debugging purposes
  */
-function trending( wiki, halflife, project ) {
+function trending( wiki, halflife, project, title ) {
   var lang = wiki.replace( 'wiki', '' );
   project = project || 'wikipedia';
 
   return new Promise( function ( resolve, reject ) {
     var fn = function ( item ) {
-      return item.contributors.length + item.anons.length > 2 && ( wiki === '*' || item.wiki === wiki ) &&
+      return title ? item.title === title :
+        item.contributors.length + item.anons.length > 2 && ( wiki === '*' || item.wiki === wiki ) &&
         item.bytesChanged > MIN_BYTES_CHANGED &&
         item.score > 0;
     };
