@@ -63,6 +63,7 @@ var routes = [
           React.createElement( Page,
             Object.assign( {}, props, {
               key: 'page-' + title,
+              titleSansPrefix: titleSansPrefix,
               title: title
             } )
           )

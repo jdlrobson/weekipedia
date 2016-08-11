@@ -112,9 +112,9 @@ export default React.createClass({
       return this.props.tabs;
     } else if ( ns === 2 ) {
       return [
-        <a href={baseUrl + 'User talk:' + this.props.title} key="page-talk-tab">Talk</a>,
-        <a href={baseUrl + 'Special:Contributions/' + this.props.title } key="page-contrib-tab">Contributions</a>,
-        <a href={baseUrl + 'Special:Uploads/' + this.props.title } key="page-upload-tab">Uploads</a>
+        <a href={baseUrl + 'User talk:' + this.props.titleSansPrefix} key="page-talk-tab">Talk</a>,
+        <a href={baseUrl + 'Special:Contributions/' + this.props.titleSansPrefix } key="page-contrib-tab">Contributions</a>,
+        <a href={baseUrl + 'Special:Uploads/' + this.props.titleSansPrefix } key="page-upload-tab">Uploads</a>
       ];
     } else {
       return [];
