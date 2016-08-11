@@ -18,6 +18,8 @@ var globalProps = {
   api: api,
   router: router,
   storage: mwStorage,
+  canAuthenticate: config.SIGN_IN_SUPPORTED,
+  username: config.username,
   project: config.PROJECT || 'wikipedia'
 };
 

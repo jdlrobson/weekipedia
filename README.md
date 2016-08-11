@@ -35,4 +35,13 @@ Before commiting code please remember to run:
 > export OFFLINE_VERSION=1
 
 > export GCM_API_KEY=
+
+For access to user restricted features:
+Register an OAUTH consumer @ https://meta.wikimedia.org/wiki/Special:OAuthConsumerRegistration/propose
+Put callback url as https://yourdomain.com/auth/mediawiki/callback
+
+> export MEDIAWIKI_CONSUMER_KEY=
+
+> export MEDIAWIKI_CONSUMER_SECRET=
+
 > npm run

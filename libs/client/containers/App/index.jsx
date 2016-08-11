@@ -67,12 +67,16 @@ export default React.createClass({
         }
       } else {
         href = link.getAttribute( 'href' ) || '';
-        // FIXME: Workaround for #5
-        if ( href.substr( 0, 5 ) === '/wiki' ) {
-          href = '/' + props.lang + href;
+
+        if ( href.substr( 0, 5 ) !== '/auth' ) {
+
+          // FIXME: Workaround for #5
+          if ( href.substr( 0, 5 ) === '/wiki' ) {
+            href = '/' + props.lang + href;
+          }
+          props.router.navigateTo( href );
+          ev.preventDefault();
         }
-        props.router.navigateTo( href );
-        ev.preventDefault();
       }
     }
 
@@ -154,7 +158,8 @@ export default React.createClass({
     return (
       <div id="mw-mf-viewport" className={navigationClasses}>
         <nav id="mw-mf-page-left">
-          <MainMenu lang={this.props.lang} onItemClick={this.closePrimaryNav}/>
+          <MainMenu {...this.props}
+            onItemClick={this.closePrimaryNav}/>
         </nav>
         <div id="mw-mf-page-center" onClick={this.closePrimaryNav}>
           <Header key="header-bar" primaryIcon={icon}

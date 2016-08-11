@@ -3,6 +3,9 @@ require('babel-core/register')
 import express from 'express'
 import hogan from 'hogan-express'
 import bodyParser from 'body-parser'
+import oauth, { OAuthStrategy } from 'passport-mediawiki-oauth'
+import passport from 'passport'
+import session from 'express-session'
 
 import visits from './endpoints/visits'
 import trending from './endpoints/trending'
@@ -19,6 +22,12 @@ import file from './endpoints/file'
 import cachedResponse from './cached-response'
 
 const project = process.env.PROJECT || 'wikipedia';
+
+const CONSUMER_SECRET = process.env.MEDIAWIKI_CONSUMER_SECRET;
+const CONSUMER_KEY = process.env.MEDIAWIKI_CONSUMER_KEY
+const OAUTH_CALLBACK_URL = 'http://localhost:8142/auth/mediawiki/callback'
+
+const SIGN_IN_SUPPORTED = CONSUMER_SECRET && CONSUMER_KEY
 
 console.log( 'Init for project', project );
 // Express
@@ -48,6 +57,7 @@ const manifest = {
 app.engine('html', hogan)
 app.set('views', __dirname + '/views')
 app.use('/', express.static( __dirname + '/../../public/' ) )
+
 app.set('port', (process.env.PORT || 3000))
 
 if ( https ) {
@@ -60,6 +70,67 @@ if ( https ) {
     }
   });
 }
+
+if ( SIGN_IN_SUPPORTED ) {
+  passport.serializeUser(function(user, done) {
+    done(null, user);
+  });
+
+  passport.deserializeUser(function(obj, done) {
+    done(null, obj);
+  });
+
+  app.use(session({
+    resave: false,
+    saveUninitialized: true,
+    secret: CONSUMER_SECRET
+  }));
+  app.use(passport.initialize());
+  app.use(passport.session());
+  passport.use(
+    new OAuthStrategy({
+      consumerKey: CONSUMER_KEY,
+      consumerSecret: CONSUMER_SECRET,
+      callbackURL: OAUTH_CALLBACK_URL,
+    },
+    function(token, tokenSecret, profile, done) {
+      // [ADDED] Twitter extended API calls using 'request' and 'querystring'
+      profile.oauth = {
+        consumer_key : CONSUMER_KEY,
+        consumer_secret : CONSUMER_SECRET,
+        token : token,
+        token_secret : tokenSecret
+      }
+      return done(null, profile);
+    } )
+  );
+
+  // Simple route middleware to ensure user is authenticated.
+  //   Use this route middleware on any resource that needs to be protected.  If
+  //   the request is authenticated (typically via a persistent login session),
+  //   the request will proceed.  Otherwise, the user will be redirected to the
+  //   login page.
+  function ensureAuthenticated(req, res, next) {
+    if (req.isAuthenticated()) {
+      return next();
+    } else {
+      res.status( 401 );
+      res.send( 'Login required for this endpoint' );
+    }
+  }
+
+  /*
+   *******************************************************
+   * Begin routes which require authenticated
+   *******************************************************
+  */
+  app.get('/auth/logout', ensureAuthenticated, function( req, res ) {
+    req.logout();
+    res.redirect('/');
+  } );
+
+}
+
 
 function checkReqParams( req, res, required ) {
   var missing = [];
@@ -109,6 +180,16 @@ app.post('/api/web-push/unsubscribe', function( req, res ) {
  * Begin GET routes
  *******************************************************
 */
+
+app.get('/auth/mediawiki',
+  passport.authenticate('mediawiki'));
+
+app.get('/auth/mediawiki/callback',
+  passport.authenticate( 'mediawiki', { failureRedirect: '/login' } ),
+  function(req, res) {
+    // Successful authentication, redirect home.
+    res.redirect('/');
+  });
 
 app.get('/manifest.json',(req, res) => {
   res.setHeader('Content-Type', 'application/json');
@@ -193,9 +274,13 @@ app.get('/api/web-push/service/trending/',(req, res) => {
 
 app.get('*',(req, res) => {
 
+  var user = req.user ? req.user : {};
+
   // use React Router
   res.status(200).render('index.html', {
     config: JSON.stringify( {
+      username: user.displayName,
+      SIGN_IN_SUPPORTED: Boolean( SIGN_IN_SUPPORTED ),
       PROJECT: process.env.PROJECT,
       OFFLINE_VERSION: process.env.OFFLINE_VERSION
     } )

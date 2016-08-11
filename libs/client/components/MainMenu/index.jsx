@@ -12,6 +12,34 @@ class MainMenu extends Component {
       this.props.onItemClick();
     }
   }
+  getUserMenu() {
+    var login, username,
+      onMenuItemClick = this.onMenuItemClick.bind(this);
+
+    if ( this.props.canAuthenticate ) {
+      if ( this.props.username ) {
+        username = this.props.username;
+        login = [
+          <Icon glyph="mf-profile-invert" href={'/' + this.props.lang + '/wiki/User:' + username }
+           label={username} type="before" onClick={onMenuItemClick} />,
+          <Icon glyph="mf-logout-invert" href='/auth/logout'
+            label="Log out" onClick={onMenuItemClick} />
+        ];
+      } else {
+        login = <Icon glyph="mf-anonymous-invert" href={'/auth/mediawiki' }
+          label='Log in' type="before" onClick={onMenuItemClick} />;
+      }
+      return (
+        <ul>
+          <li>
+            {login}
+          </li>
+        </ul>
+      );
+    } else {
+      return null;
+    }
+  }
   render(){
     var onMenuItemClick = this.onMenuItemClick.bind(this);
     var langPrefix = '/' + this.props.lang;
@@ -34,6 +62,7 @@ class MainMenu extends Component {
               label="Nearby" type="before"/>
           </li>
         </ul>
+        {this.getUserMenu()}
         <HorizontalList>
           <a href="//github.com/jdlrobson/weekipedia">About Weekipedia</a>
           <a href="/wiki/Wikipedia:General_disclaimer" onClick={onMenuItemClick}>Disclaimers</a>
