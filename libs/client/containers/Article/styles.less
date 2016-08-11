@@ -6,10 +6,10 @@
   border-top: 1px solid #eeeeee;
   border-bottom: 1px solid #cccccc;
   padding: 0.5em 0;
-}
 
-.page-actions > :first-child {
-  margin-right: -1em;
+  > :first-child {
+    margin-left: -1em;
+  }
 }
 
 .page-actions .disabled {
@@ -113,6 +113,11 @@ https://en.wikipedia.org/w/load.php?debug=false&lang=en&modules=skins.minerva.ta
     width: auto;
     border: 0;
     margin: 0 0 1em 1em;
+
+    > :first-child {
+      margin-right: -1em;
+      margin-left: 0;
+    }
   }
   .heading-holder {
     padding: 20px 0;
