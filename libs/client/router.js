@@ -67,6 +67,8 @@ var router = {
         history.replaceState( {}, null, hash );
         events.emit( 'onreplacestate' );
       } else {
+        // record the scroll position in current path
+        history.replaceState( state, null, window.location.pathname );
         window.location.hash = hash;
       }
     }
