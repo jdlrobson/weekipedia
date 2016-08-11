@@ -2,19 +2,9 @@ import addProps from './../prop-enricher'
 import collection from './../collection'
 
 import visits from './visits'
+import calcScore from './../scoring'
 
 const MIN_BYTES_CHANGED = 100;
-
-function calcScore( q, hrs ) {
-  const MIN_EDITS = 8;
-  var visitScore = q.visits > 0 ? q.visits / 2000 : 0;
-
-  return visitScore +
-    ( (-3 * q.volatileFlags ) + ( q.edits - q.anonEdits - ( q.reverts / 2 ) - MIN_EDITS ) + ( q.anonEdits * 0.2 ) ) /
-    q.getBias() *
-    ( q.contributors.length / 2 ) *
-    Math.pow( 0.5, q.age() / ( hrs * 60 ) );
-}
 
 function scorePages( halflife, visitData ) {
   var p = collection.getPages();

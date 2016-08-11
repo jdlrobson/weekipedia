@@ -1,7 +1,7 @@
 {
   "scripts": {
     "start": "npm run compile & npm run node-server",
-    "test": "grunt test",
+    "test": "grunt test && mocha --compilers js:babel-core/register tests/**",
     "dev": "npm run compile:watch & npm run node-server-dev",
     "node-server": "NODE_ENV=production node app.js",
     "node-server-dev": "NODE_ENV=development node app.js",
@@ -32,6 +32,7 @@
     "isomorphic-fetch": "^2.2.1",
     "less": "^2.7.1",
     "less-loader": "^2.2.3",
+    "mocha": "^3.0.2",
     "node-cache": "^3.2.1",
     "node-jquery-param": "0.0.2",
     "pageviews": "^1.1.0",
