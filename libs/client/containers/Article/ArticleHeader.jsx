@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 
 import HorizontalList from './../../components/HorizontalList'
+import SectionContent from './../../components/SectionContent'
 
 import Content from './../../containers/Content'
 
@@ -32,6 +33,7 @@ class ArticleHeader extends Component {
       <Content key="article-row-0" className={"pre-content heading-holder" + nsClass}>
         {header}
         {tabs}
+        <SectionContent {...this.props} text={this.props.lead} />
       </Content>
     )
   }

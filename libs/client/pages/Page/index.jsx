@@ -151,9 +151,8 @@ export default React.createClass({
       disabled={this.state.lead.languagecount === 0} />);
 
     return (
-      <Article {...this.props} actions={actions} tabs={this.getTabs()} title={displayTitle} tagline={tagline}>
+      <Article {...this.props} actions={actions} tabs={this.getTabs()} title={displayTitle} tagline={tagline} lead={leadHtml}>
         <Content key="page-row-1" className="content">
-          <SectionContent {...this.props} text={leadHtml}></SectionContent>
           {sections}
         </Content>
         {footer}
