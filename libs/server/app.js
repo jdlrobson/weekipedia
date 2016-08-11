@@ -82,6 +82,12 @@ app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
   extended: true
 }));
 
+/*
+ *******************************************************
+ * Begin POST routes
+ *******************************************************
+*/
+
 app.post('/api/web-push/subscribe', function( req, res ) {
   if ( checkReqParams( req, res, [ 'feature', 'token', 'browser' ] ) ) {
     res.status( 200 );
@@ -98,13 +104,11 @@ app.post('/api/web-push/unsubscribe', function( req, res ) {
   }
 } );
 
-app.get('/api/web-push/service/trending/',(req, res) => {
-  cachedResponse( res, req.url, function() {
-    return webPushTrend();
-  } );
-} );
-
-// Get routes
+/*
+ *******************************************************
+ * Begin GET routes
+ *******************************************************
+*/
 
 app.get('/manifest.json',(req, res) => {
   res.setHeader('Content-Type', 'application/json');
@@ -179,6 +183,12 @@ app.get('/api/page-languages/:lang/:title',(req, res) => {
   cachedResponse( res, req.url, function () {
     return languages( req.params.title, req.params.lang, project );
   });
+} );
+
+app.get('/api/web-push/service/trending/',(req, res) => {
+  cachedResponse( res, req.url, function() {
+    return webPushTrend();
+  } );
 } );
 
 app.get('*',(req, res) => {
