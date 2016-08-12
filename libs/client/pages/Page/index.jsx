@@ -6,6 +6,7 @@ import Section from './../../components/Section'
 import Button from './../../components/Button'
 import ErrorBox from './../../components/ErrorBox'
 import LanguageIcon from './../../components/LanguageIcon'
+import WatchIcon from './../../components/WatchIcon'
 
 import Article from './../../containers/Article'
 import Content from './../../containers/Content'
@@ -148,6 +149,10 @@ export default React.createClass({
     actions.push(<LanguageIcon key="article-page-action-language"
       showNotification={this.props.showNotification}
       disabled={this.state.lead.languagecount === 0} />);
+
+    if ( this.props.username ) {
+      actions.push(<WatchIcon {...this.props}/>);
+    }
 
     return (
       <Article {...this.props} actions={actions} tabs={this.getTabs()} title={displayTitle} tagline={tagline} lead={leadHtml}>
