@@ -104,6 +104,22 @@ export default React.createClass({
     sections.push( <Section {...curSection } /> );
     return sections;
   },
+  getTabs(){
+    var ns = this.state.lead.ns,
+      baseUrl = '/' + this.props.lang + '/wiki/';
+
+    if ( this.props.tabs ) {
+      return this.props.tabs;
+    } else if ( ns === 2 ) {
+      return [
+        <a href={baseUrl + 'User talk:' + this.props.title} key="page-talk-tab">Talk</a>,
+        <a href={baseUrl + 'Special:Contributions/' + this.props.title } key="page-contrib-tab">Contributions</a>,
+        <a href={baseUrl + 'Special:Uploads/' + this.props.title } key="page-upload-tab">Uploads</a>
+      ];
+    } else {
+      return [];
+    }
+  },
   render(){
     var leadHtml, footer,
       sections = [],
@@ -135,7 +151,7 @@ export default React.createClass({
       disabled={this.state.lead.languagecount === 0} />);
 
     return (
-      <Article {...this.props} actions={actions} title={displayTitle} tagline={tagline}>
+      <Article {...this.props} actions={actions} tabs={this.getTabs()} title={displayTitle} tagline={tagline}>
         <Content key="page-row-1" className="content">
           <SectionContent {...this.props} text={leadHtml}></SectionContent>
           {sections}
