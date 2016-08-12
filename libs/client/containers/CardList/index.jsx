@@ -39,7 +39,7 @@ export default React.createClass({
     if ( !this.state.isPending && this.props.api && continuer ) {
       url = this.props.endpoint + '?' + param( continuer );
       this.setState( { isPending: true } );
-      this.props.api.fetchCardListProps( url ).then( function ( props ) {
+      this.props.api.fetchCardListProps( url, this.props ).then( function ( props ) {
         // this wont work again without the continue
         self.setState( { continue: props.continue, isPending: false,
           cards: self.state.cards.concat( props.cards ) } );
