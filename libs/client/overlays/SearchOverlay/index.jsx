@@ -56,7 +56,7 @@ export default React.createClass({
 
     var state = this.state;
     var content = state.isSearching ? <IntermediateState msg="Searching" />
-      : <CardList cards={state.cards} />;
+      : <CardList cards={state.cards} emptyMessage='' />;
     return (
       <Overlay router={this.props.router} header={main}>
         <Content className="overlay-content">{content}</Content>

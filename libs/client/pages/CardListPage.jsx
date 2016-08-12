@@ -11,7 +11,6 @@ import CardList from './../containers/CardList'
 export default React.createClass({
   getDefaultProps: function () {
     return {
-      emptyMessage: 'The list is disappointedly empty.',
       api: null,
       apiEndpoint: null,
       title: null,
@@ -22,7 +21,7 @@ export default React.createClass({
   getInitialState() {
     return {
       error: false,
-      cards: null
+      list: null
     };
   },
   // You want to load subscriptions not only when the component update but also when it gets mounted.
@@ -31,9 +30,11 @@ export default React.createClass({
   },
   load() {
     var self = this;
-    var props = { lang: this.props.lang, router: this.props.router };
-    this.props.api.fetchCards( this.props.apiEndpoint, props ).then( function ( cards ) {
-      self.setState({ cards : cards });
+    var api = this.props.api;
+    var props = { lang: this.props.lang, unordered: this.props.unordered,
+      router: this.props.router, api: api };
+    api.fetchCardList( this.props.apiEndpoint, props ).then( function ( list ) {
+      self.setState({ list : list });
     } ).catch( function () {
       self.setState({ error: true });
     } );
@@ -43,9 +44,8 @@ export default React.createClass({
 
     if ( this.state.error ) {
       children = (<ErrorBox msg="Something went wrong when trying to render the list. Please refresh and try again."></ErrorBox>)
-    } else if ( this.state.cards ) {
-      children = this.state.cards.length ?
-        (<CardList {...this.props} cards={this.state.cards} />) : this.props.emptyMessage;
+    } else if ( this.state.list ) {
+      children = this.state.list;
     } else {
       children = (<IntermediateState></IntermediateState>);
     }

@@ -1,10 +1,24 @@
 import React from 'react'
 import fetch from 'isomorphic-fetch'
+
+import CardList from './containers/CardList'
+
 import Card from './components/Card'
 
 function Api() {
   this.cache = {};
   this.refCache = {};
+}
+
+function getCards( data, props) {
+  var cards = [];
+  if ( data.pages && data.pages.length ) {
+    data.pages.forEach( function ( item ) {
+      item.key = item.pageid;
+      cards.push( React.createElement( Card, Object.assign( {}, props, item ) ) );
+    } );
+  }
+  return cards;
 }
 
 Api.prototype = {
@@ -18,16 +32,24 @@ Api.prototype = {
       body: JSON.stringify( data )
     } );
   },
-  fetchCards: function ( url, props ) {
+  fetchCardListProps: function ( url, props ) {
     return this.fetch( url ).then( function ( data ) {
-      var cards = [];
-      if ( data.pages && data.pages.length ) {
-        data.pages.forEach( function ( item ) {
-          item.key = item.pageid;
-          cards.push( React.createElement( Card, Object.assign( {}, props, item ) ) );
-        } );
-      }
-      return cards;
+      var listprops = {
+        endpoint: url,
+        continue: data.continue,
+        cards: getCards( data, props )
+      };
+      return Object.assign( {}, props, listprops );
+    } );
+  },
+  fetchCards: function ( url, props ) {
+    return this.fetchCardListProps( url ).then( function ( props ) {
+      return props.cards;
+    } );
+  },
+  fetchCardList: function ( url, props ) {
+    return this.fetchCardListProps( url, props ).then( function ( props ) {
+      return React.createElement( CardList, props );
     } );
   },
   fetch: function ( url ) {
