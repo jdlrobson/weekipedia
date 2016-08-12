@@ -38,9 +38,11 @@ var routes = [
     function ( info, props ) {
       var title = info[2] || info[3],
         titleSansPrefix = title.substr(title.indexOf( ':' ) + 1),
+        titleParts = titleSansPrefix.split( '/' ),
         lang = info[1] || 'en';
 
       props.lang = lang;
+      titleSansPrefix = titleParts[0];
       props.mobileUrl = utils.getAbsoluteUrl( title, lang, 'm.' + props.project + '.org' );
       props.desktopUrl = utils.getAbsoluteUrl( title, lang, props.project + '.org' );
 
@@ -50,7 +52,8 @@ var routes = [
           React.createElement( SpecialPage,
             Object.assign( {}, props, {
               key: 'page-' + titleSansPrefix,
-              title: titleSansPrefix
+              title: titleSansPrefix,
+              params: titleParts.slice( 1 )
             } )
           )
         ];
