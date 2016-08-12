@@ -13,7 +13,7 @@ class MainMenu extends Component {
     }
   }
   getUserMenu() {
-    var login, username,
+    var login, username, usertools,
       onMenuItemClick = this.onMenuItemClick.bind(this);
 
     if ( this.props.canAuthenticate ) {
@@ -25,6 +25,12 @@ class MainMenu extends Component {
           <Icon glyph="mf-logout-invert" href='/auth/logout'
             label="Log out" onClick={onMenuItemClick} />
         ];
+        usertools = (
+          <li>
+            <Icon glyph="mf-watchlist-invert" href={'/' + this.props.lang + '/wiki/Special:Watchlist' }
+              label='Watchlist' type="before" onClick={onMenuItemClick} />
+          </li>
+        );
       } else {
         login = <Icon glyph="mf-anonymous-invert" href={'/auth/mediawiki' }
           label='Log in' type="before" onClick={onMenuItemClick} />;
@@ -34,6 +40,7 @@ class MainMenu extends Component {
           <li>
             {login}
           </li>
+          {usertools}
         </ul>
       );
     } else {
