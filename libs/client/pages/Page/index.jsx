@@ -1,7 +1,6 @@
 import React from 'react'
 
 import PageFooter from './../../components/PageFooter'
-import SectionContent from './../../components/SectionContent'
 import IntermediateState from './../../components/IntermediateState';
 import Section from './../../components/Section'
 import Button from './../../components/Button'

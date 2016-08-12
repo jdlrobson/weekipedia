@@ -5,6 +5,7 @@
     "console": true,
     "module": true,
     "require": true,
+    "Request": true,
     "ServiceWorkerRegistration": true
   },
 

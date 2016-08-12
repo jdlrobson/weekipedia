@@ -12,4 +12,4 @@ export default function ( lang, project, ns, profile ) {
     gwrlimit: 48
   };
   return mwApi( lang, params, project, null, profile );
-};
+}

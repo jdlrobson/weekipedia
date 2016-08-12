@@ -79,7 +79,6 @@ describe('calcScore', function() {
   });
 
   it('page 3 is hotter than page 4', function() {
-    console.log( calcScore( page3, 10 ), calcScore( page4, 10 ) );
     assert.ok( calcScore( page3, 10 ) > calcScore( page4, 10 ) );
   });
 });

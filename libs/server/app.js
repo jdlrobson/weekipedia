@@ -3,7 +3,7 @@ require('babel-core/register')
 import express from 'express'
 import hogan from 'hogan-express'
 import bodyParser from 'body-parser'
-import oauth, { OAuthStrategy } from 'passport-mediawiki-oauth'
+import { OAuthStrategy } from 'passport-mediawiki-oauth'
 import passport from 'passport'
 import session from 'express-session'
 
@@ -72,6 +72,20 @@ if ( https ) {
   });
 }
 
+// Simple route middleware to ensure user is authenticated.
+//   Use this route middleware on any resource that needs to be protected.  If
+//   the request is authenticated (typically via a persistent login session),
+//   the request will proceed.  Otherwise, the user will be redirected to the
+//   login page.
+function ensureAuthenticated(req, res, next) {
+  if (req.isAuthenticated()) {
+    return next();
+  } else {
+    res.status( 401 );
+    res.send( 'Login required for this endpoint' );
+  }
+}
+
 if ( SIGN_IN_SUPPORTED ) {
   passport.serializeUser(function(user, done) {
     done(null, user);
@@ -105,20 +119,6 @@ if ( SIGN_IN_SUPPORTED ) {
       return done(null, profile);
     } )
   );
-
-  // Simple route middleware to ensure user is authenticated.
-  //   Use this route middleware on any resource that needs to be protected.  If
-  //   the request is authenticated (typically via a persistent login session),
-  //   the request will proceed.  Otherwise, the user will be redirected to the
-  //   login page.
-  function ensureAuthenticated(req, res, next) {
-    if (req.isAuthenticated()) {
-      return next();
-    } else {
-      res.status( 401 );
-      res.send( 'Login required for this endpoint' );
-    }
-  }
 
   /*
    *******************************************************

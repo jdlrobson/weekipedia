@@ -20,7 +20,7 @@ function signedGetRequest( url, session ) {
       url,
       session.oauth.token,
       session.oauth.token_secret,
-      function ( err, data, res ){
+      function ( err, data ){
         if ( err ) {
           reject( JSON.stringify( err ) );
         } else {
