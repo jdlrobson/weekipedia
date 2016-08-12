@@ -21,8 +21,8 @@ Api.prototype = {
   fetchCards: function ( url, props ) {
     return this.fetch( url ).then( function ( data ) {
       var cards = [];
-      if ( data.length ) {
-        data.forEach( function ( item ) {
+      if ( data.pages.length ) {
+        data.pages.forEach( function ( item ) {
           item.key = item.pageid;
           cards.push( React.createElement( Card, Object.assign( {}, props, item ) ) );
         } );

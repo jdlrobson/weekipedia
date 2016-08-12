@@ -22,8 +22,12 @@ export default function ( lang, term, ns, project, isFullTextSearch ) {
   }
 
   return mwApi( lang, params, project ).then( function ( result ) {
-    return result.sort( function ( a, b ) {
+    var pages = result.pages;
+    pages = pages.sort( function ( a, b ) {
       return a.index < b.index ? -1 : 1;
     } );
+    return {
+      pages: pages
+    };
   } );
 }

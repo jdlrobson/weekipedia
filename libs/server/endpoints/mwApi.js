@@ -62,7 +62,7 @@ export default function ( lang, params, project, options, session ) {
 
   return req.then( function ( json ) {
     if ( json.query && json.query.pages ) {
-      return json.query.pages;
+      return { pages: json.query.pages, continue: json.continue };
     } else if ( params.meta ) {
       return json.query[params.meta];
     } else if ( params.list ) {
