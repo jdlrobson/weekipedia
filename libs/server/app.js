@@ -7,6 +7,7 @@ import oauth, { OAuthStrategy } from 'passport-mediawiki-oauth'
 import passport from 'passport'
 import session from 'express-session'
 
+import watchlist from './endpoints/watchlist'
 import visits from './endpoints/visits'
 import trending from './endpoints/trending'
 import subscribe from './endpoints/subscribe'
@@ -129,6 +130,13 @@ if ( SIGN_IN_SUPPORTED ) {
     res.redirect('/');
   } );
 
+  app.get('/api/private/watchlist/:lang', ensureAuthenticated, function(req, res){
+    watchlist( req.params.lang, project, 0, req.user ).then( function ( data ) {
+      res.setHeader('Content-Type', 'application/json');
+      res.status( 200 );
+      res.send( JSON.stringify( data ) );
+    } );
+  });
 }
 
 

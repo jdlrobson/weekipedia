@@ -7,6 +7,7 @@ import SpecialPage from './pages/SpecialPage'
 import MostRead from './pages/MostRead'
 import Random from './pages/Random'
 import Nearby from './pages/Nearby'
+import Watchlist from './pages/Watchlist'
 
 import utils from './utils'
 
@@ -94,6 +95,7 @@ function addSpecialPage( title, Class, handler ) {
 }
 
 function initSpecialPages() {
+  addSpecialPage( 'Watchlist', Watchlist );
   addSpecialPage( 'MostRead', MostRead );
   addSpecialPage( 'SplashScreen', SplashScreen );
   addSpecialPage( 'Random', Random );

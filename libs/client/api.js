@@ -33,13 +33,16 @@ Api.prototype = {
     } );
   },
   fetch: function ( url ) {
-    var promise,
+    var promise, req,
       cache = this.cache;
 
     if ( cache[url] ) {
       return cache[url];
     } else {
-      promise = fetch( url ).then( function ( resp ) {
+      req = new Request( url, {
+        credentials: 'same-origin'
+      } );
+      promise = fetch( req ).then( function ( resp ) {
         if ( resp.status === 200 ) {
           cache[url] = promise;
           return resp.json();
