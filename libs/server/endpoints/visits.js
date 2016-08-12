@@ -15,7 +15,9 @@ function isBlacklisted( title ) {
 
 export default function ( lang, project ) {
   var results = {};
-  var today = new Date();
+  var twoHours = ( 2 * 60 * 60 * 1000 );
+  // use 2 hrs ago to give browser time to catch up
+  var today = new Date( new Date() - twoHours );
   var day = ( 24 * 60 * 60 * 1000 );
   var yesterday = new Date( today - day );
   var beforeYesterday = new Date( yesterday - day );
