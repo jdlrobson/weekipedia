@@ -21,15 +21,13 @@ Api.prototype = {
   fetchCards: function ( url, props ) {
     return this.fetch( url ).then( function ( data ) {
       var cards = [];
-      if ( data.pages.length ) {
+      if ( data.pages && data.pages.length ) {
         data.pages.forEach( function ( item ) {
           item.key = item.pageid;
           cards.push( React.createElement( Card, Object.assign( {}, props, item ) ) );
         } );
-        return cards;
-      } else {
-        return null;
       }
+      return cards;
     } );
   },
   fetch: function ( url ) {

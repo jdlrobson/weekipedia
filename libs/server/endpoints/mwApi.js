@@ -65,10 +65,8 @@ export default function ( lang, params, project, options, session ) {
       return { pages: json.query.pages, continue: json.continue };
     } else if ( params.meta ) {
       return json.query[params.meta];
-    } else if ( params.list ) {
-      return json;
     } else {
-      return [];
+      return json;
     }
   } );
 }
