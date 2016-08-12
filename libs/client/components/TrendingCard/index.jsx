@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 
 import Card from './../Card'
 
+import './styles.less'
+
 class TrendingCard extends Component {
   render(){
     var props = this.props;
