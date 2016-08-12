@@ -63,5 +63,7 @@ export default function ( lang, project ) {
         return a.delta < b.delta ? 1 : -1;
       }
     } );
+  } ).catch( function () {
+    return [];
   } );
 }
