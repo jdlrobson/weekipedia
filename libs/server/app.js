@@ -131,7 +131,7 @@ if ( SIGN_IN_SUPPORTED ) {
   } );
 
   app.get('/api/private/watchlist/:lang', ensureAuthenticated, function(req, res){
-    watchlist( req.params.lang, project, 0, req.user ).then( function ( data ) {
+    watchlist( req.params.lang, project, 0, req.user, req.query ).then( function ( data ) {
       res.setHeader('Content-Type', 'application/json');
       res.status( 200 );
       res.send( JSON.stringify( data ) );
@@ -221,7 +221,7 @@ app.get('/api/trending-debug/:wiki/:title',(req, res) => {
 
 app.get('/api/random/:lang/',(req, res) => {
   return cachedResponse( res, null, function () {
-    return random( req.params.lang, 0, project );
+    return random( req.params.lang, 0, project, { continue: req.query.continue || '' } );
   } );
 } );
 
