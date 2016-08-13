@@ -30,8 +30,8 @@ class ArticleHeader extends Component {
       tabs = <HorizontalList isSeparated="1">{this.props.tabs}</HorizontalList>
     }
     return (
-      <Content key="article-row-0" className={"pre-content heading-holder" + nsClass}>
-        {header}
+      <Content key="article-row-0" className={"pre-content " + nsClass}>
+        <div className="heading-holder">{header}</div>
         {tabs}
         <SectionContent {...this.props} text={this.props.lead} />
       </Content>
