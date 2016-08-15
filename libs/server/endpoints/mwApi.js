@@ -2,7 +2,7 @@ import fetch from 'isomorphic-fetch'
 import param from 'node-jquery-param'
 import OAuth from 'oauth'
 
-function signedGetRequest( url, session ) {
+function signedRequest( url, session, params, options ) {
   var oauth = new OAuth.OAuth(
     // URL to request a token
     'https://meta.wikimedia.org/index.php?title=Special%3AOAuth%2Finitiate',
@@ -16,21 +16,34 @@ function signedGetRequest( url, session ) {
   );
 
   return new Promise( function ( resolve, reject ) {
-    oauth.get(
-      url,
-      session.oauth.token,
-      session.oauth.token_secret,
-      function ( err, data ){
-        if ( err ) {
-          reject( JSON.stringify( err ) );
-        } else {
-          resolve( JSON.parse( data ) );
-        }
-      });
+    var handler = function ( err, data ) {
+      if ( err ) {
+        reject( JSON.stringify( err ) );
+      } else {
+        resolve( JSON.parse( data ) );
+      }
+    };
+
+    if ( options && options.method === 'POST' ) {
+      oauth.post(
+        url,
+        session.oauth.token,
+        session.oauth.token_secret,
+        JSON.stringify( params ),
+        handler );
+    } else {
+      url += '?' + param( params );
+      oauth.get(
+        url,
+        session.oauth.token,
+        session.oauth.token_secret,
+        handler);
+    }
   } );
 }
 
-function anonRequest( url, options ) {
+function anonRequest( url, params, options ) {
+  url += '?' + param( Object.assign( {}, params ) );
   return fetch( url, options )
     .then( function ( resp ) {
      if ( resp.status === 200 ) {
@@ -42,7 +55,7 @@ function anonRequest( url, options ) {
 }
 
 export default function ( lang, params, project, options, session ) {
-  var req, url,
+  var req, url, fullParams,
     baseParams = {
       action: 'query',
       format: 'json',
@@ -51,13 +64,14 @@ export default function ( lang, params, project, options, session ) {
 
 
   project = project || 'wikipedia';
-  url = 'https://' + lang + '.' + project + '.org/w/api.php?' +
-    param( Object.assign( {}, baseParams, params ) );
+  url = 'https://' + lang + '.' + project + '.org/w/api.php';
+
+  fullParams = Object.assign( {}, baseParams, params );
 
   if ( session ) {
-    req = signedGetRequest( url, session );
+    req = signedRequest( url, session, fullParams, options );
   } else {
-    req = anonRequest( url, options );
+    req = anonRequest( url, fullParams, options );
   }
 
   return req.then( function ( json ) {

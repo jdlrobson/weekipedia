@@ -8,6 +8,7 @@ import passport from 'passport'
 import session from 'express-session'
 
 import watchlist from './endpoints/watchlist'
+import watch from './endpoints/watch'
 import visits from './endpoints/visits'
 import trending from './endpoints/trending'
 import subscribe from './endpoints/subscribe'
@@ -132,6 +133,22 @@ if ( SIGN_IN_SUPPORTED ) {
 
   app.get('/api/private/watchlist/:lang', ensureAuthenticated, function(req, res){
     watchlist( req.params.lang, project, 0, req.user, req.query ).then( function ( data ) {
+      res.setHeader('Content-Type', 'application/json');
+      res.status( 200 );
+      res.send( JSON.stringify( data ) );
+    } );
+  });
+
+  app.post('/api/private/watch/:lang/:title', function(req, res){
+    watch( req.params.lang, project, [ req.params.title ], req.user ).then( function ( data ) {
+      res.setHeader('Content-Type', 'application/json');
+      res.status( 200 );
+      res.send( JSON.stringify( data ) );
+    } );
+  });
+
+  app.post('/api/private/unwatch/:lang/:title', function(req, res){
+    watch( req.params.lang, project, [ req.params.title ], req.user, true ).then( function ( data ) {
       res.setHeader('Content-Type', 'application/json');
       res.status( 200 );
       res.send( JSON.stringify( data ) );
