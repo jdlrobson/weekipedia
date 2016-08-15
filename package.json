@@ -42,6 +42,7 @@
     "react-dom": "^15.2.0",
     "style-loader": "^0.13.1",
     "stylelint-config-wikimedia": "0.2.2",
+    "svg-url-loader": "^1.1.0",
     "sw-toolbox": "^3.2.1",
     "timeago": "^0.2.0",
     "url-loader": "^0.5.7",

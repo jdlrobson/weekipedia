@@ -29,6 +29,7 @@ module.exports = {
           loader: 'babel?presets[]=es2015',
           exclude: /node_modules/
         },
+        { test: /\.(svg)$/, loader: 'svg-url-loader' },
         { test: /\.(gif|png|jpg)$/, loader: 'url?limit=25000' },
         { test: /\.css$/, loader: ExtractTextPlugin.extract('style', 'css') },
         { test: /\.less$/, loader: ExtractTextPlugin.extract('style', 'css!less') }
