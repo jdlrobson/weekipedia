@@ -124,7 +124,9 @@ export default React.createClass({
     var leadHtml, footer,
       sections = [],
       actions = [],
+      secondaryActions = [],
       title = this.props.title,
+      lang = this.props.lang,
       displayTitle = this.state.lead.displaytitle || decodeURIComponent( title.replace( /_/gi, ' ' ) ),
       lead = this.state.lead,
       tagline = lead.description;
@@ -154,12 +156,21 @@ export default React.createClass({
       actions.push(<WatchIcon {...this.props}/>);
     }
 
+    if ( this.props.namespace === 0 ) {
+      secondaryActions.push(<Button key="article-talk" href={'/' + lang + '/wiki/Talk:' + title }
+        label="Talk" />);
+    }
+
     return (
-      <Article {...this.props} actions={actions} tabs={this.getTabs()} title={displayTitle} tagline={tagline} lead={leadHtml}>
+      <Article {...this.props} actions={actions} tabs={this.getTabs()} title={displayTitle}
+      footer={footer}
+        tagline={tagline} lead={leadHtml}>
         <Content key="page-row-1" className="content">
           {sections}
         </Content>
-        {footer}
+        <Content>
+          <div>{secondaryActions}</div>
+        </Content>
       </Article>
     )
   }

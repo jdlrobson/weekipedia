@@ -25,6 +25,7 @@ class ArticleFooter extends Component {
 
     return (
       <Content key="footer" className="post-content footer">
+        {this.props.footer}
         <ul className="footer-info">
           <li>
             <h2>Weekipedia</h2>
