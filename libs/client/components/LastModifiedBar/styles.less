@@ -1,14 +1,16 @@
+@import './../../globals.less';
+
 /* stylelint-disable selector-max-specificity */
 .last-modified-bar {
   background-color: transparent;
   display: block;
-  color: #666666;
+  color: @last-modified-bar-text-color;
   transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 .last-modified-bar > div {
   padding: 5px 16px;
-  background-color: #eeeeee;
+  background-color: @last-modified-bar-bg-color;
   white-space: nowrap;
   overflow: hidden;
   -webkit-text-overflow: ellipsis;
@@ -36,7 +38,7 @@
   }
 
   .last-modified-bar div {
-    background-color: #eeeeee;
+    background-color: @last-modified-bar-bg-color;
     font-size: 0.9em;
     padding: 5px 16px;
   }
