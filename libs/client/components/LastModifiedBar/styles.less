@@ -2,22 +2,38 @@
 
 /* stylelint-disable selector-max-specificity */
 .last-modified-bar {
-  background-color: transparent;
+  border-top: solid 1px @footer-border-color;
+  border-bottom: solid 1px @footer-border-color;
+  background-color: @last-modified-bar-bg-color;
   display: block;
   color: @last-modified-bar-text-color;
+  line-height: 1.5em;
   transition: background-color 0.2s ease, color 0.2s ease;
+
+  .indicator:before {
+    transform: rotateZ(-90deg);
+  }
+
+  .last-modifier-tagline {
+    white-space: nowrap;
+    overflow: hidden;
+    -webkit-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+    display: block;
+    width: 260px;
+    font-size: 0.9em;
+    padding: 7px 2em 7px 0;
+  }
+
+  .mw-ui-icon-element {
+    position: absolute;
+    left: auto;
+    right: -1em;
+  }
 }
 
 .last-modified-bar > div {
-  padding: 5px 16px;
-  background-color: @last-modified-bar-bg-color;
-  white-space: nowrap;
-  overflow: hidden;
-  -webkit-text-overflow: ellipsis;
-  text-overflow: ellipsis;
   display: block;
-  font-size: .9em;
-  margin-top: 1.5em;
 }
 
 .last-modified-bar a,
@@ -27,13 +43,10 @@
 
 .last-modified-bar.active {
   color: #fff;
+  background-color: @last-modified-bar-active-bg-color;
 
   a {
     color: #fff;
-  }
-
-  > div {
-   background-color: @last-modified-bar-active-bg-color;
   }
 }
 
@@ -42,16 +55,14 @@
   font-weight: bold;
 }
 
-@media (min-width: 720px) {
+@media (min-width: @deviceWidthTablet) {
   .last-modified-bar {
     padding-left: 0;
     padding-right: 0;
     font-size: 1em;
-  }
 
-  .last-modified-bar div {
-    background-color: @last-modified-bar-bg-color;
-    font-size: 0.9em;
-    padding: 5px 16px;
+    .last-modifier-tagline {
+      width: 100%;
+    }
   }
 }

@@ -14,16 +14,7 @@ class ArticleFooter extends Component {
         name: 'CC BY-SA 3.0'
       };
 
-    if ( this.props.mobileUrl ) {
-      switcher = (
-        <HorizontalList>
-          <span>WebApp</span>
-          <a href={this.props.mobileUrl}>Mobile</a>
-          <a href={this.props.desktopUrl}>Desktop</a>
-        </HorizontalList>
-      );
-    }
-    wordmark = siteinfo.wordmark ? <img src={siteinfo.wordmark} alt={siteinfo.title} height="16" />
+    wordmark = siteinfo.wordmark ? <h2><img src={siteinfo.wordmark} alt={siteinfo.title} height="30" /></h2>
       : <h2>{siteinfo.title}</h2>;
 
     if ( siteinfo.termsUrl ) {
@@ -38,15 +29,19 @@ class ArticleFooter extends Component {
       );
     }
 
+    if ( this.props.desktopUrl ) {
+      places.push( <a href={this.props.desktopUrl}>Desktop</a> );
+    }
+
     return (
-      <Content key="footer" className="post-content footer">
+      <div key="footer" className="post-content footer">
         {this.props.footer}
-        <ul className="footer-info">
-          <li>{wordmark}{switcher}</li>
-          <li>Content is available under <a className="external" rel="nofollow" href={license.url}>{license.name}</a> unless otherwise noted.</li>
-        </ul>
-        <HorizontalList isSeparated="1">{places}</HorizontalList>
-      </Content>
+        <Content className="footer-info">
+          {wordmark}
+          <div>Content is available under <a className="external" rel="nofollow" href={license.url}>{license.name}</a> unless otherwise noted.</div>
+          <HorizontalList isSeparated="1">{places}</HorizontalList>
+        </Content>
+      </div>
     )
   }
 }

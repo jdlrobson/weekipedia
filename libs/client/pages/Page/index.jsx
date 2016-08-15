@@ -10,6 +10,7 @@ import LastModifiedBar from './../../components/LastModifiedBar'
 import ReadMore from './../../components/ReadMore'
 
 import Article from './../../containers/Article'
+import Content from './../../containers/Content'
 
 import './styles.less'
 import './tablet.less'
@@ -134,7 +135,11 @@ export default React.createClass({
         <LastModifiedBar editor={lead.lastmodifier} lang={props.lang}
            title={props.title} timestamp={lead.lastmodified} key="page-last-modified" />
       ];
-      footer.push( <ReadMore {...props} namespace={ns} key="page-read-more" /> );
+      footer.push( (
+        <Content>
+          <ReadMore {...props} namespace={ns} key="page-read-more" />
+        </Content>
+      ) );
       return footer;
     }
   },

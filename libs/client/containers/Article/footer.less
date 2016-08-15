@@ -1,44 +1,27 @@
 @import './../../globals.less';
 
+.footer,
 .footer-info {
-  margin: 2em auto 0;
-  padding: 2em 16px 1.5em 16px;
+  overflow: auto;
+  margin-top: 42px;
 }
 
-.footer > ul {
-  font-size: 0.9em;
-  clear: both;
-}
+.footer {
+  background-color: @footer-bg-color;
 
-.footer h2 {
-  display: inline;
-  font-weight: bold;
-  font-size: 1em;
-}
+  h2 {
+    border-bottom: solid 1px @footer-border-color;
+    padding-bottom: 14px;
+  }
 
-.footer img {
-  line-height: 1;
-  display: inline;
-}
+  .footer-info {
+    overflow: auto;
 
-.footer ul {
-  text-align: center;
-}
-
-.footer-info .hlist {
-  display: inline-block;
-  margin-left: 8px;
-}
-
-.footer ul li {
-  line-height: 1.2;
-  padding: 0 0 .7em;
-}
-
-.footer .separated li {
-  padding: 0;
-  margin-right: 0;
-  margin-left: 8px;
+    > * {
+      font-size: 0.875em;
+      margin-bottom: 9px;
+    }
+  }
 }
 
 .footer {
@@ -54,5 +37,8 @@
 
   > * {
     margin-top: 10px;
+    &:first-child {
+      margin-top: 0;
+    }
   }
 }

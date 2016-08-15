@@ -1,6 +1,12 @@
 import React from 'react'
 import timeago from 'timeago'
+
 import './styles.less'
+import './icons.less'
+
+import Icon from './../Icon'
+
+import Content from './../../containers/Content'
 
 export default ({ editor, lang, title, timestamp }) => {
   const isAnon = editor && editor.name ? false : true;
@@ -14,6 +20,7 @@ export default ({ editor, lang, title, timestamp }) => {
   const timeDelta = now - ( tsAsDate.getTime() / 1000 );
 
   var editorElement, text = '', editorLabel,
+    iconVariant = '-gray',
     className = 'last-modified-bar';
 
   // Cached pages may not have this available.
@@ -22,16 +29,21 @@ export default ({ editor, lang, title, timestamp }) => {
     editorElement = isAnon ? <span>{editorLabel}</span> : <a href={prefix + editor.name}>{editorLabel}</a>
     text = ' by ';
   }
+
   // check if fresh (< 1hr)
   if ( timeDelta < 60 * 60 ) {
     className += ' active';
+    iconVariant = '-invert';
   }
 
+  var modifierTagline = [<a href={historyUrl}>{historyText}</a>, text, editorElement,
+    <Icon small={true} glyph={'arrow' + iconVariant} className='indicator' />];
   return (
     <div className={className}>
-      <div>
-        <a href={historyUrl}>{historyText}</a>{text}{editorElement}
-      </div>
+      <Content>
+      <Icon glyph={'clock' + iconVariant} type="before" small={true}
+          label={modifierTagline} className="last-modifier-tagline" />
+      </Content>
     </div>
   )
 }
