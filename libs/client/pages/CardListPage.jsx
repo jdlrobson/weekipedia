@@ -5,7 +5,6 @@ import ErrorBox from './../components/ErrorBox';
 
 import Content from './../containers/Content'
 import Article from './../containers/Article'
-import CardList from './../containers/CardList'
 
 // Pages
 export default React.createClass({

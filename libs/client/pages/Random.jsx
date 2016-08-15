@@ -1,7 +1,5 @@
 import React from 'react'
 
-import Content from './../containers/Content'
-
 import CardListPage from './CardListPage'
 
 // Pages
@@ -21,8 +19,7 @@ export default React.createClass({
   render(){
     return (
       <CardListPage {...this.props} unordered="1" apiEndpoint={'/api/random/' + this.props.lang}
-        title='Random' tagline="Random pages from across the wiki">
-    </CardListPage>
+        title='Random' tagline="Random pages from across the wiki" />
     )
   }
 })

@@ -43,7 +43,7 @@ Api.prototype = {
     } );
   },
   fetchCards: function ( url, props ) {
-    return this.fetchCardListProps( url ).then( function ( props ) {
+    return this.fetchCardListProps( url, props ).then( function ( props ) {
       return props.cards;
     } );
   },
