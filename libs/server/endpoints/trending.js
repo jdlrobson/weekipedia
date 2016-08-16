@@ -68,8 +68,8 @@ function trending( wiki, halflife, project, title ) {
 
     visits( lang, project ).then( function ( visitedPages ) {
       var visitLookup = {};
-      if ( visitedPages ) {
-        visitedPages.forEach( function ( page ) {
+      if ( visitedPages && visitedPages.pages ) {
+        visitedPages.pages.forEach( function ( page ) {
           visitLookup[page.title] = page.delta;
         } );
       }

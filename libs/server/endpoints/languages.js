@@ -12,7 +12,8 @@ export default function ( title, lang, project ) {
     llinlanguagecode: lang
   };
 
-  return mwApi( lang, params, project ).then( function ( pages ) {
+  return mwApi( lang, params, project ).then( function ( result ) {
+    var pages = result.pages;
     return pages.length ? pages[0].langlinks || [] : [];
   } );
 }

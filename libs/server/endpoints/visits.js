@@ -58,14 +58,16 @@ export default function ( lang, project ) {
 
     return addProps( pages, [ 'pageimages','pageterms' ], lang, project )
   } ).then( function ( pages ) {
-    return pages.sort( function ( a, b ) {
+    var pages = pages.sort( function ( a, b ) {
       if ( !a.delta ) {
         return 1;
       } else {
         return a.delta < b.delta ? 1 : -1;
       }
     } );
+
+    return { pages: pages };
   } ).catch( function () {
-    return [];
+    return { pages: [] };
   } );
 }
