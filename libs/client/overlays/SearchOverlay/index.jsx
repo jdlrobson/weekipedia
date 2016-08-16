@@ -7,6 +7,8 @@ import CardList from './../../containers/CardList'
 import IntermediateState from './../../components/IntermediateState';
 import SearchForm from './../../components/SearchForm'
 
+import './styles.less'
+
 export default React.createClass({
   getInitialState() {
     return {
@@ -58,7 +60,7 @@ export default React.createClass({
     var content = state.isSearching ? <IntermediateState msg="Searching" />
       : <CardList cards={state.cards} emptyMessage='' />;
     return (
-      <Overlay router={this.props.router} header={main}>
+      <Overlay router={this.props.router} header={main} className="component-search-overlay">
         <Content className="overlay-content">{content}</Content>
       </Overlay>
     )
