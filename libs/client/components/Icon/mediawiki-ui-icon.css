@@ -6,6 +6,7 @@ https://en.wikipedia.org/w/load.php?debug=false&lang=en&modules=mediawiki.ui.ico
   min-height: 1.5em;
   min-width: 1.5em;
   display: inline-block;
+  line-height: 1.5em;
 }
 
 .mw-ui-icon.mw-ui-icon-element {
