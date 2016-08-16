@@ -20,7 +20,7 @@ var globalProps = {
   storage: mwStorage,
   canAuthenticate: config.SIGN_IN_SUPPORTED,
   siteinfo: config.siteinfo,
-  username: config.username,
+  session: config.session,
   project: config.PROJECT || 'wikipedia'
 };
 

@@ -17,8 +17,8 @@ class MainMenu extends Component {
       onMenuItemClick = this.onMenuItemClick.bind(this);
 
     if ( this.props.canAuthenticate ) {
-      if ( this.props.username ) {
-        username = this.props.username;
+      if ( this.props.session ) {
+        username = this.props.session.username;
         login = [
           <Icon glyph="mf-profile-invert" href={'/' + this.props.lang + '/wiki/User:' + username }
            label={username} type="before" onClick={onMenuItemClick} />,

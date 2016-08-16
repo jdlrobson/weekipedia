@@ -151,7 +151,7 @@ export default React.createClass({
       showNotification={this.props.showNotification}
       disabled={this.state.lead.languagecount === 0} />);
 
-    if ( this.props.username ) {
+    if ( this.props.session ) {
       actions.push(<WatchIcon {...this.props}/>);
     }
 

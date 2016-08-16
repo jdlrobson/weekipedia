@@ -306,8 +306,9 @@ app.get('/api/web-push/service/trending/',(req, res) => {
 } );
 
 app.get('*',(req, res) => {
-
-  var user = req.user ? req.user : {};
+  var session = req.user ? {
+      username: req.user.displayName,
+    } : null;
 
   // use React Router
   res.status(200).render('index.html', {
@@ -318,7 +319,7 @@ app.get('*',(req, res) => {
         privacyUrl: process.env.SITE_PRIVACY_URL,
         termsUrl: process.env.SITE_TERMS_OF_USE
       },
-      username: user.displayName,
+      session: session,
       SIGN_IN_SUPPORTED: Boolean( SIGN_IN_SUPPORTED ),
       PROJECT: process.env.PROJECT,
       OFFLINE_VERSION: process.env.OFFLINE_VERSION
