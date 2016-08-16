@@ -26,6 +26,8 @@ import cachedResponse from './cached-response'
 
 const project = process.env.PROJECT || 'wikipedia';
 
+const SITE_WORDMARK_PATH = process.env.SITE_WORDMARK_PATH
+const SITE_TITLE = process.env.SITE_TITLE || 'Weekipedia'
 const CONSUMER_SECRET = process.env.MEDIAWIKI_CONSUMER_SECRET;
 const CONSUMER_KEY = process.env.MEDIAWIKI_CONSUMER_KEY
 const OAUTH_CALLBACK_URL = 'http://localhost:8142/auth/mediawiki/callback'
@@ -310,6 +312,10 @@ app.get('*',(req, res) => {
   // use React Router
   res.status(200).render('index.html', {
     config: JSON.stringify( {
+      siteinfo: {
+        wordmark: SITE_WORDMARK_PATH,
+        title: SITE_TITLE
+      },
       username: user.displayName,
       SIGN_IN_SUPPORTED: Boolean( SIGN_IN_SUPPORTED ),
       PROJECT: process.env.PROJECT,

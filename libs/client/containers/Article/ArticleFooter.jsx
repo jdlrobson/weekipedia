@@ -7,7 +7,8 @@ import Content from './../../containers/Content'
 // Main component
 class ArticleFooter extends Component {
   render(){
-    var switcher,
+    var switcher, wordmark,
+      siteinfo = this.props.siteinfo,
       license = {
         url: '//creativecommons.org/licenses/by-sa/3.0/',
         name: 'CC BY-SA 3.0'
@@ -22,15 +23,14 @@ class ArticleFooter extends Component {
         </HorizontalList>
       );
     }
+    wordmark = siteinfo.wordmark ? <img src={siteinfo.wordmark} alt={siteinfo.title} height="16" />
+      : <h2>{siteinfo.title}</h2>;
 
     return (
       <Content key="footer" className="post-content footer">
         {this.props.footer}
         <ul className="footer-info">
-          <li>
-            <h2>Weekipedia</h2>
-            {switcher}
-          </li>
+          <li>{wordmark}{switcher}</li>
           <li>Content is available under <a className="external" rel="nofollow" href={license.url}>{license.name}</a> unless otherwise noted.</li>
         </ul>
       </Content>

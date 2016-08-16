@@ -19,6 +19,7 @@ var globalProps = {
   router: router,
   storage: mwStorage,
   canAuthenticate: config.SIGN_IN_SUPPORTED,
+  siteinfo: config.siteinfo,
   username: config.username,
   project: config.PROJECT || 'wikipedia'
 };

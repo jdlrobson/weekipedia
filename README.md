@@ -28,6 +28,8 @@ Before commiting code please remember to run:
 
 > export PROJECT='wikipedia'
 
+> export SITE_WORDMARK_PATH='/public/wordmark.png'
+
 > export USE_HTTPS=true
 
 > export GCM_SENDER_ID=
