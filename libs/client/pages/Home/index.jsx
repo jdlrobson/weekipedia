@@ -10,7 +10,7 @@ import Article from './../../containers/Article';
 import Content from './../../containers/Content';
 import CardList from './../../containers/CardList';
 
-const HALF_LIFE_HOURS = '2';
+const HALF_LIFE_HOURS = '0.1';
 const HALF_LIFE_DAYS = '10';
 const HALF_LIFE_WEEKS = '36';
 const OFFLINE_ERROR = 'You do not have an internet connection';
@@ -22,7 +22,7 @@ export default React.createClass({
       isBetaMode: false,
       router: null,
       wiki: 'enwiki',
-      halflife: HALF_LIFE_DAYS
+      halflife: HALF_LIFE_HOURS
     };
   },
   getInitialState() {
