@@ -58,7 +58,7 @@ export default React.createClass({
       var ns = data.lead.ns;
 
       // If talk page or user page auto expand
-      if ( ns % 2 === 1 || ns === 2 ) {
+      if ( ns === undefined || ns % 2 === 1 || ns === 2 ) {
         self.setState( { isExpanded: true } );
       }
       self.setState(data);
@@ -136,7 +136,7 @@ export default React.createClass({
       if ( this.state.isExpanded ) {
         sections = this.getSections();
       } else {
-        sections.push(<Button key="article-expand" label="Expand" onClick={this.expand}></Button>);
+        sections.push(<Button key="article-expand" label="Expand" onClick={this.expand} />);
       }
       footer = <PageFooter {...this.props} lastmodified={lead.lastmodified}
         lastmodifier={lead.lastmodifier} namespace={this.state.lead.ns} />;
