@@ -4,6 +4,7 @@ import ErrorBox from './../components/ErrorBox';
 import IntermediateState from './../components/IntermediateState';
 import HorizontalList from './../components/HorizontalList'
 
+import Article from './../containers/Article'
 import Content from './../containers/Content'
 
 import CardListPage from './CardListPage'
@@ -76,21 +77,24 @@ export default React.createClass({
       var west = lng - 1 / 69;
       var baseUrl = '/' + this.props.lang + '/wiki/Special:Nearby/';
 
+      var content = (
+        <Content className="post-content">Explore 1 mile:
+          <HorizontalList>
+            <a href={baseUrl + lat + ',' + west}>west</a>
+            <a href={baseUrl + north + ',' + lng}>north</a>
+            <a href={baseUrl + lat + ',' + east}>east</a>
+            <a href={baseUrl + south + ',' + lng}>south</a>
+          </HorizontalList>
+        </Content>
+      );
+
       return (
         <CardListPage {...this.props} apiEndpoint={endpoint}
-          title='Nearby' tagline="Pages that are near you">
-          <Content className="post-content">Explore 1 mile:
-            <HorizontalList>
-              <a href={baseUrl + lat + ',' + west}>west</a>
-              <a href={baseUrl + north + ',' + lng}>north</a>
-              <a href={baseUrl + lat + ',' + east}>east</a>
-              <a href={baseUrl + south + ',' + lng}>south</a>
-            </HorizontalList>
-          </Content>
-        </CardListPage>
+          title='Nearby' tagline="Pages that are near you" content={content} />
       )
     } else {
-      return (<Content><IntermediateState msg="Locating you to find pages nearby"/></Content>);
+      var body = <IntermediateState msg="Locating you to find pages nearby"/>;
+      return (<Article body={body} />);
     }
   }
 })

@@ -26,8 +26,7 @@ export default React.createClass({
 
       return (
         <CardListPage {...this.props} apiEndpoint={endpoint}
-          title='Most read' tagline="Pages that others are reading">
-        </CardListPage>
+          title='Most read' tagline="Pages that others are reading" />
       )
     }
   }

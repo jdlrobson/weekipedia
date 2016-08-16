@@ -60,7 +60,7 @@ export default React.createClass({
   },
   render(){
     // show intermediate state if still loading, otherwise show list
-    var children, footer;
+    var children, footer, body, tabs;
     var wiki = this.props.wiki;
     var links = [];
     var halflife = this.props.halflife;
@@ -95,18 +95,14 @@ export default React.createClass({
         </Content>
       );
     }
+    tabs = (
+      <HorizontalList isSeparated="1" className="nav-list">{links}</HorizontalList>
+    );
+
     return (
-      <Article {...this.props} tagline="The wiki in real time" isSpecialPage="1">
-        <Content className="pre-content-special">
-          <HorizontalList isSeparated="1" className="nav-list">
-            {links}
-          </HorizontalList>
-        </Content>
-        <Content>
-          {children}
-        </Content>
-        {footer}
-      </Article>
+      <Article {...this.props} tagline="The wiki in real time" isSpecialPage="1"
+        tabs={tabs}
+        body={children} footer={footer} />
     )
   }
 })

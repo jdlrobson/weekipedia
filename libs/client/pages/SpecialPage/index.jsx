@@ -18,13 +18,14 @@ export default React.createClass({
         <div>This special page is not currently available in the web app.
         <br/>In the meantime you can <a href={url}>use Wikipedia</a>.</div>
       );
+    var body = (
+      <Content key="special-page-row-1" className="content">
+        {children}
+      </Content>
+    );
 
     return (
-      <Article {...this.props} title={this.props.title} isSpecialPage='yes'>
-        <Content key="special-page-row-1" className="content">
-          {children}
-        </Content>
-      </Article>
+      <Article {...this.props} title={this.props.title} isSpecialPage='yes' body={body} />
     )
   }
 } );

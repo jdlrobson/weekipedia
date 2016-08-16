@@ -9,7 +9,6 @@ import LanguageIcon from './../../components/LanguageIcon'
 import WatchIcon from './../../components/WatchIcon'
 
 import Article from './../../containers/Article'
-import Content from './../../containers/Content'
 
 import './styles.less'
 import './tablet.less'
@@ -156,22 +155,15 @@ export default React.createClass({
       actions.push(<WatchIcon {...this.props}/>);
     }
 
-    if ( this.props.namespace === 0 ) {
+    if ( this.state.lead.ns === 0 ) {
       secondaryActions.push(<Button key="article-talk" href={'/' + lang + '/wiki/Talk:' + title }
         label="Talk" />);
     }
 
     return (
       <Article {...this.props} actions={actions} tabs={this.getTabs()} title={displayTitle}
-      footer={footer}
-        tagline={tagline} lead={leadHtml}>
-        <Content key="page-row-1" className="content">
-          {sections}
-        </Content>
-        <Content>
-          <div>{secondaryActions}</div>
-        </Content>
-      </Article>
+        body={sections} footer={footer}
+        tagline={tagline} lead={leadHtml} secondaryActions={secondaryActions} />
     )
   }
 } );

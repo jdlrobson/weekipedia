@@ -8,12 +8,13 @@ import Article from './../containers/Article'
 // Pages
 export default React.createClass({
   render(){
-    return (
-      <Article>
+    var body = (
       <Content>
         <IntermediateState msg='Launching web app'/>
       </Content>
-    </Article>
+    );
+    return (
+      <Article body={body} />
     )
   }
 })

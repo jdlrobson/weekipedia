@@ -39,7 +39,7 @@ export default React.createClass({
     } );
   },
   render(){
-    var children;
+    var children, body;
 
     if ( this.state.error ) {
       children = (<ErrorBox msg="Something went wrong when trying to render the list. Please refresh and try again."></ErrorBox>)
@@ -48,12 +48,12 @@ export default React.createClass({
     } else {
       children = (<IntermediateState></IntermediateState>);
     }
+    body = [
+      <Content>{children}</Content>,
+    ].concat( this.props.children );
 
     return (
-      <Article {...this.props} isSpecialPage="1">
-        <Content>{children}</Content>
-        {this.props.children}
-      </Article>
+      <Article {...this.props} isSpecialPage="1" body={body} />
     )
   }
 })
