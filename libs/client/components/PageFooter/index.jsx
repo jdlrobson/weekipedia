@@ -21,11 +21,13 @@ export default React.createClass({
   loadRelatedArticles( title, lang ) {
     var self = this;
     var endpoint = '/api/related/' + lang + '/' + title;
-    this.props.api.fetchCards( endpoint, this.props ).then( function ( cards ) {
-      self.setState( {
-        related: cards
+    if ( this.props.namespace === 0 ) {
+      this.props.api.fetchCards( endpoint, this.props ).then( function ( cards ) {
+        self.setState( {
+          related: cards
+        } );
       } );
-    } );
+    }
   },
   render(){
     var related;
