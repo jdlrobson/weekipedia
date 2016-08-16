@@ -314,7 +314,9 @@ app.get('*',(req, res) => {
     config: JSON.stringify( {
       siteinfo: {
         wordmark: SITE_WORDMARK_PATH,
-        title: SITE_TITLE
+        title: SITE_TITLE,
+        privacyUrl: process.env.SITE_PRIVACY_URL,
+        termsUrl: process.env.SITE_TERMS_OF_USE
       },
       username: user.displayName,
       SIGN_IN_SUPPORTED: Boolean( SIGN_IN_SUPPORTED ),

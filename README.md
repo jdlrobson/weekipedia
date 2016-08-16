@@ -30,6 +30,10 @@ Before commiting code please remember to run:
 
 > export SITE_WORDMARK_PATH='/public/wordmark.png'
 
+> export SITE_PRIVACY_URL=//wikimediafoundation.org/wiki/Privacy_policy
+
+> export SITE_TERMS_OF_USE=//m.wikimediafoundation.org/wiki/Terms_of_Use
+
 > export USE_HTTPS=true
 
 > export GCM_SENDER_ID=
