@@ -2,9 +2,16 @@ import React from 'react'
 
 import './mediawiki-ui-icon.css'
 
-const Icon = (props) => (
-    <a className={(props.className || '') + ' mw-ui-icon mw-ui-icon-' + props.glyph + ' mw-ui-icon-' + ( props.type || 'element' )}
-      onClick={props.onClick} href={props.href}>{props.label}</a>
-  )
+const Icon = (props) => {
+  var iconProps = {
+    className: (props.className || '') + ' mw-ui-icon mw-ui-icon-' + props.glyph + ' mw-ui-icon-' +
+      ( props.type || 'element' ),
+    href: props.href,
+    onClick: props.onClick
+  };
+
+  return iconProps.href ? <a {...iconProps}>{props.label}</a> :
+    <div {...iconProps}>{props.label}</div>;
+}
 
 export default Icon
