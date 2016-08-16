@@ -29,7 +29,7 @@ function signedRequest( url, session, params, options ) {
         url,
         session.oauth.token,
         session.oauth.token_secret,
-        JSON.stringify( params ),
+        params,
         handler );
     } else {
       url += '?' + param( params );
