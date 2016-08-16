@@ -14,6 +14,7 @@ class MainMenu extends Component {
   }
   getUserMenu() {
     var login, username, usertools,
+      msg = this.props.msg,
       onMenuItemClick = this.onMenuItemClick.bind(this);
 
     if ( this.props.canAuthenticate ) {
@@ -23,21 +24,22 @@ class MainMenu extends Component {
           <Icon glyph="mf-profile-invert" href={'/' + this.props.lang + '/wiki/User:' + username }
            label={username} type="before" onClick={onMenuItemClick} />,
           <Icon glyph="mf-logout-invert" href='/auth/logout'
-            label="Log out" onClick={onMenuItemClick} />
+            label={msg('menu-logout')} onClick={onMenuItemClick} />
         ];
         usertools = [
           <li>
             <Icon glyph="mf-watchlist-invert" href={'/' + this.props.lang + '/wiki/Special:Watchlist' }
-              label='Watchlist' type="before" onClick={onMenuItemClick} />
+              label={msg('menu-watchlist')} type="before" onClick={onMenuItemClick} />
           </li>,
           <li>
             <Icon glyph="mf-contributions-invert" href={'/' + this.props.lang + '/wiki/Special:Contributions/' + username }
               label='Contributions' type="before" onClick={onMenuItemClick} />
+              label={msg('menu-contributions')} type="before" onClick={onMenuItemClick} />
           </li>
         ];
       } else {
         login = <Icon glyph="mf-anonymous-invert" href={'/auth/mediawiki' }
-          label='Log in' type="before" onClick={onMenuItemClick} />;
+          label={msg('menu-login')} type="before" onClick={onMenuItemClick} />;
       }
       return (
         <ul>
@@ -53,30 +55,31 @@ class MainMenu extends Component {
   }
   render(){
     var onMenuItemClick = this.onMenuItemClick.bind(this);
-    var langPrefix = '/' + this.props.lang;
+    var langPrefix = '/' + this.props.lang,
+      msg = this.props.msg;
 
     return (
       <div className="menu">
         <ul>
           <li>
-            <Icon glyph="mf-home-invert" href="/" label="Home" type="before"
+            <Icon glyph="mf-home-invert" href="/" label={msg('menu-home')} type="before"
               onClick={onMenuItemClick} />
           </li>
           <li>
             <Icon glyph="mf-random-invert" href={langPrefix + '/wiki/Special:Random'}
               onClick={onMenuItemClick}
-              label="Random" type="before"/>
+              label={msg('menu-random')} type="before"/>
           </li>
           <li>
             <Icon glyph="mf-nearby-invert" href={langPrefix + '/wiki/Special:Nearby'}
               onClick={onMenuItemClick}
-              label="Nearby" type="before"/>
+              label={msg('menu-nearby')} type="before"/>
           </li>
         </ul>
         {this.getUserMenu()}
         <HorizontalList>
-          <a href="//github.com/jdlrobson/weekipedia">About Weekipedia</a>
-          <a href="/wiki/Wikipedia:General_disclaimer" onClick={onMenuItemClick}>Disclaimers</a>
+          <a href="//github.com/jdlrobson/weekipedia">{msg('menu-about')}</a>
+          <a href="/wiki/Wikipedia:General_disclaimer" onClick={onMenuItemClick}>{msg('menu-disclaimers')}</a>
         </HorizontalList>
       </div>
     )

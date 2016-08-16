@@ -13,7 +13,7 @@ export default React.createClass({
     return (
       <form className="search-form" onSubmit={this.onDoSearch}>
         <SearchInput onClick={props.onClickSearch} onSearch={props.onSearch}
-          placeholder="Search Weekipedia"
+          placeholder={props.msg( 'search' )}
           focusOnRender={props.focusOnRender} />
       </form>
     )

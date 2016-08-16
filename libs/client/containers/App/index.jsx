@@ -122,7 +122,7 @@ export default React.createClass({
     this.props.router.navigateTo( '#/search' );
   },
   render(){
-    var searchForm = (<SearchForm
+    var searchForm = (<SearchForm {...this.props}
       onClickSearch={this.onClickSearch}></SearchForm>);
 
     var navigationClasses = this.state.isMenuOpen ?
