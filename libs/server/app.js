@@ -7,6 +7,7 @@ import { OAuthStrategy } from 'passport-mediawiki-oauth'
 import passport from 'passport'
 import session from 'express-session'
 import connect from 'connect-memcached'
+import fs from 'fs'
 
 import watchlistfeed from './endpoints/watchlist-feed'
 import watchlist from './endpoints/watchlist'
@@ -35,6 +36,7 @@ const SITE_TITLE = process.env.SITE_TITLE || 'Weekipedia'
 const CONSUMER_SECRET = process.env.MEDIAWIKI_CONSUMER_SECRET;
 const CONSUMER_KEY = process.env.MEDIAWIKI_CONSUMER_KEY
 
+const LANGUAGE_CODE = process.env.DEFAULT_LANGUAGE || 'en'
 const SIGN_IN_SUPPORTED = CONSUMER_SECRET && CONSUMER_KEY
 
 console.log( 'Init for project', project );
@@ -349,10 +351,33 @@ app.get('/api/web-push/service/trending/',(req, res) => {
   } );
 } );
 
-app.get('*',(req, res) => {
+app.get('/:lang?/*',(req, res) => {
   var session = req.user ? {
       username: req.user.displayName,
     } : null;
+  var language = req.query.uselang || req.params.lang || LANGUAGE_CODE;
+  var i, messages, jsonPath,
+    qqx = language === 'qqx';
+
+  if ( qqx ) {
+    jsonPath = './i18n/en.json';
+  } else {
+    jsonPath = './i18n/' + language + '.json'
+  }
+
+  try {
+    messages = JSON.parse( fs.readFileSync( jsonPath, 'utf8' ) );
+  } catch ( e ) {
+    messages = {};
+  }
+
+  if ( qqx ) {
+    for ( i in messages ) {
+      if ( messages.hasOwnProperty( i ) ) {
+        messages[i] = '{' + i + '}';
+      }
+    }
+  }
 
   // use React Router
   res.status(200).render('index.html', {
@@ -366,6 +391,7 @@ app.get('*',(req, res) => {
         termsUrl: process.env.SITE_TERMS_OF_USE
       },
       session: session,
+      i18n: messages,
       SIGN_IN_SUPPORTED: Boolean( SIGN_IN_SUPPORTED ),
       PROJECT: process.env.PROJECT,
       OFFLINE_VERSION: process.env.OFFLINE_VERSION

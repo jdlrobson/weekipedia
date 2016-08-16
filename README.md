@@ -42,6 +42,8 @@ Before commiting code please remember to run:
 
 > export GCM_API_KEY=
 
+> export DEFAULT_LANGUAGE=en
+
 For access to user restricted features:
 Register an OAUTH consumer @ https://meta.wikimedia.org/wiki/Special:OAuthConsumerRegistration/propose
 Put callback url as https://yourdomain.com/auth/mediawiki/callback

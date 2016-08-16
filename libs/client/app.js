@@ -1,13 +1,15 @@
 import React from 'react'
 import { render } from 'react-dom'
+import messages, { msg } from 'mediawiki-messages'
+
 import 'reset-css/reset.less'
 import './main.less'
-import App from './containers/App'
-import router from './router.js'
 
+import App from './containers/App'
+
+import router from './router.js'
 import routes from './routes.js'
 import overlayRoutes from './routesOverlays.js'
-
 import api from './api.js'
 import mwStorage from './mediawiki-storage'
 import initOffline from './offline'
@@ -18,11 +20,14 @@ var globalProps = {
   api: api,
   router: router,
   storage: mwStorage,
+  msg: msg,
   canAuthenticate: config.SIGN_IN_SUPPORTED,
   siteinfo: config.siteinfo,
   session: config.session,
   project: config.PROJECT || 'wikipedia'
 };
+
+messages.load( config.i18n || {} );
 
 // register all the routes
 routes.concat( overlayRoutes ).forEach( function ( args ) {

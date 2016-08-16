@@ -51,6 +51,7 @@
     "web-push-subscriber": "jdlrobson/web-push-subscriber",
     "webpack": "^1.13.1",
     "webpack-dev-server": "^1.14.1",
+    "mediawiki-messages": "jdlrobson/mediawiki-messages",
     "wikitrender": "jdlrobson/wikitrender"
   },
   "dependencies": {
