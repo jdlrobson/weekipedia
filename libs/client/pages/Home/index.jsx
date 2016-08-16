@@ -10,8 +10,6 @@ import Article from './../../containers/Article';
 import Content from './../../containers/Content';
 import CardList from './../../containers/CardList';
 
-import './styles.less';
-
 const HALF_LIFE_HOURS = '2';
 const HALF_LIFE_DAYS = '10';
 const HALF_LIFE_WEEKS = '36';
@@ -60,7 +58,7 @@ export default React.createClass({
   },
   render(){
     // show intermediate state if still loading, otherwise show list
-    var children, footer, body, tabs;
+    var children, footer, body;
     var wiki = this.props.wiki;
     var links = [];
     var halflife = this.props.halflife;
@@ -95,13 +93,10 @@ export default React.createClass({
         </Content>
       );
     }
-    tabs = (
-      <HorizontalList isSeparated="1" className="nav-list">{links}</HorizontalList>
-    );
 
     return (
       <Article {...this.props} tagline="The wiki in real time" isSpecialPage="1"
-        tabs={tabs}
+        tabs={links}
         body={children} footer={footer} />
     )
   }
