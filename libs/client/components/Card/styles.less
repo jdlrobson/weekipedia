@@ -1,5 +1,7 @@
+@import '../../globals.less';
+
 .card {
-  background-color: '#fff';
+  background-color: @card-bg-color;
   box-sizing: border-box;
   flex: 1 0 auto;
   margin: 0;
@@ -35,7 +37,7 @@
 }
 
 .card-thumb {
-  background-color: #eeeeee;
+  background-color: @card-thumb-bg-color;
   background-repeat: no-repeat;
   background-position: center center;
   background-size: 100% 100%;
@@ -53,7 +55,7 @@
 }
 
 .card-extract {
-  color: #888888;
+  color: @card-text-color;
   font-size: .8em;
   white-space: nowrap;
   overflow: hidden;
