@@ -10,6 +10,20 @@ export default React.createClass({
       isWatched: false
     };
   },
+  componentWillMount() {
+    this.loadWatchInfo();
+  },
+  loadWatchInfo() {
+    var title = this.props.title;
+    var self = this;
+    var endpoint = '/api/private/watchlist/' + this.props.lang + '/' + title;
+    this.props.api.fetch( endpoint ).then( function ( data ) {
+      title = decodeURIComponent( title );
+      self.setState( { isWatched: Boolean( data[title] ) } );
+    } ).catch( function () {
+      self.setState( { isError: true } );
+    } );
+  },
   watch( ev ) {
     var endpointPrefix;
     var props = this.props;
@@ -31,6 +45,10 @@ export default React.createClass({
       label: 'Read in another language',
       onClick: this.watch
     };
+
+    if ( this.state.isError ) {
+      iconProps.className = 'disabled';
+    }
 
     return (
       <Icon {...iconProps} />

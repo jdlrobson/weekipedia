@@ -25,6 +25,7 @@ Api.prototype = {
   post: function ( url, data ) {
     return fetch( url, {
       method: 'post',
+      credentials: 'same-origin',
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
