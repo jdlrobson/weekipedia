@@ -58,7 +58,7 @@ export default function ( lang, project ) {
 
     return addProps( pages, [ 'pageimages','pageterms' ], lang, project )
   } ).then( function ( pages ) {
-    var pages = pages.sort( function ( a, b ) {
+    pages = pages.sort( function ( a, b ) {
       if ( !a.delta ) {
         return 1;
       } else {
