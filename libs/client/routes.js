@@ -1,5 +1,6 @@
 import React from 'react'
 
+import Contributions from './pages/Contributions'
 import Home from './pages/Home'
 import Page from './pages/Page'
 import SplashScreen from './pages/SplashScreen'
@@ -76,15 +77,16 @@ var routes = [
 ];
 function addSpecialPage( title, Class, handler ) {
   routes.push( [
-    new RegExp( '^\/([a-z\-]*)\/wiki\/Special:' + title + '\/?(.*)|^\/wiki\/Special:' + title + '$' ),
+    new RegExp( '^\/([a-z\-]*)\/wiki\/Special:' + title + '\/?(.*)|^\/wiki\/Special:' + title + '\/?(.*)$' ),
     function ( info, props ) {
       var lang = info[1] || 'en';
-      props.lang = lang;
 
+      props.lang = lang;
       props.children = [
         React.createElement( Class,
           Object.assign( {}, props, {
-            key: 'page-special-' + title
+            key: 'page-special-' + title,
+            params: info[3] || info[2]
           } )
         )
       ];
@@ -95,6 +97,8 @@ function addSpecialPage( title, Class, handler ) {
 }
 
 function initSpecialPages() {
+  addSpecialPage( 'RecentChanges', Contributions );
+  addSpecialPage( 'Contributions', Contributions );
   addSpecialPage( 'Watchlist', Watchlist );
   addSpecialPage( 'MostRead', MostRead );
   addSpecialPage( 'SplashScreen', SplashScreen );
