@@ -16,8 +16,9 @@ function getCards( data, props, CardClass ) {
   CardClass = CardClass || PreviewCard;
 
   if ( data.pages && data.pages.length ) {
-    data.pages.forEach( function ( item ) {
-      item.key = item.pageid || item.id;
+    data.pages.forEach( function ( item, i ) {
+      var id = item.revid || item.pageid || item.id;
+      item.key = 'card-' + i + '-' + id;
       cards.push( React.createElement( CardClass, Object.assign( {}, props, item ) ) );
     } );
   }
