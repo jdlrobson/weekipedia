@@ -94,7 +94,7 @@ export default React.createClass({
       )
     } else {
       var body = <IntermediateState msg="Locating you to find pages nearby"/>;
-      return (<Article body={body} />);
+      return (<Article {...this.props} body={body} />);
     }
   }
 })
