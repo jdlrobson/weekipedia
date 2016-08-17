@@ -14,7 +14,7 @@ export default function ( lang, username, query, project ) {
     params.ucuser = username;
   } else {
     params.rclimit = 50;
-    params.rcprop = feedProps;
+    params.rcprop = feedProps + '|sizes';
   }
 
   return mwApi( lang, params, project ).then( function ( data ) {
