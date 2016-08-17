@@ -3,7 +3,7 @@ import fetch from 'isomorphic-fetch'
 
 import CardList from './containers/CardList'
 
-import Card from './components/Card'
+import PreviewCard from './components/PreviewCard'
 
 function Api() {
   this.cache = {};
@@ -13,7 +13,7 @@ function Api() {
 function getCards( data, props, CardClass ) {
   var cards = [];
 
-  CardClass = CardClass || Card;
+  CardClass = CardClass || PreviewCard;
 
   if ( data.pages && data.pages.length ) {
     data.pages.forEach( function ( item ) {
