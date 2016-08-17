@@ -21,6 +21,7 @@ import page from './endpoints/page'
 import nearby from './endpoints/nearby'
 import languages from './endpoints/languages'
 import file from './endpoints/file'
+import contributions from './endpoints/contributions'
 
 import cachedResponse from './cached-response'
 
@@ -297,6 +298,13 @@ app.get('/api/page-languages/:lang/:title',(req, res) => {
   cachedResponse( res, req.url, function () {
     return languages( req.params.title, req.params.lang, project );
   });
+} );
+
+app.get('/api/contributions/:lang/:username?',(req, res) => {
+  cachedResponse( res, req.url, function() {
+    var p = req.params;
+    return contributions( p.lang, p.username, req.query, project );
+  } );
 } );
 
 app.get('/api/web-push/service/trending/',(req, res) => {
