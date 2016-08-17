@@ -37,6 +37,7 @@
     "node-cache": "^3.2.1",
     "node-jquery-param": "0.0.2",
     "pageviews": "^1.1.0",
+    "passport": "^0.3.2",
     "passport-mediawiki-oauth": "^0.1.0",
     "react": "^15.2.0",
     "react-dom": "^15.2.0",
