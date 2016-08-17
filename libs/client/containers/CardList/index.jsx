@@ -1,10 +1,16 @@
 import React from 'react'
 
+import ListHeader from './../../components/ListHeader'
+
 import './styles.less'
+
+const MONTHS = ['January','February','March','April','May','June',
+  'July','August','September','October','November','December'];
 
 export default React.createClass({
   getDefaultProps: function () {
     return {
+      isDiffCardList: false,
       endpoint: null,
       continue: null,
       emptyMessage: 'The list is disappointedly empty.'
@@ -39,7 +45,7 @@ export default React.createClass({
     if ( !this.state.isPending && this.props.api && continuer ) {
       url = this.props.endpoint + '?' + param( continuer );
       this.setState( { isPending: true } );
-      this.props.api.fetchCardListProps( url, this.props ).then( function ( props ) {
+      this.props.api.fetchCardListProps( url, this.props, this.props.CardClass ).then( function ( props ) {
         // this wont work again without the continue
         self.setState( { continue: props.continue, isPending: false,
           cards: self.state.cards.concat( props.cards ) } );
@@ -56,12 +62,36 @@ export default React.createClass({
     } );
   },
   render: function () {
+    var lastTs;
     var props = this.props;
     var cards = this.state.cards;
+    var cardsAndHeaders = [];
     var continuer = props.continue && props.endpoint ?
       <div className='gutter' /> : null;
+    var className = 'card-list' + ( props.unordered ? ' card-list-unordered' : '' );
+
+    if ( this.props.isDiffCardList ) {
+      className += ' diff-list';
+      cards.forEach( function ( card, i ) {
+        var ts, header;
+        if ( card.props.timestamp ) {
+          ts = new Date( card.props.timestamp );
+          if ( !lastTs || ( ts.getDate() !== lastTs.getDate() ) ) {
+            header = (
+              <ListHeader key={'card-list-header-' + i}>
+                {ts.getDate()} {MONTHS[ts.getMonth()]} {ts.getFullYear()}
+              </ListHeader>
+            );
+            cardsAndHeaders.push( header );
+          }
+          lastTs = ts;
+        }
+        cardsAndHeaders.push( card );
+      } );
+      cards = cardsAndHeaders;
+    }
     return props.cards.length ? (
-        <div className={"card-list" + ( props.unordered ? ' card-list-unordered' : '' ) }>{cards}{continuer}</div>
+        <div className={className}>{cards}{continuer}</div>
       ) : <div>{props.emptyMessage}</div>;
   }
 } );

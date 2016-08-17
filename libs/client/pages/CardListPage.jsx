@@ -10,6 +10,7 @@ import Article from './../containers/Article'
 export default React.createClass({
   getDefaultProps: function () {
     return {
+      CardClass: null,
       api: null,
       apiEndpoint: null,
       title: null,
@@ -31,8 +32,9 @@ export default React.createClass({
     var self = this;
     var api = this.props.api;
     var props = { lang: this.props.lang, unordered: this.props.unordered,
+      isDiffCardList: this.props.isDiffCardList,
       router: this.props.router, api: api };
-    api.fetchCardList( this.props.apiEndpoint, props ).then( function ( list ) {
+    api.fetchCardList( this.props.apiEndpoint, props, this.props.CardClass ).then( function ( list ) {
       self.setState({ list : list });
     } ).catch( function () {
       self.setState({ error: true });

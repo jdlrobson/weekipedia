@@ -53,6 +53,7 @@ Api.prototype = {
     } );
   },
   fetchCardList: function ( url, props, CardClass ) {
+    props.CardClass = CardClass;
     return this.fetchCardListProps( url, props, CardClass ).then( function ( props ) {
       return React.createElement( CardList, props );
     } );

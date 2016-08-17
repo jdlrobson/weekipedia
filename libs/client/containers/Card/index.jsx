@@ -26,7 +26,7 @@ class Card extends Component {
     return (
       <div className="card" onClick={this.navigateTo.bind(this)}>
         {this.props.indicator}
-        <div className="card-thumb" style={styles}></div>
+        <div className="card-thumb" style={styles}>{this.props.metaInfo}</div>
         <div className="card-detail">
           <h3>
             <a href={url}>{title}</a>

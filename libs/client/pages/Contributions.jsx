@@ -2,6 +2,8 @@ import React from 'react'
 
 import CardListPage from './CardListPage'
 
+import DiffCard from './../components/CardDiff'
+
 // Pages
 export default React.createClass({
   render(){
@@ -19,8 +21,8 @@ export default React.createClass({
     }
 
     return (
-      <CardListPage {...this.props} apiEndpoint={endpoint}
-        title={title} tagline={tagline} />
+      <CardListPage {...this.props} apiEndpoint={endpoint} isDiffCardList={true}
+        title={title} tagline={tagline} CardClass={DiffCard} />
     )
   }
 })
