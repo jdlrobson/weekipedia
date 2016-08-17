@@ -10,12 +10,15 @@ function Api() {
   this.refCache = {};
 }
 
-function getCards( data, props) {
+function getCards( data, props, CardClass ) {
   var cards = [];
+
+  CardClass = CardClass || Card;
+
   if ( data.pages && data.pages.length ) {
     data.pages.forEach( function ( item ) {
       item.key = item.pageid;
-      cards.push( React.createElement( Card, Object.assign( {}, props, item ) ) );
+      cards.push( React.createElement( CardClass, Object.assign( {}, props, item ) ) );
     } );
   }
   return cards;
@@ -33,12 +36,12 @@ Api.prototype = {
       body: JSON.stringify( data )
     } );
   },
-  fetchCardListProps: function ( url, props ) {
+  fetchCardListProps: function ( url, props, CardClass ) {
     return this.fetch( url ).then( function ( data ) {
       var listprops = {
         endpoint: url,
         continue: data.continue,
-        cards: getCards( data, props )
+        cards: getCards( data, props, CardClass )
       };
       return Object.assign( {}, props, listprops );
     } );
@@ -48,8 +51,8 @@ Api.prototype = {
       return props.cards;
     } );
   },
-  fetchCardList: function ( url, props ) {
-    return this.fetchCardListProps( url, props ).then( function ( props ) {
+  fetchCardList: function ( url, props, CardClass ) {
+    return this.fetchCardListProps( url, props, CardClass ).then( function ( props ) {
       return React.createElement( CardList, props );
     } );
   },
