@@ -58,7 +58,7 @@ function trending( wiki, halflife, project, title ) {
   var lang = wiki.replace( 'wiki', '' );
   project = project || 'wikipedia';
 
-  return new Promise( function ( resolve, reject ) {
+  return new Promise( function ( resolve ) {
     var fn = function ( item ) {
       return title ? item.title === title :
         item.contributors.length + item.anons.length > 2 && ( wiki === '*' || item.wiki === wiki ) &&
@@ -76,11 +76,13 @@ function trending( wiki, halflife, project, title ) {
       var pages = scorePages( halflife, visitLookup );
       var results = annotate( sortScoredPages( pages ), fn, 50 );
       if ( !results.length ) {
-        reject();
+        resolve( {
+          pages: [], ts: new Date()
+        } );
       } else {
         addProps( results, [ 'pageimages','pageterms' ], lang, project ).then( function( results ) {
           resolve( {
-            results: results, ts: new Date()
+            pages: results, ts: new Date()
           } );
         })
       }

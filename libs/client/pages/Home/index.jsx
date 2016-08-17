@@ -1,6 +1,5 @@
 import React from 'react'
 
-import HorizontalList from './../../components/HorizontalList'
 import IntermediateState from './../../components/IntermediateState';
 import TrendingCard from './../../components/TrendingCard';
 import ErrorBox from './../../components/ErrorBox';
@@ -8,7 +7,6 @@ import PushButton from './../../components/PushButton';
 
 import Article from './../../containers/Article';
 import Content from './../../containers/Content';
-import CardList from './../../containers/CardList';
 
 const HALF_LIFE_HOURS = '0.1';
 const HALF_LIFE_DAYS = '10';
@@ -28,8 +26,7 @@ export default React.createClass({
   getInitialState() {
     return {
       error: false,
-      errorMsg: 'Nothing is trending right now.',
-      topics: null
+      cardList: null
     };
   },
   // You want to load subscriptions not only when the component update but also when it gets mounted.
@@ -42,13 +39,15 @@ export default React.createClass({
   load() {
     var self = this;
     var props = this.props;
+    var wiki = props.wiki;
+    var halflife = props.halflife;
+    var endpoint = '/api/trending/' + wiki + '/' + halflife;
+    var cardListProps = Object.assign( {}, props, {
+      emptyMessage: 'Nothing is trending right now.'
+    } );
 
-    this.props.api.getTrending( this.props.wiki, this.props.halflife ).then( function ( data ) {
-      var topics = data.map( function ( item ) {
-        item.key = item.id;
-        return React.createElement( TrendingCard, Object.assign( {}, props, item ) );
-      } );
-      self.setState({ topics: topics });
+    this.props.api.fetchCardList( endpoint, cardListProps, TrendingCard ).then( function ( cardList ) {
+      self.setState({ cardList: cardList });
     } ).catch( function ( error ) {
       if ( error.message.indexOf( 'Failed to fetch' ) > -1 ) {
         self.setState({ errorMsg: OFFLINE_ERROR });
@@ -58,7 +57,7 @@ export default React.createClass({
   },
   render(){
     // show intermediate state if still loading, otherwise show list
-    var children, footer, body;
+    var children, footer;
     var wiki = this.props.wiki;
     var links = [];
     var halflife = this.props.halflife;
@@ -80,8 +79,8 @@ export default React.createClass({
     }
     if ( this.state.error ) {
       children = (<ErrorBox msg={this.state.errorMsg}></ErrorBox>)
-    } else if ( this.state.topics ) {
-      children = (<CardList cards={this.state.topics} />);
+    } else if ( this.state.cardList ) {
+      children = (this.state.cardList);
     } else {
       children = (<IntermediateState></IntermediateState>);
     }

@@ -17,7 +17,7 @@ function getCards( data, props, CardClass ) {
 
   if ( data.pages && data.pages.length ) {
     data.pages.forEach( function ( item ) {
-      item.key = item.pageid;
+      item.key = item.pageid || item.id;
       cards.push( React.createElement( CardClass, Object.assign( {}, props, item ) ) );
     } );
   }
@@ -121,13 +121,6 @@ Api.prototype = {
       cache[cacheKey] = promise;
       return promise;
     }
-  },
-  getTrending: function ( wiki, halflife ) {
-    var url = '/api/trending/' + wiki + '/' + halflife;
-
-    return this.fetch( url ).then( function ( json ) {
-      return json.results;
-    } );
   }
 };
 
