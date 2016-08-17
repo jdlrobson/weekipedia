@@ -32,6 +32,12 @@ https://en.wikipedia.org/w/load.php?debug=false&lang=en&modules=mediawiki.ui.ico
   min-height: 1.5em;
   content: '';
 }
+
+
+.mw-ui-icon.mw-ui-icon-small:before {
+  background-size: 75% auto;
+}
+
 .mw-ui-icon.mw-ui-icon-before:before {
   position: relative;
   width: 1.5em;
