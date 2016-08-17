@@ -49,7 +49,7 @@ export default React.createClass({
     title = title || this.props.title;
     lang = lang || this.props.lang;
 
-    if ( window.location.search.indexOf( 'expanded=1' ) > -1 ) {
+    if ( window.location.search.indexOf( 'expanded=1' ) > -1 || this.props.siteinfo.expandArticlesByDefault ) {
       this.setState( { isExpanded: true } );
     }
     this.setState( { lead: {} } );

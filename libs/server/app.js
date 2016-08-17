@@ -322,6 +322,7 @@ app.get('*',(req, res) => {
   res.status(200).render('index.html', {
     config: JSON.stringify( {
       siteinfo: {
+        expandArticlesByDefault: process.env.SITE_EXPAND_SECTIONS,
         wordmark: SITE_WORDMARK_PATH,
         title: SITE_TITLE,
         privacyUrl: process.env.SITE_PRIVACY_URL,

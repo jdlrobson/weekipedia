@@ -51,3 +51,7 @@ Put callback url as https://yourdomain.com/auth/mediawiki/callback
 > export MEDIAWIKI_CONSUMER_SECRET=
 
 > npm run
+
+To expand articles by default
+
+> export SITE_EXPAND_SECTIONS=1
