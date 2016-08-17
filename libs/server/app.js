@@ -300,10 +300,10 @@ app.get('/api/page-languages/:lang/:title',(req, res) => {
   });
 } );
 
-app.get('/api/contributions/:lang/:username?',(req, res) => {
+app.get('/api/contributions/:lang/:ns/:username?',(req, res) => {
   cachedResponse( res, req.url, function() {
     var p = req.params;
-    return contributions( p.lang, p.username, req.query, project );
+    return contributions( p.lang, p.username, p.ns, req.query, project );
   } );
 } );
 

@@ -1,7 +1,7 @@
 import mwApi from './mwApi';
 
 // request/lib/oauth.js
-export default function ( lang, username, query, project ) {
+export default function ( lang, username, ns, query, project ) {
   var params = Object.assign( {
     list: username ? 'usercontribs' : 'recentchanges'
   }, query || {} );
@@ -12,9 +12,11 @@ export default function ( lang, username, query, project ) {
     params.uclimit = 50;
     params.ucprop = feedProps;
     params.ucuser = username;
+    params.ucnamespace = ns;
   } else {
     params.rclimit = 50;
     params.rcprop = feedProps + '|sizes';
+    params.rcnamespace = ns;
   }
 
   return mwApi( lang, params, project ).then( function ( data ) {
