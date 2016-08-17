@@ -29,6 +29,10 @@ class MainMenu extends Component {
           <li>
             <Icon glyph="mf-watchlist-invert" href={'/' + this.props.lang + '/wiki/Special:Watchlist' }
               label='Watchlist' type="before" onClick={onMenuItemClick} />
+          </li>,
+          <li>
+            <Icon glyph="mf-contributions-invert" href={'/' + this.props.lang + '/wiki/Special:Contributions/' + username }
+              label='Contributions' type="before" onClick={onMenuItemClick} />
           </li>
         );
       } else {
