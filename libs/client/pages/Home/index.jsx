@@ -6,7 +6,6 @@ import ErrorBox from './../../components/ErrorBox';
 import PushButton from './../../components/PushButton';
 
 import Article from './../../containers/Article';
-import Content from './../../containers/Content';
 
 const HALF_LIFE_HOURS = '0.1';
 const HALF_LIFE_DAYS = '10';
@@ -54,7 +53,7 @@ export default React.createClass({
   },
   render(){
     // show intermediate state if still loading, otherwise show list
-    var children, footer;
+    var children, push;
     var wiki = this.props.wiki;
     var links = [];
     var halflife = this.props.halflife;
@@ -82,16 +81,14 @@ export default React.createClass({
       children = (<IntermediateState></IntermediateState>);
     }
 
-    footer = (
-      <Content className="post-content">
-        <PushButton api={this.props.api} />
-      </Content>
+    push = (
+      <PushButton api={this.props.api} />
     );
 
     return (
       <Article {...this.props} tagline="The wiki in real time" isSpecialPage="1"
         tabs={links}
-        body={children} footer={footer} />
+        body={[children, push]} />
     )
   }
 })

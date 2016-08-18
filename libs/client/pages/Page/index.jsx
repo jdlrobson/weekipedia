@@ -1,12 +1,13 @@
 import React from 'react'
 
-import PageFooter from './../../components/PageFooter'
 import IntermediateState from './../../components/IntermediateState';
 import Section from './../../components/Section'
 import Button from './../../components/Button'
 import ErrorBox from './../../components/ErrorBox'
 import LanguageIcon from './../../components/LanguageIcon'
 import WatchIcon from './../../components/WatchIcon'
+import LastModifiedBar from './../../components/LastModifiedBar'
+import ReadMore from './../../components/ReadMore'
 
 import Article from './../../containers/Article'
 
@@ -121,10 +122,27 @@ export default React.createClass({
       return [];
     }
   },
+  getFooter() {
+    var footer = [];
+    var props = this.props;
+    var lead = this.state.lead;
+    var ns = lead.ns;
+    if ( !lead ) {
+      return footer;
+    } else {
+      footer = [
+        <LastModifiedBar editor={lead.lastmodifier} lang={props.lang}
+           title={props.title} timestamp={lead.lastmodified} key="page-last-modified" />
+      ];
+      footer.push( <ReadMore {...props} namespace={ns} key="page-read-more" /> );
+      return footer;
+    }
+  },
   render(){
-    var leadHtml, footer,
+    var leadHtml,
       sections = [],
       actions = [],
+      footer = this.getFooter(),
       secondaryActions = [],
       title = this.props.title,
       lang = this.props.lang,
@@ -139,8 +157,6 @@ export default React.createClass({
       } else {
         sections.push(<Button key="article-expand" label="Expand" onClick={this.expand} />);
       }
-      footer = <PageFooter {...this.props} lastmodified={lead.lastmodified}
-        lastmodifier={lead.lastmodifier} namespace={this.state.lead.ns} />;
     } else {
       if ( this.state.error ) {
         sections.push( <ErrorBox msg={this.state.errorMsg} key="article-error" /> );
