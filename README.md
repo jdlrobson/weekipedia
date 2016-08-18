@@ -50,6 +50,10 @@ Put callback url as https://yourdomain.com/auth/mediawiki/callback
 
 > export MEDIAWIKI_CONSUMER_SECRET=
 
+install memcached (https://memcached.org/downloads) and get it up and running
+
+> memcached &
+
 > npm run
 
 To expand articles by default

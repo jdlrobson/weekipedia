@@ -6,6 +6,7 @@ import bodyParser from 'body-parser'
 import { OAuthStrategy } from 'passport-mediawiki-oauth'
 import passport from 'passport'
 import session from 'express-session'
+import connect from 'connect-memcached'
 
 import watchlist from './endpoints/watchlist'
 import watched from './endpoints/watched'
@@ -90,7 +91,10 @@ function ensureAuthenticated(req, res, next) {
   }
 }
 
+
 if ( SIGN_IN_SUPPORTED ) {
+  const MemcachedStore = connect(session);
+
   passport.serializeUser(function(user, done) {
     done(null, user);
   });
@@ -102,6 +106,10 @@ if ( SIGN_IN_SUPPORTED ) {
   app.use(session({
     resave: false,
     saveUninitialized: true,
+    store: new MemcachedStore({
+      hosts: ['127.0.0.1:11211'],
+      secret: CONSUMER_SECRET
+    }),
     secret: CONSUMER_SECRET
   }));
   app.use(passport.initialize());

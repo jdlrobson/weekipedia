@@ -19,6 +19,7 @@
     "babel-preset-es2015": "^6.9.0",
     "babel-preset-react": "^6.11.1",
     "body-parser": "^1.15.2",
+    "connect-memcached": "^0.2.0",
     "css-loader": "^0.23.1",
     "events": "^1.1.1",
     "express": "^4.14.0",
