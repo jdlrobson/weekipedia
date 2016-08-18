@@ -3,7 +3,6 @@ import subscriber from 'web-push-subscriber'
 import collection from './../collection'
 import addProps from './../prop-enricher'
 
-const MAX_HISTORY = 100;
 const EDITS_PER_MIN = process.env.TREND_EDITS_PER_MIN || 20 / 60;
 const BIAS = process.env.TREND_BIAS || 0.6;
 const MIN_AGE = process.env.TREND_MIN_AGE || 5;
