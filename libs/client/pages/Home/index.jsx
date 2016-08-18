@@ -32,9 +32,6 @@ export default React.createClass({
   // You want to load subscriptions not only when the component update but also when it gets mounted.
   componentWillMount(){
     this.load();
-    if ( window.location.search.indexOf( 'beta=' ) > -1 ) {
-      this.setState( { isBetaMode: true } );
-    }
   },
   load() {
     var self = this;
@@ -85,13 +82,11 @@ export default React.createClass({
       children = (<IntermediateState></IntermediateState>);
     }
 
-    if ( this.state.isBetaMode ) {
-      footer = (
-        <Content className="post-content">
-          <PushButton api={this.props.api} />
-        </Content>
-      );
-    }
+    footer = (
+      <Content className="post-content">
+        <PushButton api={this.props.api} />
+      </Content>
+    );
 
     return (
       <Article {...this.props} tagline="The wiki in real time" isSpecialPage="1"
