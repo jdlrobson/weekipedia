@@ -8,7 +8,7 @@ import Content from './../../containers/Content'
 // Main component
 class ArticleHeader extends Component {
   render(){
-    var tabs,
+    var
       header = [],
       nsClass = this.props.isSpecialPage ? ' special-page-heading' : ' standard-page-heading',
       tagline = this.props.tagline;
@@ -27,12 +27,11 @@ class ArticleHeader extends Component {
     }
 
     if ( this.props.tabs.length ) {
-      tabs = <HorizontalList isSeparated="1">{this.props.tabs}</HorizontalList>
+      header.push( <HorizontalList isSeparated="1">{this.props.tabs}</HorizontalList> );
     }
     return (
       <Content key="article-row-0" className={"pre-content " + nsClass}>
         <div className="heading-holder">{header}</div>
-        {tabs}
         <SectionContent {...this.props} text={this.props.lead} />
       </Content>
     )
