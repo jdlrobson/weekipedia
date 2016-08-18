@@ -18,7 +18,8 @@ class Section extends Component {
     }
   }
   render(){
-    var hLevel = this.props.toclevel + 1;
+    var toclevel = this.props.toclevel || 1;
+    var hLevel = toclevel;
     var hMethod = React.DOM['h' + hLevel];
     var headingChildren = [ <span dangerouslySetInnerHTML={{ __html: this.props.line}} key={"section-heading-span-" + this.props.id} /> ];
 

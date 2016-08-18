@@ -80,8 +80,8 @@ export default React.createClass({
   },
   getSections() {
     var sections = [];
-    var allSections = this.state.remaining.sections;
-    var topLevelSection = allSections[0].toclevel;
+    var allSections = this.state.remaining.sections || [];
+    var topLevelSection = allSections.length ? allSections[0].toclevel : 2;
     var curSection;
     var self = this;
 
@@ -99,8 +99,10 @@ export default React.createClass({
         curSection.subsections.push( <Section {...self.props} {...sectionProps} key={id} isCollapsible={false} /> );
       }
     } );
-    // push the last one
-    sections.push( <Section {...curSection } /> );
+    if ( allSections.length ) {
+      // push the last one
+      sections.push( <Section {...curSection } /> );
+    }
     return sections;
   },
   getTabs(){
