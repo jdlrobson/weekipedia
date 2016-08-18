@@ -25,7 +25,7 @@ class MainMenu extends Component {
           <Icon glyph="mf-logout-invert" href='/auth/logout'
             label="Log out" onClick={onMenuItemClick} />
         ];
-        usertools = (
+        usertools = [
           <li>
             <Icon glyph="mf-watchlist-invert" href={'/' + this.props.lang + '/wiki/Special:Watchlist' }
               label='Watchlist' type="before" onClick={onMenuItemClick} />
@@ -34,7 +34,7 @@ class MainMenu extends Component {
             <Icon glyph="mf-contributions-invert" href={'/' + this.props.lang + '/wiki/Special:Contributions/' + username }
               label='Contributions' type="before" onClick={onMenuItemClick} />
           </li>
-        );
+        ];
       } else {
         login = <Icon glyph="mf-anonymous-invert" href={'/auth/mediawiki' }
           label='Log in' type="before" onClick={onMenuItemClick} />;
