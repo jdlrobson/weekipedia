@@ -31,7 +31,6 @@ const SITE_WORDMARK_PATH = process.env.SITE_WORDMARK_PATH
 const SITE_TITLE = process.env.SITE_TITLE || 'Weekipedia'
 const CONSUMER_SECRET = process.env.MEDIAWIKI_CONSUMER_SECRET;
 const CONSUMER_KEY = process.env.MEDIAWIKI_CONSUMER_KEY
-const OAUTH_CALLBACK_URL = 'http://localhost:8142/auth/mediawiki/callback'
 
 const SIGN_IN_SUPPORTED = CONSUMER_SECRET && CONSUMER_KEY
 
@@ -110,8 +109,7 @@ if ( SIGN_IN_SUPPORTED ) {
   passport.use(
     new OAuthStrategy({
       consumerKey: CONSUMER_KEY,
-      consumerSecret: CONSUMER_SECRET,
-      callbackURL: OAUTH_CALLBACK_URL,
+      consumerSecret: CONSUMER_SECRET
     },
     function(token, tokenSecret, profile, done) {
       // [ADDED] Twitter extended API calls using 'request' and 'querystring'
@@ -216,13 +214,17 @@ app.post('/api/web-push/unsubscribe', function( req, res ) {
 */
 
 app.get('/auth/mediawiki',
-  passport.authenticate('mediawiki'));
+  function (req, res, next) {
+    req.session.returnto = req.query.returnto || req.get( 'Referrer' );
+    next();
+  }, passport.authenticate('mediawiki') );
 
 app.get('/auth/mediawiki/callback',
   passport.authenticate( 'mediawiki', { failureRedirect: '/login' } ),
   function(req, res) {
-    // Successful authentication, redirect home.
-    res.redirect('/');
+    // Successful authentication, do redirect.
+    res.redirect(req.session.returnto || '/');
+    delete req.session.returnTo;
   });
 
 app.get('/manifest.json',(req, res) => {
