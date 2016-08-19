@@ -33,7 +33,6 @@ https://en.wikipedia.org/w/load.php?debug=false&lang=en&modules=mediawiki.ui.ico
   content: '';
 }
 
-
 .mw-ui-icon.mw-ui-icon-small:before {
   background-size: 75% auto;
 }

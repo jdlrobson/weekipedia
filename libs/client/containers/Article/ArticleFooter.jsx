@@ -7,7 +7,7 @@ import Content from './../../containers/Content'
 // Main component
 class ArticleFooter extends Component {
   render(){
-    var switcher, wordmark, places = [],
+    var wordmark, places = [],
       siteinfo = this.props.siteinfo,
       license = {
         url: '//creativecommons.org/licenses/by-sa/3.0/',
