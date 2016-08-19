@@ -7,9 +7,9 @@ import PushButton from './../../components/PushButton';
 
 import Article from './../../containers/Article';
 
-const HALF_LIFE_HOURS = '0.1';
-const HALF_LIFE_DAYS = '10';
-const HALF_LIFE_WEEKS = '36';
+const HALF_LIFE_HOURS = '0.5';
+const HALF_LIFE_DAYS = '12';
+const HALF_LIFE_WEEKS = '84';
 const OFFLINE_ERROR = 'You do not have an internet connection';
 
 // Pages

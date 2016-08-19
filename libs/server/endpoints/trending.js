@@ -63,6 +63,7 @@ function trending( wiki, halflife, project, title ) {
       return title ? item.title === title :
         item.contributors.length + item.anons.length > 2 && ( wiki === '*' || item.wiki === wiki ) &&
         item.bytesChanged > MIN_BYTES_CHANGED &&
+      ( item.lastUpdated() / 60 ) < ( halflife * 2 ) &&
         item.score > 0;
     };
 

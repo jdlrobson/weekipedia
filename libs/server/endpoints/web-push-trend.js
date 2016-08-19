@@ -13,25 +13,31 @@ const MIN_CONTRIBUTORS = process.env.TREND_MIN_CONTRIBUTORS || 2;
 console.log( '# Trending setup:', EDITS_PER_MIN, BIAS, MIN_AGE,
   MAX_AGE, MIN_EDITS, MIN_CONTRIBUTORS );
 
-function isTrending( item ) {
+function mightTrend( item ) {
   var age = item.age();
+  return age > MIN_AGE && item.edits > ( MIN_EDITS / 2 ) &&
+    age < MAX_AGE;
+}
 
-  // If older than 10 minutes
-  return item.editsPerMinute() > EDITS_PER_MIN && item.getBias() <= BIAS && age > MIN_AGE &&
-    age < MAX_AGE && item.edits > MIN_EDITS &&
-    item.contributors.length >= MIN_CONTRIBUTORS;
+function isTrending( item ) {
+  return mightTrend( item ) && item.contributors.length >= MIN_CONTRIBUTORS &&
+    item.editsPerMinute() > EDITS_PER_MIN && item.getBias() <= BIAS;
 }
 
 collection.on( 'edit', function ( item, collection ) {
-  if ( item.wiki === 'enwiki' && isTrending( item ) ) {
-    collection.markSafe( item.id );
+  if ( item.wiki === 'enwiki' ) {
 
-    if ( !item.trendedAt ) {
-      // tell me
-      console.log( 'Trended', item.title, item.editsPerMinute(), item.getBias(), item.age(), item.contributors );
-      item.trendedAt = new Date();
-      // ping people
-      subscriber.broadcast( 'trending' );
+    if ( isTrending( item ) ) {
+      collection.markSafe( item.id );
+      if ( !item.trendedAt ) {
+        // tell me
+        console.log( 'Trended', item.title, item.editsPerMinute(), item.getBias(), item.age(), item.contributors );
+        item.trendedAt = new Date();
+        // ping people
+        subscriber.broadcast( 'trending' );
+      }
+    } else if ( mightTrend( item ) ) {
+      collection.markSafe( item.id );
     }
   }
 } );
