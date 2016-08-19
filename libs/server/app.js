@@ -8,6 +8,7 @@ import passport from 'passport'
 import session from 'express-session'
 import connect from 'connect-memcached'
 
+import watchlistfeed from './endpoints/watchlist-feed'
 import watchlist from './endpoints/watchlist'
 import watched from './endpoints/watched'
 import watch from './endpoints/watch'
@@ -141,6 +142,15 @@ if ( SIGN_IN_SUPPORTED ) {
     req.logout();
     res.redirect('/');
   } );
+
+  app.get('/api/private/watchlist-feed/:lang/:ns?', ensureAuthenticated, function(req, res){
+    var callback = function ( data ) {
+      res.setHeader('Content-Type', 'application/json');
+      res.status( 200 );
+      res.send( JSON.stringify( data ) );
+    };
+    watchlistfeed( req.params.lang, project, req.params.ns, req.user, req.query ).then( callback );
+  });
 
   app.get('/api/private/watchlist/:lang/:title?', ensureAuthenticated, function(req, res){
     var callback = function ( data ) {
