@@ -18,7 +18,6 @@ export default React.createClass({
   },
   loadRelatedArticles( title, lang, namespace ) {
     var self = this;
-    console.log( 'hello', lang, title, this.props, namespace );
     var endpoint = '/api/related/' + lang + '/' + title;
     if ( namespace === 0 ) {
       this.props.api.fetchCards( endpoint, this.props ).then( function ( cards ) {
