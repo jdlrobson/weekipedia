@@ -10,6 +10,7 @@ import MostRead from './pages/MostRead'
 import Random from './pages/Random'
 import Nearby from './pages/Nearby'
 import Watchlist from './pages/Watchlist'
+import WatchlistFeed from './pages/WatchlistFeed'
 
 import utils from './utils'
 
@@ -101,7 +102,8 @@ function initSpecialPages() {
   addSpecialPage( 'History', History );
   addSpecialPage( 'RecentChanges', Contributions );
   addSpecialPage( 'Contributions', Contributions );
-  addSpecialPage( 'Watchlist', Watchlist );
+  addSpecialPage( 'Watchlist', WatchlistFeed );
+  addSpecialPage( 'EditWatchlist', Watchlist );
   addSpecialPage( 'MostRead', MostRead );
   addSpecialPage( 'SplashScreen', SplashScreen );
   addSpecialPage( 'Random', Random );
