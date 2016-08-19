@@ -1,9 +1,9 @@
 import React from 'react'
 
-import TrendingCard from './../../components/TrendingCard';
-import PushButton from './../../components/PushButton';
+import TrendingCard from './../components/TrendingCard';
+import PushButton from './../components/PushButton';
 
-import CardListPage from './../CardListPage'
+import CardListPage from './CardListPage'
 
 const HALF_LIFE_HOURS = '0.5';
 const HALF_LIFE_DAYS = '12';
@@ -15,6 +15,7 @@ export default React.createClass({
     return {
       router: null,
       wiki: 'enwiki',
+      params: '',
       halflife: HALF_LIFE_HOURS
     };
   },
@@ -27,9 +28,11 @@ export default React.createClass({
   render(){
     // show intermediate state if still loading, otherwise show list
     var push;
-    var wiki = this.props.wiki;
     var links = [];
-    var halflife = this.props.halflife;
+    var args = this.props.params;
+    var wiki = args[0] || 'enwiki';
+    var halflife = args[1] || HALF_LIFE_HOURS;
+    
     var endpoint = '/api/trending/' + wiki + '/' + halflife;
     var hrClass = '', dayClass = '', wkClass = '';
     if ( halflife === HALF_LIFE_DAYS ) {

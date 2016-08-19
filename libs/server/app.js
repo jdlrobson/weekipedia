@@ -358,6 +358,7 @@ app.get('*',(req, res) => {
   res.status(200).render('index.html', {
     config: JSON.stringify( {
       siteinfo: {
+        home: process.env.HOME_PAGE_PATH,
         expandArticlesByDefault: process.env.SITE_EXPAND_SECTIONS,
         wordmark: SITE_WORDMARK_PATH,
         title: SITE_TITLE,

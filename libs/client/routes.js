@@ -2,7 +2,7 @@ import React from 'react'
 
 import Contributions from './pages/Contributions'
 import History from './pages/History'
-import Home from './pages/Home'
+import Feed from './pages/Feed'
 import Page from './pages/Page'
 import SplashScreen from './pages/SplashScreen'
 import SpecialPage from './pages/SpecialPage'
@@ -11,28 +11,17 @@ import Random from './pages/Random'
 import Nearby from './pages/Nearby'
 import Watchlist from './pages/Watchlist'
 
+import router from './router'
 import utils from './utils'
+
+const HOMEPAGE_PATH = '/wiki/Main Page'
 
 var routes = [
   [
     // Home page / Hot
-    /^\/?$|^\/hot\/(.*)$/,
+    /^\/?$/,
     function( info, props ) {
-      var filter = info[1] || '';
-      var args = filter.split( '/' );
-
-      return Object.assign( {}, props, {
-        children: [
-          React.createElement( Home,
-            Object.assign( {}, props, {
-              title: 'Hot',
-              halflife: args[1],
-              wiki: args[0] || 'enwiki',
-              key: 'home-' + filter
-            } )
-          )
-        ]
-      } );
+      return router.matchRoute( props.siteinfo.home || HOMEPAGE_PATH, '', props )
     }
   ],
   // View a page
@@ -99,6 +88,7 @@ function addSpecialPage( title, Class, handler ) {
 }
 
 function initSpecialPages() {
+  addSpecialPage( 'Feed', Feed );
   addSpecialPage( 'History', History );
   addSpecialPage( 'RecentChanges', Contributions );
   addSpecialPage( 'Contributions', Contributions );
