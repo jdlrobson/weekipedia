@@ -16,9 +16,12 @@ self.addEventListener( 'push', function() {
       var lang = 'en';
       var page = results.pages[0];
       if ( page ) {
+        console.log( 'Got page', page );
         var trendedAt = page.trendedAt;
         var minsAgo = ( new Date() - new Date( trendedAt ) ) / 1000 /  60;
+        console.log( 'Trended', minsAgo, 'mins ago' );
         if ( minsAgo < 60 ) {
+          console.log( 'send notification' );
           // if it's recent send notification
           self.registration.showNotification( page.title + " is trending on Wikipedia", {
             icon: page.thumbnail ? page.thumbnail.source : icon,
