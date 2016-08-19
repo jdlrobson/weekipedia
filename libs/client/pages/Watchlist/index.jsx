@@ -1,7 +1,7 @@
 import React from 'react'
 
-import WatchListEdit from './WatchListEdit'
-import WatchListFeed from './WatchListFeed'
+import WatchListEdit from './WatchlistEdit'
+import WatchListFeed from './WatchlistFeed'
 
 // Pages
 export default React.createClass({
