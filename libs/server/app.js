@@ -18,6 +18,7 @@ import search from './endpoints/search'
 import related from './endpoints/related'
 import random from './endpoints/random'
 import webPushTrend from './endpoints/web-push-trend.js'
+import pagehistory from './endpoints/page-history'
 import page from './endpoints/page'
 import nearby from './endpoints/nearby'
 import languages from './endpoints/languages'
@@ -314,6 +315,13 @@ app.get('/api/contributions/:lang/:ns/:username?',(req, res) => {
   cachedResponse( res, req.url, function() {
     var p = req.params;
     return contributions( p.lang, p.username, p.ns, req.query, project );
+  } );
+} );
+
+app.get('/api/pagehistory/:lang/:title',(req, res) => {
+  cachedResponse( res, req.url, function() {
+    var p = req.params;
+    return pagehistory( p.lang, p.title, req.query, project );
   } );
 } );
 
