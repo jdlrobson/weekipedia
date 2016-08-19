@@ -90,7 +90,7 @@ export default React.createClass({
 
       return (
         <CardListPage {...this.props} apiEndpoint={endpoint}
-          title='Nearby' tagline="Pages that are near you" content={content} />
+          title='Nearby' tagline="Pages that are near you">{content}</CardListPage>
       )
     } else {
       var body = <IntermediateState msg="Locating you to find pages nearby"/>;

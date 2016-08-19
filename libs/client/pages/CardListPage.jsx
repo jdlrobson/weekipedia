@@ -41,19 +41,22 @@ export default React.createClass({
     } );
   },
   render(){
-    var body;
+    var body = [];
 
     if ( this.state.error ) {
-      body = (
+      body = [
         <Content>
           <ErrorBox msg="Something went wrong when trying to render the list. Please refresh and try again."/>
         </Content>
-      );
+      ];
     } else if ( this.state.list ) {
-      body = this.state.list;
+      body = [ this.state.list ];
     } else {
-      body = (<Content><IntermediateState /></Content>);
+      body = [
+        <Content><IntermediateState /></Content>
+      ];
     }
+    body = body.concat( this.props.children );
 
     return (
       <Article {...this.props} isSpecialPage="1" body={body} />
