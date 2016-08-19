@@ -6,6 +6,8 @@ import ErrorBox from './../components/ErrorBox';
 import Content from './../containers/Content'
 import Article from './../containers/Article'
 
+const OFFLINE_ERROR = 'You do not have an internet connection';
+
 // Pages
 export default React.createClass({
   getDefaultProps: function () {
@@ -20,6 +22,7 @@ export default React.createClass({
   },
   getInitialState() {
     return {
+      errorMsg: 'Something went wrong when trying to render the list. Please refresh and try again.',
       error: false,
       list: null
     };
@@ -31,12 +34,21 @@ export default React.createClass({
   load() {
     var self = this;
     var api = this.props.api;
-    var props = { lang: this.props.lang, unordered: this.props.unordered,
-      isDiffCardList: this.props.isDiffCardList,
-      router: this.props.router, api: api };
-    api.fetchCardList( this.props.apiEndpoint, props, this.props.CardClass ).then( function ( list ) {
+    var props = this.props;
+    var cardListProps = {
+      lang: props.lang,
+      unordered: props.unordered,
+      isDiffCardList: props.isDiffCardList,
+      emptyMessage: props.emptyMessage,
+      router: props.router,
+      api: api
+    };
+    api.fetchCardList( props.apiEndpoint, cardListProps, props.CardClass ).then( function ( list ) {
       self.setState({ list : list });
-    } ).catch( function () {
+    } ).catch( function ( error ) {
+      if ( error.message.indexOf( 'Failed to fetch' ) > -1 ) {
+        self.setState({ errorMsg: OFFLINE_ERROR });
+      }
       self.setState({ error: true });
     } );
   },
@@ -45,15 +57,15 @@ export default React.createClass({
 
     if ( this.state.error ) {
       body = [
-        <Content>
-          <ErrorBox msg="Something went wrong when trying to render the list. Please refresh and try again."/>
+        <Content key="card-list-error">
+          <ErrorBox msg={this.state.errorMsg}/>
         </Content>
       ];
     } else if ( this.state.list ) {
       body = [ this.state.list ];
     } else {
       body = [
-        <Content><IntermediateState /></Content>
+        <Content key="card-list-loading"><IntermediateState /></Content>
       ];
     }
     body = body.concat( this.props.children );
