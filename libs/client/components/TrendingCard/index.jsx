@@ -49,8 +49,7 @@ class TrendingCard extends Component {
     var updated = parseInt( ( new Date() - new Date( this.props.updated || this.props.start ) ) / 1000 / 60, 10 );
     var speed = mins < 1 ? totalEdits : ( totalEdits / mins ).toFixed( 2 );
 
-    var indicator = (<Icon glyph={glyph} className='indicator' small={true}
-      label={this.props.bytesChanged} type='before' />);
+    var indicator = (<Icon glyph={glyph} className='indicator' small={true} type="before" />);
 
     var description = this.props.terms && this.props.terms.description ?
       this.props.terms.description[0] + '; ' : '';
