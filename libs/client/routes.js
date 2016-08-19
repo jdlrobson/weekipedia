@@ -10,7 +10,6 @@ import MostRead from './pages/MostRead'
 import Random from './pages/Random'
 import Nearby from './pages/Nearby'
 import Watchlist from './pages/Watchlist'
-import WatchlistFeed from './pages/WatchlistFeed'
 
 import utils from './utils'
 
@@ -87,6 +86,7 @@ function addSpecialPage( title, Class, handler ) {
       props.children = [
         React.createElement( Class,
           Object.assign( {}, props, {
+            title: title,
             key: 'page-special-' + title,
             params: info[3] || info[2]
           } )
@@ -102,7 +102,7 @@ function initSpecialPages() {
   addSpecialPage( 'History', History );
   addSpecialPage( 'RecentChanges', Contributions );
   addSpecialPage( 'Contributions', Contributions );
-  addSpecialPage( 'Watchlist', WatchlistFeed );
+  addSpecialPage( 'Watchlist', Watchlist );
   addSpecialPage( 'EditWatchlist', Watchlist );
   addSpecialPage( 'MostRead', MostRead );
   addSpecialPage( 'SplashScreen', SplashScreen );
