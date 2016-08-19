@@ -10,7 +10,12 @@ function add ( browser, featureName, token ) {
   return true;
 }
 
+function ping( browser, featureName, token ) {
+  subscriber.ping( browser, [token], featureName );
+}
+
 export default {
   add: add,
+  ping: ping,
   remove: remove
 }

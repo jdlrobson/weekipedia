@@ -1,13 +1,13 @@
-/* globals global, clients */
-let {
-  self
-} = global;
+/* globals clients, self */
 
+console.log( 'worker installed' );
 self.addEventListener( 'push', function() {
+  console.log( 'received push' );
   var icon = 'https://en.m.wikipedia.org/static/apple-touch/wikipedia.png';
   var tag = 'wikimedia-editor-notification';
 
   fetch( '/api/web-push/service/trending/' ).then( function ( resp ) {
+    console.log( 'got', resp );
     if (resp.status !== 200) {
     // Nothing more to do.
       return;

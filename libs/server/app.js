@@ -210,6 +210,14 @@ app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
  *******************************************************
 */
 
+app.post('/api/web-push/test', function( req, res ) {
+  if ( checkReqParams( req, res, [ 'feature', 'token', 'browser' ] ) ) {
+    res.status( 200 );
+    subscribe.ping( req.body.browser, req.body.feature, req.body.token );
+    res.send( 'OK' );
+  }
+} );
+
 app.post('/api/web-push/subscribe', function( req, res ) {
   if ( checkReqParams( req, res, [ 'feature', 'token', 'browser' ] ) ) {
     res.status( 200 );
