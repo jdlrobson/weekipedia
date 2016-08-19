@@ -64,13 +64,15 @@ export default React.createClass({
   render: function () {
     var lastTs;
     var props = this.props;
+    var isDiffCardList = this.props.isDiffCardList;
+    var isUnordered = props.unordered && !isDiffCardList;
     var cards = this.state.cards;
     var cardsAndHeaders = [];
     var continuer = props.continue && props.endpoint ?
       <div className='gutter' /> : null;
-    var className = 'card-list' + ( props.unordered ? ' card-list-unordered' : '' );
+    var className = 'card-list' + ( isUnordered ? ' card-list-unordered' : '' );
 
-    if ( this.props.isDiffCardList ) {
+    if ( isDiffCardList ) {
       className += ' diff-list';
       cards.forEach( function ( card, i ) {
         var ts, header;
