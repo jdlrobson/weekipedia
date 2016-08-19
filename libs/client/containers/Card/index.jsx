@@ -24,7 +24,7 @@ class Card extends Component {
     var url = this.props.url || '/' + this.props.lang + '/wiki/' + encodeURIComponent( title );
 
     return (
-      <div className="card" onClick={this.navigateTo.bind(this)}>
+      <div className={'card ' + this.props.className} onClick={this.navigateTo.bind(this)}>
         {this.props.indicator}
         <div className="card-thumb" style={styles}>{this.props.metaInfo}</div>
         <div className="card-detail">

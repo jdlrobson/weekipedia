@@ -14,10 +14,13 @@ class CardDiff extends Component {
       <p className="timestamp">{date.getUTCHours()}:{date.getUTCMinutes()}</p>
       <p className={bytesDeltaClass}>{bytes}</p>
     </div>;
+    if ( this.props.minor ) {
+      extracts.push( <abbr className="minor-edit" title="This is a minor edit">m</abbr>);
+    }
 
     var url = '/wiki/Special:MobileDiff/' + this.props.revid;
     return (
-      <Card {...this.props} extracts={extracts} metaInfo={metaInfo} url={url} />
+      <Card className="card-diff" {...this.props} extracts={extracts} metaInfo={metaInfo} url={url} />
     )
   }
 }
