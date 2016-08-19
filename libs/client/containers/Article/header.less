@@ -1,5 +1,7 @@
 @import './../../globals.less';
 
+@tagline-font-size: .85em;
+
 .page-actions {
   position: absolute;
   float: none;
@@ -23,11 +25,20 @@
   position: relative;
   padding: 20px 0 3.1em;
   overflow: hidden;
-}
-.heading-holder .tagline {
-  color: #555555;
-  font-size: .85em;
-  margin: 7px 0 10px 0;
+
+  .tagline {
+    color: #555555;
+    font-size: @tagline-font-size;
+    margin: 7px 0 10px 0;
+
+    h2 {
+      padding: 0;
+      font-size: 1.1 / @tagline-font-size;
+      font-weight: bold;
+      border-bottom: 0;
+      text-align: center;
+    }
+  }
 }
 
 .standard-page-heading h1 {
@@ -50,6 +61,9 @@
 }
 
 .special-page-heading {
+  .heading-holder {
+    padding-bottom: 20px;
+  }
   .hlist,
   .tagline {
     text-align: center;

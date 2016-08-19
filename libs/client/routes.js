@@ -1,6 +1,7 @@
 import React from 'react'
 
 import Contributions from './pages/Contributions'
+import History from './pages/History'
 import Home from './pages/Home'
 import Page from './pages/Page'
 import SplashScreen from './pages/SplashScreen'
@@ -97,6 +98,7 @@ function addSpecialPage( title, Class, handler ) {
 }
 
 function initSpecialPages() {
+  addSpecialPage( 'History', History );
   addSpecialPage( 'RecentChanges', Contributions );
   addSpecialPage( 'Contributions', Contributions );
   addSpecialPage( 'Watchlist', Watchlist );

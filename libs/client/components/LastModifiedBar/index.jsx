@@ -10,8 +10,7 @@ import Content from './../../containers/Content'
 
 export default ({ editor, lang, title, timestamp }) => {
   const isAnon = editor && editor.name ? false : true;
-  const MOBILE_WP = 'https://' + lang + '.m.wikipedia.org/wiki/'
-  const historyUrl = MOBILE_WP + 'Special:History/' + title
+  const historyUrl = '/' + lang + '/wiki/Special:History/' + title
   const prefix = '/wiki/User:'
   const tsAsDate = new Date( timestamp );
   const historyText = 'Last edited ' + timeago( tsAsDate )
