@@ -29,9 +29,10 @@ export default React.createClass({
     // show intermediate state if still loading, otherwise show list
     var push;
     var links = [];
-    var args = this.props.params;
+    var args = this.props.params.split( '/' );
     var wiki = args[0] || 'enwiki';
     var halflife = args[1] || HALF_LIFE_HOURS;
+    var prefix = '/wiki/Special:Feed/'
     
     var endpoint = '/api/trending/' + wiki + '/' + halflife;
     var hrClass = '', dayClass = '', wkClass = '';
@@ -43,9 +44,9 @@ export default React.createClass({
       hrClass = 'active';
     }
     links = [
-      <a href={'/hot/' + wiki + '/' + HALF_LIFE_HOURS} className={hrClass} key='hot-filter-1'>by hour</a>,
-      <a href={'/hot/' + wiki +'/' + HALF_LIFE_DAYS} className={dayClass} key='hot-filter-2'>by day</a>,
-      <a href={'/hot/' + wiki +'/' + HALF_LIFE_WEEKS} className={wkClass} key='hot-filter-3'>by week</a>
+      <a href={prefix + wiki + '/' + HALF_LIFE_HOURS} className={hrClass} key='hot-filter-1'>by hour</a>,
+      <a href={prefix + wiki +'/' + HALF_LIFE_DAYS} className={dayClass} key='hot-filter-2'>by day</a>,
+      <a href={prefix + wiki +'/' + HALF_LIFE_WEEKS} className={wkClass} key='hot-filter-3'>by week</a>
     ];
     if ( !hrClass && !dayClass && !wkClass ) {
       links.push( <a href={'/hot/' + wiki +'/' + halflife} className='active' key='hot-filter-4'>custom</a> );
