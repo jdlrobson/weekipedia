@@ -33,7 +33,6 @@ class MainMenu extends Component {
           </li>,
           <li>
             <Icon glyph="mf-contributions-invert" href={'/' + this.props.lang + '/wiki/Special:Contributions/' + username }
-              label='Contributions' type="before"
               label={msg('menu-contributions')} type="before" onClick={onMenuItemClick} />
           </li>
         ];
