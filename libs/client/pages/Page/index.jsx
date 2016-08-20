@@ -135,11 +135,13 @@ export default React.createClass({
         <LastModifiedBar editor={lead.lastmodifier} lang={props.lang}
            title={props.title} timestamp={lead.lastmodified} key="page-last-modified" />
       ];
-      footer.push( (
-        <Content>
-          <ReadMore {...props} namespace={ns} key="page-read-more" />
-        </Content>
-      ) );
+      if ( ns === 0 ) {
+        footer.push( (
+          <Content>
+            <ReadMore {...props} namespace={ns} key="page-read-more" />
+          </Content>
+        ) );
+      }
       return footer;
     }
   },
