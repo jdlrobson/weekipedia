@@ -28,10 +28,13 @@ export default React.createClass({
     };
   },
   // You want to load subscriptions not only when the component update but also when it gets mounted.
-  componentWillMount(){
-    this.load();
+  componentDidMount(){
+    this.load( this.props.apiEndpoint );
   },
-  load() {
+  componentWillReceiveProps( props ) {
+    this.load( props.apiEndpoint );
+  },
+  load( apiEndpoint ) {
     var self = this;
     var api = this.props.api;
     var props = this.props;
@@ -43,7 +46,8 @@ export default React.createClass({
       router: props.router,
       api: api
     };
-    api.fetchCardList( props.apiEndpoint, cardListProps, props.CardClass ).then( function ( list ) {
+    this.setState({ list : null });
+    api.fetchCardList( apiEndpoint, cardListProps, props.CardClass ).then( function ( list ) {
       self.setState({ list : list });
     } ).catch( function ( error ) {
       if ( error.message.indexOf( 'Failed to fetch' ) > -1 ) {
