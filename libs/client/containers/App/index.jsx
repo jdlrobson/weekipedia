@@ -122,8 +122,8 @@ export default React.createClass({
     this.props.router.navigateTo( '#/search' );
   },
   render(){
-    var searchForm = (<SearchForm {...this.props}
-      onClickSearch={this.onClickSearch}></SearchForm>);
+    var searchForm = (<SearchForm msg={this.props.msg}
+      onClickSearch={this.onClickSearch} />);
 
     var navigationClasses = this.state.isMenuOpen ?
       'primary-navigation-enabled navigation-enabled' : '';

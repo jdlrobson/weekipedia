@@ -54,7 +54,8 @@ export default React.createClass({
   },
   render(){
     var main = <SearchForm
-      onSearch={this.onSearch} onSearchSubmit={this.onSearchSubmit} focusOnRender="1"></SearchForm>;
+      msg={this.props.msg}
+      onSearch={this.onSearch} onSearchSubmit={this.onSearchSubmit} focusOnRender="1" />;
 
     var state = this.state;
     var content = state.isSearching ? <IntermediateState msg="Searching" />
