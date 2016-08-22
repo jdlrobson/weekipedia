@@ -13,7 +13,8 @@ export default React.createClass({
 
     if ( username ) {
       title = 'User Contributions';
-      tagline = <a href={'/' + this.props.lang + '/wiki/User:' + username}>{username}</a>;
+      tagline = <a href={'/' + this.props.lang + '/wiki/User:' + username}
+        onClick={this.props.onClickInternalLink}>{username}</a>;
       endpoint += username;
     } else {
       title = 'Recent Changes';

@@ -10,6 +10,7 @@ class MainMenu extends Component {
   onMenuItemClick(){
     if ( this.props.onItemClick ) {
       this.props.onItemClick();
+      this.props.onClickInternalLink.apply( this, arguments );
     }
   }
   getUserMenu() {
@@ -58,7 +59,7 @@ class MainMenu extends Component {
       msg = this.props.msg;
 
     return (
-      <div className="menu">
+      <div className="component-main-menu menu">
         <ul>
           <li>
             <Icon glyph="mf-home-invert" href="/" label={msg('menu-home')} type="before"

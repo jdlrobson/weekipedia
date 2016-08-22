@@ -20,7 +20,8 @@ export default React.createClass({
     var lang = this.props.lang;
     var endpoint = '/api/pagehistory/' + lang + '/' + this.props.params;
     var title = decodeURIComponent( this.props.params ).replace( /_/gi, ' ' );
-    var tagline = (<h2><a href={"/" + lang + "/wiki/" + title}>{title}</a></h2>);
+    var tagline = (<h2><a href={"/" + lang + "/wiki/" + title}
+      onClick={this.props.onClickInternalLink}>{title}</a></h2>);
     return (
       <CardListPage {...this.props} apiEndpoint={endpoint} isDiffCardList={true}
         title='Page History' tagline={tagline} CardClass={DiffCard} />

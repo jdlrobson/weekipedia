@@ -45,10 +45,6 @@ function renderCurrentRoute( ev ) {
   )
 }
 
-if ( 'onhashchange' in window ) {
-  window.onhashchange = renderCurrentRoute;
-}
-
 if ( 'onpopstate' in window ) {
   window.onpopstate = renderCurrentRoute;
   router.on( 'onpushstate', renderCurrentRoute );

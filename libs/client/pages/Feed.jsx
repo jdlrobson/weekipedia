@@ -44,9 +44,12 @@ export default React.createClass({
       hrClass = 'active';
     }
     links = [
-      <a href={prefix + wiki + '/' + HALF_LIFE_HOURS} className={hrClass} key='hot-filter-1'>by hour</a>,
-      <a href={prefix + wiki +'/' + HALF_LIFE_DAYS} className={dayClass} key='hot-filter-2'>by day</a>,
-      <a href={prefix + wiki +'/' + HALF_LIFE_WEEKS} className={wkClass} key='hot-filter-3'>by week</a>
+      <a href={prefix + wiki + '/' + HALF_LIFE_HOURS} className={hrClass} key='hot-filter-1'
+        onClick={this.props.onClickInternalLink}>by hour</a>,
+      <a href={prefix + wiki +'/' + HALF_LIFE_DAYS} className={dayClass} key='hot-filter-2'
+        onClick={this.props.onClickInternalLink}>by day</a>,
+      <a href={prefix + wiki +'/' + HALF_LIFE_WEEKS} className={wkClass} key='hot-filter-3'
+        onClick={this.props.onClickInternalLink}>by week</a>
     ];
     if ( !hrClass && !dayClass && !wkClass ) {
       links.push( <a href={'/hot/' + wiki +'/' + halflife} className='active' key='hot-filter-4'>custom</a> );

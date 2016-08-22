@@ -1,5 +1,4 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
 
 import './styles.less'
 
@@ -34,7 +33,7 @@ export default React.createClass({
     var children = React.Children.map( props.children, ( child ) => React.cloneElement( child, {
         showNotification: this.showNotification,
         showOverlay: this.showOverlay,
-        hijackLinks: this.hijackLinks
+        onClickInternalLink: this.onClickInternalLink
       } )
     );
     this.setState( { children: children } );
@@ -60,59 +59,39 @@ export default React.createClass({
       isOverlayFullScreen: false
     } );
   },
-  hijackLinks( container ){
-    container = container || ReactDOM.findDOMNode( this );
-
-    var self = this;
-    var links = ReactDOM.findDOMNode( this ).querySelectorAll( 'a' );
+  onClickInternalLink( ev ) {
+    var href, match, refId;
+    var link = ev.currentTarget;
+    var childNode = link.firstChild;
+    var parentNode = link.parentNode;
     var props = this.props;
 
-    function navigateTo( ev ) {
-      var href, match, refId;
-      var link = ev.currentTarget;
-      var childNode = link.firstChild;
-      var parentNode = link.parentNode;
-      if ( parentNode.className === 'mw-ref' ) {
+    if ( parentNode.className === 'mw-ref' ) {
+      ev.preventDefault();
+      ev.stopPropagation();
+      refId = link.getAttribute( 'href' ).substr( 1 );
+      this.showOverlay( <ReferenceDrawer {...props} refId={refId} /> );
+
+    } else if ( childNode && childNode.nodeName === 'IMG' ) {
+      href = link.getAttribute( 'href' ) || '';
+      match = href.match( /\/wiki\/File\:(.*)/ );
+      if ( match && match[1] ) {
         ev.preventDefault();
-        ev.stopPropagation();
-        refId = link.getAttribute( 'href' ).substr( 1 );
-        self.showOverlay( <ReferenceDrawer {...self.props} refId={refId} /> );
+        props.router.navigateTo( '#/media/' + match[1] );
+      }
+    } else {
+      href = link.getAttribute( 'href' ) || '';
 
-      } else if ( childNode && childNode.nodeName === 'IMG' ) {
-        href = link.getAttribute( 'href' ) || '';
-        match = href.match( /\/wiki\/File\:(.*)/ );
-        if ( match && match[1] ) {
-          ev.preventDefault();
-          props.router.navigateTo( '#/media/' + match[1] );
+      if ( href.substr( 0, 5 ) !== '/auth' ) {
+
+        // FIXME: Workaround for #5
+        if ( href.substr( 0, 5 ) === '/wiki' ) {
+          href = '/' + props.lang + href;
         }
-      } else {
-        href = link.getAttribute( 'href' ) || '';
-
-        if ( href.substr( 0, 5 ) !== '/auth' ) {
-
-          // FIXME: Workaround for #5
-          if ( href.substr( 0, 5 ) === '/wiki' ) {
-            href = '/' + props.lang + href;
-          }
-          props.router.navigateTo( href );
-          ev.preventDefault();
-        }
+        props.router.navigateTo( href );
+        ev.preventDefault();
       }
     }
-
-    container.setAttribute( 'data-hijacked-prev', 1 );
-
-    Array.prototype.forEach.call( links, function ( link ) {
-      // remove previous hijacked link
-      link.removeEventListener( 'click', navigateTo );
-      link.addEventListener( 'click', navigateTo );
-    } );
-  },
-  componentDidMount(){
-    this.hijackLinks();
-  },
-  componentDidUpdate(){
-    this.hijackLinks();
   },
   closeOverlay() {
     // If an overlay is open
@@ -184,7 +163,7 @@ export default React.createClass({
     return (
       <div id="mw-mf-viewport" className={navigationClasses}>
         <nav id="mw-mf-page-left">
-          <MainMenu {...this.props}
+          <MainMenu {...this.props} onClickInternalLink={this.onClickInternalLink}
             onItemClick={this.closePrimaryNav}/>
         </nav>
         <div id="mw-mf-page-center" onClick={this.closePrimaryNav}>

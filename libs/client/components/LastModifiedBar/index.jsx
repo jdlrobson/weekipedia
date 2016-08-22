@@ -8,7 +8,7 @@ import Icon from './../Icon'
 
 import Content from './../../containers/Content'
 
-export default ({ editor, lang, title, timestamp }) => {
+export default ({ editor, lang, title, timestamp, onClickInternalLink }) => {
   const isAnon = editor && editor.name ? false : true;
   const historyUrl = '/' + lang + '/wiki/Special:History/' + title
   const prefix = '/wiki/User:'
@@ -37,11 +37,14 @@ export default ({ editor, lang, title, timestamp }) => {
   if ( editor ) {
     editorLabel = isAnon ? 'an anonymous user' : editor.name
     editorElement = isAnon ? <span key={key + '-editor'}>{editorLabel}</span> :
-      <a href={prefix + editor.name} key={key + '-editor'}>{editorLabel}</a>
+      <a href={prefix + editor.name} onClick={onClickInternalLink}
+        key={key + '-editor'}>{editorLabel}</a>;
     text = ' by ';
   }
 
-  var modifierTagline = [<a href={historyUrl} key={key+'-link'}>{historyText}</a>, text, editorElement,
+  var modifierTagline = [<a href={historyUrl} key={key+'-link'}
+    onClick={onClickInternalLink}
+    >{historyText}</a>, text, editorElement,
     <Icon key={key + '-label'}
       small={true} glyph={'arrow' + iconVariant} className='indicator' />];
   return (

@@ -1,5 +1,4 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
 
 import IntermediateState from './../../components/IntermediateState';
 import Section from './../../components/Section'
@@ -64,7 +63,6 @@ export default React.createClass({
         self.setState( { isExpanded: true } );
       }
       self.setState(data);
-      self.props.hijackLinks( ReactDOM.findDOMNode( this ) );
     } ).catch( function ( error ) {
       var msg = error.message.toString();
       if ( msg.indexOf( 'Failed to fetch' ) > -1 ) {
@@ -88,7 +86,7 @@ export default React.createClass({
     var curSection;
     var self = this;
 
-    allSections.forEach( function ( sectionProps ) {
+    allSections.forEach( function ( sectionProps, i ) {
       var id = sectionProps.id;
       if ( sectionProps.toclevel === topLevelSection ) {
         if ( curSection ) {
@@ -96,6 +94,7 @@ export default React.createClass({
         }
         curSection = Object.assign( {}, self.props, sectionProps, {
           key: id,
+          number: i,
           subsections: []
         } );
       } else {
@@ -116,9 +115,15 @@ export default React.createClass({
       return this.props.tabs;
     } else if ( ns === 2 ) {
       return [
-        <a href={baseUrl + 'User talk:' + this.props.titleSansPrefix} key="page-talk-tab">Talk</a>,
-        <a href={baseUrl + 'Special:Contributions/' + this.props.titleSansPrefix } key="page-contrib-tab">Contributions</a>,
-        <a href={baseUrl + 'Special:Uploads/' + this.props.titleSansPrefix } key="page-upload-tab">Uploads</a>
+        <a href={baseUrl + 'User talk:' + this.props.titleSansPrefix}
+          onClick={this.props.onClickInternalLink}
+          key="page-talk-tab">Talk</a>,
+        <a href={baseUrl + 'Special:Contributions/' + this.props.titleSansPrefix }
+          onClick={this.props.onClickInternalLink}
+          key="page-contrib-tab">Contributions</a>,
+        <a href={baseUrl + 'Special:Uploads/' + this.props.titleSansPrefix }
+          onClick={this.props.onClickInternalLink}
+          key="page-upload-tab">Uploads</a>
       ];
     } else {
       return [];
@@ -134,7 +139,8 @@ export default React.createClass({
     } else {
       footer = [
         <LastModifiedBar editor={lead.lastmodifier} lang={props.lang}
-           title={props.title} timestamp={lead.lastmodified} key="page-last-modified" />
+          onClickInternalLink={props.onClickInternalLink}
+          title={props.title} timestamp={lead.lastmodified} key="page-last-modified" />
       ];
       if ( ns === 0 ) {
         footer.push( (
@@ -182,7 +188,9 @@ export default React.createClass({
     }
 
     if ( this.state.lead.ns === 0 ) {
-      secondaryActions.push(<Button key="article-talk" href={'/' + lang + '/wiki/Talk:' + title }
+      secondaryActions.push(<Button
+        onClick={this.props.onClickInternalLink}
+        key="article-talk" href={'/' + lang + '/wiki/Talk:' + title }
         label="Talk" />);
     }
 

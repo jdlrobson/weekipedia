@@ -12,10 +12,12 @@ export default React.createClass({
 
     var editLink = <a
       className={isEditWatchlist ? 'active' : '' }
+      onClick={props.onClickInternalLink}
       href={prefix + 'Special:EditWatchlist'}>List</a>;
 
     var modLink = <a
       className={isEditWatchlist ? '' : 'active' }
+      onClick={props.onClickInternalLink}
       href={prefix + 'Special:Watchlist'}>Modified</a>;
 
     var newProps = Object.assign( {}, props, {
