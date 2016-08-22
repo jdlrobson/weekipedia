@@ -9,6 +9,7 @@ import Icon from './../../components/Icon'
 import TransparentShield from './../../components/TransparentShield'
 import SearchForm from './../../components/SearchForm'
 
+import ReferenceDrawer from './../../overlays/ReferenceDrawer'
 import Toast from './../../overlays/Toast'
 
 // Main component
@@ -17,6 +18,7 @@ export default React.createClass({
     return {
       isMenuOpen: false,
       notification: '',
+      isOverlayFullScreen: true,
       isOverlayEnabled: false
     }
   },
@@ -37,29 +39,44 @@ export default React.createClass({
     this.setState( { children: children } );
   },
   componentWillReceiveProps( nextProps ) {
-    this.setState( { isOverlayEnabled: nextProps.overlay } );
+    this.setState( {
+      isOverlayEnabled: nextProps.overlay,
+      isOverlayFullScreen: nextProps.isOverlayFullScreen
+    } );
     this.mountChildren( nextProps )
   },
   componentWillMount() {
-    this.setState( { isOverlayEnabled: this.props.overlay } );
+    this.setState( {
+      isOverlayEnabled: this.props.overlay,
+      isOverlayFullScreen: this.props.isOverlayFullScreen
+    } );
     this.mountChildren( this.props );
+  },
+  showOverlay( overlay ) {
+    this.setState( {
+      overlay: overlay,
+      isOverlayEnabled: true,
+      isOverlayFullScreen: false
+    } );
   },
   hijackLinks( container ){
     container = container || ReactDOM.findDOMNode( this );
 
-    var links = container.querySelectorAll( 'a' );
+    var self = this;
+    var links = ReactDOM.findDOMNode( this ).querySelectorAll( 'a' );
     var props = this.props;
 
     function navigateTo( ev ) {
-      var href, match;
+      var href, match, refId;
       var link = ev.currentTarget;
       var childNode = link.firstChild;
       var parentNode = link.parentNode;
       if ( parentNode.className === 'mw-ref' ) {
         ev.preventDefault();
         ev.stopPropagation();
-        props.router.navigateTo( null,
-          '#/ref/' + link.getAttribute( 'href' ).substr( 1 ), true );
+        refId = link.getAttribute( 'href' ).substr( 1 );
+        self.showOverlay( <ReferenceDrawer {...self.props} refId={refId} /> );
+
       } else if ( childNode && childNode.nodeName === 'IMG' ) {
         href = link.getAttribute( 'href' ) || '';
         match = href.match( /\/wiki\/File\:(.*)/ );
@@ -141,9 +158,11 @@ export default React.createClass({
     var overlay, toast;
 
     if ( this.state.isOverlayEnabled ) {
-      if ( this.props.overlayProps ) {
+      if ( this.state.overlay ) {
+        overlay = this.state.overlay;
+      } else if ( this.props.overlayProps ) {
         overlay = React.createElement( this.props.overlay,
-          this.props.isOverlayFullScreen ? this.props.overlayProps :
+          this.state.isOverlayFullScreen ? this.props.overlayProps :
           Object.assign( {}, this.props.overlayProps, {
             onExit: this.closeOverlay
           } )
@@ -154,7 +173,7 @@ export default React.createClass({
     }
 
     if ( overlay ) {
-      navigationClasses += this.props.isOverlayFullScreen ? 'overlay-enabled' : '';
+      navigationClasses += this.state.isOverlayFullScreen ? 'overlay-enabled' : '';
     }
 
     if ( this.state.notification ) {
