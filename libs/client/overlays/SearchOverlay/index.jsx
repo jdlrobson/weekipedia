@@ -2,9 +2,8 @@ import React from 'react'
 
 import Overlay from './../../containers/Overlay'
 import Content from './../../containers/Content'
-import CardList from './../../containers/CardList'
 
-import IntermediateState from './../../components/IntermediateState';
+import CardList from './../../components/CardList'
 import SearchForm from './../../components/SearchForm'
 
 import './styles.less'
@@ -14,22 +13,20 @@ export default React.createClass({
     return {
       isSearching: false,
       term: '',
-      cards: []
+      list: null
     }
   },
   getDefaultProps() {
     return {
+      emptyMessage: '',
+      loadingMessage: 'Searching',
       api: null,
       lang: 'en'
     }
   },
   showResults( endpoint ) {
-    var self = this;
-    this.props.api.fetchCards( endpoint, this.props ).then( function ( cards ) {
-      self.setState({
-        cards: cards,
-        isSearching: false
-      } );
+    this.setState( {
+      list: <CardList {...this.props} apiEndpoint={endpoint} infiniteScroll={false} />
     } );
   },
   onSearchSubmit( term ) {
@@ -39,7 +36,7 @@ export default React.createClass({
       endpoint = '/api/search-full/' + this.props.lang + '/' + encodeURIComponent( term );
       this.showResults( endpoint );
     } else {
-      this.setState( { cards: [] } );
+      this.setState( { list: <CardList emptyMessage={this.props.emptyMessage} /> } );
     }
   },
   onSearch( term ){
@@ -57,12 +54,11 @@ export default React.createClass({
       msg={this.props.msg}
       onSearch={this.onSearch} onSearchSubmit={this.onSearchSubmit} focusOnRender="1" />;
 
-    var state = this.state;
-    var content = state.isSearching ? <IntermediateState msg="Searching" />
-      : <CardList cards={state.cards} emptyMessage='' />;
     return (
       <Overlay router={this.props.router} header={main} className="component-search-overlay">
-        <Content className="overlay-content">{content}</Content>
+        <Content className="overlay-content">
+        {this.state.list}
+        </Content>
       </Overlay>
     )
   }

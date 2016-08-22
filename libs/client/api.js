@@ -1,32 +1,8 @@
-import React from 'react'
 import fetch from 'isomorphic-fetch'
-
-import CardList from './containers/CardList'
-
-import PreviewCard from './components/PreviewCard'
 
 function Api() {
   this.cache = {};
   this.refCache = {};
-}
-
-function getCards( data, props, CardClass ) {
-  var cards = [];
-
-  CardClass = CardClass || PreviewCard;
-
-  if ( data.pages && data.pages.length ) {
-    data.pages.forEach( function ( item, i ) {
-      var id = item.revid || item.pageid || item.id;
-      item.key = 'card-' + i + '-' + id;
-      // If no title we can assume they are all the same page so promote username
-      if ( !item.title ) {
-        item.title = item.user;
-      }
-      cards.push( React.createElement( CardClass, Object.assign( {}, props, item ) ) );
-    } );
-  }
-  return cards;
 }
 
 Api.prototype = {
@@ -39,28 +15,6 @@ Api.prototype = {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify( data )
-    } );
-  },
-  fetchCardListProps: function ( url, props, CardClass ) {
-    return this.fetch( url ).then( function ( data ) {
-      var listprops = {
-        endpoint: url,
-        continue: data.continue,
-        cards: getCards( data, props, CardClass )
-      };
-      return Object.assign( {}, props, listprops );
-    } );
-  },
-  fetchCards: function ( url, props ) {
-    return this.fetchCardListProps( url, props ).then( function ( props ) {
-      return props.cards;
-    } );
-  },
-  fetchCardList: function ( url, props, CardClass ) {
-    props.CardClass = CardClass;
-    props.key = 'card-list-' + url;
-    return this.fetchCardListProps( url, props, CardClass ).then( function ( props ) {
-      return React.createElement( CardList, props );
     } );
   },
   fetch: function ( url ) {
