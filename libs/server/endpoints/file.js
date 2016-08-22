@@ -10,8 +10,9 @@ export default function ( lang, title, width, height, project ) {
   };
 
   return mwApi( lang, params, project ).then( function ( data ) {
-    if ( data[0] && data[0].imageinfo ) {
-      return data[0].imageinfo[0];
+    var pages = data.pages;
+    if ( pages[0] && pages[0].imageinfo ) {
+      return pages[0].imageinfo[0];
     } else {
       throw new Error( 'Unable to find file' );
     }
