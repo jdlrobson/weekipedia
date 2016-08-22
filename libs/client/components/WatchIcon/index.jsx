@@ -2,6 +2,8 @@ import React from 'react'
 
 import Icon from './../Icon'
 
+import CtaDrawer from './../../overlays/CtaDrawer'
+
 import './icons.less'
 
 export default React.createClass({
@@ -11,7 +13,9 @@ export default React.createClass({
     };
   },
   componentWillMount() {
-    this.loadWatchInfo();
+    if ( this.props.session ) {
+      this.loadWatchInfo();
+    }
   },
   loadWatchInfo() {
     var title = this.props.title;
@@ -37,13 +41,20 @@ export default React.createClass({
     props.showNotification( state.isWatched ?
       'Page removed from watchlist.' : 'Page added to watchlist.' );
   },
+  dispatch( ev ) {
+    if ( this.props.session ) {
+      this.watch( ev );
+    } else {
+      this.props.showOverlay( <CtaDrawer {...this.props}/> );
+    }
+  },
   render(){
     var state = this.state;
     var iconProps = {
       key: 'watch',
       glyph: state.isWatched ? 'watched' : 'watch',
       label: 'Read in another language',
-      onClick: this.watch
+      onClick: this.dispatch
     };
 
     if ( this.state.isError ) {

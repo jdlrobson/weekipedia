@@ -33,6 +33,7 @@ export default React.createClass({
     // clone each child and pass them the notifier
     var children = React.Children.map( props.children, ( child ) => React.cloneElement( child, {
         showNotification: this.showNotification,
+        showOverlay: this.showOverlay,
         hijackLinks: this.hijackLinks
       } )
     );

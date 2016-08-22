@@ -55,6 +55,24 @@
   right: 0;
   box-sizing: border-box;
   transform: translate(0, 100px);
+  padding: 0 16px 1em;
+  background-color: #f3f3f3;
+  box-shadow: 0 -1px 8px 0 rgba(0, 0, 0, 0.35);
+  text-align: center;
+
+  > div,
+  > p {
+    margin-bottom: 1em;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  p {
+    line-height: 1.4;
+    margin-top: 0.5em;
+  }
 }
 
 .drawer.visible {
