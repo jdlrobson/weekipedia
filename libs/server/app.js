@@ -352,15 +352,17 @@ app.get('/api/web-push/service/trending/',(req, res) => {
 } );
 
 app.get('/:lang?/*',(req, res) => {
+  const enMsgPath = './i18n/en.json';
+
   var session = req.user ? {
       username: req.user.displayName,
     } : null;
   var language = req.query.uselang || req.params.lang || LANGUAGE_CODE;
-  var i, messages, jsonPath,
+  var i, messages, jsonPath, enMessages,
     qqx = language === 'qqx';
 
   if ( qqx ) {
-    jsonPath = './i18n/en.json';
+    jsonPath = enMsgPath;
   } else {
     jsonPath = './i18n/' + language + '.json'
   }
@@ -370,6 +372,9 @@ app.get('/:lang?/*',(req, res) => {
   } catch ( e ) {
     messages = {};
   }
+
+  enMessages = JSON.parse( fs.readFileSync( enMsgPath, 'utf8' ) );
+  messages = Object.assign( {}, enMessages, messages );
 
   if ( qqx ) {
     for ( i in messages ) {
