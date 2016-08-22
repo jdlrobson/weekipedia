@@ -1,4 +1,5 @@
 import React from 'react'
+import ReactDOM from 'react-dom'
 
 import IntermediateState from './../../components/IntermediateState';
 import Section from './../../components/Section'
@@ -63,7 +64,7 @@ export default React.createClass({
         self.setState( { isExpanded: true } );
       }
       self.setState(data);
-      self.props.hijackLinks();
+      self.props.hijackLinks( ReactDOM.findDOMNode( this ) );
     } ).catch( function ( error ) {
       var msg = error.message.toString();
       if ( msg.indexOf( 'Failed to fetch' ) > -1 ) {

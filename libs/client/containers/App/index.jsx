@@ -44,8 +44,10 @@ export default React.createClass({
     this.setState( { isOverlayEnabled: this.props.overlay } );
     this.mountChildren( this.props );
   },
-  hijackLinks(){
-    var links = ReactDOM.findDOMNode( this ).querySelectorAll( 'a' );
+  hijackLinks( container ){
+    container = container || ReactDOM.findDOMNode( this );
+
+    var links = container.querySelectorAll( 'a' );
     var props = this.props;
 
     function navigateTo( ev ) {
@@ -80,7 +82,11 @@ export default React.createClass({
       }
     }
 
+    container.setAttribute( 'data-hijacked-prev', 1 );
+
     Array.prototype.forEach.call( links, function ( link ) {
+      // remove previous hijacked link
+      link.removeEventListener( 'click', navigateTo );
       link.addEventListener( 'click', navigateTo );
     } );
   },
