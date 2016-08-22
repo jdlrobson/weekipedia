@@ -17,6 +17,7 @@ export default ({ editor, lang, title, timestamp }) => {
   var editorElement, text = '', editorLabel, tsAsDate, historyText,
     timeDelta,
     iconVariant = '-gray',
+    key = 'last-modified-bar',
     className = 'last-modified-bar';
 
   if ( timestamp ) {
@@ -35,12 +36,14 @@ export default ({ editor, lang, title, timestamp }) => {
   // Cached pages may not have this available.
   if ( editor ) {
     editorLabel = isAnon ? 'an anonymous user' : editor.name
-    editorElement = isAnon ? <span>{editorLabel}</span> : <a href={prefix + editor.name}>{editorLabel}</a>
+    editorElement = isAnon ? <span key={key + '-editor'}>{editorLabel}</span> :
+      <a href={prefix + editor.name} key={key + '-editor'}>{editorLabel}</a>
     text = ' by ';
   }
 
-  var modifierTagline = [<a href={historyUrl}>{historyText}</a>, text, editorElement,
-    <Icon small={true} glyph={'arrow' + iconVariant} className='indicator' />];
+  var modifierTagline = [<a href={historyUrl} key={key+'-link'}>{historyText}</a>, text, editorElement,
+    <Icon key={key + '-label'}
+      small={true} glyph={'arrow' + iconVariant} className='indicator' />];
   return (
     <div className={className}>
       <Content>

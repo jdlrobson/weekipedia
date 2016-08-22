@@ -30,7 +30,7 @@ class ArticleFooter extends Component {
     }
 
     if ( this.props.desktopUrl ) {
-      places.push( <a href={this.props.desktopUrl}>Desktop</a> );
+      places.push( <a key="article-footer-desktop-url" href={this.props.desktopUrl}>Desktop</a> );
     }
 
     return (
