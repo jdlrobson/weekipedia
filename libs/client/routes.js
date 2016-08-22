@@ -72,6 +72,8 @@ function addSpecialPage( title, Class, handler ) {
       var lang = info[1] || 'en';
 
       props.lang = lang;
+      props.mobileUrl = utils.getAbsoluteUrl( 'Special:' + title, lang, 'm.' + props.project + '.org' );
+      props.desktopUrl = utils.getAbsoluteUrl( 'Special:' + title, lang, props.project + '.org' );
       props.children = [
         React.createElement( Class,
           Object.assign( {}, props, {
