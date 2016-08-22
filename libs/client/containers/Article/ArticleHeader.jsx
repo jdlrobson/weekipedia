@@ -27,7 +27,8 @@ class ArticleHeader extends Component {
     }
 
     if ( this.props.tabs.length ) {
-      header.push( <HorizontalList isSeparated="1">{this.props.tabs}</HorizontalList> );
+      header.push( <HorizontalList isSeparated="1"
+        key="article-header-tabs">{this.props.tabs}</HorizontalList> );
     }
     return (
       <Content key="article-row-0" className={"pre-content " + nsClass}>
