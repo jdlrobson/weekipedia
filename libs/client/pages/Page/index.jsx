@@ -138,7 +138,7 @@ export default React.createClass({
       ];
       if ( ns === 0 ) {
         footer.push( (
-          <Content>
+          <Content key="page-read-more">
             <ReadMore {...props} namespace={ns} key="page-read-more" />
           </Content>
         ) );
@@ -178,7 +178,7 @@ export default React.createClass({
       disabled={this.state.lead.languagecount === 0} />);
 
     if ( this.props.canAuthenticate ) {
-      actions.push(<WatchIcon {...this.props}/>);
+      actions.push(<WatchIcon {...this.props} key="page-action-watch"/>);
     }
 
     if ( this.state.lead.ns === 0 ) {
