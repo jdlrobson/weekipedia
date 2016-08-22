@@ -15,7 +15,7 @@ const MONTHS = ['January','February','March','April','May','June',
 
 function getCards( data, props, keyPrefix ) {
   var cards = [],
-    CardClass = props.CardClass || PreviewCard;
+    CardClass = props.CardClass;
 
   if ( data.pages && data.pages.length ) {
     data.pages.forEach( function ( item, i ) {
@@ -34,6 +34,7 @@ function getCards( data, props, keyPrefix ) {
 export default React.createClass({
   getDefaultProps: function () {
     return {
+      CardClass: PreviewCard,
       infiniteScroll: true,
       isDiffCardList: false,
       endpoint: null,
@@ -61,6 +62,7 @@ export default React.createClass({
     var cardListProps = {
       lang: props.lang,
       unordered: props.unordered,
+      CardClass: props.CardClass,
       isDiffCardList: props.isDiffCardList,
       emptyMessage: props.emptyMessage,
       router: props.router,

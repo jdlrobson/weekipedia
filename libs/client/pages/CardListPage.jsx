@@ -1,6 +1,7 @@
 import React from 'react'
 
 import CardList from './../components/CardList'
+import PreviewCard from './../components/PreviewCard'
 
 import Article from './../containers/Article'
 
@@ -8,7 +9,7 @@ import Article from './../containers/Article'
 export default React.createClass({
   getDefaultProps: function () {
     return {
-      CardClass: null,
+      CardClass: PreviewCard,
       api: null,
       apiEndpoint: null,
       title: null,
