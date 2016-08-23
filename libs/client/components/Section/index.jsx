@@ -12,6 +12,14 @@ class Section extends Component {
       isOpen: true
     };
   }
+  componentWillMount(){
+    if ( this.isReferenceSection() ) {
+      this.setState( { isOpen: false } );
+    }
+  }
+  isReferenceSection() {
+    return this.props.text.indexOf( 'class="mw-references' ) > -1;
+  }
   onToggle() {
     if ( this.props.isCollapsible ) {
       this.setState( { isOpen: !this.state.isOpen } );
