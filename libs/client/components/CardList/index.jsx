@@ -53,6 +53,7 @@ export default React.createClass({
     };
   },
   componentWillReceiveProps( props ) {
+    this.setState( { cards: null } );
     this.load( props.apiEndpoint );
   },
   load( apiEndpoint ) {
