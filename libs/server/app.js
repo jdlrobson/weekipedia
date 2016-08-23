@@ -25,6 +25,7 @@ import page from './endpoints/page'
 import nearby from './endpoints/nearby'
 import languages from './endpoints/languages'
 import file from './endpoints/file'
+import diff from './endpoints/diff'
 import contributions from './endpoints/contributions'
 
 import cachedResponse from './cached-response'
@@ -312,6 +313,13 @@ app.get('/api/nearby/:lang/:latitude,:longitude',(req, res) => {
     return nearby( req.params.latitude, req.params.longitude, req.params.lang, 0, project );
   } );
 } );
+
+app.get('/api/diff/:lang/:revId',(req, res) => {
+  cachedResponse( res, req.url, function () {
+    return diff( req.params.lang, req.params.revId, project )
+  });
+} );
+
 
 app.get('/api/page/:lang/:title',(req, res) => {
   cachedResponse( res, req.url, function () {
