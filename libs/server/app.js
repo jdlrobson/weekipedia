@@ -28,6 +28,7 @@ import file from './endpoints/file'
 import diff from './endpoints/diff'
 import contributions from './endpoints/contributions'
 
+import respond from './respond'
 import cachedResponse from './cached-response'
 
 const project = process.env.PROJECT || 'wikipedia';
@@ -354,9 +355,7 @@ app.get('/api/pagehistory/:lang/:title',(req, res) => {
 } );
 
 app.get('/api/web-push/service/trending/',(req, res) => {
-  cachedResponse( res, req.url, function() {
-    return webPushTrend();
-  } );
+  respond( res, webPushTrend );
 } );
 
 app.get('/:lang?/*',(req, res) => {

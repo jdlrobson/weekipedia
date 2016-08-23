@@ -1,20 +1,8 @@
 import NodeCache from 'node-cache';
 
-const shortLifeCache = new NodeCache( { stdTTL: 60 * 10, checkperiod: 60 * 10 } );
+import respond from './respond.js'
 
-function respond( res, method ) {
-  return method().then( function ( data ) {
-    var responseText = JSON.stringify( data );
-    res.status( 200 );
-    res.send( responseText );
-    return responseText;
-  }).catch( function () {
-    res.status( 404 );
-    res.send( JSON.stringify( {
-      msg: '404'
-    } ) );
-  });
-}
+const shortLifeCache = new NodeCache( { stdTTL: 60 * 10, checkperiod: 60 * 10 } );
 
 function cachedResponse( res, cacheKey, method ){
   res.setHeader('Content-Type', 'application/json');
