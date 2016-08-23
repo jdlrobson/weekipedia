@@ -1,6 +1,7 @@
 import React from 'react'
 import timeago from 'timeago'
 
+
 import HorizontalList from './../../components/HorizontalList'
 import IntermediateState from './../../components/IntermediateState'
 import Icon from './../../components/Icon'
@@ -27,18 +28,8 @@ export default React.createClass({
   load( revId ) {
     var self = this;
     var endpoint = '/api/diff/' + this.props.lang + '/' + revId;
-    this.props.api.fetch( endpoint ).then( function ( page ) {
-      var rev = page.revisions[0];
-      self.setState( {
-        diff: {
-          title: page.title,
-          comment: rev.comment,
-          user: rev.user,
-          parent: rev.parentid,
-          body: rev.diff.body,
-          timestamp: rev.timestamp
-        }
-      } );
+    this.props.api.fetch( endpoint ).then( function ( diff ) {
+      self.setState( { diff: diff } );
     } );
   },
   render(){

@@ -21,6 +21,8 @@
     "body-parser": "^1.15.2",
     "connect-memcached": "^0.2.0",
     "css-loader": "^0.23.1",
+    "diff": "^3.0.0",
+    "domino": "^1.0.25",
     "events": "^1.1.1",
     "express": "^4.14.0",
     "express-session": "^1.14.0",
@@ -34,6 +36,7 @@
     "isomorphic-fetch": "^2.2.1",
     "less": "^2.7.1",
     "less-loader": "^2.2.3",
+    "mediawiki-messages": "jdlrobson/mediawiki-messages",
     "mocha": "^3.0.2",
     "node-cache": "^3.2.1",
     "node-jquery-param": "0.0.2",
@@ -51,7 +54,6 @@
     "web-push-subscriber": "jdlrobson/web-push-subscriber",
     "webpack": "^1.13.1",
     "webpack-dev-server": "^1.14.1",
-    "mediawiki-messages": "jdlrobson/mediawiki-messages",
     "wikitrender": "jdlrobson/wikitrender"
   },
   "dependencies": {
