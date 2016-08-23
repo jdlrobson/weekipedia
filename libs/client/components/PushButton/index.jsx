@@ -2,8 +2,6 @@ import React from 'react'
 
 import Button from './../../components/Button';
 
-import './styles.css'
-
 function getSubscriptionId( subscription ) {
   var provider = getPushProvider( subscription.endpoint );
   if ( provider === 'firefox' ) {
@@ -115,16 +113,19 @@ export default React.createClass({
     }
   },
   render(){
-    var label, onClick;
+    var label, error, onClick;
     if ( !this.state.isError ) {
-      label = this.state.isEnabled ? 'Disable push notifications' : 'Enable push notifications';
+      label = this.state.isEnabled ? 'Disable' : 'Enable';
       onClick = this.toggle;
     } else {
-      label = this.state.isBlocked ? 'Please enable push notifications.' : 'Not supported.';
+      error = this.state.isBlocked ? 'Please enable push notifications.' : 'Not supported.';
     }
 
-    return (
-      <Button className="push-button" onClick={onClick} label={label}></Button>
+    return error ? null : (
+      <div>
+        <p>Enable push notifications and receive trends as they happen.</p>
+        <Button className="push-button" onClick={onClick} label={label}></Button>
+      </div>
     )
   }
 })
