@@ -101,16 +101,7 @@ function initSpecialPages() {
   addSpecialPage( 'MostRead', MostRead );
   addSpecialPage( 'SplashScreen', SplashScreen );
   addSpecialPage( 'Random', Random );
-  addSpecialPage( 'Nearby', Nearby,
-    function( info, props ) {
-      if ( info[2] ) {
-        var coords = info[2].split( ',' );
-        props.latitude = coords[0];
-        props.longitude = coords[1];
-      }
-      return props;
-    }
-  );
+  addSpecialPage( 'Nearby', Nearby );
 }
 
 initSpecialPages();

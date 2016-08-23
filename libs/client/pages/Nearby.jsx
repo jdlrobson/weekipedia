@@ -14,8 +14,6 @@ export default React.createClass({
   getDefaultProps: function () {
     return {
       api: null,
-      latitude: null,
-      longitude: null,
       lang: 'en'
     };
   },
@@ -25,12 +23,19 @@ export default React.createClass({
       cards: null
     };
   },
+  componentWillReceiveProps( props ) {
+    this.loadCoords( props.params );
+  },
   // You want to load subscriptions not only when the component update but also when it gets mounted.
   componentWillMount(){
-    if ( this.props.latitude ) {
+    this.loadCoords( this.props.params );
+  },
+  loadCoords( params ) {
+    var coords = params.split( ',' );
+    if ( coords.length ) {
       this.setState( {
-        latitude: parseFloat( this.props.latitude ),
-        longitude: parseFloat( this.props.longitude )
+        latitude: parseFloat( coords[0] ),
+        longitude: parseFloat( coords[1] )
       } )
     } else {
       this.requestCoords();
@@ -63,11 +68,12 @@ export default React.createClass({
   render(){
     var lat = this.state.latitude;
     var lng = this.state.longitude;
+    var props = this.props;
 
     if ( this.state.error ) {
       return (<Content><ErrorBox msg="Something went wrong when trying to get your location."></ErrorBox></Content>)
     } else if ( lat !== undefined ) {
-      var endpoint = '/api/nearby/' + this.props.lang
+      var endpoint = '/api/nearby/' + props.lang
         + '/' + lat + ',' + lng;
 
       // Each degree of latitude is approximately 69 miles
@@ -75,15 +81,19 @@ export default React.createClass({
       var south = lat - 1 / 69;
       var east = lng + 1 / 69;
       var west = lng - 1 / 69;
-      var baseUrl = '/' + this.props.lang + '/wiki/Special:Nearby/';
+      var baseUrl = '/' + props.lang + '/wiki/Special:Nearby/';
 
       var content = (
         <Content className="post-content">Explore 1 mile:
           <HorizontalList>
-            <a href={baseUrl + lat + ',' + west}>west</a>
-            <a href={baseUrl + north + ',' + lng}>north</a>
-            <a href={baseUrl + lat + ',' + east}>east</a>
-            <a href={baseUrl + south + ',' + lng}>south</a>
+            <a href={baseUrl + lat + ',' + west}
+              onClick={props.onClickInternalLink}>west</a>
+            <a href={baseUrl + north + ',' + lng}
+              onClick={props.onClickInternalLink}>north</a>
+            <a href={baseUrl + lat + ',' + east}
+              onClick={props.onClickInternalLink}>east</a>
+            <a href={baseUrl + south + ',' + lng}
+              onClick={props.onClickInternalLink}>south</a>
           </HorizontalList>
         </Content>
       );
