@@ -14,17 +14,38 @@
       color: inherit;
     }
   }
+}
 
-  div {
-    color: #999;
-    font-size: 0.7em;
-    text-transform: uppercase;
+.user-footer {
+  > * {
+    margin-bottom: 0.7em;
   }
+}
+
+.diff-header > div,
+.user-roles {
+  color: #999;
+  font-size: 0.7em;
+  text-transform: uppercase;
 }
 
 .diff-comment {
   padding-bottom: 1em;
   font-style: italic;
+}
+
+.edit-count {
+  text-align: left;
+  margin-top: 1.2em;
+  color: #333;
+  line-height: 1;
+  font-size: 0.7em;
+  text-transform: uppercase;
+
+  > div {
+    font-size: 1.85em;
+    color: #888;
+  }
 }
 
 .diff-body {

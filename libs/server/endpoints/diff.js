@@ -63,6 +63,20 @@ function transform( body ) {
   return '<div>' + newDiff + '</div>';
 }
 
+function revUserInfo( lang, username, project, revData ) {
+  var params = {
+    list: 'users',
+    ususers: username,
+    usprop: 'groups|editcount'
+  };
+
+  return mwApi( lang, params, project ).then( function ( data ) {
+    return Object.assign( revData, {
+      user: data.query.users[0]
+    } );
+  } );
+}
+
 export default function ( lang, revId, project ) {
   var params = {
     prop: 'revisions',
@@ -72,7 +86,7 @@ export default function ( lang, revId, project ) {
   };
 
   return mwApi( lang, params, project ).then( function ( data ) {
-    var page, rev, body,
+    var page, rev, body, revData,
       pages = data.pages;
 
     if ( pages[0] && pages[0].revisions ) {
@@ -81,14 +95,14 @@ export default function ( lang, revId, project ) {
       body = transform( rev.diff.body );
       delete rev.diff;
 
-      return Object.assign( rev, {
+      revData = Object.assign( rev, {
         title: page.title,
         comment: rev.comment,
-        user: rev.user,
         parent: rev.parentid,
         body: body,
         timestamp: rev.timestamp
       } );
+      return revUserInfo( lang, rev.user, project, revData );
     }
     throw new Error( 'Unable to load diff.' );
   } );

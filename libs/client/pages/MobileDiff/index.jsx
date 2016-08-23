@@ -12,6 +12,8 @@ import Content from './../../containers/Content'
 import './styles.less'
 import './icons.less'
 
+const IGNORED_GROUPS = [ 'user', 'autoconfirmed', '*' ];
+
 // Pages
 export default React.createClass({
   getInitialState() {
@@ -34,6 +36,7 @@ export default React.createClass({
   },
   render(){
     var body, title, footer, link,
+      groups = [],
       links = [],
       urlPrefix = '/' + this.props.lang + '/wiki/',
       diff = this.state.diff;
@@ -59,11 +62,21 @@ export default React.createClass({
         </Content>
       );
 
-      link = <a href={urlPrefix + 'User:' + diff.user}
-        onClick={this.props.onClickInternalLink}>{diff.user}</a>;
+      link = <a href={urlPrefix + 'User:' + diff.user.name}
+        onClick={this.props.onClickInternalLink}>{diff.user.name}</a>;
+
+      diff.user.groups.forEach( function ( group ) {
+        if ( IGNORED_GROUPS.indexOf( group ) === -1 ) {
+          groups.push( group );
+        } else {
+          return false;
+        }
+      } );
       footer = (
-        <Content>
+        <Content className="user-footer">
           <Icon type="before" glyph="user" label={link} />
+          <HorizontalList className="user-roles">{groups}</HorizontalList>
+          <div className="edit-count"><div>{diff.user.editcount}</div> edits</div>
         </Content>
       )
     } else {
