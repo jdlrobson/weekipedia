@@ -41,7 +41,8 @@ function transform( body ) {
     } else if ( added && !removed ) {
       newDiff += '<div class="diff-addedline">' + added + '</div>'; 
     } else if ( added && removed ) {
-      charDiff = jsdiff.diffWords( getText( removed ), getText( added ) );
+      // must diffChars to avoid wrapping html codes e.g. &lt; with a ins or del tag
+      charDiff = jsdiff.diffChars( getText( removed ), getText( added ) );
       charDiff.forEach( function ( change ) {
         if ( change.added ) {
           charDiffVal += '<ins>'
