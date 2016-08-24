@@ -54,6 +54,9 @@ function trend() {
     var trended = [];
     pages.forEach( function ( page ) {
       if ( page.trendedAt ) {
+        if ( typeof page.trendedAt === 'string' ) {
+          page.trendedAt = new Date( page.trendedAt );
+        }
         trended.push( page );
       }
     } );
