@@ -1,16 +1,48 @@
-.section .indicator {
-  float: left;
-  margin-top: 0.7em;
-  font-size: 0.4em;
-  background-repeat: no-repeat;
-}
-
 .section h2 {
   clear: both;
   cursor: pointer;
   width: 100%;
   border-bottom: solid 1px #e2e3e4;
   margin-bottom: 0.5em;
+}
+
+.section {
+  .indicator {
+    float: left;
+    margin-left: -1em;
+  }
+
+  h1 span {
+    font-size: 1.7em;
+  }
+  h2 span {
+    font-size: 1.5em;
+  }
+  h3 span {
+    font-size: 1.2em;
+    font-weight: bold;
+  }
+  h4 span {
+    font-weight: bold;
+  }
+
+  h1, h2, h3, h4, h5 {
+    line-height: 1;
+    padding: 0.5em 0;
+    font-family: 'Linux Libertine', 'Georgia', ' Times', serif;
+    word-wrap: break-word;
+    word-break: break-word;
+
+    > span {
+      width: 100%;
+    }
+
+    > .component-edit-icon,
+    > span {
+      display: table-cell;
+      vertical-align: middle;
+    }
+  }
 }
 
 .section > div {
