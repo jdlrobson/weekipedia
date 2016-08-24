@@ -1,10 +1,23 @@
 import React from 'react'
 
+import EditorOverlay from './overlays/EditorOverlay'
 import ImageOverlay from './overlays/ImageOverlay'
 import LanguageOverlay from './overlays/LanguageOverlay'
 import SearchOverlay from './overlays/SearchOverlay'
 
 export default [
+  // Edit Overlay
+  [
+    /^#\/edit\/?(.*)$/,
+    function ( info, props ) {
+      var overlayProps = Object.assign( {}, props, {
+        section: info[1]
+      } );
+      return {
+        overlay: React.createElement( EditorOverlay, overlayProps )
+      }
+    }
+  ],
   // Image Overlay
   [
     /^#\/media\/(.*)$/,

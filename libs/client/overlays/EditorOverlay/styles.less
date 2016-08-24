@@ -1,0 +1,38 @@
+@import './../../globals.less';
+
+.component-editor-overlay {
+  .overlay-content {
+    height: 100%;
+    box-sizing: border-box;
+  }
+
+  .disabled {
+    opacity: 0.2;
+  }
+
+  .license {
+    font-size: 0.9em;
+    color: #777777;
+    margin-top: 0.5em;
+    line-height: 1.4;
+  }
+
+  .summary-request {
+    font-size: 1.4em;
+    font-weight: bold;
+    margin: 0.5em 0;
+    color: #555555;
+  }
+
+  .editor {
+    border: 0;
+    line-height: 24px;
+    font-size: 16px;
+    transition: none;
+    background: transparent;
+    height: 100%;
+    width: 100%;
+    // To account for header
+    margin-bottom: 80px;
+  }
+}

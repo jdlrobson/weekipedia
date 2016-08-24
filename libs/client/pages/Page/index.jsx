@@ -5,6 +5,7 @@ import Section from './../../components/Section'
 import Button from './../../components/Button'
 import ErrorBox from './../../components/ErrorBox'
 import LanguageIcon from './../../components/LanguageIcon'
+import EditIcon from './../../components/EditIcon'
 import WatchIcon from './../../components/WatchIcon'
 import LastModifiedBar from './../../components/LastModifiedBar'
 import ReadMore from './../../components/ReadMore'
@@ -184,6 +185,7 @@ export default React.createClass({
       disabled={this.state.lead.languagecount === 0} />);
 
     if ( this.props.canAuthenticate ) {
+      actions.push(<EditIcon {...this.props} key="page-action-edit"/>);
       actions.push(<WatchIcon {...this.props} key="page-action-watch"/>);
     }
 
