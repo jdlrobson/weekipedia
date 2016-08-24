@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 
 import Icon from './../Icon'
+import EditIcon from './../EditIcon'
 import SectionContent from './../SectionContent'
 
 import './styles.less'
@@ -31,6 +32,9 @@ class Section extends Component {
     var headingChildren = [
       <span dangerouslySetInnerHTML={{ __html: this.props.line}} key={"section-heading-span-" + this.props.id} />
     ];
+    if ( this.props.canAuthenticate ) {
+      headingChildren.push( <EditIcon {...this.props} section={this.props.number + 1}/> );
+    }
 
     if ( this.props.isCollapsible ) {
       headingChildren.unshift( <Icon glyph="arrow" small={true}
