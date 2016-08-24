@@ -3,6 +3,7 @@ import React from 'react'
 import './styles.less'
 
 import Overlay from './../../containers/Overlay'
+import TruncatedText from './../../containers/TruncatedText'
 
 import IntermediateState from './../../components/IntermediateState';
 import Button from './../../components/Button';
@@ -64,7 +65,7 @@ export default React.createClass({
       footer = (
         <div className="details">
           <Button isPrimary="1" label="Details" href={img.descriptionurl}/>
-          <p className="truncated-text" dangerouslySetInnerHTML={{ __html: description }}></p>
+          <TruncatedText><p dangerouslySetInnerHTML={{ __html: description }}></p></TruncatedText>
           <HorizontalList isSeparated="1" className="license">
             <span dangerouslySetInnerHTML= {{ __html: artist }}></span>
             <a href={licenseUrl}>{licenseName}</a>

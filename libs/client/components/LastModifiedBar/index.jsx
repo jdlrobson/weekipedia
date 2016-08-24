@@ -7,6 +7,7 @@ import './icons.less'
 import Icon from './../Icon'
 
 import Content from './../../containers/Content'
+import TruncatedText from './../../containers/TruncatedText'
 
 export default ({ editor, lang, title, timestamp, onClickInternalLink }) => {
   const isAnon = editor && editor.name ? false : true;
@@ -42,11 +43,15 @@ export default ({ editor, lang, title, timestamp, onClickInternalLink }) => {
     text = ' by ';
   }
 
-  var modifierTagline = [<a href={historyUrl} key={key+'-link'}
-    onClick={onClickInternalLink}
-    >{historyText}</a>, text, editorElement,
-    <Icon key={key + '-label'}
-      small={true} glyph={'arrow' + iconVariant} className='indicator' />];
+  var modifierTagline = (
+    <TruncatedText>
+      <a href={historyUrl} key={key+'-link'}
+      onClick={onClickInternalLink}>{historyText}</a> {text} {editorElement}
+      <Icon key={key + '-label'}
+        small={true} glyph={'arrow' + iconVariant} className='indicator' />
+    </TruncatedText>
+  );
+
   return (
     <div className={className}>
       <Content>

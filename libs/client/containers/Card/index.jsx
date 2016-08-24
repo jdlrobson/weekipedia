@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 
+import TruncatedText from '../../containers/TruncatedText'
+
 import './styles.less'
 
 class Card extends Component {
@@ -19,7 +21,11 @@ class Card extends Component {
         : 'none'
     };
     var extracts = this.props.extracts.map( function ( item, i ) {
-      return (<p className="card-extract" key={'card-extract-' + title + '-' + i}>{item}</p>);
+      return (
+        <p className="card-extract" key={'card-extract-' + title + '-' + i}>
+          <TruncatedText>{item}</TruncatedText>
+        </p>
+      );
     });
     var url = this.props.url || '/' + this.props.lang + '/wiki/' + encodeURIComponent( title );
 

@@ -58,8 +58,10 @@
 .card-extract {
   color: @card-text-color;
   font-size: .8em;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  padding-right: .2em;
   margin-top: 2px;
+
+  > * {
+    display: block;
+  }
 }
