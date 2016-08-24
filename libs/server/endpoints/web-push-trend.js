@@ -2,6 +2,7 @@ import subscriber from 'web-push-subscriber'
 
 import collection from './../collection'
 import addProps from './../prop-enricher'
+import cachedResponse from './../cached-response.js'
 
 const EDITS_PER_MIN = process.env.TREND_EDITS_PER_MIN || 20 / 60;
 const BIAS = process.env.TREND_BIAS || 0.6;
@@ -33,6 +34,7 @@ collection.on( 'edit', function ( item, collection ) {
         // tell me
         console.log( 'Trended', item.title, item.editsPerMinute(), item.getBias(), item.age(), item.contributors );
         item.trendedAt = new Date();
+        cachedResponse.invalidate( '/api/web-push/service/trending/' );
         // ping people
         subscriber.broadcast( 'trending' );
       }

@@ -23,4 +23,15 @@ function cachedResponse( res, cacheKey, method ){
   }
 }
 
-export default cachedResponse
+function invalidate( url ) {
+  shortLifeCache.get( url, function( err, responseText ) {
+    if ( responseText ) {
+      console.log('invalidated', url);
+      shortLifeCache.del( url );
+    }
+  } );
+}
+export default {
+  cachedResponse: cachedResponse,
+  invalidate: invalidate
+}

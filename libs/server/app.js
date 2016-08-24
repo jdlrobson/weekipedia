@@ -31,8 +31,9 @@ import diff from './endpoints/diff'
 import contributions from './endpoints/contributions'
 
 import respond from './respond'
-import cachedResponse from './cached-response'
+import cachedResponses from './cached-response.js'
 
+const cachedResponse = cachedResponses.cachedResponse
 const project = process.env.PROJECT || 'wikipedia';
 
 const SITE_WORDMARK_PATH = process.env.SITE_WORDMARK_PATH
@@ -364,7 +365,7 @@ app.get('/api/pagehistory/:lang/:title',(req, res) => {
 } );
 
 app.get('/api/web-push/service/trending/',(req, res) => {
-  respond( res, webPushTrend );
+  cachedResponse( res, req.url, webPushTrend );
 } );
 
 app.get('/api/wikitext/:lang/:title/:section?',(req, res) => {
