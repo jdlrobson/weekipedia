@@ -1,7 +1,9 @@
+@header-height: 3.35em;
+
 .header {
   display: table;
   width: 100%;
-  height: 3.35em;
+  height: @header-height;
   white-space: nowrap;
   border-top: 1px solid #cccccc;
   margin-top: -1px;
@@ -22,6 +24,17 @@
 .header > div {
   width: 3.35em;
   position: relative;
+
+  &:last-child {
+    // magic. don't ask.
+    padding-right: 0.31em;
+  }
+
+  > .mw-ui-button {
+    display: table-cell;
+    vertical-align: middle;
+    height: @header-height;
+  }
 }
 
 .header > div a {
@@ -54,9 +67,10 @@
 }
 
 .header .main h2 > * {
-  width: 1em;
   display: table-cell;
   padding-right: 0.4em;
+  width: auto;
+  max-width: 1em;
 }
 
 @media (min-width: 62.5em) {

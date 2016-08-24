@@ -18,6 +18,9 @@ class Header extends Component {
           <div className='main'>
             {this.props.main}
           </div>
+          <div>
+            {this.props.secondaryIcon}
+          </div>
         </Content>
       </div>
     )
