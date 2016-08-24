@@ -1,0 +1,76 @@
+.mw-ui-input {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  display: block;
+  width: 100%;
+  border: 1px solid #cccccc;
+  border-radius: 2px;
+  padding: 0.3em 0.3em 0.3em 0.6em;
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  vertical-align: middle;
+}
+.mw-ui-input::-webkit-input-placeholder {
+  font-style: italic;
+  font-weight: normal;
+}
+.mw-ui-input::-moz-placeholder {
+  font-style: italic;
+  font-weight: normal;
+}
+.mw-ui-input:-moz-placeholder {
+  font-style: italic;
+  font-weight: normal;
+}
+.mw-ui-input:-ms-input-placeholder {
+  font-style: italic;
+  font-weight: normal;
+}
+.mw-ui-input:invalid {
+  box-shadow: none;
+}
+.mw-ui-input:focus {
+  border-color: #347bff;
+  box-shadow: inset 0 0 0 1px #347bff;
+  outline: 0;
+}
+.mw-ui-input:disabled {
+  border-color: #eeeeee;
+  color: #cccccc;
+}
+.mw-ui-input[type="search"] {
+  -webkit-appearance: textfield;
+}
+.mw-ui-input[type="search"]::-ms-clear {
+  display: none;
+}
+.mw-ui-input[type="search"]::-webkit-search-cancel-button,
+.mw-ui-input[type="search"]::-webkit-search-decoration {
+  -webkit-appearance: none;
+}
+textarea.mw-ui-input {
+  min-height: 8em;
+}
+input[type="number"],
+.mw-ui-input-inline {
+  display: inline-block;
+  width: auto;
+  max-width: 100%;
+}
+.mw-ui-input-large {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+.mw-ui-input-large + .mw-ui-input-large {
+  margin-top: -1px;
+}
+.mw-ui-input-large:focus {
+  position: relative;
+}
+input.mw-ui-input-large {
+  font-size: 1.75em;
+  font-weight: bold;
+  line-height: 1.25em;
+}
