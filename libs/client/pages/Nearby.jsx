@@ -24,15 +24,15 @@ export default React.createClass({
     };
   },
   componentWillReceiveProps( props ) {
-    this.loadCoords( props.params );
+    this.loadCoords( props.params || '' );
   },
   // You want to load subscriptions not only when the component update but also when it gets mounted.
   componentWillMount(){
-    this.loadCoords( this.props.params );
+    this.loadCoords( this.props.params || '' );
   },
   loadCoords( params ) {
     var coords = params.split( ',' );
-    if ( coords.length ) {
+    if ( coords.length === 2 ) {
       this.setState( {
         latitude: parseFloat( coords[0] ),
         longitude: parseFloat( coords[1] )
