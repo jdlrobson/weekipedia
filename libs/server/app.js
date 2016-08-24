@@ -34,6 +34,7 @@ import respond from './respond'
 import cachedResponses from './cached-response.js'
 
 const cachedResponse = cachedResponses.cachedResponse
+const invalidate = cachedResponses.invalidate
 const project = process.env.PROJECT || 'wikipedia';
 
 const SITE_WORDMARK_PATH = process.env.SITE_WORDMARK_PATH
@@ -158,7 +159,11 @@ if ( SIGN_IN_SUPPORTED ) {
     var p = req.params;
     var body = req.body;
     respond( res, function () {
-      return edit( p.lang, p.title, body.text, body.summary, p.section, project, req.user );
+      return edit( p.lang, p.title, body.text, body.summary, p.section, project, req.user )
+        .then( function ( data ) {
+          invalidate( '/api/page/' + p.lang + '/' + p.title );
+          return data;
+        } );
     } );
   } );
 
