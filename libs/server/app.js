@@ -400,7 +400,11 @@ app.get('/:lang?/*',(req, res) => {
         wordmark: SITE_WORDMARK_PATH,
         title: SITE_TITLE,
         privacyUrl: process.env.SITE_PRIVACY_URL,
-        termsUrl: process.env.SITE_TERMS_OF_USE
+        termsUrl: process.env.SITE_TERMS_OF_USE,
+        license: {
+          url: '//creativecommons.org/licenses/by-sa/3.0/',
+          name: 'CC BY-SA 3.0'
+        }
       },
       session: session,
       i18n: messages,

@@ -9,10 +9,7 @@ class ArticleFooter extends Component {
   render(){
     var wordmark, places = [],
       siteinfo = this.props.siteinfo,
-      license = {
-        url: '//creativecommons.org/licenses/by-sa/3.0/',
-        name: 'CC BY-SA 3.0'
-      };
+      license = siteinfo.license;
 
     wordmark = siteinfo.wordmark ? <h2><img src={siteinfo.wordmark} alt={siteinfo.title} height="30" /></h2>
       : <h2>{siteinfo.title}</h2>;
