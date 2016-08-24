@@ -8,8 +8,9 @@ import './icons.less'
 
 export default React.createClass({
   launchEditor() {
-    var endpoint = this.props.section ? '#/edit/' + this.props.section : '#/edit/';
-    this.props.navigateTo( null, endpoint );
+    var section = this.props.section;
+    var endpoint = section !== undefined ? '#/edit/' + section : '#/edit/';
+    this.props.router.navigateTo( null, endpoint );
   },
   dispatch( ev ) {
     ev.stopPropagation();
