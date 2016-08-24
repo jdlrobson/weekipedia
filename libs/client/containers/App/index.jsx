@@ -28,6 +28,13 @@ export default React.createClass({
       isOverlayEnabled: false
     };
   },
+  mountOverlay( props ) {
+    this.setState( {
+      overlay: props.overlay,
+      isOverlayEnabled: props.overlay,
+      isOverlayFullScreen: props.isOverlayFullScreen
+    } );
+  },
   mountChildren( props ) {
     // clone each child and pass them the notifier
     var children = React.Children.map( props.children, ( child ) => React.cloneElement( child, {
@@ -39,17 +46,11 @@ export default React.createClass({
     this.setState( { children: children } );
   },
   componentWillReceiveProps( nextProps ) {
-    this.setState( {
-      isOverlayEnabled: nextProps.overlay,
-      isOverlayFullScreen: nextProps.isOverlayFullScreen
-    } );
+    this.mountOverlay( nextProps );
     this.mountChildren( nextProps )
   },
   componentWillMount() {
-    this.setState( {
-      isOverlayEnabled: this.props.overlay,
-      isOverlayFullScreen: this.props.isOverlayFullScreen
-    } );
+    this.mountOverlay( this.props );
     this.mountChildren( this.props );
   },
   showOverlay( overlay ) {
@@ -135,22 +136,8 @@ export default React.createClass({
       onClick={this.openPrimaryNav}/>;
     var shield = this.state.isMenuOpen ? <TransparentShield /> : null;
 
-    var overlay, toast;
-
-    if ( this.state.isOverlayEnabled ) {
-      if ( this.state.overlay ) {
-        overlay = this.state.overlay;
-      } else if ( this.props.overlayProps ) {
-        overlay = React.createElement( this.props.overlay,
-          this.state.isOverlayFullScreen ? this.props.overlayProps :
-          Object.assign( {}, this.props.overlayProps, {
-            onExit: this.closeOverlay
-          } )
-        );
-      } else {
-        overlay = this.props.overlay;
-      }
-    }
+    var toast,
+      overlay = this.state.isOverlayEnabled ? this.state.overlay : null;
 
     if ( overlay ) {
       navigationClasses += this.state.isOverlayFullScreen ? 'overlay-enabled' : '';
