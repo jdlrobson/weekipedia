@@ -71,6 +71,10 @@ const manifest = {
 app.engine('html', hogan)
 app.set('views', __dirname + '/views')
 app.use('/', express.static( __dirname + '/../../public/' ) )
+app.use(bodyParser.json()); // support json encoded bodies
+app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
+  extended: true
+}));
 
 app.set('port', (process.env.PORT || 3000))
 
@@ -151,8 +155,9 @@ if ( SIGN_IN_SUPPORTED ) {
 
   app.post('/api/private/edit/:lang/:title/:section?',(req, res) => {
     var p = req.params;
+    var body = req.body;
     respond( res, function () {
-      return edit( p.lang, p.title, req.body.text, req.body.summary, p.section, project, req.user );
+      return edit( p.lang, p.title, body.text, body.summary, p.section, project, req.user );
     } );
   } );
 
@@ -211,11 +216,6 @@ function checkReqParams( req, res, required ) {
     return true;
   }
 }
-
-app.use(bodyParser.json()); // support json encoded bodies
-app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
-  extended: true
-}));
 
 /*
  *******************************************************
