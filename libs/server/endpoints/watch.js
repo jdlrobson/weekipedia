@@ -1,18 +1,13 @@
-import mwApi from './mwApi';
+import mwApiToken from './mwApiToken';
 
 export default function ( lang, project, titles, profile, unwatch ) {
-  var watchTokenParams = { action: 'query', meta: 'tokens', type: 'watch' };
-  return mwApi( lang, watchTokenParams, project, null, profile ).then( function ( data ) {
-    var params = {
-      action: 'watch',
-      titles: titles.join( '|' ),
-      token: data.watchtoken
-    };
+  var params = {
+    action: 'watch',
+    titles: titles.join( '|' )
+  };
+  if ( unwatch ) {
+    params.unwatch = '1';
+  }
 
-    if ( unwatch ) {
-      params.unwatch = '1';
-    }
-
-    return mwApi( lang, params, project, { method: 'POST' }, profile );
-  } );
+  return mwApiToken( 'watch', lang, params, project, { method: 'POST' }, profile );
 }

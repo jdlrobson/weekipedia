@@ -9,6 +9,7 @@ import session from 'express-session'
 import connect from 'connect-memcached'
 import fs from 'fs'
 
+import wikitext from './endpoints/wikitext'
 import watchlistfeed from './endpoints/watchlist-feed'
 import watchlist from './endpoints/watchlist'
 import watched from './endpoints/watched'
@@ -25,6 +26,7 @@ import page from './endpoints/page'
 import nearby from './endpoints/nearby'
 import languages from './endpoints/languages'
 import file from './endpoints/file'
+import edit from './endpoints/edit'
 import diff from './endpoints/diff'
 import contributions from './endpoints/contributions'
 
@@ -145,6 +147,13 @@ if ( SIGN_IN_SUPPORTED ) {
   app.get('/auth/logout', ensureAuthenticated, function( req, res ) {
     req.logout();
     res.redirect('/');
+  } );
+
+  app.post('/api/private/edit/:lang/:title/:section?',(req, res) => {
+    var p = req.params;
+    respond( res, function () {
+      return edit( p.lang, p.title, req.body.text, req.body.summary, p.section, project, req.user );
+    } );
   } );
 
   app.get('/api/private/watchlist-feed/:lang/:ns?', ensureAuthenticated, function(req, res){
@@ -356,6 +365,13 @@ app.get('/api/pagehistory/:lang/:title',(req, res) => {
 
 app.get('/api/web-push/service/trending/',(req, res) => {
   respond( res, webPushTrend );
+} );
+
+app.get('/api/wikitext/:lang/:title/:section?',(req, res) => {
+  var p = req.params;
+  respond( res, function () {
+    return wikitext( p.lang, p.title, p.section, project );
+  } );
 } );
 
 app.get('/:lang?/*',(req, res) => {

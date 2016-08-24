@@ -43,7 +43,11 @@ function signedRequest( url, session, params, options ) {
 }
 
 function anonRequest( url, params, options ) {
-  url += '?' + param( Object.assign( {}, params ) );
+  if ( options && options.method === 'POST' ) {
+    options.body = JSON.stringify( params );
+  } else {
+    url += '?' + param( Object.assign( {}, params ) );
+  }
   return fetch( url, options )
     .then( function ( resp ) {
      if ( resp.status === 200 ) {
@@ -51,7 +55,9 @@ function anonRequest( url, params, options ) {
      } else {
        throw Error( resp.status );
      }
-    } );
+    } ).then( function ( json ) {
+      return json;
+    });
 }
 
 export default function ( lang, params, project, options, session ) {
