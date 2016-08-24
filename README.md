@@ -65,3 +65,16 @@ To expand articles by default
 To change the default home page
 
 > export HOME_PAGE_PATH='/wiki/Special:Feed'
+
+Setup push notifications
+> export TREND_EDITS_PER_MIN=0
+
+> export TREND_BIAS=1
+
+> export TREND_MIN_AGE=5
+
+> export TREND_MAX_AGE=100000
+
+> export TREND_MIN_TOTAL_EDITS=2
+
+> export TREND_MIN_CONTRIBUTORS=1
