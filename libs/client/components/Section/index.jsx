@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 
 import { Icon, ErrorBox, IntermediateState } from 'wikipedia-react-components'
-import EditIcon from './../EditIcon'
+import EditorLink from './../EditorLink'
 import SectionContent from './../SectionContent'
 
 import { getSections } from './../../react-helpers'
@@ -71,6 +71,7 @@ class Section extends Component {
     }
   }
   render(){
+    var editIcon;
     var props = this.props;
     var state = this.state;
     var isCollapsible = this.props.isCollapsible;
@@ -82,14 +83,14 @@ class Section extends Component {
       <span id={props.anchor}
         dangerouslySetInnerHTML={{ __html: this.props.line}} key={"section-heading-span-" + this.props.id} />
     ];
-    if ( this.props.canAuthenticate && this.props.isEditable ) {
-      headingChildren.push( <EditIcon {...this.props} section={this.props.id}
-        key={"section-edit-icon-" + this.props.id} /> );
+    if ( props.canAuthenticate && props.isEditable ) {
+      editIcon = <EditorLink section={props.id} session={props.session}
+        key={"section-edit-icon-" + props.id} />;
     }
 
     if ( isCollapsible ) {
       headingChildren.unshift( <Icon glyph={this.state.jsEnabled ? "arrow" : ""} small={true}
-        className="indicator" key={"section-heading-toggle-" + this.props.id} /> );
+        className="indicator" key={"section-heading-toggle-" + this.props.id} section={true} /> );
     }
     var heading = hMethod.call(React.DOM, {
       className: 'section-heading',
@@ -113,7 +114,7 @@ class Section extends Component {
     return (
       <div className={ isExpanded ? 'section open-block' : 'section' }>
         {heading}
-        <SectionContent {...this.props} subsections={subsections} text={text}></SectionContent>
+        <SectionContent {...this.props} subsections={subsections} text={text} editLink={editIcon}></SectionContent>
         {body}
       </div>
     )

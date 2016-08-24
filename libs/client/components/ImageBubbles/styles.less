@@ -1,0 +1,42 @@
+@import './../../globals.less';
+
+@circleSize: 100px;
+
+.component-image-bubbles {
+  padding: 28px 12px;
+
+  &:after {
+    content: '';
+    clear: both;
+    display: block;
+  }
+
+  li {
+    float: left;
+    margin-right: .1em;
+    display: block;
+    border-radius: @circleSize;
+    border: solid 2px #ccc;
+    overflow: hidden;
+    text-align: center;
+    width: @circleSize;
+    height: @circleSize;
+    margin-bottom: 20px;
+
+    img {
+      margin-left: -50%;
+      margin-top: -50%;
+    }
+  }
+}
+
+@media (min-width: @deviceWidthTablet) {
+  .component-image-slides {
+    padding: 0;
+
+    li {
+      float: none;
+      margin: 12px auto;
+    }
+  }
+}

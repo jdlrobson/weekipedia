@@ -55,8 +55,11 @@ function render( path, hash, props, query ) {
   props = props || {};
   hash = hash || '#';
 
+  var newProps = Object.assign( {}, globalProps, props );
+  delete newProps.children;
+  newProps.key = path + '_' + hash;
   return React.createElement( App,
-    router.matchRoute( path, hash, Object.assign( {}, globalProps, props ), query )
+    router.matchRoute( path, hash, newProps, query )
   )
 }
 

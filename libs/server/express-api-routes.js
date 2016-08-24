@@ -326,9 +326,13 @@ function initGetMethods( app ) {
     if ( req.params.id ) {
       id = parseInt( req.params.id, 10 );
     }
-    if ( id === 0 ) {
+    if ( id === 0 || user === '~anonymous' ) {
       res.status( 400 );
-      res.send( 'Not a valid public collection id.' );
+      res.send( 'Not a valid public collection id. This is only accessible via a service worker.' );
+    }
+    if ( id < 0 ) {
+      res.status( 400 );
+      res.send( 'This id is reserved for future functionality and currently not supported.' );
     }
 
     respond( res, function () {

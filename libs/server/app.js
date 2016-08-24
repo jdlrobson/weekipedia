@@ -14,6 +14,9 @@ import shared from './../shared'
 import initApiRoutes from './express-api-routes'
 import messages from './messages'
 import respond from './respond'
+
+import initVoyagerRoutes from './express-voyager-routes'
+
 import isRTL from './../client/is-rtl'
 
 import { API_PATH, DEFAULT_PROJECT, MEDIAWIKI_COMPATIBILITY_MODE,
@@ -181,6 +184,7 @@ app.get( '/manifest.json', ( req, res ) => {
 } );
 
 initApiRoutes( app, SIGN_IN_SUPPORTED );
+initVoyagerRoutes( app )
 
 app.get( '/:lang?/*', ( req, res ) => {
   var config = {

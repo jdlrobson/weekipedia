@@ -33,7 +33,12 @@ export default React.createClass({
     }
   },
   componentDidMount() {
-    this.loadWikiText();
+    if ( this.props.section !== 'new' ) {
+      this.loadWikiText();
+    } else {
+      // allowing editing of new sections
+      this.setState( { isLoading: false } );
+    }
   },
   showEditor() {
     window.scrollTo(0,0);
@@ -107,6 +112,16 @@ export default React.createClass({
       self.setState( { isLoading: false, text: text } );
     } );
   },
+  getDefaultText() {
+    var w = this.props.wikitext;
+    var text = this.state.text;
+    if ( text && w ) {
+      text = text.slice( 0, text.indexOf('==\n') + 3 ) + w + text.slice( text.indexOf('==\n') + 3 );
+    } else if ( w ){
+      text = w;
+    }
+    return text;
+  },
   render(){
     var content, overlayProps, action, previewPane,
       editSummary, warnings,
@@ -121,7 +136,7 @@ export default React.createClass({
       summaryField = <Input placeholder="Example: Fixed typo, added content"
         key="edit-summary"
         textarea={true} onInput={this.updateSummary} />,
-      editField = <Input defaultValue={state.text || props.wikitext}
+      editField = <Input defaultValue={this.getDefaultText()}
         textarea={true} className="editor"
         placeholder={props.placeholder}
         onInput={this.updateText }/>,
@@ -178,7 +193,7 @@ export default React.createClass({
         content = <IntermediateState msg='Saving your changes' />;
       }
     }
-    overlayProps.header = <h2><TruncatedText><strong>{action}</strong> {props.title}</TruncatedText></h2>;
+    overlayProps.header = <h2><TruncatedText><strong>{action}</strong> {props.displayTitle || props.title}</TruncatedText></h2>;
 
     return (
       <Overlay {...overlayProps}>

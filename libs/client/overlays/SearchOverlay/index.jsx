@@ -37,7 +37,7 @@ export default React.createClass({
             apiEndpoint={endpoint} infiniteScroll={false} />
         } );
       } );
-    }, 200 )
+    }, 200 );
   },
   onSearchWithinPages() {
     this.onSearchSubmit( this.state.term );
@@ -66,13 +66,15 @@ export default React.createClass({
       }
       endpoint = '/api/search/' + lang + '.' + project + '/' + encodeURIComponent( term );
       this.showResults( endpoint, project );
-      this.props.router.navigateTo( null, '#/search/' + term, true );
+      // causes redraw of overlay breaking it
+      //this.props.router.navigateTo( null, '#/search/' + term, true );
     } else {
       this.setState( { cards: [] } );
     }
   },
   render(){
     var heading, panel, msg;
+    var results = this.state && this.state.list ? this.state.list : '';
     var props = this.props;
     var search = <SearchForm
       placeholder={props.msg( 'search' )}
@@ -102,7 +104,7 @@ export default React.createClass({
         className="component-search-overlay search-overlay">
         <div className="overlay-content">
           {panel}
-          {this.state.list}
+          {results}
         </div>
       </Overlay>
     )

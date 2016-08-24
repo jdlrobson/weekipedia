@@ -17,6 +17,8 @@ import initOffline from './../../offline'
 
 const APP_SESSION_KEY = 'app-session'
 
+var globalSession;
+
 // Main component
 export default React.createClass({
   getInitialState() {
@@ -24,6 +26,8 @@ export default React.createClass({
       pageviews: 0,
       isMenuOpen: false,
       notification: '',
+      checkedLoginStatus: false,
+      offlineEnabled: false,
       isRTL: false,
       lang: 'en',
       session: null,
@@ -153,19 +157,19 @@ export default React.createClass({
   },
   login() {
     var self = this;
-    if ( !this._loginRequest ) {
-      this._loginRequest = this.props.api.fetch( '/auth/whoamithistime', {
-        credentials: 'include'
+    if ( !globalSession ) {
+      globalSession = this.props.api.fetch( '/auth/whoamithistime', {
+          credentials: 'include'
       } );
     }
-    return this._loginRequest.then( function ( session ) {
+    return globalSession.then( function ( session ) {
       // cache for next session
       session.timestamp = new Date();
       self.props.storage.set( APP_SESSION_KEY, JSON.stringify( session ) );
       self.setState( { session: session } );
     } ).catch( function () {
       self.props.storage.set( APP_SESSION_KEY, 'false' );
-      self.setState( { session: null } );
+      self.setState( { session: false } );
     } );
   },
   clearSession() {
@@ -182,9 +186,14 @@ export default React.createClass({
     var showNotification = this.showNotification;
     var props = this.props;
     var msg = this.props.msg;
+    var self = this;
+
     if ( this.props.offlineVersion ) {
-      initOffline( function () {
-        showNotification( msg( 'offline-ready' ) );
+      initOffline( function ( updateFound ) {
+        self.setState( { offlineEnabled: true } );
+        if ( updateFound ) {
+          showNotification( msg( 'offline-ready' ) );
+        }
       } );
     }
     if ( 'onpopstate' in window ) {
@@ -299,7 +308,10 @@ export default React.createClass({
   },
   render(){
     var props = this.props;
-    var search = (<SearchForm
+    var state = this.state;
+    var session = this.state.session;
+    var username = session ? session.username : '~your device';
+    var search = (<SearchForm msg={this.props.msg}
       placeholder={props.msg( 'search' )}
       language_project={props.language_project}
       onClickSearch={this.onClickSearch} />);
@@ -326,10 +338,10 @@ export default React.createClass({
      toast = <Toast>{this.state.notification}</Toast>;
     }
 
-    if ( this.state.session ) {
-      secondaryIcon = <Icon glyph="notifications"
+    if ( state.offlineEnabled ) {
+      secondaryIcon = <Icon glyph='offline' key="offline-icon"
         onClick={this.onClickInternalLink}
-        href={'/' + this.props.language_project + '/Special:Notifications'}/>
+        href={'/' + props.language_project + '/Special:Collections/by/' + username + '/-1'}/>
     }
 
     if ( props.showMenuNoJavaScript ) {

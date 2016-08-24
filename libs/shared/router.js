@@ -28,6 +28,9 @@ var router = {
       search = pathOrLocation.search;
       title = hashOrTitle;
     }
+    if ( search && search.indexOf( '?' ) === -1 ) {
+      search = '?' + search;
+    }
 
     var currentPath = window.location.pathname,
       state = {
@@ -66,7 +69,8 @@ var router = {
         events.emit( 'onreplacestate' );
       } else {
         // record the scroll position in current path
-        history.replaceState( state, null, window.location.pathname );
+        url = window.location.search ? window.location.pathname + window.location.search : window.location.pathname;
+        history.replaceState( state, null, url );
         window.location.hash = hash;
       }
     }

@@ -4,7 +4,10 @@ function init( callback ) {
     navigator.serviceWorker.register( '/sw-bundle.js' ).then( ( reg ) => {
       // registration worked
       console.log( 'ServiceWorker: Registration succeeded. Scope is ' + reg.scope )
-      reg.addEventListener( 'updatefound', () => onUpdateFound( reg, callback ) )
+      reg.addEventListener( 'updatefound', () => onUpdateFound( reg, function () {
+        callback( true );
+      } ) )
+      callback();
     } ).catch( ( error ) =>
       // registration failed
       console.log( 'ServiceWorker: Registration failed with ' + error )

@@ -7,12 +7,15 @@ import { ErrorBox, Button, IntermediateState, TruncatedText } from 'wikipedia-re
 
 import Article from './Article'
 
-const COLLECTIONS_ARE_NOT_ORDERED = true;
+import calculateBoundsFromPages from './../calculate-bounds-from-pages'
+
+const COLLECTIONS_ARE_NOT_ORDERED = false;
 
 // Pages
 export default React.createClass({
   getInitialState() {
     return {
+      bounds: null,
       defaultView: false,
       error: false,
       endpoint: null,
@@ -41,7 +44,11 @@ export default React.createClass({
       endpoint = endpointPrefix + '/by/' + username + '/' + id;
       this.setState( { endpoint: endpoint, username: username, id: id, defaultView: false } );
       props.api.fetch( endpoint ).then( function ( collection ) {
-        self.setState( { title: collection.title, description: collection.description } );
+        self.setState( {
+          title: collection.title,
+          description: collection.description,
+          bounds: calculateBoundsFromPages( collection.pages )
+        } );
       } ).catch( function () {
         self.setState( { error: true } );
       })
@@ -61,7 +68,7 @@ export default React.createClass({
       props.router.navigateTo( '/' + props.lang + '/wiki/Special:Collections', null, true );
     }
   },
-  componentWillMount() {
+  componentDidMount() {
     this.load( this.props );
   },
   componentWillReceiveProps( props ) {
@@ -109,6 +116,7 @@ export default React.createClass({
   render() {
     var tagline, userUrl, actions, label, suffix, tabs,
       props = this.props,
+      lead,
       lang = this.props.lang,
       desc = this.state.description || props.description,
       username = this.state.username || props.owner,
@@ -152,6 +160,10 @@ export default React.createClass({
           <span key="collection-tab-3"
             className={title ? 'active' : ''}><TruncatedText>{title}</TruncatedText></span>
         )
+        lead = {
+          maplink: '#/collection-map/' + username + '/' + this.state.id + '/',
+          coordinates: this.state.bounds
+        };
       }
     } else {
       tabs.push(
@@ -167,8 +179,10 @@ export default React.createClass({
         </div>
       );
     }
+
     return (
-      <Article {...this.props} isSpecialPage='yes'
+      <Article {...this.props}
+        lead={lead}
         tabs={tabs}
         title={this.state.title || props.msg( 'menu-collections' )} tagline={tagline} body={this.getBody()}>
       </Article>

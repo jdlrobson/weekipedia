@@ -1,9 +1,17 @@
 import React from 'react'
 
 import { Button, ErrorBox, IntermediateState } from 'wikipedia-react-components';
+
 import LastModifiedBar from './LastModifiedBar'
-import ReadMore from './ReadMore'
 import TableOfContents from './TableOfContents'
+
+import ImageSlideshow from './../../components/ImageSlideshow'
+import ImageBubbles from './../../components/ImageBubbles'
+import Climate from './../../components/Climate'
+import CardList from './../../components/CardList'
+import Infobox from './../../components/Infobox'
+
+import GoNext from './../../components/GoNext'
 
 import Content from './../../components/Content'
 
@@ -30,8 +38,11 @@ export default React.createClass({
     return {
       jsEnabled: false,
       fragment: null,
+      action: 'view',
       isExpanded: false,
       lead: null,
+      orientation: [],
+      vcards: [],
       user: {},
       errorMsg: NOT_FOUND_MESSAGE,
       error: false,
@@ -56,6 +67,7 @@ export default React.createClass({
   },
   componentWillReceiveProps(nextProps){
     this.load( nextProps.title, nextProps.lang, nextProps.revision );
+    this.setState( { action: nextProps.query ? nextProps.query.action : 'view' } );
   },
   checkExpandedState() {
     var expandQuery = this.props.query && this.props.query.expanded;
@@ -73,6 +85,7 @@ export default React.createClass({
     project = this.props.project;
     source = project ? lang + '.' + project : lang;
 
+    this.setState( { action: this.props.action || 'view' } );
     this.checkExpandedState();
     this.props.api.getPage( title, source, null, rev ).then( function ( data ) {
       var ns = data.lead.ns;
@@ -103,6 +116,20 @@ export default React.createClass({
       isExpanded: true
     } );
   },
+  getSections() {
+    var props = this.props;
+    var remaining = this.state.remaining || this.props.remaining || {};
+    var allSections = remaining.sections || [];
+    if ( this.isOrientationView() ) {
+      allSections = this.state.orientation || [];
+    } else if ( this.isLogisticsView() ) {
+      allSections = this.state.logistics || [];
+    }
+
+    var sections = getSections( allSections, props, this.state.fragment );
+
+    return sections;
+  },
   getLocalUrl( title, params ) {
     var source = this.props.language_project || this.props.lang + '/wiki';
     title = title ? encodeURIComponent( title ).replace( '%3A', ':' ) : '';
@@ -110,10 +137,70 @@ export default React.createClass({
 
     return '/' + source + '/' + title + params;
   },
+  getPageAction() {
+    return this.state.action || this.props.action;
+  },
+  isOrientationView() {
+    return this.getPageAction() === 'orientation';
+  },
+  isLogisticsView() {
+    return this.getPageAction() === 'logistics';
+  },
+  switchView( ev ) {
+    var action = ev.currentTarget.getAttribute( 'data-action' );
+    this.setState( { action: action } );
+    this.props.router.navigateTo( {
+      pathname: window.location.pathname,
+      search: 'action=' + action
+    }, this.props.title + ' (' + action + ')', true );
+    ev.preventDefault();
+  },
+  getTabs( lead ){
+    var props = this.props,
+      isOrientationView = this.isOrientationView(),
+      isLogisticsView = this.isLogisticsView(),
+      isDefaultView = !isOrientationView && !isLogisticsView,
+      baseUrl = this.getLocalUrl();
+
+    if ( isDefaultView && ( !lead || !lead.text ) ) {
+      return [];
+    }
+
+    var tabs = [
+      <a href={baseUrl + props.title }
+        key="tab-default"
+        className={isDefaultView ? 'active' : '' }
+        data-action="view"
+        onClick={this.switchView}>Dream</a>
+    ];
+    if ( this.state.logistics && this.state.logistics.length > 0 ) {
+      tabs.push(
+        <a href={baseUrl + props.title + '?action=logistics'}
+          key="tab-logistics"
+          className={isLogisticsView ? 'active' : '' }
+          data-action="logistics"
+          onClick={this.switchView}>Arrive</a>
+      );
+    } else {
+      tabs.push( <span key="tab-logistics">Arrive</span> );
+    }
+    if ( this.state.orientation && this.state.orientation.length > 0 ) {
+      tabs.push(
+        <a href={baseUrl + props.title + '?action=orientation'}
+          key="tab-orientation"
+          className={isOrientationView ? 'active' : '' }
+          data-action="orientation"
+          onClick={this.switchView}>Explore</a>
+      );
+    } else {
+      tabs.push( <span key="tab-orientation">Explore</span> );
+    }
+
+    return tabs;
+  },
   getFooter( lead ) {
     var footer = [];
     var props = this.props;
-    var ns = lead.ns;
     if ( !lead ) {
       return footer;
     } else {
@@ -123,15 +210,14 @@ export default React.createClass({
           onClickInternalLink={props.onClickInternalLink}
           title={props.title} timestamp={lead.lastmodified} key="page-last-modified" />
       ];
-      if ( ns === 0 ) {
-        footer.push( (
-          <Content key="page-read-more">
-            <ReadMore {...props} namespace={ns} key="page-read-more" />
-          </Content>
-        ) );
-      }
       return footer;
     }
+  },
+  getBlankLeadSection( lead ) {
+    return Object.assign( {}, lead, {
+      text: '',
+      paragraph: ''
+    });
   },
   render(){
     var lead = this.state.lead || this.props.lead || {};
@@ -150,18 +236,20 @@ export default React.createClass({
   renderPage(){
     var leadHtml, toc,
       wikiPageProps = {},
+      endpoint, isRegion,
       props = this.props,
       state = this.state,
+      session = props.session,
       siteOptions = props.siteoptions,
       sections = [],
       secondaryActions = [],
       title = this.props.title,
-      lead = this.state.lead || this.props.lead || {},
+      lead = Object.assign( {}, this.state.lead || this.props.lead || {} ),
       ns = lead && lead.ns || 0,
       footer = this.getFooter( lead ),
-      remaining = this.state.remaining || this.props.remaining || {},
-      allSections = remaining.sections || [],
-      remainingSections = getSections( allSections, props, this.state.fragment );
+      lang = this.props.lang,
+      coords = lead ? lead.coordinates : null,
+      remainingSections = this.getSections();
 
     leadHtml = lead.sections && lead.sections.length ? lead.sections[0].text : undefined;
     lead.text = leadHtml;
@@ -198,6 +286,63 @@ export default React.createClass({
         label="Talk" />);
     }
 
+    var col3 = [ <IntermediateState key="page-loading" /> ];
+    if ( lead ) {
+      col3 = [];
+    }
+
+    if ( lead && lead.images && lead.images.length ) {
+      col3.push( <ImageSlideshow images={lead.images} router={this.props.router} key="image-slideshow" /> );
+    }
+
+    if ( lead.infobox ) {
+      col3.push( <Infobox {...this.props} text={lead.infobox} key="page-infobox" /> );
+    }
+    if ( lead.climate ) {
+      col3.push( <Climate key="page-climate" climate={lead.climate} /> );
+    }
+
+    if ( lead.destinations && lead.destinations.length ) {
+      lead.destinations.forEach( function ( section ) {
+        col3.push( <h2
+          dangerouslySetInnerHTML={ {__html: section.line }} key={"section-heading-" + section.id}></h2> );
+        col3.push( <CardList key={"page-destinations-" + section.id }
+          {...props} pages={section.destinations} /> );
+        if ( session ) {
+          col3.push( <a key={"editor-link-" + section.id}
+            className="editor-link" href={"#/editor/"+ section.id}>Edit original source</a> );
+        }
+      } );
+    } else {
+      if ( coords ) {
+        endpoint = '/api/voyager/nearby/' + props.language_project + '/' + coords.lat + ',' + coords.lon + '/exclude/' + title;
+        col3.push(
+          <h2 key="nearby-widget-heading">Nearby</h2>
+        );
+        col3.push(
+          <GoNext apiEndpoint={endpoint} api={props.api} lang={lang}
+            session={session}
+            key="nearby-widget-card-list" section={lead.destinations_id}
+            router={props.router} />
+        );
+      }
+    }
+
+    lead.text = leadHtml;
+    isRegion = lead.isRegion;
+
+    if ( this.isOrientationView() ) {
+      lead = this.getBlankLeadSection( lead );
+      col3 = [];
+      if ( lead.maps && lead.maps.length ) {
+        col3.push( <h2 key="map-images-section-heading">Maps</h2> );
+        col3.push( <ImageBubbles images={lead.maps} router={props.router} key="map-images-bubbles" /> );
+      }
+    } else if ( this.isLogisticsView() ) {
+      lead = this.getBlankLeadSection( lead );
+      col3 = [];
+    }
+
     wikiPageProps = Object.assign( {}, this.props, {
       lead: lead,
       toc: toc,
@@ -209,8 +354,13 @@ export default React.createClass({
     if ( ns === 2 ) {
       return <UserPage {...wikiPageProps} />;
     } else {
+      Object.assign( wikiPageProps, {
+        tabs: this.getTabs(lead),
+        column_three: col3,
+        key: 'article-tab-' + this.getPageAction()
+      } );
       return (
-        <WikiPage {...wikiPageProps} />
+        <WikiPage {...wikiPageProps}/>
       );
     }
   }

@@ -1,0 +1,95 @@
+@import './../../globals.less';
+.tabs {
+  span,
+  a {
+    color: #666;
+    text-transform: uppercase;
+    font-size: .8em;
+    line-height: 1;
+
+    &.active {
+      font-weight: bold;
+    }
+  }
+}
+
+.heading-holder {
+  .make-note-component {
+    float: right;
+    margin-top: -32px;
+    margin-right: -16px;
+  }
+  .mw-ui-icon-watched,
+  .mw-ui-icon-watch {
+    float: right;
+    margin-top: -32px;
+    margin-right: 32px;
+  }
+
+  .tagline {
+    margin-bottom: 8px;
+    padding-right: 72px;
+  }
+}
+
+.col-1-2 {
+  padding-left: 20%;
+  width: 50%;
+  float: left;
+}
+
+.col-2 {
+  margin: 0;
+}
+
+.col-1,
+.col-3 {
+  h2 {
+    text-align: center;
+    border-bottom: solid 1px #ccc;
+    font-size: .8em;
+    font-weight: normal;
+    color: #999999;
+    padding-bottom: 0.5em;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    clear: both;
+  }
+}
+
+.footer {
+  clear: both;
+}
+
+.col-3 {
+  padding-bottom: 16px;
+}
+
+@media all and (min-width: 720px) {
+  .col-1,
+  .col-2,
+  .col-3 {
+    padding: 0 0 0;
+    display: block;
+  }
+  .col-2 {
+    width: 65%;
+    display: inline-block;
+    box-sizing: border-box;
+    padding-right: 20px;
+  }
+
+  .col-1 {
+    width: 20%;
+    float: left;
+    box-sizing: border-box;
+  }
+
+  .col-3 {
+    padding-left: 1em;
+    padding-bottom: 16px;
+    width: 35%;
+    float: right;
+    box-sizing: border-box;
+  }
+}

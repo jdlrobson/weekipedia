@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 
 import ArticleFooter from './ArticleFooter'
 import ArticleHeader from './ArticleHeader'
-import Content from './../../components/Content'
 
 import './styles.less'
 
@@ -22,14 +21,8 @@ class Article extends Component {
   }
   render(){
     return (
-      <div className="component-article mw-body" id={this.props.id}>
-        <ArticleHeader {...this.props} />
-        <Content key="page-row-1" className={this.props.isSpecialPage ? '' : 'content'}>
-          {this.props.body}
-        </Content>
-        <Content className="post-content">
-          <div>{this.props.secondaryActions}</div>
-        </Content>
+      <div className="component-article mw-body"  id={this.props.id}>
+        <ArticleHeader {...this.props} isBannerEnabled={!this.props.isSpecialPage} />
         <ArticleFooter {...this.props} />
       </div>
     )

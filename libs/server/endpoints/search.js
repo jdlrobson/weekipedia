@@ -1,6 +1,8 @@
 import mwApi from './mwApi'
 import { PAGEIMAGES_API_PROPS } from './consts'
 
+import cardFilter from './voyager/card-filter'
+
 export default function ( lang, term, ns, project, isFullTextSearch ) {
   var params = Object.assign( {
     prop: 'pageterms|pageimages|pageprops',
@@ -26,7 +28,7 @@ export default function ( lang, term, ns, project, isFullTextSearch ) {
       return a.index < b.index ? -1 : 1;
     } );
     return {
-      pages: pages
+      pages: cardFilter( pages )
     };
   } );
 }

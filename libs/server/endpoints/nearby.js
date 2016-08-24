@@ -1,25 +1,32 @@
 import mwApi from './mwApi'
 import { PAGEIMAGES_API_PROPS } from './consts'
 
-export default function ( latitude, longitude, lang, ns, project ) {
-  var params = Object.assign( {
+export default function ( latitude, longitude, lang, ns, project, params ) {
+  latitude = typeof latitude === 'string' ? parseFloat( latitude, 10 ) : latitude;
+  longitude = typeof longitude === 'string' ? parseFloat( longitude, 10 ) : longitude;
+  while ( latitude < -90 ) {
+    latitude += 180;
+  }
+  while ( longitude > 180 ) {
+    longitude -= 180;
+  }
+  while ( longitude < -180 ) {
+    longitude += 360;
+  }
+  params = Object.assign( {
     colimit: 'max',
-    prop: 'coordinates|pageterms|pageimages',
+    prop: 'coordinates|pageterms|pageimages|info|pageassessments',
     codistancefrompoint: latitude + '|' + longitude,
     generator: 'geosearch',
-    ggsradius: 1000,
+    ggsradius: 20000,
     ggsnamespace: ns || 0,
     ggslimit: 50,
     ggscoord: latitude + '|' + longitude
-  }, PAGEIMAGES_API_PROPS );
+  }, PAGEIMAGES_API_PROPS, params || {} );
 
   return mwApi( lang, params, project ).then( function ( data ) {
     data.pages = data.pages ? data.pages.sort( function ( a, b ) {
-      if ( a.coordinates && b.coordinates ) {
-        return a.coordinates.dist < b.coordinates.dist ? -1 : 1;
-      } else {
-        return 0;
-      }
+      return a.coordinates && b.coordinates && a.coordinates.dist < b.coordinates.dist ? -1 : 1;
     } ) : [];
     return data;
   } )

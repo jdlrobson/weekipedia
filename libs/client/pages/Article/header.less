@@ -40,13 +40,16 @@
 
 .heading-holder {
   position: relative;
-  padding: 20px 0 3.1em;
   overflow: hidden;
 
   .tagline {
     color: #555555;
     font-size: @tagline-font-size;
-    margin: 7px 0 10px 0;
+    margin: 7px 0 50px 0;
+
+    .special-page-heading & {
+      margin-bottom: 0;
+    }
 
     h2 {
       padding: 0;
@@ -114,9 +117,6 @@
       margin-right: -1em;
       margin-left: 0;
     }
-  }
-  .heading-holder {
-    padding: 20px 0;
   }
   .heading-holder.special-page-heading {
     padding: 0;

@@ -1,0 +1,50 @@
+@import './../../globals.less';
+
+.component-page-banner {
+  max-height: none;
+  height: 180px;
+  overflow: hidden;
+  background-color: #fafafa;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  margin-left: -16px;
+  margin-right: -16px;
+
+  h1 {
+    position: absolute;
+    z-index: 1;
+    margin: 0.6em 0 0 0.4em;
+    font-weight: bold;
+    padding: 8px 7px;
+    font-size: 1.2em !important;
+    background: none repeat scroll 0% 0% rgba(0, 0, 0, 0.3);
+    border-radius: 4px;
+    color: #fff;
+    white-space: nowrap;
+    line-height: 0.9em;
+    overflow: hidden;
+    -webkit-text-overflow: ellipsis;
+    text-overflow: ellipsis;
+    max-width: 95%;
+  }
+
+  > div {
+    position: relative;
+    display: block;
+    height: 100%;
+    width: 100%;
+    background-repeat: no-repeat;
+    background-size: auto 100%;
+    background-position: center center;
+  }
+}
+
+@media (min-width: @deviceWidthTablet) {
+  .component-page-banner {
+    margin-left: auto;
+    margin-right: auto;
+
+    h1 {
+      font-size: 2.2em !important;
+    }
+  }
+}

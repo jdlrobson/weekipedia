@@ -2,6 +2,10 @@ import React from 'react'
 
 import Section from './components/Section'
 
+function isSectionEmpty( section ) {
+  return ( section.isEmpty && section.subsections.length === 0 ) && !section.vcards;
+}
+
 function getSections( allSections, props, fragment ) {
   var sections = [];
   var topLevelSection = allSections.length ? allSections[0].toclevel : 2;
@@ -9,15 +13,19 @@ function getSections( allSections, props, fragment ) {
 
   allSections.forEach( function ( sectionProps ) {
     var id = sectionProps.id;
+    if ( !sectionProps.subsections ) {
+      sectionProps.subsections = [];
+    }
+
     if ( sectionProps.toclevel === topLevelSection ) {
-      if ( curSection ) {
+      if ( curSection && !isSectionEmpty( curSection ) ) {
         sections.push( React.createElement( Section, curSection ) );
       }
       curSection = Object.assign( {}, props, sectionProps, {
         key: id,
         subsections: []
       } );
-    } else if ( curSection.text !== undefined ) {
+    } else if ( curSection.text !== undefined && !isSectionEmpty( sectionProps ) ) {
       curSection.subsections.push(
         React.createElement( Section,
           Object.assign( {}, props, sectionProps, {
@@ -38,7 +46,9 @@ function getSections( allSections, props, fragment ) {
       curSection.isCollapsible = false;
     }
     // push the last one
-    sections.push( React.createElement( Section, curSection ) );
+    if ( !isSectionEmpty( curSection ) ) {
+      sections.push( React.createElement( Section, curSection ) );
+    }
   }
   return sections;
 }

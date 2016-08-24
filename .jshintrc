@@ -6,8 +6,10 @@
     "module": true,
     "require": true,
     "Request": true,
+    "Response": true,
     "global": true,
     "Headers": true,
+    "unescape": true,
     "ServiceWorkerRegistration": true
   },
 

@@ -22,6 +22,7 @@ import UserLogin from './../client/pages/UserLogin'
 import Uploads from './../client/pages/Uploads'
 
 import Content from './../client/components/Content'
+import NomadHome from './../client/pages/NomadHome'
 
 import utils from './utils'
 
@@ -69,6 +70,7 @@ var routes = [
       props.mobileUrl = utils.getAbsoluteUrl( title, lang, props.project, true );
       props.desktopUrl = utils.getAbsoluteUrl( title, lang, props.project );
       props.revision = query.oldid;
+      props.action = action || 'view';
 
       // FIXME: i18n
       if ( title.indexOf( 'Special:' ) === 0 ) {
@@ -88,7 +90,7 @@ var routes = [
           View = Page;
         }
         props.title = titleDecoded;
-        props.fallback = '/api/page/' + articleSource + '/' + title;
+        props.fallback = '/api/voyager/page/' + articleSource + '/' + title;
         props.children = [
           React.createElement( View,
             Object.assign( {}, props, {
@@ -193,6 +195,7 @@ function initSpecialPages() {
     return props;
   } );
   addSpecialPage( 'Uploads', Uploads );
+  addSpecialPage( 'NomadHome', NomadHome );
 }
 
 initSpecialPages();

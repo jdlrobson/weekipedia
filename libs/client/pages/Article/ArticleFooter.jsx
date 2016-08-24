@@ -8,6 +8,8 @@ import Content from './../../components/Content'
 class ArticleFooter extends Component {
   render(){
     var wordmark, places = [],
+      props = this.props,
+      footerClass = props.className ? props.className + ' ' : '',
       siteinfo = this.props.siteinfo || {},
       license = siteinfo.license || {};
 
@@ -33,7 +35,7 @@ class ArticleFooter extends Component {
     }
 
     return (
-      <footer key="footer" className="post-content footer">
+      <footer key="footer" className={"post-content footer " + footerClass}>
         {this.props.footer}
         <Content className="footer-info">
           {wordmark}

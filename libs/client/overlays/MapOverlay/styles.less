@@ -1,0 +1,30 @@
+@import './../../globals.less';
+
+.map-overlay {
+  .leaflet-container {
+    height: 100%;
+  }
+}
+
+@media (min-width: @deviceWidthTablet) {
+  .map-overlay {
+    top: 4.02em;
+    bottom: 4.02em;
+    left: 20%;
+    right: 30%;
+    width: auto;
+    height: auto;
+    box-shadow: 0 -1px 8px 0 rgba(0, 0, 0, 0.35);
+    &.lightbox {
+      background: transparent;
+    }
+
+    .lightbox-header {
+      display: none;
+    }
+
+    .leaflet-container {
+      margin: auto;
+    }
+  }
+}

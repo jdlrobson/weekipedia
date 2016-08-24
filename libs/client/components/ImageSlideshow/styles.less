@@ -1,0 +1,58 @@
+@import './../../globals.less';
+
+.component-image-slideshow {
+  position: relative;
+  background: #333;
+  padding: 0 16px 16px 16px;
+  margin-bottom: 16px;
+
+  .arrow-left {
+    left: -16px;
+    &:before {
+      transform: rotate(90deg);
+    }
+  }
+  .arrow-right {
+    right: -16px;
+    &:before {
+      transform: rotate(-90deg);
+    }
+  }
+  .arrow-left,
+  .arrow-right {
+    top: 45%;
+    position: absolute;
+    z-index: 1;
+    opacity: 0.9;
+  }
+
+  ul {
+    text-align: center;
+    padding: 0 24px;
+  }
+
+  li {
+    display: none;
+
+    > a {
+      display: block;
+      height: 200px;
+      line-height: 200px;
+      white-space: nowrap;
+    }
+
+    img {
+      width: auto;
+      max-height: 200px;
+    }
+
+    &.active {
+      display: block;
+      overflow: hidden;
+
+      ~ li {
+        right: 0;
+      }
+    }
+  }
+}

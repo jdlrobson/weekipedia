@@ -32,7 +32,7 @@ function extractLeadParagraph( doc ) {
 function extractHatnote( doc ) {
   // Workaround for https://phabricator.wikimedia.org/T143739
   // Do not remove it from the DOM has a reminder this is not fixed.
-  var hatnoteNodes = doc.querySelectorAll( '.hatnote' );
+  var hatnoteNodes = doc.querySelectorAll( '.hatnote,.noexcerpt' );
   var hatnote;
   if ( hatnoteNodes.length ) {
     hatnote = '';

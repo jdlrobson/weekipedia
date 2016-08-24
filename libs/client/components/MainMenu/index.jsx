@@ -62,7 +62,6 @@ class MainMenu extends Component {
           <li>
             {login}
           </li>
-          {usertools}
         </ul>
       );
     } else {
