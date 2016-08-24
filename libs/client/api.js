@@ -6,6 +6,11 @@ function Api() {
 }
 
 Api.prototype = {
+  invalidatePage: function ( title, lang ) {
+    var keyPrefix = '/api/page/' + lang + '/';
+    delete this.cache[keyPrefix + title];
+    delete this.cache[keyPrefix + encodeURIComponent( title ) ];
+  },
   post: function ( url, data ) {
     return fetch( url, {
       method: 'post',
