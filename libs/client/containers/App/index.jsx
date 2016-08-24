@@ -30,7 +30,9 @@ export default React.createClass({
   },
   mountOverlay( props ) {
     this.setState( {
-      overlay: props.overlay,
+      overlay: props.overlay ? React.cloneElement( props.overlay, {
+        showNotification: this.showNotification
+      } ) : null,
       isOverlayEnabled: props.overlay,
       isOverlayFullScreen: props.isOverlayFullScreen
     } );
