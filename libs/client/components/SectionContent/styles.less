@@ -1,0 +1,60 @@
+@import './../../globals.less';
+
+.component-section-content {
+  // Fixes: #86
+  .mw-default-size img:not([height]) {
+    height: 64px;
+  }
+
+  figure,
+  .thumb {
+    margin: .6em 0;
+  }
+
+  figure .thumbinner,
+  .thumb .thumbinner {
+    margin: 0 auto;
+  }
+
+  .thumbinner > div {
+    float: none !important;
+    width: auto !important;
+    clear: both !important;
+  }
+
+  figcaption,
+  .thumbcaption {
+    margin: .5em 0 0;
+    font-size: .8em;
+    line-height: 1.5;
+    padding: 0 !important;
+    color: #555555;
+    width: auto !important;
+  }
+
+  .thumbborder {
+    border: 1px solid #cccccc;
+  }
+
+  img {
+    vertical-align: middle;
+  }
+
+  a {
+    word-wrap: break-word;
+  }
+
+  ul {
+    list-style: square inside;
+    margin-bottom: 32px;
+    margin-left: 2px;
+  }
+
+  ul > li > ul {
+    list-style-type: disc;
+  }
+
+  ul > ul > ul {
+    list-style-type: circle;
+  }
+}

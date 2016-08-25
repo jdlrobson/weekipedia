@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 
+import './styles.less'
+
 class SectionContent extends Component {
   componentDidMount(){
     if ( this.props.text ) {
@@ -32,7 +34,7 @@ class SectionContent extends Component {
   }
   render(){
     return (
-      <div data-section={this.props.number} className="component-section-content content"
+      <div data-section={this.props.number} className={"component-section-content content section-" + this.props.number}
         dangerouslySetInnerHTML={{ __html: this.props.text}}></div>
     )
   }
