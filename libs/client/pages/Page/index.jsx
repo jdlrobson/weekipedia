@@ -96,11 +96,12 @@ export default React.createClass({
         }
         curSection = Object.assign( {}, self.props, sectionProps, {
           key: id,
-          number: i,
+          number: i + 1,
           subsections: []
         } );
       } else {
-        curSection.subsections.push( <Section {...self.props} {...sectionProps} key={id} isCollapsible={false} /> );
+        curSection.subsections.push( <Section {...self.props} number={i+1}
+          {...sectionProps} key={id} isCollapsible={false} /> );
       }
     } );
     if ( allSections.length ) {
