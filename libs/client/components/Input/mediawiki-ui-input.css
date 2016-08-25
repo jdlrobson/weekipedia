@@ -1,3 +1,6 @@
+/* stylelint-disable selector-no-vendor-prefix */
+/* stylelint-disable string-quotes */
+
 .mw-ui-input {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;

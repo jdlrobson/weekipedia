@@ -6,6 +6,7 @@
     "module": true,
     "require": true,
     "Request": true,
+    "global": true,
     "ServiceWorkerRegistration": true
   },
 
