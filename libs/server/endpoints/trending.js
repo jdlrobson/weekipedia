@@ -9,7 +9,7 @@ const MIN_BYTES_CHANGED = 100;
 function scorePages( halflife, visitData ) {
   var p = collection.getPages();
   p.forEach( function ( item ) {
-    item.visits = visitData[item.title] || 0;
+    item.views = visitData[item.title] || 0;
     item.score = calcScore( item, halflife );
   } );
   return p;

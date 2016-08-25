@@ -31,7 +31,7 @@ export default function ( lang, project ) {
   } ).then(function( result ) {
     result.items[0].articles.forEach( function ( item ) {
       if ( !isBlacklisted( item.article ) ) {
-        results[item.article] = { title: item.article.replace( /_/gi, ' ' ), lang: lang, visits: item.views, delta: item.views };
+        results[item.article] = { title: item.article.replace( /_/gi, ' ' ), lang: lang, views: item.views, delta: item.views };
       }
     } );
     return pageviews.getTopPageviews( {
@@ -44,7 +44,7 @@ export default function ( lang, project ) {
   } ).then( function ( result ) {
     result.items[0].articles.forEach( function ( item ) {
       if ( results[item.article] ) {
-        results[item.article].delta = results[item.article].visits - item.views;
+        results[item.article].delta = results[item.article].views - item.views;
       }
     } );
   } ).then( function () {
