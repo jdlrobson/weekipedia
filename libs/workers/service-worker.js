@@ -26,6 +26,9 @@ staticAssets.forEach((asset) => router.get(asset, cacheFirst))
 // Serve API requests from the network
 router.get('/api/(.*)', networkOnly)
 
+// Login must happen via network
+router.get('/auth/(.*)', () => networkOnly)
+
 // Serve any other url with the shell
 router.get('/(.*)', () => caches.match('/wiki/Special:SplashScreen'))
 
