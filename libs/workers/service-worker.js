@@ -1,5 +1,5 @@
 /* globals clients, caches, skipWaiting */
-const version = process.env.OFFLINE_VERSION
+const version = global.__VERSION__;
 
 import {
   precache, router, cacheFirst, networkOnly, options
@@ -13,7 +13,7 @@ const staticAssets = [
   '/home-icon.png',
   '/manifest.json',
   '/main-bundle.js',
-  '/style.less',
+  '/style.css',
   '/wiki/Special:SplashScreen'
 ]
 

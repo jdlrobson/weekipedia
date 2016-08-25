@@ -1,3 +1,6 @@
+const version = process.env.OFFLINE_VERSION;
+
+var webpack = require('webpack')
 var ExtractTextPlugin = require('extract-text-webpack-plugin')
 
 module.exports = {
@@ -12,7 +15,10 @@ module.exports = {
       publicPath: "/"
     },
     plugins: [
-      new ExtractTextPlugin('style.css', { allChunks: true })
+      new ExtractTextPlugin('style.css', { allChunks: true }),
+      new webpack.DefinePlugin({
+        'global.__VERSION__': version
+      }),
     ],
     resolve: {
       extensions: ['', 'index.js', '.js', '.jsx' ]
