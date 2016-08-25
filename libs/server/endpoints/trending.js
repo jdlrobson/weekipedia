@@ -1,4 +1,4 @@
-import addProps from './../prop-enricher'
+import addProps from './prop-enricher'
 import collection from './../collection'
 
 import visits from './visits'

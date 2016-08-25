@@ -1,5 +1,5 @@
 import pageviews from 'pageviews';
-import addProps from './../prop-enricher'
+import addProps from './prop-enricher'
 
 const blacklist = [ 'Main_Page', 'Web_scraping', 'Special:', '-', 'Talk:', 'User:', 'File:' ];
 

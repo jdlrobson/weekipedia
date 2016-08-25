@@ -1,5 +1,4 @@
-import fetch from 'isomorphic-fetch'
-import param from 'node-jquery-param'
+import mwApi from './mwApi'
 
 function propEnricher( arr, props, lang, project ) {
   lang = lang || 'en';
@@ -9,13 +8,13 @@ function propEnricher( arr, props, lang, project ) {
     throw 'Too many items passed. Max limit is 50.';
   }
 
-  var base = 'https://' + lang + '.' + project + '.org/w/api.php';
   var titles = [];
   arr.forEach( function (page) {
-    titles.push(encodeURIComponent(page.title));
+    titles.push( page.title );
   });
   var params = {
-    prop: props.join('|')
+    prop: props.join('|'),
+    titles: titles.join( '|' )
   };
   if ( props.indexOf('pageimages') > -1 ) {
     params.pilimit = 50;
@@ -24,24 +23,22 @@ function propEnricher( arr, props, lang, project ) {
   if ( props.indexOf('pageterms') > -1 ) {
     params.wbptterms = 'description';
   }
-  var url = base + '?action=query&format=json&titles=' +
-    titles.join('|') + '&formatversion=2&' + param( params );
 
-  return fetch( url ).then(function(resp) {
-    return resp.json();
-  }).then(function(data) {
+  return mwApi( lang, params, project ).then( function( data ) {
     var index = {};
-    var pages = data.query.pages;
+    var pages = data.pages;
 
     pages.forEach(function(page){
       index[page.title] = {};
-      index[page.title].terms = page.terms;
+      if ( page.description ) {
+        index[page.title].description = page.description;
+      }
       index[page.title].thumbnail = page.thumbnail;
     })
     arr.forEach(function(page){
-      var obj = index[page.title]
+      var obj = index[page.title];
       page.thumbnail = obj.thumbnail;
-      page.terms = obj.terms;
+      page.description = obj.description;
     });
     return arr;
   }).catch( function () {
