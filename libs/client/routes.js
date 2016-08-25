@@ -30,7 +30,8 @@ var routes = [
     /^\/([a-z\-]*)\/wiki\/(.*)|^\/wiki\/(.*)/,
     function ( info, props ) {
       var title = info[2] || info[3],
-        titleSansPrefix = title.substr(title.indexOf( ':' ) + 1),
+        titleDecoded = decodeURIComponent( title ),
+        titleSansPrefix = titleDecoded.substr( titleDecoded.indexOf( ':' ) + 1 ),
         titleParts = titleSansPrefix.split( '/' ),
         lang = info[1] || 'en';
 
@@ -51,13 +52,13 @@ var routes = [
           )
         ];
       } else {
-        props.title = decodeURIComponent( title );
+        props.title = titleDecoded;
         props.children = [
           React.createElement( Page,
             Object.assign( {}, props, {
               key: 'page-' + title,
               titleSansPrefix: titleSansPrefix,
-              title: title
+              title: titleDecoded
             } )
           )
         ];
