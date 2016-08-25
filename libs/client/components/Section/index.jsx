@@ -33,7 +33,8 @@ class Section extends Component {
       <span dangerouslySetInnerHTML={{ __html: this.props.line}} key={"section-heading-span-" + this.props.id} />
     ];
     if ( this.props.canAuthenticate ) {
-      headingChildren.push( <EditIcon {...this.props} section={this.props.number}/> );
+      headingChildren.push( <EditIcon {...this.props} section={this.props.number}
+        key={"section-edit-icon-" + this.props.id} /> );
     }
 
     if ( this.props.isCollapsible ) {
