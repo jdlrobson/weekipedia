@@ -9,8 +9,14 @@ import './styles.less'
 // Main component
 class Article extends Component {
   componentDidUpdate() {
-    // If given update scroll position on container
-    if ( this.props.scrollY ) {
+    var node;
+
+    if ( window.location.hash && window.location.hash !== '#' ) {
+      try {
+        node = document.querySelector( window.location.hash );
+        node.scrollIntoView();
+      } catch ( e ) {}
+    } else if ( this.props.scrollY ) {
       window.scrollTo( 0, this.props.scrollY );
     }
   }

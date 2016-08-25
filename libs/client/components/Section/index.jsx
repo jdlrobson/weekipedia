@@ -40,7 +40,7 @@ class Section extends Component {
       headingChildren.unshift( <Icon glyph="arrow" small={true}
         className="indicator" key={"section-heading-toggle-" + this.props.id} /> );
     }
-    var heading = hMethod.call(React.DOM, { onClick: this.onToggle.bind(this) }, headingChildren );
+    var heading = hMethod.call(React.DOM, { onClick: this.onToggle.bind(this), id: this.props.anchor }, headingChildren );
     return (
       <div className={ this.state.isOpen ? 'section open-block' : 'section' }>
         {heading}
