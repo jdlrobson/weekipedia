@@ -10,6 +10,7 @@ import WatchIcon from './../../components/WatchIcon'
 import LastModifiedBar from './../../components/LastModifiedBar'
 import ReadMore from './../../components/ReadMore'
 import UserPageCta from './../../components/UserPageCta'
+import TableOfContents from './../../components/TableOfContents'
 
 import Article from './../../containers/Article'
 import Content from './../../containers/Content'
@@ -26,6 +27,7 @@ export default React.createClass({
   getDefaultProps: function () {
     return {
       api: null,
+      showTableOfContents: false,
       lang: 'en'
     };
   },
@@ -166,6 +168,7 @@ export default React.createClass({
       lang = this.props.lang,
       displayTitle = this.state.lead.displaytitle || decodeURIComponent( title.replace( /_/gi, ' ' ) ),
       lead = this.state.lead,
+      remainingSections = this.getSections(),
       tagline = lead.description;
 
     leadHtml = lead.sections && lead.sections.length ? lead.sections[0].text : undefined;
@@ -174,7 +177,10 @@ export default React.createClass({
         sections.push( <UserPageCta user={title}
           isReaderOwner={props.session && props.session.username === props.titleSanPrefix } /> );
       } else if ( this.state.isExpanded ) {
-        sections = this.getSections();
+        if ( remainingSections.length && props.showTableOfContents ) {
+          sections.push( <TableOfContents sections={remainingSections} /> );
+        }
+        sections = sections.concat( remainingSections );
       } else {
         sections.push(<Button key="article-expand" label="Expand" onClick={this.expand} />);
       }
