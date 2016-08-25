@@ -2,6 +2,16 @@ import fetch from 'isomorphic-fetch'
 import param from 'node-jquery-param'
 import OAuth from 'oauth'
 
+function flatten( pages ) {
+  pages.forEach( function ( page ) {
+    if ( page.terms && page.terms.description ) {
+      page.description = page.terms.description[0] || '';
+      delete page.terms;
+    }
+  } );
+  return pages;
+}
+
 function signedRequest( url, session, params, options ) {
   var oauth = new OAuth.OAuth(
     // URL to request a token
@@ -82,7 +92,7 @@ export default function ( lang, params, project, options, session ) {
 
   return req.then( function ( json ) {
     if ( json.query && json.query.pages ) {
-      return { pages: json.query.pages, continue: json.continue };
+      return { pages: flatten( json.query.pages ), continue: json.continue };
     } else if ( params.meta ) {
       return json.query[params.meta];
     } else {

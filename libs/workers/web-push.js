@@ -25,7 +25,7 @@ self.addEventListener( 'push', function() {
           // if it's recent send notification
           self.registration.showNotification( page.title + " is trending on Wikipedia", {
             icon: page.thumbnail ? page.thumbnail.source : icon,
-            body: page.terms ? page.terms.description[0] : '',
+            body: page.description,
             tag: tag,
             data: 'https://trending.wmflabs.org/' + lang + '/wiki/' + page.title + '?referrer=push'
           } );

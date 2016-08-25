@@ -6,8 +6,8 @@ import './styles.less'
 
 class PreviewCard extends Component {
   render(){
-    var extracts = this.props.terms && this.props.terms.description ?
-      this.props.terms.description : [];
+    var extracts = this.props.description ?
+      [ this.props.description ] : [];
     return <Card {...this.props} extracts={extracts} />;
   }
 }
