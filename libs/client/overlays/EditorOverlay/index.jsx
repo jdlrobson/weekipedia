@@ -52,7 +52,7 @@ export default React.createClass({
   save() {
     var data,
       self = this,
-      endpoint = '/api/private/edit/' + this.props.lang + '/' + this.props.title;
+      endpoint = '/api/private/edit/' + this.props.lang + '/' + encodeURIComponent( this.props.title );
 
     if ( this.props.section ) {
       endpoint += '/' + this.props.section;
@@ -72,7 +72,7 @@ export default React.createClass({
   },
   loadWikiText(){
     var self = this;
-    var endpoint = '/api/wikitext/' + this.props.lang + '/' + this.props.title;
+    var endpoint = '/api/wikitext/' + this.props.lang + '/' + encodeURIComponent( this.props.title );
     if ( this.props.section ) {
       endpoint += '/' + this.props.section;
     }

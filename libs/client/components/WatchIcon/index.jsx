@@ -37,7 +37,7 @@ export default React.createClass({
     this.setState( { isWatched: !state.isWatched } );
     endpointPrefix  = state.isWatched ? '/api/private/unwatch/' : '/api/private/watch/';
     // do it
-    props.api.post( endpointPrefix + props.lang + '/' + props.title );
+    props.api.post( endpointPrefix + props.lang + '/' + encodeURIComponent( props.title ) );
     props.showNotification( state.isWatched ?
       'Page removed from watchlist.' : 'Page added to watchlist.' );
   },
