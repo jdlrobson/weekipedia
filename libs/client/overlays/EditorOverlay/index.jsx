@@ -77,12 +77,16 @@ export default React.createClass({
       endpoint += '/' + this.props.section;
     }
     this.props.api.fetch( endpoint ).then( function ( data ) {
-      var page = data.pages[0];
-      if ( page.revisions.length ) {
-        self.setState( { text: page.revisions[0].content } );
+      var text,
+        page = data.pages[0];
+
+      if ( page.missing ) {
+        text = '';
+      } else if ( page.revisions.length ) {
+        text = page.revisions[0].content;
       }
 
-      self.setState( { isLoading: false } );
+      self.setState( { isLoading: false, text: text } );
     } );
   },
   render(){
@@ -98,6 +102,7 @@ export default React.createClass({
       summary = <Input placeholder="Example: Fixed typo, added content"
         textarea={true} onInput={this.updateSummary} />,
       editField = <Input defaultValue={state.text} textarea={true} className="editor"
+        placeholder="A new page begins here. Start typing!"
         onInput={this.updateText }/>,
       secondaryIcon = state.step === EDIT_STEP ? previewBtn : saveBtn;
 
