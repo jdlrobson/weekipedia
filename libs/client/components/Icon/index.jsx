@@ -10,7 +10,9 @@ const Icon = (props) => {
     onClick: props.onClick
   };
   if ( props.small ) {
-    iconProps.className += ' mw-ui-icon-small'
+    iconProps.className += ' mw-ui-icon-small';
+  } else if ( props.large ) {
+    iconProps.className += ' mw-ui-icon-large';
   }
 
   return iconProps.href ? <a {...iconProps}>{props.label}</a> :

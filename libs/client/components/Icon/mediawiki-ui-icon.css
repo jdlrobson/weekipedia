@@ -42,3 +42,15 @@ https://en.wikipedia.org/w/load.php?debug=false&lang=en&modules=mediawiki.ui.ico
   width: 1.5em;
   margin-right: 1em;
 }
+
+.mw-ui-icon.mw-ui-icon-element.mw-ui-icon-large {
+  width: 5em;
+  min-width: 5em;
+  max-width: 5em;
+  min-height: 5em;
+  line-height: 5em;
+}
+
+.mw-ui-icon.mw-ui-icon-large:before {
+   min-height: 5em;
+}
