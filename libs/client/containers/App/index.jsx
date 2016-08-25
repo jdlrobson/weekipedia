@@ -11,12 +11,16 @@ import SearchForm from './../../components/SearchForm'
 import ReferenceDrawer from './../../overlays/ReferenceDrawer'
 import Toast from './../../overlays/Toast'
 
+import isRTL from './../../is-rtl'
+
 // Main component
 export default React.createClass({
   getInitialState() {
     return {
       isMenuOpen: false,
       notification: '',
+      isRTL: false,
+      lang: 'en',
       isOverlayFullScreen: true,
       isOverlayEnabled: false
     }
@@ -47,11 +51,33 @@ export default React.createClass({
     );
     this.setState( { children: children } );
   },
+  mountLanguage( props ) {
+    var newStylesheet,
+      rtl = isRTL( props.lang ),
+      stylesheet = document.querySelector( 'link[href="/style.rtl.css"]' );
+
+    function addStylesheet( newPath ) {
+      newStylesheet = document.createElement( 'link' )
+      newStylesheet.setAttribute( 'rel', 'stylesheet' );
+      newStylesheet.setAttribute( 'href', newPath );
+      document.body.appendChild( newStylesheet );
+    }
+
+    if ( rtl && !this.state.isRTL ) {
+      addStylesheet( '/style.rtl.css' );
+    } else if ( !rtl && this.state.isRTL && stylesheet ) {
+      stylesheet.parentNode.removeChild( stylesheet );
+    }
+
+    this.setState( { isRTL: rtl } );
+  },
   componentWillReceiveProps( nextProps ) {
+    this.mountLanguage( nextProps );
     this.mountOverlay( nextProps );
-    this.mountChildren( nextProps )
+    this.mountChildren( nextProps );
   },
   componentWillMount() {
+    this.mountLanguage( this.props );
     this.mountOverlay( this.props );
     this.mountChildren( this.props );
   },
@@ -139,6 +165,7 @@ export default React.createClass({
     var shield = this.state.isMenuOpen ? <TransparentShield /> : null;
 
     var toast,
+      isRTL = this.state.isRTL,
       overlay = this.state.isOverlayEnabled ? this.state.overlay : null;
 
     if ( overlay ) {
@@ -150,7 +177,8 @@ export default React.createClass({
     }
 
     return (
-      <div id="mw-mf-viewport" className={navigationClasses}>
+      <div id="mw-mf-viewport" className={navigationClasses}
+        lang={this.props.lang} dir={isRTL ? 'rtl' : 'ltr'}>
         <nav id="mw-mf-page-left">
           <MainMenu {...this.props} onClickInternalLink={this.onClickInternalLink}
             onItemClick={this.closePrimaryNav}/>

@@ -3,6 +3,7 @@
 module.exports = function ( grunt ) {
   grunt.loadNpmTasks( 'grunt-stylelint' );
   grunt.loadNpmTasks('grunt-jsxhint');
+  grunt.loadNpmTasks( 'grunt-cssjanus' );
 
   grunt.initConfig( {
     jshint: {
@@ -14,6 +15,14 @@ module.exports = function ( grunt ) {
         'libs/**/*.js',
         'libs/**/*.jsx'
       ],
+    },
+    cssjanus: {
+      build: {
+        generateExactDuplicates: false,
+        files: {
+          'public/style.rtl.css': 'public/style.css'
+        }
+      }
     },
     stylelint: {
       options: {

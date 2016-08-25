@@ -1,6 +1,7 @@
 db_collection/
 public/*-bundle.js
 public/style.css
+public/style.rtl.css
 public/dist/*
 node_modules/
 mydb/
