@@ -15,11 +15,23 @@ export default function ( title, lang, project ) {
       if ( resp.status === 200 ) {
         return resp.json();
       } else {
-        throw Error( resp.status );
+        if ( title.indexOf( 'User:' ) > -1 ) {
+          return {
+            lead: {
+              ns: 2,
+              sections: [ { text: '' } ]
+            },
+            remaining: {
+              sections: []
+            }
+          }
+        } else {
+          throw Error( resp.status );
+        }
       }
     } ).then( function ( json ) {
       if ( json.lead && json.lead.ns === 2 ) {
-        var username= title.indexOf( ':' ) > -1 ? title.split( ':' )[1] : title;
+        var username = title.indexOf( ':' ) > -1 ? title.split( ':' )[1] : title;
 
         // it's a user page so get more info
         return mwApi( lang, { meta: 'globaluserinfo', guiuser: username }, project ).then( function ( userInfo ) {

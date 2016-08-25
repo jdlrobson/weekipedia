@@ -166,7 +166,7 @@ export default React.createClass({
       tagline = lead.description;
 
     leadHtml = lead.sections && lead.sections.length ? lead.sections[0].text : '';
-    if ( leadHtml ) {
+    if ( leadHtml !== undefined ) {
       if ( this.state.isExpanded ) {
         sections = this.getSections();
       } else {
