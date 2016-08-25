@@ -3,8 +3,8 @@
     "start": "npm run compile & npm run node-server",
     "test": "grunt test && mocha --compilers js:babel-core/register tests/**",
     "dev": "npm run compile:watch & npm run node-server-dev",
-    "node-server": "NODE_ENV=production node app.js",
-    "node-server-dev": "NODE_ENV=development node app.js",
+    "node-server": "NODE_ENV=production node weekipedia.js",
+    "node-server-dev": "NODE_ENV=development node weekipedia.js",
     "compile:watch": "NODE_ENV=development webpack --watch",
     "compile": "webpack --content-base public/"
   },
