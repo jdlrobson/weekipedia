@@ -8,7 +8,7 @@ import SearchOverlay from './overlays/SearchOverlay'
 export default [
   // Edit Overlay
   [
-    /^#\/edit\/?(.*)$/,
+    /^#\/editor\/?(.*)$/,
     function ( info, props ) {
       var overlayProps = Object.assign( {}, props, {
         section: info[1]

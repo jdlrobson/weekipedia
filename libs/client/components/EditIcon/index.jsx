@@ -9,7 +9,7 @@ import './icons.less'
 export default React.createClass({
   launchEditor() {
     var section = this.props.section;
-    var endpoint = section !== undefined ? '#/edit/' + section : '#/edit/';
+    var endpoint = section !== undefined ? '#/editor/' + section : '#/editor/';
     this.props.router.navigateTo( null, endpoint );
   },
   dispatch( ev ) {
