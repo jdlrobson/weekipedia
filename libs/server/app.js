@@ -161,7 +161,7 @@ if ( SIGN_IN_SUPPORTED ) {
     respond( res, function () {
       return edit( p.lang, p.title, body.text, body.summary, p.section, project, req.user )
         .then( function ( data ) {
-          invalidate( '/api/page/' + p.lang + '/' + p.title );
+          invalidate( '/api/page/' + p.lang + '/' + encodeURIComponent( p.title ) );
           return data;
         } );
     } );

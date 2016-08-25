@@ -64,8 +64,11 @@ export default React.createClass({
     this.setState( { step: SAVE_STEP } );
     this.props.api.post( endpoint, data ).then( function () {
       self.props.api.invalidatePage( self.props.title, self.props.lang );
-      self.props.router.navigateTo( window.location.pathname + '?referer=editor&cachebuster=' + Math.random() );
-      self.props.showNotification( 'Your edit was successful!' );
+      // wait 2s before doing this to give cache time to warm.
+      setTimeout( function () {
+        self.props.router.navigateTo( window.location.pathname + '?referer=editor&cachebuster=' + Math.random() );
+        self.props.showNotification( 'Your edit was successful!' );
+      }, 2000 );
     } ).catch( function () {
       self.showPreview();
     } );
