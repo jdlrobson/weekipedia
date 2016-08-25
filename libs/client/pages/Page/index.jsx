@@ -9,6 +9,7 @@ import EditIcon from './../../components/EditIcon'
 import WatchIcon from './../../components/WatchIcon'
 import LastModifiedBar from './../../components/LastModifiedBar'
 import ReadMore from './../../components/ReadMore'
+import UserPageCta from './../../components/UserPageCta'
 
 import Article from './../../containers/Article'
 import Content from './../../containers/Content'
@@ -155,6 +156,7 @@ export default React.createClass({
   },
   render(){
     var leadHtml,
+      props = this.props,
       sections = [],
       actions = [],
       footer = this.getFooter(),
@@ -165,9 +167,12 @@ export default React.createClass({
       lead = this.state.lead,
       tagline = lead.description;
 
-    leadHtml = lead.sections && lead.sections.length ? lead.sections[0].text : '';
+    leadHtml = lead.sections && lead.sections.length ? lead.sections[0].text : undefined;
     if ( leadHtml !== undefined ) {
-      if ( this.state.isExpanded ) {
+      if ( lead.ns === 2 && !leadHtml ) {
+        sections.push( <UserPageCta user={title}
+          isReaderOwner={props.session && props.session.username === props.titleSanPrefix } /> );
+      } else if ( this.state.isExpanded ) {
         sections = this.getSections();
       } else {
         sections.push(<Button key="article-expand" label="Expand" onClick={this.expand} />);
