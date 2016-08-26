@@ -1,10 +1,4 @@
-const offlineEnabled = process.env.OFFLINE_VERSION;
-
-var version;
-if ( offlineEnabled ) {
-  version = process.env.OFFLINE_HASH;
-  console.log(version);
-}
+const offlineVersion = process.env.OFFLINE_VERSION;
 
 var webpack = require('webpack')
 var ExtractTextPlugin = require('extract-text-webpack-plugin')
@@ -23,7 +17,9 @@ module.exports = {
     plugins: [
       new ExtractTextPlugin('style.css', { allChunks: true }),
       new webpack.DefinePlugin({
-        'global.__VERSION__': version
+        'global.__VERSION__': JSON.stringify( {
+          number: offlineVersion
+        } )
       }),
     ],
     resolve: {

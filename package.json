@@ -3,11 +3,10 @@
     "start": "npm run compile & npm run node-server",
     "test": "grunt test && mocha --compilers js:babel-core/register tests/**",
     "dev": "npm run compile:watch & npm run node-server-dev",
-    "node-server": "npm run offline node weekipedia.js",
+    "node-server": "node weekipedia.js",
     "node-server-dev": "NODE_ENV=development node weekipedia.js",
     "compile:watch": "NODE_ENV=development webpack --watch",
-    "offline": "OFFLINE_HASH=$(git log | head -n1 | awk '{print $2}')",
-    "compile": "npm run offline webpack --content-base public/ && grunt cssjanus"
+    "compile": "webpack --content-base public/ && grunt cssjanus"
   },
   "babel": {
     "presets": [

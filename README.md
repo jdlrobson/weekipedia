@@ -38,8 +38,6 @@ Before commiting code please remember to run:
 
 > export GCM_SENDER_ID=
 
-> export OFFLINE_VERSION=1
-
 > export GCM_API_KEY=
 
 > export DEFAULT_LANGUAGE=en
@@ -78,3 +76,11 @@ Setup push notifications
 > export TREND_MIN_TOTAL_EDITS=2
 
 > export TREND_MIN_CONTRIBUTORS=1
+
+Add offline support
+
+> OFFLINE_VERSION=$(git log | head -n1 | awk '{print $2}')
+
+> export OFFLINE_VERSION=$OFFLINE_VERSION
+
+> npm run compile

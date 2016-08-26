@@ -8,8 +8,8 @@ import Content from './../../containers/Content'
 class ArticleFooter extends Component {
   render(){
     var wordmark, places = [],
-      siteinfo = this.props.siteinfo,
-      license = siteinfo.license;
+      siteinfo = this.props.siteinfo || {},
+      license = siteinfo.license || {};
 
     wordmark = siteinfo.wordmark ? <h2><img src={siteinfo.wordmark} alt={siteinfo.title} height="30" /></h2>
       : <h2>{siteinfo.title}</h2>;

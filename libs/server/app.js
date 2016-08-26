@@ -443,7 +443,7 @@ app.get('/:lang?/*',(req, res) => {
       i18n: getMessages( req.query.uselang || req.params.lang || LANGUAGE_CODE ),
       SIGN_IN_SUPPORTED: Boolean( SIGN_IN_SUPPORTED ),
       PROJECT: process.env.PROJECT,
-      OFFLINE_VERSION: process.env.OFFLINE_VERSION ? process.env.OFFLINE_HASH : null
+      OFFLINE_VERSION: process.env.OFFLINE_VERSION
     } )
   })
 })

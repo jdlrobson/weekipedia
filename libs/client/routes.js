@@ -4,7 +4,6 @@ import Contributions from './pages/Contributions'
 import History from './pages/History'
 import Feed from './pages/Feed'
 import Page from './pages/Page'
-import SplashScreen from './pages/SplashScreen'
 import SpecialPage from './pages/SpecialPage'
 import MobileDiff from './pages/MobileDiff'
 import MostRead from './pages/MostRead'
@@ -100,7 +99,6 @@ function initSpecialPages() {
   addSpecialPage( 'EditWatchlist', Watchlist );
   addSpecialPage( 'MobileDiff', MobileDiff );
   addSpecialPage( 'MostRead', MostRead );
-  addSpecialPage( 'SplashScreen', SplashScreen );
   addSpecialPage( 'Random', Random );
   addSpecialPage( 'Nearby', Nearby );
 }
