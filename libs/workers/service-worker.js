@@ -28,7 +28,7 @@ staticAssets.forEach((asset) => router.get(asset, cacheFirst))
 router.get('/api/(.*)', networkOnly)
 
 // Login must happen via network
-router.get('/auth/(.*)', () => networkOnly)
+router.get('/auth/(.*)', networkOnly)
 
 // Serve any other url with the shell
 router.get('/(.*)', () => caches.match('/'))
