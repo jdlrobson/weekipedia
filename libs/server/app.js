@@ -32,6 +32,7 @@ import contributions from './endpoints/contributions'
 
 import respond from './respond'
 import cachedResponses from './cached-response.js'
+import isRTL from './../client/is-rtl'
 
 const cachedResponse = cachedResponses.cachedResponse
 const invalidate = cachedResponses.invalidate
@@ -424,6 +425,7 @@ app.get('/:lang?/*',(req, res) => {
 
   // use React Router
   res.status(200).render('index.html', {
+    isRTL: isRTL( req.params.lang ),
     config: JSON.stringify( {
       siteinfo: {
         home: process.env.HOME_PAGE_PATH,

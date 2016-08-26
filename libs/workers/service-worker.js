@@ -14,6 +14,7 @@ const staticAssets = [
   '/manifest.json',
   '/main-bundle.js',
   '/style.css',
+  '/style.rtl.css',
   '/wiki/Special:SplashScreen'
 ]
 

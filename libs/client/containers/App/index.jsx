@@ -65,7 +65,7 @@ export default React.createClass({
       document.body.appendChild( newStylesheet );
     }
 
-    if ( rtl && !this.state.isRTL ) {
+    if ( rtl && !this.state.isRTL && !stylesheet ) {
       addStylesheet( '/style.rtl.css' );
     } else if ( !rtl && this.state.isRTL && stylesheet ) {
       stylesheet.parentNode.removeChild( stylesheet );
