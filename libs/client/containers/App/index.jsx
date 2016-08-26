@@ -53,6 +53,8 @@ export default React.createClass({
   },
   mountLanguage( props ) {
     var newStylesheet,
+      self = this,
+      newLang = props.lang,
       rtl = isRTL( props.lang ),
       stylesheet = document.querySelector( 'link[href="/style.rtl.css"]' );
 
@@ -70,6 +72,12 @@ export default React.createClass({
     }
 
     this.setState( { isRTL: rtl } );
+    if ( newLang !== this.state.lang ) {
+      props.api.fetch( '/api/messages/' + newLang ).then( function ( msgs ) {
+        props.messages.load( msgs );
+        self.setState( { lang: newLang } );
+      } );
+    }
   },
   componentWillReceiveProps( nextProps ) {
     this.mountLanguage( nextProps );

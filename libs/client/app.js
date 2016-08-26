@@ -21,6 +21,7 @@ var globalProps = {
   router: router,
   storage: mwStorage,
   msg: msg,
+  messages: messages,
   canAuthenticate: config.SIGN_IN_SUPPORTED,
   siteinfo: config.siteinfo,
   session: config.session,

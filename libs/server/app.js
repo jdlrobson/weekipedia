@@ -36,6 +36,7 @@ import cachedResponses from './cached-response.js'
 const cachedResponse = cachedResponses.cachedResponse
 const invalidate = cachedResponses.invalidate
 const project = process.env.PROJECT || 'wikipedia';
+const EN_MESSAGE_PATH = './i18n/en.json';
 
 const SITE_WORDMARK_PATH = process.env.SITE_WORDMARK_PATH
 const SITE_TITLE = process.env.SITE_TITLE || 'Weekipedia'
@@ -380,18 +381,12 @@ app.get('/api/wikitext/:lang/:title/:section?',(req, res) => {
   } );
 } );
 
-app.get('/:lang?/*',(req, res) => {
-  const enMsgPath = './i18n/en.json';
-
-  var session = req.user ? {
-      username: req.user.displayName,
-    } : null;
-  var language = req.query.uselang || req.params.lang || LANGUAGE_CODE;
+function getMessages( language ) {
   var i, messages, jsonPath, enMessages,
     qqx = language === 'qqx';
 
   if ( qqx ) {
-    jsonPath = enMsgPath;
+    jsonPath = EN_MESSAGE_PATH;
   } else {
     jsonPath = './i18n/' + language + '.json'
   }
@@ -402,7 +397,7 @@ app.get('/:lang?/*',(req, res) => {
     messages = {};
   }
 
-  enMessages = JSON.parse( fs.readFileSync( enMsgPath, 'utf8' ) );
+  enMessages = JSON.parse( fs.readFileSync( EN_MESSAGE_PATH, 'utf8' ) );
   messages = Object.assign( {}, enMessages, messages );
 
   if ( qqx ) {
@@ -412,6 +407,20 @@ app.get('/:lang?/*',(req, res) => {
       }
     }
   }
+  return messages;
+}
+app.get('/api/messages/:lang',(req, res) => {
+  cachedResponse( res, req.url, function() {
+    return new Promise( function ( resolve ) {
+      resolve( getMessages( req.params.lang ) );
+    } );
+  } );
+} );
+
+app.get('/:lang?/*',(req, res) => {
+  var session = req.user ? {
+      username: req.user.displayName,
+    } : null;
 
   // use React Router
   res.status(200).render('index.html', {
@@ -429,7 +438,7 @@ app.get('/:lang?/*',(req, res) => {
         }
       },
       session: session,
-      i18n: messages,
+      i18n: getMessages( req.query.uselang || req.params.lang || LANGUAGE_CODE ),
       SIGN_IN_SUPPORTED: Boolean( SIGN_IN_SUPPORTED ),
       PROJECT: process.env.PROJECT,
       OFFLINE_VERSION: process.env.OFFLINE_VERSION
