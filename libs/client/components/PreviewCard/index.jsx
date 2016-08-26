@@ -6,11 +6,18 @@ import './styles.less'
 
 class PreviewCard extends Component {
   render(){
-    var props = this.props,
+    var dist,
+      units = 'm',
+      props = this.props,
       extracts = props.description ?
         [ props.description ] : [];
     if ( props.coordinates ) {
-      extracts.push( parseInt( props.coordinates.dist, 10 ) + 'm' );
+      dist = parseInt( props.coordinates.dist, 10 );
+      if ( dist > 1000 ) {
+        dist = parseInt( dist / 1000, 10 );
+        units = 'km';
+      }
+      extracts.push( dist + units );
     }
     return <Card {...props} extracts={extracts} />;
   }
