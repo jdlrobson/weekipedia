@@ -1,4 +1,10 @@
-const version = process.env.OFFLINE_VERSION;
+const offlineEnabled = process.env.OFFLINE_VERSION;
+
+var version;
+if ( offlineEnabled ) {
+  version = process.env.OFFLINE_HASH;
+  console.log(version);
+}
 
 var webpack = require('webpack')
 var ExtractTextPlugin = require('extract-text-webpack-plugin')
