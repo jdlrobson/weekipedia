@@ -8,6 +8,9 @@ function flatten( pages ) {
       page.description = page.terms.description[0] || '';
       delete page.terms;
     }
+    if ( page.coordinates ) {
+      page.coordinates = page.coordinates[0];
+    }
   } );
   return pages;
 }

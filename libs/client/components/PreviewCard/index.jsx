@@ -6,9 +6,13 @@ import './styles.less'
 
 class PreviewCard extends Component {
   render(){
-    var extracts = this.props.description ?
-      [ this.props.description ] : [];
-    return <Card {...this.props} extracts={extracts} />;
+    var props = this.props,
+      extracts = props.description ?
+        [ props.description ] : [];
+    if ( props.coordinates ) {
+      extracts.push( parseInt( props.coordinates.dist, 10 ) + 'm' );
+    }
+    return <Card {...props} extracts={extracts} />;
   }
 }
 
