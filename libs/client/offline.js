@@ -1,10 +1,10 @@
-function init () {
+function init ( callback ) {
   // Initialize service worker if available
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('/sw-bundle.js').then((reg) => {
       // registration worked
       console.log('ServiceWorker: Registration succeeded. Scope is ' + reg.scope)
-      reg.addEventListener('updatefound', () => onUpdateFound(reg))
+      reg.addEventListener('updatefound', () => onUpdateFound(reg, callback))
     }).catch((error) =>
       // registration failed
       console.log('ServiceWorker: Registration failed with ' + error)
@@ -12,16 +12,16 @@ function init () {
   }
 }
 
-function onUpdateFound (registration) {
+function onUpdateFound (registration, callback) {
   let newWorker = registration.installing
 
   registration.installing.addEventListener('statechange',
-    () => onStateChange(newWorker))
+    () => onStateChange(newWorker, callback))
 }
 
-function onStateChange (newWorker) {
+function onStateChange (newWorker, callback) {
   if (newWorker.state === 'activated') {
-    onFirstLoad()
+    onFirstLoad(callback)
     if (navigator.serviceWorker.controller) {
       onClaimed()
     }
@@ -33,8 +33,9 @@ function onStateChange (newWorker) {
   }
 }
 
-function onFirstLoad () {
+function onFirstLoad ( callback ) {
   console.log('Service Worker: ready to work offline')
+  callback();
 }
 
 function onClaimed () {

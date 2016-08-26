@@ -12,7 +12,6 @@ import routes from './routes.js'
 import overlayRoutes from './routesOverlays.js'
 import api from './api.js'
 import mwStorage from './mediawiki-storage'
-import initOffline from './offline'
 
 var config = JSON.parse( document.body.getAttribute( 'data-config' ) || '{}' );
 
@@ -22,6 +21,7 @@ var globalProps = {
   storage: mwStorage,
   msg: msg,
   messages: messages,
+  offlineVersion: config.OFFLINE_VERSION,
   canAuthenticate: config.SIGN_IN_SUPPORTED,
   siteinfo: config.siteinfo,
   session: config.session,
@@ -53,6 +53,3 @@ if ( 'onpopstate' in window ) {
 }
 
 renderCurrentRoute();
-if ( config.OFFLINE_VERSION ) {
-  initOffline();
-}

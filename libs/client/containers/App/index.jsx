@@ -12,6 +12,7 @@ import ReferenceDrawer from './../../overlays/ReferenceDrawer'
 import Toast from './../../overlays/Toast'
 
 import isRTL from './../../is-rtl'
+import initOffline from './../../offline'
 
 // Main component
 export default React.createClass({
@@ -88,6 +89,15 @@ export default React.createClass({
     this.mountLanguage( this.props );
     this.mountOverlay( this.props );
     this.mountChildren( this.props );
+  },
+  componentDidMount() {
+    var showNotification = this.showNotification;
+    var msg = this.props.msg;
+    if ( this.props.offlineVersion ) {
+      initOffline( function () {
+        showNotification( msg( 'offline-ready' ) );
+      } );
+    }
   },
   showOverlay( overlay ) {
     this.setState( {
