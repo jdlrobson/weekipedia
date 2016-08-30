@@ -1,3 +1,4 @@
+@import './../../globals.less';
 @header-height: 3.35em;
 
 .header {
@@ -5,7 +6,7 @@
   width: 100%;
   height: @header-height;
   white-space: nowrap;
-  border-top: 1px solid #cccccc;
+  border-top: 1px solid @header-border-color;
   margin-top: -1px;
   border-spacing: 0;
   border-collapse: collapse;
@@ -42,7 +43,7 @@
 }
 
 .header-container {
-  background-color: #f2f2f2;
+  background-color: @header-bg-color;
   border-bottom: 1px solid transparent;
 }
 
@@ -51,7 +52,7 @@
   right: 0;
   position: fixed;
   top: 0;
-  border-bottom-color: #dddddd;
+  border-bottom-color: @header-border-color;
 }
 
 .header > div.main {
