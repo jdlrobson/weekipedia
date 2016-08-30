@@ -47,6 +47,12 @@ const CONSUMER_KEY = process.env.MEDIAWIKI_CONSUMER_KEY
 const LANGUAGE_CODE = process.env.DEFAULT_LANGUAGE || 'en'
 const SIGN_IN_SUPPORTED = CONSUMER_SECRET && CONSUMER_KEY
 
+const SITE_EXPAND_SECTIONS = process.env.SITE_EXPAND_SECTIONS ?
+  Boolean( parseInt( process.env.SITE_EXPAND_SECTIONS, 10 ) ) : false;
+
+const SITE_EXPAND_ARTICLE = process.env.SITE_EXPAND_ARTICLE ?
+  Boolean( process.env.SITE_EXPAND_ARTICLE ) : SITE_EXPAND_SECTIONS;
+
 console.log( 'Init for project', project );
 // Express
 const app = express()
@@ -429,7 +435,8 @@ app.get('/:lang?/*',(req, res) => {
     config: JSON.stringify( {
       siteinfo: {
         home: process.env.HOME_PAGE_PATH,
-        expandArticlesByDefault: process.env.SITE_EXPAND_SECTIONS,
+        expandSectionsByDefault: SITE_EXPAND_SECTIONS,
+        expandArticlesByDefault: SITE_EXPAND_ARTICLE,
         wordmark: SITE_WORDMARK_PATH,
         title: SITE_TITLE,
         privacyUrl: process.env.SITE_PRIVACY_URL,

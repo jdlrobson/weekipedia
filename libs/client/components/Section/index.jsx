@@ -17,6 +17,7 @@ class Section extends Component {
     if ( this.isReferenceSection() ) {
       this.setState( { isOpen: false } );
     }
+    this.setState( { isOpen: this.props.siteinfo.expandSectionsByDefault } );
   }
   isReferenceSection() {
     return this.props.text.indexOf( 'class="mw-references' ) > -1;

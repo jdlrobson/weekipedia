@@ -58,6 +58,9 @@ install memcached (https://memcached.org/downloads) and get it up and running
 
 To expand articles by default
 
+> export SITE_EXPAND_ARTICLE=1
+
+To expand sections by default. If true overrides SITE_EXPAND_ARTICLE.
 > export SITE_EXPAND_SECTIONS=1
 
 To change the default home page
