@@ -28,6 +28,7 @@ class Section extends Component {
     }
   }
   render(){
+    var isCollapsible = this.props.isCollapsible;
     var hLevel = this.props.toclevel + 1;
     var hMethod = React.DOM['h' + hLevel];
     var headingChildren = [
@@ -38,13 +39,13 @@ class Section extends Component {
         key={"section-edit-icon-" + this.props.id} /> );
     }
 
-    if ( this.props.isCollapsible ) {
+    if ( isCollapsible ) {
       headingChildren.unshift( <Icon glyph="arrow" small={true}
         className="indicator" key={"section-heading-toggle-" + this.props.id} /> );
     }
     var heading = hMethod.call(React.DOM, { onClick: this.onToggle.bind(this), id: this.props.anchor }, headingChildren );
     return (
-      <div className={ this.state.isOpen ? 'section open-block' : 'section' }>
+      <div className={ this.state.isOpen || !isCollapsible ? 'section open-block' : 'section' }>
         {heading}
         <SectionContent {...this.props} text={this.props.text}></SectionContent>
         {this.props.subsections}
