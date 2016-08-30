@@ -52,9 +52,16 @@ export default React.createClass({
       continue: null
     };
   },
-  componentWillReceiveProps( props ) {
+  loadCards( props ) {
     this.setState( { cards: null } );
-    this.load( props.apiEndpoint );
+    if ( props.apiEndpoint ) {
+      this.load( props.apiEndpoint );
+    } else if ( props.pages ) {
+      this.setState( { cards: getCards( { pages: props.pages }, props ) } );
+    }
+  },
+  componentWillReceiveProps( props ) {
+    this.loadCards( props );
   },
   load( apiEndpoint ) {
     var self = this;
@@ -115,11 +122,11 @@ export default React.createClass({
   },
   componentDidMount() {
     var self = this;
-    this.load( this.props.apiEndpoint );
+    this.loadCards( this.props );
     // setup infinite scroll
     if ( this.props.infiniteScroll ) {
       document.addEventListener( 'scroll', function () {
-        if ( document.body.scrollHeight === document.body.scrollTop + window.innerHeight ) {
+        if ( document.body.scrollHeight >= ( document.body.scrollTop + window.innerHeight ) / 2 ) {
           self.loadMore();
         }
       } );
