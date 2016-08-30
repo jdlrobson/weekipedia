@@ -34,7 +34,7 @@ class Section extends Component {
     var headingChildren = [
       <span dangerouslySetInnerHTML={{ __html: this.props.line}} key={"section-heading-span-" + this.props.id} />
     ];
-    if ( this.props.canAuthenticate ) {
+    if ( this.props.canAuthenticate && this.props.isEditable ) {
       headingChildren.push( <EditIcon {...this.props} section={this.props.number}
         key={"section-edit-icon-" + this.props.id} /> );
     }
@@ -54,9 +54,11 @@ class Section extends Component {
   }
 }
 Section.propTypes = {
+  isEditable: React.PropTypes.bool,
   isCollapsible: React.PropTypes.bool
 };
 Section.defaultProps = {
+  isEditable: true,
   isCollapsible: true,
   subsections: []
 };
