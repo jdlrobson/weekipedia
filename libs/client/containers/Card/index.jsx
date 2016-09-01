@@ -15,6 +15,7 @@ class Card extends Component {
   }
   render(){
     var title = this.props.title;
+    var className = this.props.className ? 'card ' + this.props.className : 'card';
     var styles = {
       backgroundImage: this.props.thumbnail ?
         'url(' + this.props.thumbnail.source + ')'
@@ -30,7 +31,7 @@ class Card extends Component {
     var url = this.props.url || '/' + this.props.lang + '/wiki/' + encodeURIComponent( title );
 
     return (
-      <div className={'card ' + this.props.className} onClick={this.navigateTo.bind(this)}>
+      <div className={className} onClick={this.navigateTo.bind(this)}>
         {this.props.indicator}
         <div className="card-thumb" style={styles}>{this.props.metaInfo}</div>
         <div className="card-detail">
