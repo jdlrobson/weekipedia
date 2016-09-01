@@ -12,9 +12,6 @@ const MAX_AGE = process.env.TREND_MAX_AGE || 50;
 const MIN_EDITS = process.env.TREND_MIN_TOTAL_EDITS || 20;
 const MIN_CONTRIBUTORS = process.env.TREND_MIN_CONTRIBUTORS || 2;
 
-console.log( '# Trending setup:', EDITS_PER_MIN, BIAS, MIN_AGE,
-  MAX_AGE, MIN_EDITS, MIN_CONTRIBUTORS );
-
 function mightTrend( item ) {
   var age = item.age();
   return age > MIN_AGE && item.edits > ( MIN_EDITS / 2 ) &&
@@ -26,24 +23,29 @@ function isTrending( item ) {
     item.editsPerMinute() > EDITS_PER_MIN && item.getBias() <= BIAS;
 }
 
-collection.on( 'edit', function ( item, collection ) {
-  if ( item.wiki === 'enwiki' ) {
+if ( collection ) {
+  console.log( '# Trending setup:', EDITS_PER_MIN, BIAS, MIN_AGE,
+    MAX_AGE, MIN_EDITS, MIN_CONTRIBUTORS );
 
-    if ( isTrending( item ) ) {
-      collection.markSafe( item.id );
-      if ( !item.trendedAt ) {
-        // tell me
-        console.log( 'Trended', item.title, item.editsPerMinute(), item.getBias(), item.age(), item.contributors );
-        item.trendedAt = new Date();
-        cachedResponse.invalidate( '/api/web-push/service/trending/' );
-        // ping people
-        subscriber.broadcast( 'trending' );
+  collection.on( 'edit', function ( item, collection ) {
+    if ( item.wiki === 'enwiki' ) {
+
+      if ( isTrending( item ) ) {
+        collection.markSafe( item.id );
+        if ( !item.trendedAt ) {
+          // tell me
+          console.log( 'Trended', item.title, item.editsPerMinute(), item.getBias(), item.age(), item.contributors );
+          item.trendedAt = new Date();
+          cachedResponse.invalidate( '/api/web-push/service/trending/' );
+          // ping people
+          subscriber.broadcast( 'trending' );
+        }
+      } else if ( mightTrend( item ) ) {
+        collection.markSafe( item.id );
       }
-    } else if ( mightTrend( item ) ) {
-      collection.markSafe( item.id );
     }
-  }
-} );
+  } );
+}
 
 function trend() {
   function trendSort( pages ) {
@@ -53,8 +55,14 @@ function trend() {
   }
 
   return new Promise( function ( resolve, reject ) {
-    var pages = collection.getPages();
-    var trended = [];
+    var pages, trended;
+    if ( !collection ) {
+      reject( 'Trending is disabled. A site admin should enable it via TREND_ENABLED.' );
+      return;
+    }
+
+    pages = collection.getPages();
+    trended = [];
     pages.forEach( function ( page ) {
       if ( page.trendedAt ) {
         if ( typeof page.trendedAt === 'string' ) {

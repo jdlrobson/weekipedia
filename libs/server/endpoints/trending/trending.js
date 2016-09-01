@@ -58,7 +58,7 @@ function trending( wiki, halflife, project, title ) {
   var lang = wiki.replace( 'wiki', '' );
   project = project || 'wikipedia';
 
-  return new Promise( function ( resolve ) {
+  return new Promise( function ( resolve, reject ) {
     var fn = function ( item ) {
       return title ? item.title === title :
         item.contributors.length + item.anons.length > 2 && ( wiki === '*' || item.wiki === wiki ) &&
@@ -66,6 +66,9 @@ function trending( wiki, halflife, project, title ) {
       ( item.lastUpdated() / 60 ) < ( halflife * 2 ) &&
         item.score > 0;
     };
+    if ( !collection ) {
+      reject( 'Trending is disabled. A site admin should enable it via TREND_ENABLED.' );
+    }
 
     visits( lang, project ).then( function ( visitedPages ) {
       var visitLookup = {};

@@ -68,6 +68,8 @@ To change the default home page
 > export HOME_PAGE_PATH='/wiki/Special:Feed'
 
 Setup push notifications
+> export TREND_ENABLED=1
+
 > export TREND_EDITS_PER_MIN=0
 
 > export TREND_BIAS=1
