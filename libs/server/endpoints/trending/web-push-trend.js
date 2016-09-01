@@ -1,8 +1,9 @@
 import subscriber from 'web-push-subscriber'
 
 import collection from './collection'
-import addProps from './prop-enricher'
-import cachedResponse from './../cached-response.js'
+
+import addProps from './../prop-enricher'
+import cachedResponse from './../../cached-response.js'
 
 const EDITS_PER_MIN = process.env.TREND_EDITS_PER_MIN || 20 / 60;
 const BIAS = process.env.TREND_BIAS || 0.6;

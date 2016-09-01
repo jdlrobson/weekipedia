@@ -1,7 +1,7 @@
-import addProps from './prop-enricher'
-import collection from './collection'
+import addProps from './../prop-enricher'
+import visits from './../visits'
 
-import visits from './visits'
+import collection from './collection'
 import calcScore from './scoring'
 
 const MIN_BYTES_CHANGED = 100;
