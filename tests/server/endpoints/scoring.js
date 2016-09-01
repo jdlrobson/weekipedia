@@ -1,6 +1,6 @@
 var assert = require( 'assert' );
 
-import calcScore from './../../libs/server/scoring.js'
+import calcScore from './../../../libs/server/endpoints/scoring.js'
 
 var MockPage = function ( data ) {
   var key;

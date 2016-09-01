@@ -1,6 +1,6 @@
 import subscriber from 'web-push-subscriber'
 
-import collection from './../collection'
+import collection from './collection'
 import addProps from './prop-enricher'
 import cachedResponse from './../cached-response.js'
 

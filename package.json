@@ -1,7 +1,7 @@
 {
   "scripts": {
     "start": "npm run compile & npm run node-server",
-    "test": "grunt test && mocha --compilers js:babel-core/register tests/**",
+    "test": "grunt test && mocha --compilers js:babel-core/register tests/*/**",
     "dev": "npm run compile:watch & npm run node-server-dev",
     "node-server": "node weekipedia.js",
     "node-server-dev": "NODE_ENV=development node weekipedia.js",
