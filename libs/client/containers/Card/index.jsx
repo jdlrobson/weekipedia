@@ -23,17 +23,22 @@ class Card extends Component {
     };
     var extracts = this.props.extracts.map( function ( item, i ) {
       return (
-        <p className="card-extract" key={'card-extract-' + title + '-' + i}>
+        <p className="card-extract" key={'card-extract-' + title + '-' + i}
+          title={typeof item === 'string' ? item : null}>
           <TruncatedText>{item}</TruncatedText>
         </p>
       );
     });
     var url = this.props.url || '/' + this.props.lang + '/wiki/' + encodeURIComponent( title );
+    var illustration;
+    if ( this.props.thumbnail || this.props.metaInfo || this.props.showPlaceholderIllustration ) {
+      illustration =<div className="card-thumb" style={styles}>{this.props.metaInfo}</div>;
+    }
 
     return (
       <div className={className} onClick={this.navigateTo.bind(this)}>
         {this.props.indicator}
-        <div className="card-thumb" style={styles}>{this.props.metaInfo}</div>
+        {illustration}
         <div className="card-detail">
           <h3>
             <a href={url}>{title}</a>
@@ -46,6 +51,7 @@ class Card extends Component {
 }
 
 Card.defaultProps = {
+  showPlaceholderIllustration: true,
   url: null,
   title: null,
   indicator: null,
