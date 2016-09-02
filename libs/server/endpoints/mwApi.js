@@ -95,7 +95,7 @@ export default function ( lang, params, project, options, session ) {
 
   return req.then( function ( json ) {
     if ( json.query && json.query.pages ) {
-      return { pages: flatten( json.query.pages ), continue: json.continue };
+      return { pages: flatten( json.query.pages ), continue: json.continue, redirects: json.query.redirects };
     } else if ( params.meta ) {
       return json.query[params.meta];
     } else {
