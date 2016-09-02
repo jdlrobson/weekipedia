@@ -47,7 +47,7 @@ Api.prototype = {
   },
   getPage: function ( title, lang ) {
     lang = lang || 'en';
-    return this.fetch( API_PATH + '/page/' + lang + '/' + encodeURIComponent( title ) );
+    return this.fetch( API_PATH + 'page/' + lang + '/' + encodeURIComponent( title ) );
   },
   getReference: function ( title, lang, refId ) {
     return this.getReferences( title, lang ).then( function ( refs ) {

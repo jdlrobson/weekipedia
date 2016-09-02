@@ -1,8 +1,9 @@
 import mwApi from './mwApi'
 
-function propEnricher( arr, props, lang, project ) {
+function propEnricher( arr, props, lang, project, params ) {
   lang = lang || 'en';
   project = project || 'wikipedia';
+  params = params || {};
 
   if ( arr.length > 50 ) {
     throw 'Too many items passed. Max limit is 50.';
@@ -12,13 +13,17 @@ function propEnricher( arr, props, lang, project ) {
   arr.forEach( function (page) {
     titles.push( page.title );
   });
-  var params = {
+  params = Object.assign( params, {
+    redirects: '',
     prop: props.join('|'),
     titles: titles.join( '|' )
-  };
+  } );
   if ( props.indexOf('pageimages') > -1 ) {
     params.pilimit = 50;
     params.pithumbsize = 120;
+  }
+  if ( props.indexOf('coordinates') > -1 ) {
+    params.colimit = 'max';
   }
   if ( props.indexOf('pageterms') > -1 ) {
     params.wbptterms = 'description';
@@ -27,18 +32,32 @@ function propEnricher( arr, props, lang, project ) {
   return mwApi( lang, params, project ).then( function( data ) {
     var index = {};
     var pages = data.pages;
+    var redirects = {};
+    if ( data.redirects ) {
+      data.redirects.forEach( (redirect) => {
+        redirects[redirect.from] = redirect.to;
+      });
+    }
 
     pages.forEach(function(page){
       index[page.title] = {};
-      if ( page.description ) {
-        index[page.title].description = page.description;
-      }
+      index[page.title].description = page.description;
       index[page.title].thumbnail = page.thumbnail;
+      index[page.title].coordinates = page.coordinates;
+      if ( page.missing ) {
+        index[page.title].missing = true;
+      }
     })
     arr.forEach(function(page){
-      var obj = index[page.title];
+      var obj = index[page.title] || index[redirects[page.title]];
       page.thumbnail = obj.thumbnail;
-      page.description = obj.description;
+      if ( obj.missing ) {
+        page.missing = true;
+      }
+      page.coordinates = obj.coordinates;
+      if ( obj.description && !page.description ) {
+        page.description = obj.description;
+      }
     });
     return arr;
   }).catch( function () {
