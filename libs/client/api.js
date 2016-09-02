@@ -5,9 +5,11 @@ function Api() {
   this.refCache = {};
 }
 
+const API_PATH = '/api/';
+
 Api.prototype = {
   invalidatePage: function ( title, lang ) {
-    var keyPrefix = '/api/page/' + lang + '/';
+    var keyPrefix = API_PATH + 'page/' + lang + '/';
     delete this.cache[keyPrefix + title];
     delete this.cache[keyPrefix + encodeURIComponent( title ) ];
   },
@@ -45,7 +47,7 @@ Api.prototype = {
   },
   getPage: function ( title, lang ) {
     lang = lang || 'en';
-    return this.fetch( '/api/page/' + lang + '/' + encodeURIComponent( title ) );
+    return this.fetch( API_PATH + '/page/' + lang + '/' + encodeURIComponent( title ) );
   },
   getReference: function ( title, lang, refId ) {
     return this.getReferences( title, lang ).then( function ( refs ) {
