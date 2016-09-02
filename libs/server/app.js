@@ -29,6 +29,7 @@ import file from './endpoints/file'
 import edit from './endpoints/edit'
 import diff from './endpoints/diff'
 import contributions from './endpoints/contributions'
+import collection from './endpoints/collection'
 
 import respond from './respond'
 import cachedResponses from './cached-response.js'
@@ -182,6 +183,34 @@ if ( SIGN_IN_SUPPORTED ) {
       res.send( JSON.stringify( data ) );
     };
     watchlistfeed( req.params.lang, project, req.params.ns, req.user, req.query ).then( callback );
+  });
+
+  app.all('/api/private/:lang/collection/:id/:action/:title', ensureAuthenticated, function(req, res){
+    var id = parseInt( req.params.id, 10 ) || 0
+    var action = req.params.action;
+    var lang = req.params.lang;
+    var profile = req.user;
+    var title = req.params.title;
+
+    respond( res, function () {
+      if ( action === 'with' ) {
+        return collection.includes( lang, project, title, profile );
+      } else if ( action === 'has' ) {
+        return collection.member( lang, project, id, [ title ], profile );
+      } else {
+        return collection.update( lang, project, id, [ title ], profile, action === 'remove' );
+      }
+    } );
+  });
+
+  app.get('/api/:lang/collection/by/:user/:id?', function(req, res){
+    var id = parseInt( req.params.id, 10 );
+    var lang = req.params.lang;
+    var user = req.params.user;
+
+    respond( res, function () {
+      return id ? collection.members( lang, project, id, user ) : collection.list( lang, project, user );
+    } );
   });
 
   app.get('/api/private/watchlist/:lang/:title?', ensureAuthenticated, function(req, res){

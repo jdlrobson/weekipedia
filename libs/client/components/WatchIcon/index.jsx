@@ -12,15 +12,21 @@ export default React.createClass({
       isWatched: false
     };
   },
+  getDefaultProps() {
+    return {
+      collection: 0
+    }
+  },
   componentWillMount() {
     if ( this.props.session ) {
       this.loadWatchInfo();
     }
   },
   loadWatchInfo() {
-    var title = this.props.title;
+    var props = this.props;
+    var title = props.title;
     var self = this;
-    var endpoint = '/api/private/watchlist/' + this.props.lang + '/' + title;
+    var endpoint = '/api/private/' + props.lang + '/collection/' + props.collection + '/has/' + title + '/';
     this.props.api.fetch( endpoint ).then( function ( data ) {
       title = decodeURIComponent( title );
       self.setState( { isWatched: Boolean( data[title] ) } );
@@ -29,15 +35,18 @@ export default React.createClass({
     } );
   },
   watch( ev ) {
-    var endpointPrefix;
+    var endpoint;
     var props = this.props;
     var state = this.state;
 
     ev.stopPropagation();
     this.setState( { isWatched: !state.isWatched } );
-    endpointPrefix  = state.isWatched ? '/api/private/unwatch/' : '/api/private/watch/';
+    endpoint  = '/api/private/' + props.lang + '/collection/' + props.collection;
+    endpoint += state.isWatched ? '/remove/' : '/add/';
+    endpoint += encodeURIComponent( props.title );
+
     // do it
-    props.api.post( endpointPrefix + props.lang + '/' + encodeURIComponent( props.title ) );
+    props.api.post( endpoint );
     props.showNotification( state.isWatched ?
       'Page removed from watchlist.' : 'Page added to watchlist.' );
   },
