@@ -1,5 +1,6 @@
 import React from 'react'
 
+import Collections from './pages/Collections'
 import Contributions from './pages/Contributions'
 import History from './pages/History'
 import Feed from './pages/Feed'
@@ -101,6 +102,7 @@ function initSpecialPages() {
   addSpecialPage( 'MostRead', MostRead );
   addSpecialPage( 'Random', Random );
   addSpecialPage( 'Nearby', Nearby );
+  addSpecialPage( 'Collections', Collections );
 }
 
 initSpecialPages();
