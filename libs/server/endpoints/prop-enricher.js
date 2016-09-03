@@ -10,7 +10,14 @@ function propEnricher( arr, props, lang, project, params ) {
   }
 
   var titles = [];
-  arr.forEach( function (page) {
+  if ( typeof arr[0] === 'string' ) {
+    arr = arr.map( function ( title ) {
+      return {
+        title: title
+      };
+    } );
+  }
+  arr.forEach( function ( page ) {
     titles.push( page.title );
   });
   params = Object.assign( params, {
