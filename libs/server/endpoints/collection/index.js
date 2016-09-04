@@ -12,6 +12,7 @@ function membersWithProps( lang, project, collection, username ) {
     return getInfo( lang, project, collection, username ).then( function ( info ) {
       return addProps( titles, [ 'pageterms', 'pageimages' ], lang, project ).then( function ( pages ) {
         return {
+          id: info.id,
           title: info.title,
           description: info.description,
           pages: pages
