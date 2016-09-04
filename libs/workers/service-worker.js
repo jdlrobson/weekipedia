@@ -1,8 +1,8 @@
-/* globals clients, caches, skipWaiting */
+/* globals clients, skipWaiting */
 const version = global.__VERSION__;
 
 import {
-  precache, router, cacheFirst, networkOnly, options
+  precache, router, cacheFirst, networkFirst, networkOnly, options
 } from 'sw-toolbox'
 
 options.cache.name = 'weekipedia-' + version.number;
@@ -31,7 +31,7 @@ router.get('/api/(.*)', networkOnly)
 router.get('/auth/(.*)', networkOnly)
 
 // Serve any other url with the shell
-router.get('/(.*)', () => caches.match('/'))
+router.get('/(.*)', () => router.get('/', networkFirst))
 
 // Rest of calls go to network
 router.default = networkOnly
