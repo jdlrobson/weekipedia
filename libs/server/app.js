@@ -185,7 +185,7 @@ if ( SIGN_IN_SUPPORTED ) {
     watchlistfeed( req.params.lang, project, req.params.ns, req.user, req.query ).then( callback );
   });
 
-  app.all('/api/private/:lang/collection/:id/:action/:title', ensureAuthenticated, function(req, res){
+  app.all('/api/private/:lang/collection/:id/:action/:title?', ensureAuthenticated, function(req, res){
     var id = parseInt( req.params.id, 10 ) || 0
     var action = req.params.action;
     var lang = req.params.lang;
@@ -193,7 +193,9 @@ if ( SIGN_IN_SUPPORTED ) {
     var title = req.params.title;
 
     respond( res, function () {
-      if ( action === 'with' ) {
+      if ( action === 'edit' ) {
+        return collection.edit( lang, project, id, req.body.title, req.body.description, profile );
+      } else if ( action === 'with' ) {
         return collection.includes( lang, project, title, profile );
       } else if ( action === 'has' ) {
         return collection.member( lang, project, id, [ title ], profile );

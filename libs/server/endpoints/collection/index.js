@@ -3,6 +3,7 @@ import member from './member'
 import members from './members'
 import getInfo from './get-info'
 import includes from './includes'
+import edit from './edit'
 import list from './list'
 
 import addProps from './../prop-enricher'
@@ -23,6 +24,7 @@ function membersWithProps( lang, project, collection, username ) {
 }
 
 export default {
+  edit: edit,
   includes: includes,
   list: list,
   member: member,
