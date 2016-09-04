@@ -21,7 +21,7 @@ function includes( lang, project, title, profile ) {
 
       if ( revs[0] ) {
         split = revs[0].content.split( '==\n' );
-        members = extractMembers( split[1] );
+        members = split[1] ? extractMembers( split[1] ) : [];
         info = extractInfo( page.title, split[0] );
         info.member = members.indexOf( title ) > -1;
         result.collections.push( info );
