@@ -1,6 +1,7 @@
 import React from 'react'
 
 import EditorOverlay from './overlays/EditorOverlay'
+import CollectionEditorOverlay from './overlays/CollectionEditorOverlay'
 import ImageOverlay from './overlays/ImageOverlay'
 import LanguageOverlay from './overlays/LanguageOverlay'
 import SearchOverlay from './overlays/SearchOverlay'
@@ -27,6 +28,19 @@ export default [
       } );
       return {
         overlay: React.createElement( ImageOverlay, overlayProps )
+      }
+    }
+  ],
+  // collections
+  [
+    /^#\/edit-collection\/(.*)\/(.*)$/,
+    function ( info, props ) {
+      var overlayProps = Object.assign( {}, props, {
+        username: info[1],
+        id: info[2]
+      } );
+      return {
+        overlay: React.createElement( CollectionEditorOverlay, overlayProps )
       }
     }
   ],

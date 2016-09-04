@@ -5,6 +5,7 @@ import CardList from './../components/CardList'
 import CollectionCard from './../components/CollectionCard'
 import IntermediateState from './../components/IntermediateState'
 import ErrorBox from './../components/ErrorBox'
+import Button from './../components/Button'
 
 import Article from './../containers/Article'
 
@@ -73,14 +74,18 @@ export default React.createClass({
     }
   },
   render() {
-    var tagline, userUrl;
+    var tagline, userUrl, actions;
     if ( this.state.username ) {
+      if ( this.props.session && this.state.username === this.props.session.username ) {
+        actions = <Button label="Edit" href={"#/edit-collection/" + this.state.username + '/' + this.state.id} isPrimary={true}/>;
+      }
       userUrl = '/' + this.props.lang + '/wiki/Special:Collections/by/' + this.state.username;
       // The api request is cached at this point
       tagline = (
         <div>
           <div>by <a href={userUrl} onClick={this.navigateTo}>{this.state.username}</a></div>
           {this.state.description}
+          <div>{actions}</div>
         </div>
       );
     }

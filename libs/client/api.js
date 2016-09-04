@@ -8,10 +8,13 @@ function Api() {
 const API_PATH = '/api/';
 
 Api.prototype = {
+  invalidatePath: function ( path ) {
+    delete this.cache[path];
+  },
   invalidatePage: function ( title, lang ) {
     var keyPrefix = API_PATH + 'page/' + lang + '/';
-    delete this.cache[keyPrefix + title];
-    delete this.cache[keyPrefix + encodeURIComponent( title ) ];
+    this.invalidatePath( keyPrefix + title );
+    this.invalidatePath( keyPrefix + encodeURIComponent( title ) );
   },
   post: function ( url, data ) {
     return fetch( url, {
