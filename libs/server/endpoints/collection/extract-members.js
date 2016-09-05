@@ -1,5 +1,6 @@
-function extractMembers( body ) {
-  var lines, members;
+function extractMembers( body, expand ) {
+  var lines, members,
+    memberPages = [];
 
   body = body.slice( body.indexOf( '*' ) + 1 );
   lines = body.split( '\n' );
@@ -12,9 +13,17 @@ function extractMembers( body ) {
       title = m[1];
       if ( members.indexOf( title ) === -1 ) {
         members.push( title );
+
+        // extract description
+        m = line.match(/\[\[.*\]\] - (.*)/ );
+        if ( m ) {
+          memberPages.push( { title: title, description: m[1] } );
+        } else {
+          memberPages.push( { title: title } );
+        }
       }
     }
   } );
-  return members;
+  return expand ? memberPages : members;
 }
 export default extractMembers;

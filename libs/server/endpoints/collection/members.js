@@ -10,7 +10,7 @@ function members( lang, project, collection, username ) {
   return wikitext( lang, collectionTitle, section, project ).then( function ( json ) {
     var page = json.pages[0];
     var rev = page.revisions[0];
-    return extractMembers( rev.content );
+    return extractMembers( rev.content, true );
   } );
 }
 

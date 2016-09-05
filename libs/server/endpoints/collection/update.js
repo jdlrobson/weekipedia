@@ -11,15 +11,18 @@ export default function ( lang, project, collection, titles, profile, unwatch ) 
 
   function updateCollection() {
     return members( lang, project, collection, profile.displayName ).then( function ( items ) {
+      var existingTitles = items.map( function ( item ) {
+        return item.title;
+      } );
       titles.forEach( function ( title ) {
         if ( unwatch ) {
-          var index = items.indexOf( title );
+          var index = existingTitles.indexOf( title );
           if ( index > -1 ) {
             items.splice( index, 1 );
           }
         } else {
-          if ( items.indexOf( title ) === -1 ) {
-            items.push( title );
+          if ( existingTitles.indexOf( title ) === -1 ) {
+            items.push( { title: title } );
           }
         }
       } );
@@ -28,7 +31,8 @@ export default function ( lang, project, collection, titles, profile, unwatch ) 
       var section = 1;
       var collectionTitle = lookup( profile.displayName, collection );
       var body = '== Items ==\n* ' + items.map( function ( item ) {
-          return '[[' + item + ']]';
+          var link = '[[' + item.title + ']]';
+          return item.description ? link + ' - ' + item.description : link;
         } ).join( '\n* ' );
 
       return edit( lang, collectionTitle, body, 'Update collection', section, project, profile );
