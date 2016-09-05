@@ -5,6 +5,7 @@ import getInfo from './get-info'
 import includes from './includes'
 import edit from './edit'
 import list from './list'
+import create from './create'
 
 import addProps from './../prop-enricher'
 
@@ -24,6 +25,7 @@ function membersWithProps( lang, project, collection, username ) {
 }
 
 export default {
+  create: create,
   edit: edit,
   includes: includes,
   list: list,

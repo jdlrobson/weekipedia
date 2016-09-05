@@ -193,7 +193,9 @@ if ( SIGN_IN_SUPPORTED ) {
     var title = req.params.title;
 
     respond( res, function () {
-      if ( action === 'edit' ) {
+      if ( action === 'create' ) {
+        return collection.create( lang, project, req.body.title, req.body.description, profile );
+      } if ( action === 'edit' ) {
         return collection.edit( lang, project, id, req.body.title, req.body.description, profile );
       } else if ( action === 'with' ) {
         return collection.includes( lang, project, title, profile );
