@@ -25,7 +25,10 @@ function list( lang, project, username ) {
             source: thumbFromTitle( page.images[0].title.split( ':' )[1], 200 )
           };
         }
-        result.collections.push( collection );
+        // id=0 is reserved for watchlist so don't treat it as collection
+        if ( collection.id !== 0 ) {
+          result.collections.push( collection );
+        }
       }
     } );
     return result;

@@ -24,7 +24,9 @@ function includes( lang, project, title, profile ) {
         members = split[1] ? extractMembers( split[1] ) : [];
         info = extractInfo( page.title, split[0] );
         info.member = members.indexOf( title ) > -1;
-        result.collections.push( info );
+        if ( info.id !== 0 ) {
+          result.collections.push( info );
+        }
       }
     } );
     if ( profile ) {

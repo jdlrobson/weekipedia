@@ -1,6 +1,6 @@
 export default function ( username, collection ) {
     var title = 'User:' + username + '/lists/';
-    if ( collection ) {
+    if ( collection !== undefined ) {
       title += collection;
     }
     return title;

@@ -387,12 +387,19 @@ app.get('/api/page-languages/:lang/:title',(req, res) => {
 } );
 
 app.get('/api/:lang/collection/by/:user/:id?', function(req, res){
-  var id = parseInt( req.params.id, 10 );
+  var id;
   var lang = req.params.lang;
   var user = req.params.user;
+  if ( req.params.id ) {
+    id = parseInt( req.params.id, 10 );
+  }
+  if ( id === 0 ) {
+    res.status( 400 );
+    res.send( 'Not a valid public collection id.' );
+  }
 
   respond( res, function () {
-    return id ? collection.members( lang, project, id, user ) : collection.list( lang, project, user );
+    return id !== undefined ? collection.members( lang, project, id, user ) : collection.list( lang, project, user );
   } );
 });
 
