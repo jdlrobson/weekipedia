@@ -13,6 +13,7 @@ import Article from './../containers/Article'
 export default React.createClass({
   getInitialState() {
     return {
+      defaultView: false,
       error: false,
       endpoint: null,
       description: null,
@@ -32,13 +33,13 @@ export default React.createClass({
       id = args[2];
 
       endpoint = '/api/' + props.lang + '/collection/by/' + username + '/' + id;
-      this.setState( { endpoint: endpoint, username: username, id: id } );
+      this.setState( { endpoint: endpoint, username: username, id: id, defaultView: false } );
       props.api.fetch( endpoint ).then( function ( collection ) {
         self.setState( { title: collection.title, description: collection.description } );
       } ).catch( function () {
         self.setState( { error: true } );
       })
-    } else if ( args.length === 2 ) {
+    } else if ( args.length === 2 && args[1] ) {
       username = args[1];
       endpoint = '/api/' + props.lang + '/collection/by/' + username;
       this.setState( { endpoint: endpoint, username: username, id: id } );
@@ -47,6 +48,15 @@ export default React.createClass({
       } ).catch( function () {
         self.setState( { error: true } );
       })
+    } else if ( args.length === 0 || !args[0] ) {
+      if ( this.props.session ) {
+        props.router.navigateTo( '/' + props.lang + '/wiki/Special:Collections/by/' + session.username,
+          null, true );
+      } else {
+        this.setState( { defaultView: true, username: false } );
+      }
+    } else {
+      props.router.navigateTo( '/' + props.lang + '/wiki/Special:Collections', null, true );
     }
   },
   componentWillMount() {
@@ -59,9 +69,13 @@ export default React.createClass({
     if ( this.state.title ) {
       return <CardList key="collection-list" {...this.props} unordered="1" apiEndpoint={this.state.endpoint} />
     } else if ( this.state.collections ) {
-      return <CardList key="collections-list" {...this.props} pages={this.state.collections} CardClass={CollectionCard} />;
+      return <CardList key="collections-list"
+        emptyMessage="There are no collections by this user."
+        {...this.props} pages={this.state.collections} CardClass={CollectionCard} />;
     } else if ( this.state.error ) {
       return <ErrorBox msg="Unable to show page." key="article-error" />;
+    } else if ( this.state.defaultView ) {
+      return <div><a href="/wiki/Special:UserLogin">Sign in</a> to use collections.</div>;
     } else {
       return <IntermediateState />
     }
