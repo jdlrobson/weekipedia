@@ -37,6 +37,7 @@
     "isomorphic-fetch": "^2.2.1",
     "less": "^2.7.1",
     "less-loader": "^2.2.3",
+    "md5-hex": "^1.3.0",
     "mediawiki-messages": "jdlrobson/mediawiki-messages",
     "mocha": "^3.0.2",
     "node-cache": "^3.2.1",
