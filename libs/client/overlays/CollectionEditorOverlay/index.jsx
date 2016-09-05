@@ -16,8 +16,15 @@ export default React.createClass({
     }
   },
   componentWillMount() {
-    var self = this;
     var props = this.props;
+    if ( props.id ) {
+      this.loadCollection( props );
+    } else {
+      this.setState( { title: '', description: '', waiting: false })
+    }
+  },
+  loadCollection( props ) {
+    var self = this;
     var endpoint = '/api/' + props.lang + '/collection/by/' + props.username + '/' + props.id;
     props.api.fetch( endpoint ).then( function ( data ) {
       self.setState( data );
@@ -34,8 +41,12 @@ export default React.createClass({
   },
   save() {
     var props = this.props;
-    var endpoint = '/api/private/' + props.lang + '/collection/' + props.id + '/edit';
+    var endpoint = '/api/private/' + props.lang + '/collection/';
     var self = this;
+    var msg = props.id ? 'Collection was successfully updated' :
+      'Collection was successfully created.';
+
+    endpoint += props.id  ? props.id + '/edit' : '_/create';
     this.setState( { waiting: true } );
     props.api.post( endpoint, {
       title: this.state.title,
@@ -43,7 +54,7 @@ export default React.createClass({
     } ).then( function ( resp ) {
       if ( resp.status === 200 ) {
         props.router.back();
-        props.showNotification( 'Collection was successfully updated' );
+        props.showNotification( msg );
         props.api.invalidatePath( '/api/' + props.lang + '/collection/by/' + props.username + '/' + props.id )
         props.router.navigateTo( window.location.pathname + '?c' + Math.random(), null, true );
       } else {
@@ -54,7 +65,7 @@ export default React.createClass({
   },
   render(){
     var body;
-    if ( !this.state.waiting && this.state.title ) {
+    if ( !this.state.waiting && this.state.title !== undefined ) {
       body = (
         <div>
           <label>Name</label>

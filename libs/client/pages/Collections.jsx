@@ -74,10 +74,12 @@ export default React.createClass({
     }
   },
   render() {
-    var tagline, userUrl, actions;
+    var tagline, userUrl, actions, label, suffix;
     if ( this.state.username ) {
       if ( this.props.session && this.state.username === this.props.session.username ) {
-        actions = <Button label="Edit" href={"#/edit-collection/" + this.state.username + '/' + this.state.id} isPrimary={true}/>;
+        label = this.state.id ? 'Edit' : 'Create';
+        suffix = this.state.id ? '/' + this.state.id : '';
+        actions = <Button label={label} href={"#/edit-collection/" + this.state.username + suffix } isPrimary={true}/>;
       }
       userUrl = '/' + this.props.lang + '/wiki/Special:Collections/by/' + this.state.username;
       // The api request is cached at this point

@@ -33,7 +33,7 @@ export default [
   ],
   // collections
   [
-    /^#\/edit-collection\/(.*)\/(.*)$/,
+    /^#\/edit-collection\/(.*)\/?(.*)$/,
     function ( info, props ) {
       var overlayProps = Object.assign( {}, props, {
         username: info[1],
