@@ -11,6 +11,7 @@ import MostRead from './pages/MostRead'
 import Random from './pages/Random'
 import Nearby from './pages/Nearby'
 import Watchlist from './pages/Watchlist'
+import UserLogin from './pages/UserLogin'
 
 import router from './router'
 import utils from './utils'
@@ -102,6 +103,7 @@ function initSpecialPages() {
   addSpecialPage( 'MostRead', MostRead );
   addSpecialPage( 'Random', Random );
   addSpecialPage( 'Nearby', Nearby );
+  addSpecialPage( 'UserLogin', UserLogin );
   addSpecialPage( 'Collections', Collections );
 }
 
