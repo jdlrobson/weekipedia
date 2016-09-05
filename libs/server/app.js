@@ -207,16 +207,6 @@ if ( SIGN_IN_SUPPORTED ) {
     } );
   });
 
-  app.get('/api/:lang/collection/by/:user/:id?', function(req, res){
-    var id = parseInt( req.params.id, 10 );
-    var lang = req.params.lang;
-    var user = req.params.user;
-
-    respond( res, function () {
-      return id ? collection.members( lang, project, id, user ) : collection.list( lang, project, user );
-    } );
-  });
-
   app.get('/api/private/watchlist/:lang/:title?', ensureAuthenticated, function(req, res){
     var callback = function ( data ) {
       res.setHeader('Content-Type', 'application/json');
@@ -395,6 +385,16 @@ app.get('/api/page-languages/:lang/:title',(req, res) => {
     return languages( req.params.title, req.params.lang, project );
   });
 } );
+
+app.get('/api/:lang/collection/by/:user/:id?', function(req, res){
+  var id = parseInt( req.params.id, 10 );
+  var lang = req.params.lang;
+  var user = req.params.user;
+
+  respond( res, function () {
+    return id ? collection.members( lang, project, id, user ) : collection.list( lang, project, user );
+  } );
+});
 
 app.get('/api/contributions/:lang/:ns/:username?',(req, res) => {
   cachedResponse( res, req.url, function() {
