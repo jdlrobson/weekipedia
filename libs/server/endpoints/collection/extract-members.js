@@ -7,7 +7,7 @@ function extractMembers( body, expand ) {
   members = [];
 
   lines.forEach( function ( line ) {
-    var title, m2;
+    var title;
     var m = line.match( /\[\[(.*)\]\]/ );
     if ( m ) {
       title = m[1];
@@ -15,9 +15,9 @@ function extractMembers( body, expand ) {
         members.push( title );
 
         // extract description
-        m2 = line.match(/\[\[.*\]\] - (.+)/ );
-        if ( m2 && m2[1] !== undefined ) {
-          memberPages.push( { title: title, description: m[2] } );
+        m = line.match(/\[\[.*\]\] - (.*)/ );
+        if ( m ) {
+          memberPages.push( { title: title, description: m[1] } );
         } else {
           memberPages.push( { title: title } );
         }
