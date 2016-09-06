@@ -403,6 +403,14 @@ app.get('/api/:lang/collection/by/:user/:id?', function(req, res){
   } );
 });
 
+app.get('/api/:lang/collection/', function(req, res){
+  var lang = req.params.lang;
+
+  respond( res, function () {
+    return collection.all( lang, project, req.query );
+  } );
+});
+
 app.get('/api/contributions/:lang/:ns/:username?',(req, res) => {
   cachedResponse( res, req.url, function() {
     var p = req.params;

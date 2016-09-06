@@ -17,6 +17,10 @@ function getCards( data, props, keyPrefix ) {
   var cards = [],
     CardClass = props.CardClass;
 
+  if ( data.collections ) {
+    data.pages = data.collections;
+  }
+
   if ( data.pages && data.pages.length ) {
     data.pages.forEach( function ( item, i ) {
       var id = item.revid || item.pageid || item.id;

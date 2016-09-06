@@ -26,13 +26,15 @@ export default React.createClass({
   load( props ) {
     var self = this;
     var args = props.params.split( '/' );
-    var endpoint, username, id;
+    var endpoint, username, id,
+      endpointPrefix = '/api/' + props.lang + '/collection';
+
     this.setState( { description: null, title: null, error: false } );
     if ( args.length === 3 ) {
       username = args[1];
       id = args[2];
 
-      endpoint = '/api/' + props.lang + '/collection/by/' + username + '/' + id;
+      endpoint = endpointPrefix + '/by/' + username + '/' + id;
       this.setState( { endpoint: endpoint, username: username, id: id, defaultView: false } );
       props.api.fetch( endpoint ).then( function ( collection ) {
         self.setState( { title: collection.title, description: collection.description } );
@@ -49,12 +51,7 @@ export default React.createClass({
         self.setState( { error: true } );
       })
     } else if ( args.length === 0 || !args[0] ) {
-      if ( this.props.session ) {
-        props.router.navigateTo( '/' + props.lang + '/wiki/Special:Collections/by/' + session.username,
-          null, true );
-      } else {
-        this.setState( { defaultView: true, username: false } );
-      }
+      this.setState( { defaultView: true, username: false, endpoint: endpointPrefix } );
     } else {
       props.router.navigateTo( '/' + props.lang + '/wiki/Special:Collections', null, true );
     }
@@ -75,7 +72,14 @@ export default React.createClass({
     } else if ( this.state.error ) {
       return <ErrorBox msg="Unable to show page." key="article-error" />;
     } else if ( this.state.defaultView ) {
-      return <div><a href="/wiki/Special:UserLogin">Sign in</a> to use collections.</div>;
+      return (
+        <div>
+          <CardList key="collection-list" {...this.props} unordered="1"
+             CardClass={CollectionCard}
+             apiEndpoint={this.state.endpoint} />
+          <a href="/wiki/Special:UserLogin">Sign in</a> to use collections.
+        </div>
+      );
     } else {
       return <IntermediateState />
     }
