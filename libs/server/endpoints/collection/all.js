@@ -20,9 +20,9 @@ function all( lang, project, query ) {
     params.gcmcontinue = query.gcmcontinue;
   }
 
-  console.log( params );
   return mwApi( lang, params, project ).then( function ( json ) {
     var result = { collections: [], continue: json.continue };
+    json.pages = json.pages || [];
     json.pages.forEach( function ( page ) {
       var collection,
         revs = page.revisions;
