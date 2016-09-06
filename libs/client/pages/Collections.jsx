@@ -25,7 +25,7 @@ export default React.createClass({
   },
   load( props ) {
     var self = this;
-    var args = props.params.split( '/' );
+    var args = props.params ? props.params.split( '/' ) : [];
     var endpoint, username, id,
       endpointPrefix = '/api/' + props.lang + '/collection';
 
@@ -76,6 +76,7 @@ export default React.createClass({
         <div>
           <CardList key="collection-list" {...this.props} unordered="1"
              CardClass={CollectionCard}
+             emptyMessage="There are no collections."
              apiEndpoint={this.state.endpoint} />
           <a href="/wiki/Special:UserLogin">Sign in</a> to use collections.
         </div>
