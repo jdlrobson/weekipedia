@@ -5,7 +5,7 @@ import list from './list'
 
 export default function ( lang, project, title, description, profile ) {
   return list( lang, project, profile.displayName ).then( function ( result ) {
-    var id = 0;
+    var id = 1;
     result.collections.forEach( function ( collection ) {
       if ( collection.id === id ) {
         id += 1;
@@ -16,7 +16,7 @@ export default function ( lang, project, title, description, profile ) {
     title = title || 'Unnamed collection';
     var body = ["'''" + title + "'''", '', description, '', '== Items ==', '' ].join( '\n' );
 
-    return edit( lang, collectionTitle, body, 'Create collection', null, project, profile );
+    return edit( lang, collectionTitle, body, 'Create collection', '0', project, profile );
   } );
 }
 
