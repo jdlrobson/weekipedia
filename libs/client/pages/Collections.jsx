@@ -92,7 +92,7 @@ export default React.createClass({
     if ( this.state.username ) {
       if ( this.props.session && this.state.username === this.props.session.username ) {
         label = this.state.id ? 'Edit' : 'Create';
-        suffix = this.state.id ? '/' + this.state.id : '';
+        suffix = this.state.id ? '/' + this.state.id : '/';
         actions = <Button label={label} href={"#/edit-collection/" + this.state.username + suffix } isPrimary={true}/>;
       }
       userUrl = '/' + this.props.lang + '/wiki/Special:Collections/by/' + this.state.username;
