@@ -59,8 +59,8 @@ console.log( 'Init for project', project );
 const app = express()
 const https = process.env.USE_HTTPS;
 const manifest = {
-  name: 'Weekipedia',
-  short_name: 'Weekipedia',
+  name: SITE_TITLE,
+  short_name: SITE_TITLE,
   start_url: './',
   display: 'standalone',
   icons: [
@@ -455,10 +455,12 @@ function getMessages( language ) {
   enMessages = JSON.parse( fs.readFileSync( EN_MESSAGE_PATH, 'utf8' ) );
   messages = Object.assign( {}, enMessages, messages );
 
-  if ( qqx ) {
-    for ( i in messages ) {
-      if ( messages.hasOwnProperty( i ) ) {
+  for ( i in messages ) {
+    if ( messages.hasOwnProperty( i ) ) {
+      if ( qqx ) {
         messages[i] = '{' + i + '}';
+      } else {
+        messages[i] = messages[i].replace( '{{SITENAME}}', SITE_TITLE );
       }
     }
   }
@@ -480,6 +482,7 @@ app.get('/:lang?/*',(req, res) => {
   // use React Router
   res.status(200).render('index.html', {
     isRTL: isRTL( req.params.lang ),
+    title: SITE_TITLE,
     config: JSON.stringify( {
       siteinfo: {
         home: process.env.HOME_PAGE_PATH,

@@ -1,5 +1,5 @@
 {
-  "offline-ready": "Weekipedia is now available offline.",
+  "offline-ready": "{{SITENAME}} is now available offline.",
   "home-tagline": "The wiki in real time",
   "home-by-hour": "by hour",
   "home-by-day": "by day",
@@ -12,7 +12,7 @@
   "menu-watchlist": "Watchlist",
   "menu-login": "Log in",
   "menu-logout": "Log out",
-  "menu-about": "About Weekipedia",
+  "menu-about": "About {{SITENAME}}",
   "menu-disclaimers": "Disclaimers",
-  "search": "Search Weekipedia"
+  "search": "Search {{SITENAME}}"
 }

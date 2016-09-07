@@ -6,7 +6,7 @@
   "menu-watchlist": "רשימת מעקב",
   "menu-login": "כניסה לחשבון",
   "menu-logout": "יציאה מהחשבון",
-  "menu-about": "אודות Weekipedia",
+  "menu-about": "אודות {{SITENAME}}",
   "menu-disclaimers": "הבהרה משפטית",
-  "search": "חיפוש באתר Weekipedia..."
+  "search": "חיפוש באתר {{SITENAME}}..."
 }
