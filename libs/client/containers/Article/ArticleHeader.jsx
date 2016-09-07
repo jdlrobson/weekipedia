@@ -33,6 +33,8 @@ class ArticleHeader extends Component {
     return (
       <Content key="article-row-0" className={"pre-content " + nsClass}>
         <div className="heading-holder">{header}</div>
+        <p className="lead-paragraph" dangerouslySetInnerHTML={{ __html: this.props.lead_paragraph}} />
+        <div className="infobox-container" dangerouslySetInnerHTML={{ __html: this.props.infobox}} />
         <SectionContent {...this.props} text={this.props.lead} />
       </Content>
     )

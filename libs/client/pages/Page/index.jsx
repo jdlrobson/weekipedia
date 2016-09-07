@@ -210,7 +210,7 @@ export default React.createClass({
 
     return (
       <Article {...this.props} actions={actions} tabs={this.getTabs()} title={displayTitle}
-        body={sections} footer={footer}
+        body={sections} footer={footer} infobox={lead.infobox} lead_paragraph={lead.paragraph}
         tagline={tagline} lead={leadHtml} secondaryActions={secondaryActions} />
     )
   }
