@@ -13,6 +13,16 @@ function extractLeadParagraph(doc) {
   }
   return p;
 }
+function extractHatnote(doc) {
+  // Workaround for https://phabricator.wikimedia.org/T143739
+  // Do not remove it from the DOM has a reminder this is not fixed.
+  var hatnoteNode = doc.querySelector( '.hatnote' );
+  var hatnote;
+  if ( hatnoteNode ) {
+    hatnote = hatnoteNode.innerHTML;
+  }
+  return hatnote;
+}
 function extractInfobox(doc) {
   var infobox;
   var node = doc.querySelector( '.infobox' );
@@ -75,6 +85,7 @@ export default function ( title, lang, project ) {
           var leadParagraph = extractLeadParagraph(doc);
           json.lead.infobox = infobox;
           json.lead.paragraph = leadParagraph;
+          json.lead.hatnote = extractHatnote(doc);
           json.lead.sections[0].text = doc.body.innerHTML;
         }
         return json;

@@ -25,6 +25,9 @@ class ArticleHeader extends Component {
     if ( tagline ) {
       header.push(<div className="tagline" key="article-tagline">{tagline}</div>)
     }
+    if ( this.props.hatnote ) {
+      header.push( <p className="hatnote" dangerouslySetInnerHTML={{ __html: this.props.hatnote}} /> );
+    }
 
     if ( this.props.tabs.length ) {
       header.push( <HorizontalList isSeparated="1"
