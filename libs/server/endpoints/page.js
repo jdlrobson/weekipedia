@@ -16,10 +16,14 @@ function extractLeadParagraph(doc) {
 function extractHatnote(doc) {
   // Workaround for https://phabricator.wikimedia.org/T143739
   // Do not remove it from the DOM has a reminder this is not fixed.
-  var hatnoteNode = doc.querySelector( '.hatnote' );
+  var hatnoteNodes = doc.querySelectorAll( '.hatnote' );
   var hatnote;
-  if ( hatnoteNode ) {
-    hatnote = hatnoteNode.innerHTML;
+  if ( hatnoteNodes.length ) {
+    hatnote = '';
+    Array.prototype.forEach.call( hatnoteNodes, function ( hatnoteNode ) {
+      hatnote += hatnoteNode.innerHTML + '<br/>';
+      hatnoteNode.parentNode.removeChild( hatnoteNode );
+    } );
   }
   return hatnote;
 }
