@@ -14,7 +14,7 @@ function flatten( pages ) {
 }
 
 export default function ( lang, params, project, options, session ) {
-  var req, url, fullParams,
+  var url, fullParams,
     baseParams = {
       action: 'query',
       format: 'json',
