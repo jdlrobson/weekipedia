@@ -44,18 +44,23 @@ export default React.createClass({
     };
   },
   // You want to load subscriptions not only when the component update but also when it gets mounted.
-  componentWillMount(){
+  componentDidMount(){
     this.load();
+  },
+  componentWillMount() {
+    this.setState( this.props );
   },
   componentWillReceiveProps(nextProps){
     this.load( nextProps.title, nextProps.lang );
   },
   load( title, lang ) {
-    var self = this;
+    var self = this,
+      expandQuery = typeof window !== 'undefined' && window.location.search.indexOf( 'expanded=1' ) > -1;
+
     title = title || this.props.title;
     lang = lang || this.props.lang;
 
-    if ( window.location.search.indexOf( 'expanded=1' ) > -1 || this.props.siteinfo.expandArticlesByDefault ) {
+    if ( expandQuery || this.props.siteinfo.expandArticlesByDefault ) {
       this.setState( { isExpanded: true } );
     }
     this.setState( { lead: {} } );

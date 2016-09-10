@@ -44,12 +44,13 @@ export default React.createClass({
   },
   mountChildren( props ) {
     // clone each child and pass them the notifier
-    var children = React.Children.map( props.children, ( child ) => React.cloneElement( child, {
-        showNotification: this.showNotification,
-        showOverlay: this.showOverlay,
-        onClickInternalLink: this.onClickInternalLink
-      } )
-    );
+    var childProps = typeof document !== 'undefined' ? {
+      showNotification: this.showNotification,
+      showOverlay: this.showOverlay,
+      onClickInternalLink: this.onClickInternalLink
+    } : {};
+
+    var children = React.Children.map( props.children, ( child ) => React.cloneElement( child, childProps ) );
     this.setState( { children: children } );
   },
   mountLanguage( props ) {
@@ -80,15 +81,18 @@ export default React.createClass({
       } );
     }
   },
+  mount( props ) {
+    if ( typeof document !== 'undefined' ) {
+      this.mountLanguage( props );
+      this.mountOverlay( props );
+    }
+    this.mountChildren( props );
+  },
   componentWillReceiveProps( nextProps ) {
-    this.mountLanguage( nextProps );
-    this.mountOverlay( nextProps );
-    this.mountChildren( nextProps );
+    this.mount( nextProps );
   },
   componentWillMount() {
-    this.mountLanguage( this.props );
-    this.mountOverlay( this.props );
-    this.mountChildren( this.props );
+    this.mount( this.props );
   },
   componentDidMount() {
     var showNotification = this.showNotification;
