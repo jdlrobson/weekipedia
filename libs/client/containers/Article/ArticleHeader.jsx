@@ -10,23 +10,31 @@ class ArticleHeader extends Component {
   render(){
     var
       header = [],
-      nsClass = this.props.isSpecialPage ? ' special-page-heading' : ' standard-page-heading',
-      tagline = this.props.tagline;
+      lead = this.props.lead || {},
+      nsClass = this.props.isSpecialPage ? ' special-page-heading' : ' standard-page-heading';
+
+    if ( typeof lead === 'string' ) {
+      lead = { text: lead };
+    }
+    if ( this.props.tagline ) {
+      lead.description = this.props.tagline;
+    }
+    if ( !lead.displaytitle && this.props.title ) {
+      lead.displaytitle = this.props.title;
+    }
 
     if ( this.props.actions ) {
       header.push( <HorizontalList className="page-actions" key="page-actions">{this.props.actions}</HorizontalList> );
     }
-    if ( this.props.title ) {
+    if ( lead.displaytitle ) {
       header.push(
         <h1 key="article-title"
-        id="section_0" dangerouslySetInnerHTML={{ __html: this.props.title}}></h1>
+        id="section_0" dangerouslySetInnerHTML={{ __html: lead.displaytitle }}></h1>
       );
     }
-    if ( tagline ) {
-      header.push(<div className="tagline" key="article-tagline">{tagline}</div>)
-    }
-    if ( this.props.hatnote ) {
-      header.push( <p className="hatnote" dangerouslySetInnerHTML={{ __html: this.props.hatnote}} /> );
+    header.push(<div className="tagline" key="article-tagline">{lead.description}</div>)
+    if ( lead.hatnote ) {
+      header.push( <p className="hatnote" dangerouslySetInnerHTML={{ __html: lead.hatnote}} /> );
     }
 
     if ( this.props.tabs.length ) {
@@ -36,9 +44,9 @@ class ArticleHeader extends Component {
     return (
       <Content key="article-row-0" className={"pre-content " + nsClass}>
         <div className="heading-holder">{header}</div>
-        <p className="lead-paragraph" dangerouslySetInnerHTML={{ __html: this.props.lead_paragraph}} />
-        <div className="infobox-container" dangerouslySetInnerHTML={{ __html: this.props.infobox}} />
-        <SectionContent {...this.props} text={this.props.lead} />
+        <p className="lead-paragraph" dangerouslySetInnerHTML={{ __html: lead.paragraph}} />
+        <div className="infobox-container" dangerouslySetInnerHTML={{ __html: lead.infobox}} />
+        <SectionContent {...this.props} text={lead.text} />
       </Content>
     )
   }

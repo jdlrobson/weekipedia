@@ -166,12 +166,15 @@ export default React.createClass({
       secondaryActions = [],
       title = this.props.title,
       lang = this.props.lang,
-      displayTitle = this.state.lead.displaytitle || decodeURIComponent( title.replace( /_/gi, ' ' ) ),
-      lead = this.state.lead,
-      remainingSections = this.getSections(),
-      tagline = lead.description;
+      lead = this.state.lead || {},
+      remainingSections = this.getSections();
 
     leadHtml = lead.sections && lead.sections.length ? lead.sections[0].text : undefined;
+    lead.text = leadHtml;
+    if ( !lead.displaytitle ) {
+      lead.displaytitle = decodeURIComponent( title.replace( /_/gi, ' ' ) );
+    }
+
     if ( leadHtml !== undefined ) {
       if ( lead.ns === 2 && !leadHtml ) {
         sections.push( <UserPageCta user={title}
@@ -209,10 +212,11 @@ export default React.createClass({
     }
 
     return (
-      <Article {...this.props} actions={actions} tabs={this.getTabs()} title={displayTitle}
-        hatnote={lead.hatnote}
-        body={sections} footer={footer} infobox={lead.infobox} lead_paragraph={lead.paragraph}
-        tagline={tagline} lead={leadHtml} secondaryActions={secondaryActions} />
+      <Article {...this.props} actions={actions} tabs={this.getTabs()}
+        lead={lead}
+        body={sections}
+        secondaryActions={secondaryActions}
+        footer={footer} />
     )
   }
 } );
