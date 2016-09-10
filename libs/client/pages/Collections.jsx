@@ -9,6 +9,8 @@ import Button from './../components/Button'
 
 import Article from './../containers/Article'
 
+const COLLECTIONS_ARE_NOT_ORDERED = true;
+
 // Pages
 export default React.createClass({
   getInitialState() {
@@ -64,17 +66,17 @@ export default React.createClass({
   },
   getBody(){
     if ( this.state.title ) {
-      return <CardList key="collection-list" {...this.props} unordered="1" apiEndpoint={this.state.endpoint} />
+      return <CardList key="collection-list" {...this.props} unordered={COLLECTIONS_ARE_NOT_ORDERED} apiEndpoint={this.state.endpoint} />
     } else if ( this.state.collections ) {
       return <CardList key="collections-list"
-        emptyMessage="There are no collections by this user."
+        emptyMessage="There are no collections by this user."  unordered={COLLECTIONS_ARE_NOT_ORDERED}
         {...this.props} pages={this.state.collections} CardClass={CollectionCard} />;
     } else if ( this.state.error ) {
       return <ErrorBox msg="Unable to show page." key="article-error" />;
     } else if ( this.state.defaultView ) {
       return (
         <div>
-          <CardList key="collection-list" {...this.props} unordered="1"
+          <CardList key="collection-list" {...this.props} unordered={COLLECTIONS_ARE_NOT_ORDERED}
              CardClass={CollectionCard}
              emptyMessage="There are no collections."
              apiEndpoint={this.state.endpoint} />
