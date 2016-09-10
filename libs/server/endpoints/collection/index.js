@@ -13,7 +13,7 @@ import addProps from './../prop-enricher'
 function membersWithProps( lang, project, collection, username ) {
   return members( lang, project, collection, username ).then( function ( titles ) {
     return getInfo( lang, project, collection, username ).then( function ( info ) {
-      return addProps( titles, [ 'pageterms', 'pageimages' ], lang, project ).then( function ( pages ) {
+      return addProps( titles, [ 'pageterms', 'pageimages', 'coordinates' ], lang, project ).then( function ( pages ) {
         return {
           id: info.id,
           title: info.title,

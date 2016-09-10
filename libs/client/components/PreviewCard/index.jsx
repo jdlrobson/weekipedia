@@ -11,7 +11,7 @@ class PreviewCard extends Component {
       props = this.props,
       extracts = props.description ?
         [ props.description ] : [];
-    if ( props.coordinates ) {
+    if ( props.coordinates && props.coordinates.dist ) {
       dist = parseInt( props.coordinates.dist, 10 );
       if ( dist > 1000 ) {
         dist = parseInt( dist / 1000, 10 );
