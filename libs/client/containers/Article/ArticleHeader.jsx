@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 
 import HorizontalList from './../../components/HorizontalList'
 import SectionContent from './../../components/SectionContent'
+import Infobox from './../../components/Infobox'
 
 import Content from './../../containers/Content'
 
@@ -41,11 +42,12 @@ class ArticleHeader extends Component {
       header.push( <HorizontalList isSeparated="1"
         key="article-header-tabs">{this.props.tabs}</HorizontalList> );
     }
+
     return (
       <Content key="article-row-0" className={"pre-content " + nsClass}>
         <div className="heading-holder">{header}</div>
         <SectionContent {...this.props} className="lead-paragraph" text={lead.paragraph} />
-        <div className="infobox-container" dangerouslySetInnerHTML={{ __html: lead.infobox}} />
+        <Infobox {...this.props} text={lead.infobox} />
         <SectionContent {...this.props} className="lead-section" text={lead.text} />
       </Content>
     )
