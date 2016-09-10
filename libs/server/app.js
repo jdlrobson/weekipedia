@@ -479,30 +479,32 @@ app.get('/:lang?/*',(req, res) => {
       username: req.user.displayName,
     } : null;
 
+  var config = {
+    siteinfo: {
+      home: process.env.HOME_PAGE_PATH,
+      expandSectionsByDefault: SITE_EXPAND_SECTIONS,
+      expandArticlesByDefault: SITE_EXPAND_ARTICLE,
+      wordmark: SITE_WORDMARK_PATH,
+      title: SITE_TITLE,
+      privacyUrl: process.env.SITE_PRIVACY_URL,
+      termsUrl: process.env.SITE_TERMS_OF_USE,
+      license: {
+        url: '//creativecommons.org/licenses/by-sa/3.0/',
+        name: 'CC BY-SA 3.0'
+      }
+    },
+    session: session,
+    i18n: getMessages( req.query.uselang || req.params.lang || LANGUAGE_CODE ),
+    canAuthenticate: Boolean( SIGN_IN_SUPPORTED ),
+    project: process.env.PROJECT || 'wikipedia',
+    offlineVersion: process.env.OFFLINE_VERSION
+  };
+
   // use React Router
   res.status(200).render('index.html', {
     isRTL: isRTL( req.params.lang ),
     title: SITE_TITLE,
-    config: JSON.stringify( {
-      siteinfo: {
-        home: process.env.HOME_PAGE_PATH,
-        expandSectionsByDefault: SITE_EXPAND_SECTIONS,
-        expandArticlesByDefault: SITE_EXPAND_ARTICLE,
-        wordmark: SITE_WORDMARK_PATH,
-        title: SITE_TITLE,
-        privacyUrl: process.env.SITE_PRIVACY_URL,
-        termsUrl: process.env.SITE_TERMS_OF_USE,
-        license: {
-          url: '//creativecommons.org/licenses/by-sa/3.0/',
-          name: 'CC BY-SA 3.0'
-        }
-      },
-      session: session,
-      i18n: getMessages( req.query.uselang || req.params.lang || LANGUAGE_CODE ),
-      canAuthenticate: Boolean( SIGN_IN_SUPPORTED ),
-      project: process.env.PROJECT || 'wikipedia',
-      offlineVersion: process.env.OFFLINE_VERSION
-    } )
+    config: JSON.stringify( config )
   })
 })
 
