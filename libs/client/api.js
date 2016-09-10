@@ -30,6 +30,11 @@ Api.prototype = {
       body: JSON.stringify( data )
     } );
   },
+  prefetch: function ( url, data ) {
+    this.cache[url] = new Promise( function ( resolve ) {
+      resolve( data );
+    } );
+  },
   fetch: function ( url ) {
     var promise, req,
       cache = this.cache;

@@ -8,6 +8,10 @@ import passport from 'passport'
 import session from 'express-session'
 import connect from 'connect-memcached'
 import fs from 'fs'
+import ReactDOMServer from 'react-dom/server'
+
+import shared from './../shared'
+import routes from './../client/routes'
 
 import wikitext from './endpoints/wikitext'
 import watchlistfeed from './endpoints/watchlist-feed'
@@ -54,6 +58,8 @@ const SITE_EXPAND_SECTIONS = process.env.SITE_EXPAND_SECTIONS ?
 
 const SITE_EXPAND_ARTICLE = process.env.SITE_EXPAND_ARTICLE ?
   Boolean( process.env.SITE_EXPAND_ARTICLE ) : SITE_EXPAND_SECTIONS;
+
+const SERVER_SIDE_RENDERING = Boolean( process.env.SERVER_SIDE_RENDERING );
 
 console.log( 'Init for project', project );
 // Express
@@ -497,7 +503,7 @@ app.get('/:lang?/*',(req, res) => {
 
   var config = {
     siteinfo: {
-      home: process.env.HOME_PAGE_PATH,
+      home: process.env.HOME_PAGE_PATH || '/wiki/Main Page',
       expandSectionsByDefault: SITE_EXPAND_SECTIONS,
       expandArticlesByDefault: SITE_EXPAND_ARTICLE,
       wordmark: SITE_WORDMARK_PATH,
@@ -516,14 +522,32 @@ app.get('/:lang?/*',(req, res) => {
     offlineVersion: process.env.OFFLINE_VERSION
   };
 
-  res.setHeader('Vary', 'Cookie');
-  // use React Router
-  res.status(200).render('index.html', {
-    isRTL: isRTL( req.params.lang ),
-    title: SITE_TITLE,
-    config: JSON.stringify( config )
-  })
-})
+  shared.init( config, routes );
+  var route = shared.router.matchRoute( req.path, '#', config, req.query );
+
+  function render( data ) {
+    data = data || {};
+    // not ideal. Duplicates HTML content of article in config. Relying on gzip
+    Object.assign( config, data );
+    res.setHeader('Vary', 'Cookie');
+    res.status(200).render('index.html', {
+      isRTL: isRTL( req.params.lang ),
+      title: SITE_TITLE,
+      config: JSON.stringify( config ),
+      body: SERVER_SIDE_RENDERING ? ReactDOMServer.renderToString( shared.render( req.path, '#', data, req.query ) ) : ''
+    });
+  }
+  if ( route.fallback && SERVER_SIDE_RENDERING ) {
+    var fallbackUrl = req.protocol + '://' + req.get('host') + route.fallback;
+    fetch( fallbackUrl ).then( function ( resp ) {
+      return resp.json();
+    } ).then( function ( data ) {
+      render( { fallbackProps: data, fallbackPath: route.fallback } );
+    } );
+  } else {
+    render();
+  }
+});
 
 app.listen(app.get('port'))
 

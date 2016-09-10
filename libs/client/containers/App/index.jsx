@@ -48,7 +48,7 @@ export default React.createClass({
       showNotification: this.showNotification,
       showOverlay: this.showOverlay,
       onClickInternalLink: this.onClickInternalLink
-    } : {};
+    } : ( this.props.fallbackProps || {} );
 
     var children = React.Children.map( props.children, ( child ) => React.cloneElement( child, childProps ) );
     this.setState( { children: children } );

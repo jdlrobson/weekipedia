@@ -14,19 +14,9 @@ import Nearby from './pages/Nearby'
 import Watchlist from './pages/Watchlist'
 import UserLogin from './pages/UserLogin'
 
-import router from './router'
 import utils from './utils'
 
-const HOMEPAGE_PATH = '/wiki/Main Page'
-
 var routes = [
-  [
-    // Home page / Hot
-    /^\/?$/,
-    function( info, props ) {
-      return router.matchRoute( props.siteinfo.home || HOMEPAGE_PATH, '', props )
-    }
-  ],
   // View a page
   [
     /^\/([a-z\-]*)\/wiki\/(.*)|^\/wiki\/(.*)/,
@@ -55,6 +45,7 @@ var routes = [
         ];
       } else {
         props.title = titleDecoded;
+        props.fallback = '/api/page/' + lang + '/' + title;
         props.children = [
           React.createElement( Page,
             Object.assign( {}, props, {
@@ -66,16 +57,6 @@ var routes = [
         ];
       }
       return props;
-    }
-  ],
-  [
-    /^\/([a-z\-]*)\/wiki\/Category(\%3A|:)(.*)|^\/wiki\/Category(\%3A|:)(.*)$/,
-    function ( info, props ) {
-      var lang = info[1] || 'en';
-      var params = info[5] || info[3] || '';
-      var newPath = '/' + lang + '/wiki/Special:Categories/' + params;
-
-      return router.matchRoute( newPath, '', props );
     }
   ]
 ];

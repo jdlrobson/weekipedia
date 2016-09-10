@@ -89,3 +89,7 @@ Add offline support
 > export OFFLINE_VERSION=$OFFLINE_VERSION
 
 > npm run compile
+
+Enable server side rendering
+
+> export SERVER_SIDE_RENDERING=1
