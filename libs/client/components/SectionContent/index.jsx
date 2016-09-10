@@ -33,8 +33,13 @@ class SectionContent extends Component {
     } );
   }
   render(){
+    var classSuffix = this.props.className ? ' ' + this.props.className : '';
+    if ( this.props.number ) {
+      classSuffix += ' section-' + this.props.number;
+    }
     return (
-      <div data-section={this.props.number} className={"component-section-content content section-" + this.props.number}
+      <div data-section={this.props.number}
+        className={"component-section-content content" + classSuffix}
         dangerouslySetInnerHTML={{ __html: this.props.text}}></div>
     )
   }
