@@ -15,18 +15,13 @@ import mwStorage from './mediawiki-storage'
 
 var config = JSON.parse( document.body.getAttribute( 'data-config' ) || '{}' );
 
-var globalProps = {
+var globalProps = Object.assign( {}, config, {
   api: api,
   router: router,
   storage: mwStorage,
   msg: msg,
-  messages: messages,
-  offlineVersion: config.OFFLINE_VERSION,
-  canAuthenticate: config.SIGN_IN_SUPPORTED,
-  siteinfo: config.siteinfo,
-  session: config.session,
-  project: config.PROJECT || 'wikipedia'
-};
+  messages: messages
+} );
 
 messages.load( config.i18n || {} );
 

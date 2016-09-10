@@ -499,9 +499,9 @@ app.get('/:lang?/*',(req, res) => {
       },
       session: session,
       i18n: getMessages( req.query.uselang || req.params.lang || LANGUAGE_CODE ),
-      SIGN_IN_SUPPORTED: Boolean( SIGN_IN_SUPPORTED ),
-      PROJECT: process.env.PROJECT,
-      OFFLINE_VERSION: process.env.OFFLINE_VERSION
+      canAuthenticate: Boolean( SIGN_IN_SUPPORTED ),
+      project: process.env.PROJECT || 'wikipedia',
+      offlineVersion: process.env.OFFLINE_VERSION
     } )
   })
 })
