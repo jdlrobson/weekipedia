@@ -14,10 +14,14 @@ class Section extends Component {
     };
   }
   componentWillMount(){
+    this.setState( { jsEnabled: false } );
     if ( this.isReferenceSection() ) {
       this.setState( { isOpen: false } );
     }
     this.setState( { isOpen: this.props.siteinfo.expandSectionsByDefault } );
+  }
+  componentDidMount() {
+    this.setState( { jsEnabled: true } );
   }
   isReferenceSection() {
     return this.props.text.indexOf( 'class="mw-references' ) > -1;
@@ -40,7 +44,7 @@ class Section extends Component {
     }
 
     if ( isCollapsible ) {
-      headingChildren.unshift( <Icon glyph="arrow" small={true}
+      headingChildren.unshift( <Icon glyph={this.state.jsEnabled ? "arrow" : ""} small={true}
         className="indicator" key={"section-heading-toggle-" + this.props.id} /> );
     }
     var heading = hMethod.call(React.DOM, { onClick: this.onToggle.bind(this), id: this.props.anchor }, headingChildren );
