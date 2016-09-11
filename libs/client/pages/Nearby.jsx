@@ -27,7 +27,7 @@ export default React.createClass({
     this.loadCoords( props.params || '' );
   },
   // You want to load subscriptions not only when the component update but also when it gets mounted.
-  componentWillMount(){
+  componentDidMount(){
     this.loadCoords( this.props.params || '' );
   },
   loadCoords( params ) {

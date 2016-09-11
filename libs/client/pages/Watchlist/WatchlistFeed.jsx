@@ -10,7 +10,7 @@ export default React.createClass({
     var ns, match;
     var endpoint = '/api/private/watchlist-feed/' + this.props.lang + '/';
 
-    if ( window.location.search.indexOf( 'filter=' ) ) {
+    if ( typeof window !== 'undefined' && window.location.search.indexOf( 'filter=' ) ) {
       match = window.location.search.match( /filter\=([0-9])/ );
       if ( match ) {
         ns = match[1];

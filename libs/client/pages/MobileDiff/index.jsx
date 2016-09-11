@@ -21,7 +21,7 @@ export default React.createClass({
       diff: null
     };
   },
-  componentWillMount(){
+  componentDidMount(){
     this.load( this.props.params );
   },
   componentWillReceiveProps( nextProps ){
