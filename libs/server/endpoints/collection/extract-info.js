@@ -1,4 +1,4 @@
-function info( pageTitle, body ) {
+function info( pageTitle, body, timestamp ) {
   var title,
     lines = body.split( '\n' ),
     m = lines[0].match( /'''(.*)'''/ ),
@@ -11,6 +11,7 @@ function info( pageTitle, body ) {
   }
 
   return {
+    updated: timestamp,
     id: parseInt( args[2], 10 ),
     title: title,
     owner: args[0].split( ':' )[1],

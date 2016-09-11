@@ -6,7 +6,7 @@ function list( lang, project, username ) {
   var params = {
     prop: 'revisions|images',
     generator: 'prefixsearch',
-    rvprop: 'content',
+    rvprop: 'content|timestamp',
     rvsection: 0,
     gpssearch: 'User:' + username + '/lists/',
     gpsnamespace: 2
@@ -19,7 +19,7 @@ function list( lang, project, username ) {
         revs = page.revisions;
 
       if ( revs[0] ) {
-        collection = extractInfo( page.title, revs[0].content );
+        collection = extractInfo( page.title, revs[0].content, revs[0].timestamp );
         if ( page.images ) {
           collection.thumbnail = {
             source: thumbFromTitle( page.images[0].title.split( ':' )[1], 200 )
@@ -30,6 +30,9 @@ function list( lang, project, username ) {
           result.collections.push( collection );
         }
       }
+    } );
+    result.collections = result.collections.sort( function ( a, b ) {
+      return a.updated > b.updated ? -1 : 1;
     } );
     return result;
   } );
