@@ -40,8 +40,10 @@ export default React.createClass({
         // do it
         col.member = !col.member;
         props.api.post( endpoint );
+        props.api.invalidatePath( '/api/' + props.lang + '/collection/by/' + props.username + '/' + id );
       }
     } );
+    props.api.invalidatePath( '/api/private/en/collection/all/with/' + props.title );
     this.setState( collections );
   },
   watch( ev ) {
