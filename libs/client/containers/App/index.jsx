@@ -148,6 +148,9 @@ export default React.createClass({
     // If an overlay is open
     if ( this.state.isOverlayEnabled ) {
       this.setState( { isOverlayEnabled: false } );
+      if ( window.location.hash && window.location.hash !== '#' ) {
+        window.location.hash = '#';
+      }
     }
     this.setState( { notification: null } );
   },
@@ -157,6 +160,7 @@ export default React.createClass({
   },
   openPrimaryNav( ev ){
     this.setState({ isMenuOpen: true });
+    this.closeOverlay();
     ev.preventDefault();
     ev.stopPropagation();
   },
