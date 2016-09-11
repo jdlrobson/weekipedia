@@ -56,7 +56,7 @@ export default React.createClass({
     if ( this.state.collections ) {
       return (
         <Overlay {...this.props} className="collection-overlay" isDrawer={true}>
-        <h2>Add to existing collection</h2>,
+        <h2>Add to existing collection</h2>
         <ul>
           {
             this.state.collections.map( function ( collection ) {
@@ -67,6 +67,7 @@ export default React.createClass({
             } )
           }
         </ul>
+        <a href={"#/edit-collection/" + this.props.session.username + '/'}>Create new collection</a>
         </Overlay>
       );
     } else {

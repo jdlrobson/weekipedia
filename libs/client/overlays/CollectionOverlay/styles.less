@@ -14,7 +14,12 @@
   ul {
     margin-bottom: 4.02em;
     overflow: scroll;
-    height: 100%;
+    bottom: 0;
+    position: absolute;
+    top: 50px;
+    left: 1em;
+    right: 1em;
+    font-size: .7em;
   }
 
   li {
@@ -32,5 +37,13 @@
     position: absolute;
     right: -10px;
     top: 30%;
+  }
+
+  > a {
+    position: absolute;
+    bottom: 10px;
+    left: 0;
+    right: 0;
+    width: 100%;
   }
 }
