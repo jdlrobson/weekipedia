@@ -49,20 +49,24 @@ export default React.createClass({
   },
   componentWillMount() {
     this.setState( this.props );
+    this.checkExpandedState();
   },
   componentWillReceiveProps(nextProps){
     this.load( nextProps.title, nextProps.lang );
   },
+  checkExpandedState() {
+    var expandQuery = typeof window !== 'undefined' && window.location.search.indexOf( 'expanded=1' ) > -1;
+    if ( expandQuery || this.props.siteinfo.expandArticlesByDefault ) {
+      this.setState( { isExpanded: true } );
+    }
+  },
   load( title, lang ) {
-    var self = this,
-      expandQuery = typeof window !== 'undefined' && window.location.search.indexOf( 'expanded=1' ) > -1;
+    var self = this;
 
     title = title || this.props.title;
     lang = lang || this.props.lang;
 
-    if ( expandQuery || this.props.siteinfo.expandArticlesByDefault ) {
-      this.setState( { isExpanded: true } );
-    }
+    this.checkExpandedState();
     this.setState( { lead: {} } );
     this.props.api.getPage( title, lang ).then( function ( data ) {
       var ns = data.lead.ns;
