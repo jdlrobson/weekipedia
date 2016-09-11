@@ -326,7 +326,15 @@ app.get('/api/trending-debug/:wiki/:title',(req, res) => {
 
 app.get('/api/random/:lang/',(req, res) => {
   return cachedResponse( res, null, function () {
-    return random( req.params.lang, 0, project, { continue: req.query.continue || '' } );
+    var param,
+      params = {};
+    for ( param in [ 'picontinue', 'continue' ] ) {
+      if ( req.query[param] ) {
+        params[param] = req.query[param];
+      }
+    }
+
+    return random( req.params.lang, 0, project, params );
   } );
 } );
 
