@@ -10,6 +10,9 @@ const API_PATH = '/api/';
 Api.prototype = {
   invalidatePath: function ( path ) {
     delete this.cache[path];
+    if ( path[path.length - 1] === '/' ) {
+      delete this.cache[path.substr(0, path.length -1)];
+    }
   },
   invalidatePage: function ( title, lang ) {
     var keyPrefix = API_PATH + 'page/' + lang + '/';

@@ -53,10 +53,14 @@ export default React.createClass({
       description: this.state.description
     } ).then( function ( resp ) {
       if ( resp.status === 200 ) {
-        props.router.back();
-        props.showNotification( msg );
-        props.api.invalidatePath( '/api/' + props.lang + '/collection/by/' + props.username + '/' + props.id )
-        props.router.navigateTo( window.location.pathname + '?c' + Math.random(), null, true );
+        // Annoyingly this timeout doesn't always seem to be enough.
+        setTimeout( function () {
+          props.router.back();
+          props.showNotification( msg );
+          props.api.invalidatePath( '/api/' + props.lang + '/collection/by/' + props.username + '/' );
+          props.api.invalidatePath( '/api/' + props.lang + '/collection/by/' + props.username + '/' + props.id )
+          props.router.navigateTo( window.location.pathname + '?c' + Math.random(), null, true );
+        }, 5000 );
       } else {
         props.showNotification( 'An error occurred while saving the collection' );
         self.setState( { waiting: false } );
