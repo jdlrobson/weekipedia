@@ -51,14 +51,14 @@ var router = {
   }
 };
 
-function matchRouteInternal( routes, path, props ) {
+function matchRouteInternal( routes, path, props, query ) {
   var chosenRoute;
   props = props || {};
   props.router = router;
   routes.some( function ( route ) {
     var res = path.match( route[0] );
     if ( res ) {
-      chosenRoute = route[1]( res, props );
+      chosenRoute = route[1]( res, props, query );
       return true;
     } else {
     }
@@ -67,11 +67,24 @@ function matchRouteInternal( routes, path, props ) {
 }
 
 function matchFragment( fragment, props ) {
-  return matchRouteInternal( routes, fragment, props );
+  return matchRouteInternal( routes, fragment, props, false );
 }
 
-function matchRoute( path, fragment, props ) {
-  var route = matchRouteInternal( routes, path || window.location.pathname, props );
+function matchRoute( path, fragment, props, query ) {
+  query = query || props.query;
+  if ( query === undefined ) {
+    var i, vals,
+      args = window.location.search.split( '&' );
+
+    query = {};
+    for ( i = 0; i < args.length; i++ ) {
+      vals = args[i].split( '=' );
+      query[vals[0]] = vals[1];
+    }
+  }
+  props.query = query;
+
+  var route = matchRouteInternal( routes, path || window.location.pathname, props, query );
   var childProps = Object.assign( {}, route );
   // avoid chaos
   delete childProps.children;

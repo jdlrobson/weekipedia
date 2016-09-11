@@ -7,14 +7,11 @@ import CardListPage from './../CardListPage'
 // Pages
 export default React.createClass({
   render() {
-    var ns, match;
+    var ns;
     var endpoint = '/api/private/watchlist-feed/' + this.props.lang + '/';
 
-    if ( typeof window !== 'undefined' && window.location.search.indexOf( 'filter=' ) ) {
-      match = window.location.search.match( /filter\=([0-9])/ );
-      if ( match ) {
-        ns = match[1];
-      }
+    if ( this.props.query && this.props.query.filter ) {
+      ns = this.props.query.filter;
     }
 
     if ( ns ) {

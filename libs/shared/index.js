@@ -19,8 +19,8 @@ function init( config, routes ) {
     [
       // Home page / Hot
       /^\/?$/,
-      function( info, props ) {
-        return router.matchRoute( props.siteinfo.home, '#', props )
+      function( info, props, query ) {
+        return router.matchRoute( props.siteinfo.home, '#', props, query )
       }
     ],
     [
@@ -51,12 +51,12 @@ function init( config, routes ) {
   } );
 }
 
-function render( path, hash, props ) {
+function render( path, hash, props, query ) {
   props = props || {};
   hash = hash || '#';
 
   return React.createElement( App,
-    router.matchRoute( path, hash, Object.assign( {}, globalProps, props ) )
+    router.matchRoute( path, hash, Object.assign( {}, globalProps, props ), query )
   )
 }
 
