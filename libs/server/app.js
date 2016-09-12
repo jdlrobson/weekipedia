@@ -30,6 +30,7 @@ import edit from './endpoints/edit'
 import diff from './endpoints/diff'
 import contributions from './endpoints/contributions'
 import collection from './endpoints/collection'
+import categories from './endpoints/categories'
 
 import respond from './respond'
 import cachedResponses from './cached-response.js'
@@ -335,6 +336,13 @@ app.get('/api/random/:lang/',(req, res) => {
     }
 
     return random( req.params.lang, 0, project, params );
+  } );
+} );
+
+app.get('/api/categories/:lang/:title?/',(req, res) => {
+  return cachedResponse( res, null, function () {
+    var p = req.params;
+    return categories( p.lang, p.title, project, req.query );
   } );
 } );
 
