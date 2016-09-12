@@ -18,6 +18,12 @@
   visibility: hidden;
 }
 
+.card-list-empty {
+  color: #333;
+  text-align: center;
+  font-size: .9em;
+}
+
 @media (min-width: 720px) {
   .card-list {
     box-shadow: none;
@@ -36,8 +42,9 @@
 
   .card-list-unordered .card {
     border: 1px solid rgba(0, 0, 0, 0.2);
-    margin: 0 10px 10px 0;
+    margin: 0 auto 10px auto;
     width: 30%;
+    max-width: 30%;
     border-radius: 2px;
   }
 }

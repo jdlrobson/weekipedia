@@ -1,6 +1,8 @@
 import React from 'react'
 
-import CardList from './CardList'
+import CardList from './../CardList'
+
+import './styles.less'
 
 export default React.createClass({
   render(){

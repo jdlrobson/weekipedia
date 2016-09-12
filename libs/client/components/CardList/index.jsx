@@ -152,7 +152,7 @@ export default React.createClass({
     var cardsAndHeaders = [];
     var continuer = props.continue && props.endpoint ?
       <div className='gutter' /> : null;
-    var className = 'card-list' + ( isUnordered ? ' card-list-unordered' : '' );
+    var className = 'card-list component-card-list' + ( isUnordered ? ' card-list-unordered' : '' );
 
     if ( this.state.error ) {
       return (
@@ -186,6 +186,6 @@ export default React.createClass({
     }
     return cards.length ? (
         <div className={className}>{cards}{continuer}</div>
-      ) : <div>{props.emptyMessage}</div>;
+      ) : <div className="card-list-empty">{props.emptyMessage}</div>;
   }
 } );
