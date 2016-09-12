@@ -111,7 +111,7 @@ export default React.createClass({
       tagline = (
         <div>
           <div>by <a href={userUrl} onClick={this.navigateTo}>{this.state.username}</a></div>
-          {this.state.description}
+          {this.state.description}&nbsp;
           <div>{actions}</div>
         </div>
       );
