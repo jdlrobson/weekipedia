@@ -1,0 +1,41 @@
+import React from 'react'
+
+import CardList from './../components/CardList'
+import IntermediateState from './../components/IntermediateState'
+
+import Article from './../containers/Article'
+
+// Pages
+export default React.createClass({
+  getInitialState() {
+    return {
+      endpoint: null
+    };
+  },
+  componentDidMount() {
+    this.load( this.props );
+  },
+  componentWillReceiveProps( props ) {
+    this.load( props );
+  },
+  load( props ){
+    var endpoint = '/api/categories/' + props.lang + '/';
+    if ( props.params ) {
+      endpoint += props.params;
+    }
+    this.setState( { endpoint: endpoint } );
+  },
+  render() {
+    var props = this.props;
+    var body = this.state.endpoint ? <CardList {...props} apiEndpoint={this.state.endpoint} /> :
+      <IntermediateState/>;
+
+    return (
+      <Article {...props} isSpecialPage='yes'
+        title={'Categories'}
+        body={body}>
+      </Article>
+    )
+  }
+})
+

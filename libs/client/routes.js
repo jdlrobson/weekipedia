@@ -1,5 +1,6 @@
 import React from 'react'
 
+import Categories from './pages/Categories'
 import Collections from './pages/Collections'
 import Contributions from './pages/Contributions'
 import History from './pages/History'
@@ -66,8 +67,19 @@ var routes = [
       }
       return props;
     }
+  ],
+  [
+    /^\/([a-z\-]*)\/wiki\/Category(\%3A|:)(.*)|^\/wiki\/Category(\%3A|:)(.*)$/,
+    function ( info, props ) {
+      var lang = info[1] || 'en';
+      var params = info[5] || info[3] || '';
+      var newPath = '/' + lang + '/wiki/Special:Categories/' + params;
+
+      return router.matchRoute( newPath, '', props );
+    }
   ]
 ];
+
 function addSpecialPage( title, Class, handler ) {
   routes.push( [
     new RegExp( '^\/([a-z\-]*)\/wiki\/Special:' + title + '\/?(.*)|^\/wiki\/Special:' + title + '\/?(.*)$' ),
@@ -93,6 +105,7 @@ function addSpecialPage( title, Class, handler ) {
 }
 
 function initSpecialPages() {
+  addSpecialPage( 'Categories', Categories );
   addSpecialPage( 'Feed', Feed );
   addSpecialPage( 'History', History );
   addSpecialPage( 'RecentChanges', Contributions );
