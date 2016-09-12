@@ -35,10 +35,6 @@ class MainMenu extends Component {
           <li>
             <Icon glyph="mf-contributions-invert" href={'/' + this.props.lang + '/wiki/Special:Contributions/' + username }
               label={msg('menu-contributions')} type="before" onClick={onMenuItemClick} />
-          </li>,
-          <li>
-            <Icon glyph="mf-collections-invert" href={'/' + this.props.lang + '/wiki/Special:Collections/by/' + username }
-              label={msg('menu-collections')} type="before" onClick={onMenuItemClick} />
           </li>
         ];
       } else {
@@ -78,6 +74,10 @@ class MainMenu extends Component {
             <Icon glyph="mf-nearby-invert" href={langPrefix + '/wiki/Special:Nearby'}
               onClick={onMenuItemClick}
               label={msg('menu-nearby')} type="before"/>
+          </li>
+          <li>
+            <Icon glyph="mf-collections-invert" href={'/' + this.props.lang + '/wiki/Special:Collections/' }
+              label={msg('menu-collections')} type="before" onClick={onMenuItemClick} />
           </li>
         </ul>
         {this.getUserMenu()}
