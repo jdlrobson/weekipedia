@@ -2,13 +2,30 @@ import React from 'react'
 
 import './mediawiki-ui-button.css'
 
-const Button = (props) => {
-  var modifiers = props.isPrimary ? 'mw-ui-primary' : '';
-  modifiers += props.isQuiet ? 'mw-ui-quiet' : '';
-  modifiers += props.className ? ' ' + props.className : '';
+export default React.createClass({
+  componentWillMount() {
+    this.setState( { jsEnabled: false } );
+  },
+  componentDidMount() {
+    this.setState( { jsEnabled: true } );
+  },
+  render() {
+    var props = this.props;
+    var disabled = false;
+    var modifiers = props.isPrimary ? 'mw-ui-primary' : '';
+    modifiers += props.isQuiet ? 'mw-ui-quiet' : '';
+    modifiers += props.className ? ' ' + props.className : '';
 
-  return <a className={'mw-ui-button ' + modifiers}
-    onClick={props.onClick} href={props.href}>{props.label}</a>
-}
-
-export default Button
+    if ( !this.state.jsEnabled && props.onClick && !props.href ) {
+      disabled = true;
+    }
+    var btnProps = {
+      className: 'mw-ui-button ' + modifiers,
+      href: props.href,
+      onClick: props.onClick,
+      disabled: disabled
+    }
+    return btnProps.href ? <a {...btnProps}>{props.label}</a> :
+      <button {...btnProps}>{props.label}</button>
+  }
+})
