@@ -39,7 +39,7 @@ class ArticleHeader extends Component {
     }
 
     if ( this.props.tabs.length ) {
-      header.push( <HorizontalList isSeparated="1"
+      header.push( <HorizontalList isSeparated="1" className="tabs"
         key="article-header-tabs">{this.props.tabs}</HorizontalList> );
     }
 
