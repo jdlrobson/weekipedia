@@ -52,6 +52,7 @@ export default React.createClass({
       } ).catch( function () {
         self.setState( { error: true } );
       })
+      this.setState( { description: 'All collections by ' + username})
     } else if ( args.length === 0 || !args[0] ) {
       this.setState( { defaultView: true, username: false, endpoint: endpointPrefix } );
     } else {
@@ -95,9 +96,12 @@ export default React.createClass({
     }
   },
   render() {
-    var tagline, userUrl, actions, label, suffix;
+    var username, tagline, userUrl, actions, label, suffix, tabs,
+      lang = this.props.lang,
+      session = this.props.session;
+
     if ( this.state.username ) {
-      if ( this.props.session && this.state.username === this.props.session.username ) {
+      if ( session && this.state.username === session.username ) {
         label = this.state.id ? 'Edit' : 'Create';
         suffix = this.state.id ? '/' + this.state.id : '/';
         actions = <Button label={label} href={"#/edit-collection/" + this.state.username + suffix } isPrimary={true}/>;
@@ -111,9 +115,33 @@ export default React.createClass({
           <div>{actions}</div>
         </div>
       );
+      username = this.state.username;
+    } else if ( session ) {
+      username = session.username;
+    }
+
+    tabs = [
+      <a key="collection-tab-1" href={'/' + lang + '/wiki/Special:Collections/'}
+        onClick={this.props.onClickInternalLink}
+        className={!this.state.username ? 'active' : ''}>All</a>
+    ];
+    if ( username ) {
+      tabs.push(
+        <a key="collection-tab-2" href={'/' + lang + '/wiki/Special:Collections/by/' + username}
+          onClick={this.props.onClickInternalLink}
+          className={this.state.username === username && !this.state.title ? 'active' : ''}>{username}</a>
+      );
+    } else {
+      tagline = (
+        <div>
+          <div>by everyone</div>
+          Collections of pages from our community.
+        </div>
+      );
     }
     return (
       <Article {...this.props} isSpecialPage='yes'
+        tabs={tabs}
         title={this.state.title || 'Collections'} tagline={tagline} body={this.getBody()}>
       </Article>
     )
