@@ -99,7 +99,7 @@ export default React.createClass({
     var curSection;
     var self = this;
 
-    allSections.forEach( function ( sectionProps, i ) {
+    allSections.forEach( function ( sectionProps ) {
       var id = sectionProps.id;
       if ( sectionProps.toclevel === topLevelSection ) {
         if ( curSection ) {
@@ -107,11 +107,10 @@ export default React.createClass({
         }
         curSection = Object.assign( {}, self.props, sectionProps, {
           key: id,
-          number: i + 1,
           subsections: []
         } );
       } else {
-        curSection.subsections.push( <Section {...self.props} number={i+1}
+        curSection.subsections.push( <Section {...self.props}
           {...sectionProps} key={id} isCollapsible={false} /> );
       }
     } );

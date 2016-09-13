@@ -39,7 +39,7 @@ class Section extends Component {
       <span dangerouslySetInnerHTML={{ __html: this.props.line}} key={"section-heading-span-" + this.props.id} />
     ];
     if ( this.props.canAuthenticate && this.props.isEditable ) {
-      headingChildren.push( <EditIcon {...this.props} section={this.props.number}
+      headingChildren.push( <EditIcon {...this.props} section={this.props.id}
         key={"section-edit-icon-" + this.props.id} /> );
     }
 
