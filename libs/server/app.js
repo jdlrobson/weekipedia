@@ -516,6 +516,7 @@ app.get('/:lang?/*',(req, res) => {
     offlineVersion: process.env.OFFLINE_VERSION
   };
 
+  res.setHeader('Vary', 'Cookie');
   // use React Router
   res.status(200).render('index.html', {
     isRTL: isRTL( req.params.lang ),
