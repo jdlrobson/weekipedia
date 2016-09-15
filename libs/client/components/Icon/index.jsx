@@ -13,10 +13,12 @@ export default React.createClass({
     var props = this.props;
     var glyph = props.glyph;
     // If the icon's only purpose is to run with JS and JS is not available it should be disabled
-    if ( !props.href && props.onClick && !this.state.jsEnabled ) {
-      glyph = '';
-    } else if ( props.href && props.href.indexOf( '#/' ) === 0 ) {
-      glyph = '';
+    if ( !this.state.jsEnabled ) {
+      if ( !props.href && props.onClick ) {
+        glyph = '';
+      } else if ( props.href && props.href.indexOf( '#/' ) === 0 ) {
+        glyph = '';
+      }
     }
 
     var iconProps = {
