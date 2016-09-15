@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 
-import Icon from './Icon'
+import Icon from './../Icon'
+
+import './icons.less'
 
 class LanguageIcon extends Component {
   render(){

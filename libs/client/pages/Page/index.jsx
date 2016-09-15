@@ -17,7 +17,6 @@ import Content from './../../containers/Content'
 
 import './styles.less'
 import './tablet.less'
-import './icons.less'
 
 const OFFLINE_ERROR_MESSAGE = 'You need an internet connection to view this page';
 const NOT_FOUND_MESSAGE = 'This page does not exist.';
