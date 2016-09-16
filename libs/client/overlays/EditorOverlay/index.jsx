@@ -5,6 +5,7 @@ import Content from './../../containers/Content'
 import TruncatedText from './../../containers/TruncatedText'
 
 import Button from './../../components/Button'
+import SectionContent from './../../components/SectionContent'
 import IntermediateState from './../../components/IntermediateState'
 import Panel from './../../components/Panel'
 import Input from './../../components/Input'
@@ -42,12 +43,31 @@ export default React.createClass({
   },
   showPreview() {
     this.setState( { step: PREVIEW_STEP } );
+    if ( !this.state.preview ) {
+      this.loadPreview();
+    }
   },
   updateSummary( ev ) {
     this.setState( { summary: ev.currentTarget.value } );
   },
   updateText( ev ) {
-    this.setState( { text: ev.currentTarget.value } );
+    this.setState( { text: ev.currentTarget.value, preview: null } );
+  },
+  loadPreview() {
+    var self = this,
+      source = this.props.language_project || this.props.lang + '.' + this.props.project,
+      endpoint = '/api/' + source + '/parse/',
+      data = {
+        title: this.props.title,
+        wikitext: this.state.text
+      };
+
+    if ( this.props.section ) {
+      endpoint += this.props.section;
+    }
+    this.props.api.post( endpoint, data ).then( function ( data ) {
+      self.setState( { preview: data.text['*'] } );
+    } );
   },
   save() {
     var data,
@@ -97,7 +117,7 @@ export default React.createClass({
     } );
   },
   render(){
-    var content, overlayProps, action,
+    var content, overlayProps, action, previewPane,
       props = this.props,
       license = props.siteinfo.license,
       state = this.state,
@@ -131,15 +151,22 @@ export default React.createClass({
       } else if ( state.step === PREVIEW_STEP ) {
         action = 'Previewing';
         overlayProps.primaryIcon = backBtn;
-        content = (
-          <Panel>
+        previewPane = state.preview ?
+          <SectionContent text={state.preview} /> :
+          <IntermediateState />;
+
+        content = [
+          <Panel key="editor-summary">
             <p className="summary-request">How did you improve the page?</p>
             {summary}
             <p className="license">Content will be saved under the following license: <br/>
               <a href={license.url}>{license.name}</a>
             </p>
+          </Panel>,
+          <Panel key="editor-preview">
+            {previewPane}
           </Panel>
-        );
+        ];
       } else {
         action = 'Saving';
         overlayProps.primaryIcon = backBtn;
