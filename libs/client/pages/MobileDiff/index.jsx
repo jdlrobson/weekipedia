@@ -36,8 +36,10 @@ export default React.createClass({
   },
   render(){
     var body, title, footer, link,
+      userGroups, editorTagline,
       groups = [],
       links = [],
+      props = this.props,
       urlPrefix = '/' + this.props.lang + '/wiki/',
       diff = this.state.diff;
 
@@ -63,21 +65,30 @@ export default React.createClass({
         </Content>
       );
 
-      link = <a href={urlPrefix + 'User:' + diff.user.name}
-        onClick={this.props.onClickInternalLink}>{diff.user.name}</a>;
-
-      diff.user.groups.forEach( function ( group ) {
+      // anon edits do not have groups
+      userGroups = diff.user.groups || [];
+      userGroups.forEach( function ( group ) {
         if ( IGNORED_GROUPS.indexOf( group ) === -1 ) {
           groups.push( group );
         } else {
           return false;
         }
       } );
+
+      if ( diff.anon ) {
+        link = <span>Anonymous user</span>;
+        editorTagline = <a href={'/wiki/' + props.lang + '/Special:Contributions/' + diff.user.name}>{diff.user.name}</a>;
+      } else {
+        link = <a href={urlPrefix + 'User:' + diff.user.name}
+          onClick={this.props.onClickInternalLink}>{diff.user.name}</a>;
+        editorTagline = <div className="edit-count"><div>{diff.user.editcount}</div> edits</div>;
+      }
+
       footer = (
         <Content className="user-footer">
-          <Icon type="before" glyph="user" label={link} />
+          <Icon type="before" glyph={diff.anon ? 'anonymous' : 'user'} label={link} />
           <HorizontalList className="user-roles">{groups}</HorizontalList>
-          <div className="edit-count"><div>{diff.user.editcount}</div> edits</div>
+          {editorTagline}
         </Content>
       )
     } else {
