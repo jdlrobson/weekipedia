@@ -33,13 +33,11 @@ export default React.createClass({
   getInitialState() {
     return {
       isExpanded: false,
-      lead: {
-        languagecount: 0
-      },
+      lead: null,
       user: {},
       errorMsg: NOT_FOUND_MESSAGE,
       error: false,
-      remaining: {}
+      remaining: null
     };
   },
   // You want to load subscriptions not only when the component update but also when it gets mounted.
@@ -69,7 +67,6 @@ export default React.createClass({
     source = project ? lang + '.' + project : lang;
 
     this.checkExpandedState();
-    this.setState( { lead: {} } );
     this.props.api.getPage( title, source ).then( function ( data ) {
       var ns = data.lead.ns;
 
@@ -96,7 +93,8 @@ export default React.createClass({
   },
   getSections() {
     var sections = [];
-    var allSections = this.state.remaining.sections || [];
+    var remaining = this.state.remaining || this.props.remaining || {};
+    var allSections = remaining.sections || [];
     var topLevelSection = allSections.length ? allSections[0].toclevel : 2;
     var curSection;
     var self = this;
@@ -128,8 +126,8 @@ export default React.createClass({
 
     return '/' + source + '/' + title;
   },
-  getTabs(){
-    var ns = this.state.lead.ns,
+  getTabs( lead ){
+    var ns = lead.ns,
       baseUrl = this.getLocalUrl();
 
     if ( this.props.tabs ) {
@@ -150,10 +148,9 @@ export default React.createClass({
       return [];
     }
   },
-  getFooter() {
+  getFooter( lead ) {
     var footer = [];
     var props = this.props;
-    var lead = this.state.lead;
     var ns = lead.ns;
     if ( !lead ) {
       return footer;
@@ -179,11 +176,11 @@ export default React.createClass({
       props = this.props,
       sections = [],
       actions = [],
-      footer = this.getFooter(),
       secondaryActions = [],
       title = this.props.title,
       lang = this.props.lang,
-      lead = this.state.lead || {},
+      lead = this.state.lead || this.props.lead || {},
+      footer = this.getFooter( lead ),
       remainingSections = this.getSections();
 
     leadHtml = lead.sections && lead.sections.length ? lead.sections[0].text : undefined;
@@ -214,14 +211,14 @@ export default React.createClass({
 
     actions.push(<LanguageIcon key="article-page-action-language"
       showNotification={this.props.showNotification}
-      disabled={this.state.lead.languagecount === 0} />);
+      disabled={lead.languagecount === 0} />);
 
     if ( this.props.canAuthenticate ) {
       actions.push(<EditIcon {...this.props} key="page-action-edit"/>);
       actions.push(<WatchIcon {...this.props} key="page-action-watch"/>);
     }
 
-    if ( this.state.lead.ns === 0 ) {
+    if ( lead.ns === 0 ) {
       secondaryActions.push(<Button
         onClick={this.props.onClickInternalLink}
         key="article-talk" href={ this.getLocalUrl( 'Talk:' + title ) }
@@ -229,7 +226,7 @@ export default React.createClass({
     }
 
     return (
-      <Article {...this.props} actions={actions} tabs={this.getTabs()}
+      <Article {...this.props} actions={actions} tabs={this.getTabs(lead)}
         lead={lead}
         body={sections}
         secondaryActions={secondaryActions}
