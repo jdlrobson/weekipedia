@@ -35,7 +35,8 @@ class ArticleHeader extends Component {
     }
     header.push(<div className="tagline" key="article-tagline">{lead.description}</div>)
     if ( lead.hatnote ) {
-      header.push( <p className="hatnote" dangerouslySetInnerHTML={{ __html: lead.hatnote}} /> );
+      header.push( <p key="article-header-hatnote"
+        className="hatnote" dangerouslySetInnerHTML={{ __html: lead.hatnote}} /> );
     }
 
     if ( this.props.tabs.length ) {
