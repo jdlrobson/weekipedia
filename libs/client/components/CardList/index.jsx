@@ -70,6 +70,7 @@ export default React.createClass({
     var props = this.props;
     var cardListProps = {
       lang: props.lang,
+      language_project: props.language_project,
       unordered: props.unordered,
       CardClass: props.CardClass,
       isDiffCardList: props.isDiffCardList,

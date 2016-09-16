@@ -14,6 +14,7 @@ class Card extends Component {
     }
   }
   render(){
+    var props = this.props;
     var title = this.props.title;
     var className = this.props.className ? 'card ' + this.props.className : 'card';
     var styles = {
@@ -29,7 +30,8 @@ class Card extends Component {
         </p>
       );
     });
-    var url = this.props.url || '/' + this.props.lang + '/wiki/' + encodeURIComponent( title );
+    var wikiUrlPrefix = props.language_project ? '/' + props.language_project + '/' : '/' + props.lang + '/wiki/';
+    var url = props.url || wikiUrlPrefix + encodeURIComponent( title );
     var illustration;
     if ( this.props.thumbnail || this.props.metaInfo || this.props.showPlaceholderIllustration ) {
       illustration =<div className="card-thumb" style={styles}>{this.props.metaInfo}</div>;

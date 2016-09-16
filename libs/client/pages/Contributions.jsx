@@ -8,7 +8,8 @@ import CardDiff from './../components/CardDiff'
 export default React.createClass({
   render(){
     var title, tagline,
-      endpoint = '/api/contributions/' + this.props.lang + '/0/',
+      source = this.props.language_project || this.props.lang,
+      endpoint = '/api/contributions/' + source + '/0/',
       username = this.props.params;
 
     if ( username ) {

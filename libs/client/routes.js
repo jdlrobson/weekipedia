@@ -19,16 +19,23 @@ import utils from './utils'
 var routes = [
   // View a page
   [
-    /^\/([a-z\-]*)\/wiki\/(.*)|^\/wiki\/(.*)/,
+    // regex 1: /:lang/wiki/:title [1, 2]
+    // regex 2: /wiki/:title [3]
+    // regex3: /:lang.:project/:title [4,5,6]
+    /^\/([a-z\-]*)\/wiki\/(.*)|^\/wiki\/(.*)|^\/(.*)\.(.*)\/(.*)/,
     function ( info, props ) {
-      var title = info[2] || info[3],
+      var title = info[2] || info[3] || info[6],
         titleDecoded = decodeURIComponent( title ),
         titleSansPrefix = titleDecoded.substr( titleDecoded.indexOf( ':' ) + 1 ),
         titleParts = titleSansPrefix.split( '/' ),
-        lang = info[1] || 'en';
+        project = info[5],
+        lang = info[1] || info[4] || 'en',
+        articleSource = project ? lang + '.' + project : lang;
 
       props.lang = lang;
       titleSansPrefix = titleParts[0];
+      props.project = project || props.project;
+      props.language_project = lang + '.' + props.project;
       props.mobileUrl = utils.getAbsoluteUrl( title, lang, 'm.' + props.project + '.org' );
       props.desktopUrl = utils.getAbsoluteUrl( title, lang, props.project + '.org' );
 
@@ -45,7 +52,7 @@ var routes = [
         ];
       } else {
         props.title = titleDecoded;
-        props.fallback = '/api/page/' + lang + '/' + title;
+        props.fallback = '/api/page/' + articleSource + '/' + title;
         props.children = [
           React.createElement( Page,
             Object.assign( {}, props, {
@@ -62,12 +69,24 @@ var routes = [
 ];
 
 function addSpecialPage( title, Class, handler ) {
+  var regex = [
+    // regex 1: /:lang/wiki/Special\::title [1, 2]
+    '^\/([a-z\-]*)\/wiki\/Special:' + title + '\/?(.*)',
+    // regex 2: /wiki/Special\::title [3]
+    '^\/wiki\/Special:' + title + '\/?(.*)$',
+    // // regex3: /:lang.:project/:title [4,5,6]
+    '^\/([^\.]*)\.(.*)\/Special:' + title + '\/?(.*)$',
+  ];
   routes.push( [
-    new RegExp( '^\/([a-z\-]*)\/wiki\/Special:' + title + '\/?(.*)|^\/wiki\/Special:' + title + '\/?(.*)$' ),
+    new RegExp( regex.join( '|' ) ),
     function ( info, props ) {
-      var lang = info[1] || 'en';
-      var params = info[3] || info[2];
+      var lang = info[1] || info[4] || 'en';
+      var project = info[5];
+      var params = info[3] || info[2] || info[6];
       var suffix = params ? '/' + params : '';
+
+      props.project = project || props.project;
+      props.language_project = lang + '.' + props.project;
 
       props.lang = lang;
       props.mobileUrl = utils.getAbsoluteUrl( 'Special:' + title + suffix, lang, 'm.' + props.project + '.org' );

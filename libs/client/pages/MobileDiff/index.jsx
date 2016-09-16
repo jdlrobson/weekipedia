@@ -29,7 +29,9 @@ export default React.createClass({
   },
   load( revId ) {
     var self = this;
-    var endpoint = '/api/diff/' + this.props.lang + '/' + revId;
+    var props = this.props;
+    var source = props.language_project ? props.language_project : props.lang;
+    var endpoint = '/api/diff/' + source + '/' + revId;
     this.props.api.fetch( endpoint ).then( function ( diff ) {
       self.setState( { diff: diff } );
       window.scrollTo( 0, 0 );
@@ -41,7 +43,7 @@ export default React.createClass({
       groups = [],
       links = [],
       props = this.props,
-      urlPrefix = '/' + this.props.lang + '/wiki/',
+      urlPrefix = props.language_project ? '/' + props.language_project + '/' : '/' + this.props.lang + '/wiki/',
       diff = this.state.diff;
 
     if ( diff ) {
@@ -78,7 +80,7 @@ export default React.createClass({
 
       if ( diff.anon ) {
         link = <span>Anonymous user</span>;
-        editorTagline = <a href={'/wiki/' + props.lang + '/Special:Contributions/' + diff.user.name}>{diff.user.name}</a>;
+        editorTagline = <a href={urlPrefix + 'Special:Contributions/' + diff.user.name}>{diff.user.name}</a>;
       } else {
         link = <a href={urlPrefix + 'User:' + diff.user.name}
           onClick={this.props.onClickInternalLink}>{diff.user.name}</a>;

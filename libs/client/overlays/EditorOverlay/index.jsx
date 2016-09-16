@@ -52,7 +52,9 @@ export default React.createClass({
   save() {
     var data,
       self = this,
-      endpoint = '/api/private/edit/' + this.props.lang + '/' + encodeURIComponent( this.props.title );
+      props = this.props,
+      source = props.language_project || props.lang,
+      endpoint = '/api/private/edit/' + source + '/' + encodeURIComponent( this.props.title );
 
     if ( this.props.section ) {
       endpoint += '/' + this.props.section;
@@ -63,7 +65,7 @@ export default React.createClass({
     };
     this.setState( { step: SAVE_STEP } );
     this.props.api.post( endpoint, data ).then( function () {
-      self.props.api.invalidatePage( self.props.title, self.props.lang );
+      self.props.api.invalidatePage( props.title, source );
       // wait 2s before doing this to give cache time to warm.
       setTimeout( function () {
         self.props.router.navigateTo( window.location.pathname + '?referer=editor&cachebuster=' + Math.random() );
@@ -74,8 +76,10 @@ export default React.createClass({
     } );
   },
   loadWikiText(){
-    var self = this;
-    var endpoint = '/api/wikitext/' + this.props.lang + '/' + encodeURIComponent( this.props.title );
+    var self = this,
+      source = this.props.language_project || this.props.lang,
+      endpoint = '/api/wikitext/' + source + '/' + encodeURIComponent( this.props.title );
+
     if ( this.props.section ) {
       endpoint += '/' + this.props.section;
     }

@@ -137,7 +137,11 @@ export default React.createClass({
 
         // FIXME: Workaround for #5
         if ( href.substr( 0, 5 ) === '/wiki' ) {
-          href = '/' + props.lang + href;
+          if ( props.language_project ) {
+            href = '/' + props.language_project + href.substr( 5 );
+          } else {
+            href = '/' + props.lang + href;
+          }
         }
         props.router.navigateTo( href );
         ev.preventDefault();

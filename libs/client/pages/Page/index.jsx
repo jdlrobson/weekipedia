@@ -60,14 +60,17 @@ export default React.createClass({
     }
   },
   load( title, lang ) {
-    var self = this;
+    var source, project,
+      self = this;
 
     title = title || this.props.title;
     lang = lang || this.props.lang;
+    project = this.props.project;
+    source = project ? lang + '.' + project : lang;
 
     this.checkExpandedState();
     this.setState( { lead: {} } );
-    this.props.api.getPage( title, lang ).then( function ( data ) {
+    this.props.api.getPage( title, source ).then( function ( data ) {
       var ns = data.lead.ns;
 
       // If talk page or user page auto expand
@@ -119,9 +122,15 @@ export default React.createClass({
     }
     return sections;
   },
+  getLocalUrl( title ) {
+    var source = this.props.language_project || this.props.lang + '/wiki';
+    title = title || '';
+
+    return '/' + source + '/' + title;
+  },
   getTabs(){
     var ns = this.state.lead.ns,
-      baseUrl = '/' + this.props.lang + '/wiki/';
+      baseUrl = this.getLocalUrl();
 
     if ( this.props.tabs ) {
       return this.props.tabs;
@@ -151,6 +160,7 @@ export default React.createClass({
     } else {
       footer = [
         <LastModifiedBar editor={lead.lastmodifier} lang={props.lang}
+          language_project={props.language_project}
           onClickInternalLink={props.onClickInternalLink}
           title={props.title} timestamp={lead.lastmodified} key="page-last-modified" />
       ];
@@ -214,7 +224,7 @@ export default React.createClass({
     if ( this.state.lead.ns === 0 ) {
       secondaryActions.push(<Button
         onClick={this.props.onClickInternalLink}
-        key="article-talk" href={'/' + lang + '/wiki/Talk:' + title }
+        key="article-talk" href={ this.getLocalUrl( 'Talk:' + title ) }
         label="Talk" />);
     }
 

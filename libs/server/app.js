@@ -108,6 +108,19 @@ if ( https ) {
   });
 }
 
+function getProject( req ) {
+  var proj = { project: DEFAULT_PROJECT };
+  if ( req.params.lang ) {
+    proj.lang = req.params.lang;
+    if ( req.params.lang.indexOf( '.' ) > -1 ) {
+      var tmp = req.params.lang.split( '.' );
+      proj.lang = tmp[0];
+      proj.project = tmp[1];
+    }
+  }
+  return proj;
+}
+
 // Simple route middleware to ensure user is authenticated.
 //   Use this route middleware on any resource that needs to be protected.  If
 //   the request is authenticated (typically via a persistent login session),
@@ -176,7 +189,8 @@ if ( SIGN_IN_SUPPORTED ) {
     var p = req.params;
     var body = req.body;
     respond( res, function () {
-      return edit( p.lang, p.title, body.text, body.summary, p.section, DEFAULT_PROJECT, req.user )
+      var proj = getProject( req );
+      return edit( proj.lang, p.title, body.text, body.summary, p.section, proj.project, req.user )
         .then( function ( data ) {
           invalidate( '/api/page/' + p.lang + '/' + encodeURIComponent( p.title ) );
           return data;
@@ -362,7 +376,8 @@ app.get('/api/file/:lang/:width,:height/:title/',(req, res) => {
 
 app.get('/api/related/:lang/:title',(req, res) => {
   return cachedResponse( res, null, function () {
-    return related( req.params.lang, req.params.title, DEFAULT_PROJECT );
+    var p = getProject( req );
+    return related( p.lang, req.params.title, p.project );
   } );
 } );
 
@@ -386,14 +401,22 @@ app.get('/api/nearby/:lang/:latitude,:longitude',(req, res) => {
 
 app.get('/api/diff/:lang/:revId',(req, res) => {
   cachedResponse( res, req.url, function () {
-    return diff( req.params.lang, req.params.revId, DEFAULT_PROJECT )
+    var p = getProject( req );
+    return diff( p.lang, req.params.revId, p.project )
   });
 } );
 
 
-app.get('/api/page/:lang/:title',(req, res) => {
+app.get('/api/page/:lang.:project/:title',(req, res) => {
   cachedResponse( res, req.url, function () {
-    return page( req.params.title, req.params.lang, DEFAULT_PROJECT )
+    return page( req.params.title, req.params.lang, req.params.project );
+  });
+} );
+
+app.get('/api/page/:lang/:title',(req, res) => {
+  var proj = getProject(req);
+  cachedResponse( res, req.url, function () {
+    return page( req.params.title, proj.lang, proj.project )
   });
 } );
 
@@ -404,8 +427,9 @@ app.get('/api/visits/:lang/',(req, res) => {
 } );
 
 app.get('/api/page-languages/:lang/:title',(req, res) => {
+  var proj = getProject(req);
   cachedResponse( res, req.url, function () {
-    return languages( req.params.title, req.params.lang, DEFAULT_PROJECT );
+    return languages( req.params.title, proj.lang, proj.project );
   });
 } );
 
@@ -437,14 +461,16 @@ app.get('/api/:lang/collection/', function(req, res){
 app.get('/api/contributions/:lang/:ns/:username?',(req, res) => {
   cachedResponse( res, req.url, function() {
     var p = req.params;
-    return contributions( p.lang, p.username, p.ns, req.query, DEFAULT_PROJECT );
+    var pr = getProject( req );
+    return contributions( pr.lang, p.username, p.ns, req.query, pr.project );
   } );
 } );
 
 app.get('/api/pagehistory/:lang/:title',(req, res) => {
   cachedResponse( res, req.url, function() {
+    var proj = getProject( req );
     var p = req.params;
-    return pagehistory( p.lang, p.title, req.query, DEFAULT_PROJECT );
+    return pagehistory( proj.lang, p.title, req.query, proj.project );
   } );
 } );
 
@@ -454,8 +480,9 @@ app.get('/api/web-push/service/trending/',(req, res) => {
 
 app.get('/api/wikitext/:lang/:title/:section?',(req, res) => {
   var p = req.params;
+  var proj = getProject( req );
   respond( res, function () {
-    return wikitext( p.lang, p.title, p.section, DEFAULT_PROJECT );
+    return wikitext( proj.lang, p.title, p.section, proj.project );
   } );
 } );
 

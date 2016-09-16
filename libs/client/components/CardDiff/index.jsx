@@ -18,7 +18,9 @@ class CardDiff extends Component {
       extracts.push( <abbr className="minor-edit" title="This is a minor edit">m</abbr>);
     }
 
-    var url = '/wiki/Special:MobileDiff/' + this.props.revid;
+    var source = this.props.language_project || this.props.lang + '/wiki';
+    var url = '/' + source + '/Special:MobileDiff/' + this.props.revid;
+
     return (
       <Card className="card-diff" {...this.props} extracts={extracts} metaInfo={metaInfo} url={url} />
     )

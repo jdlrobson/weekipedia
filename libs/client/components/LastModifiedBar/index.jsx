@@ -9,9 +9,10 @@ import Icon from './../Icon'
 import Content from './../../containers/Content'
 import TruncatedText from './../../containers/TruncatedText'
 
-export default ({ editor, lang, title, timestamp, onClickInternalLink }) => {
+export default ({ editor, language_project, lang, title, timestamp, onClickInternalLink }) => {
   const isAnon = editor && editor.name ? false : true;
-  const historyUrl = '/' + lang + '/wiki/Special:History/' + title
+  const source = language_project ? language_project : lang + '/wiki';
+  const historyUrl = '/' + source + '/Special:History/' + title
   const prefix = '/wiki/User:'
   const now = Math.round( new Date().getTime() / 1000 );
 

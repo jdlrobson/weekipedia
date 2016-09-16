@@ -14,10 +14,17 @@ Api.prototype = {
       delete this.cache[path.substr(0, path.length -1)];
     }
   },
-  invalidatePage: function ( title, lang ) {
+  invalidatePage: function ( title, langOrProject ) {
+    var s = langOrProject.split( '.' );
+    var lang = s[0];
+    var proj = s[1];
     var keyPrefix = API_PATH + 'page/' + lang + '/';
+    var keyPrefix2 = API_PATH + 'page/' + langOrProject + '/';
+
     this.invalidatePath( keyPrefix + title );
     this.invalidatePath( keyPrefix + encodeURIComponent( title ) );
+    this.invalidatePath( keyPrefix2 + title );
+    this.invalidatePath( keyPrefix2 + encodeURIComponent( title ) );
   },
   post: function ( url, data ) {
     return fetch( url, {

@@ -34,7 +34,8 @@ export default React.createClass({
   },
   componentDidMount(){
     var self = this;
-    this.props.api.fetch( '/api/page-languages/' + this.props.lang + '/' + this.props.title ).then( function ( languages ) {
+    var source =  this.props.language_project || this.props.lang;
+    this.props.api.fetch( '/api/page-languages/' + source + '/' + this.props.title ).then( function ( languages ) {
       self.setState( { isLoading: false, languages: languages } )
     } );
   },
@@ -87,12 +88,15 @@ export default React.createClass({
   render(){
     var self = this;
     var state = this.state;
+    var props = this.props;
     var content, prefLang, preferredLangs, otherLangs;
 
     function mapLanguage( language ) {
       var code = language.lang;
+      var source =  props.project ? code + '.' + props.project + '/' : code + '/wiki/';
+
       return (
-        <a href={'/' + code + '/wiki/' + language.title.replace( /\//gi, '%2F' ) }
+        <a href={'/' + source + language.title.replace( /\//gi, '%2F' ) }
           key={"lang-item-" + code}
           onClick={self.navigateTo}
           hrefLang={language.lang} lang={language.lang}>
