@@ -23,16 +23,18 @@ class MainMenu extends Component {
         username = this.props.session.username;
         login = [
           <Icon glyph="mf-profile-invert" href={'/' + this.props.lang + '/wiki/User:' + username }
+            key="menu-item-profile"
            label={username} type="before" onClick={onMenuItemClick} />,
           <Icon glyph="mf-logout-invert" href='/auth/logout'
+            key="menu-item-logout"
             label={msg('menu-logout')} onClick={onMenuItemClick} />
         ];
         usertools = [
-          <li>
+          <li key="menu-item-watchlist">
             <Icon glyph="mf-watchlist-invert" href={'/' + this.props.lang + '/wiki/Special:Watchlist' }
               label={msg('menu-watchlist')} type="before" onClick={onMenuItemClick} />
           </li>,
-          <li>
+          <li key="menu-item-contribs">
             <Icon glyph="mf-contributions-invert" href={'/' + this.props.lang + '/wiki/Special:Contributions/' + username }
               label={msg('menu-contributions')} type="before" onClick={onMenuItemClick} />
           </li>
