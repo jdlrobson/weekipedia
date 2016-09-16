@@ -45,6 +45,7 @@ export default React.createClass({
       title = diff.title;
       links = [
         <a href={urlPrefix + 'Special:MobileDiff/' + diff.parent}
+          key="mobile-diff-prev-link"
           onClick={this.props.onClickInternalLink}>← Previous edit</a>
       ];
       body = (
