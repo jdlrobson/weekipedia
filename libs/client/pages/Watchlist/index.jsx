@@ -11,11 +11,13 @@ export default React.createClass({
     var prefix = '/' + this.props.lang + '/wiki/';
 
     var editLink = <a
+      key="watchlist-list-tab"
       className={isEditWatchlist ? 'active' : '' }
       onClick={props.onClickInternalLink}
       href={prefix + 'Special:EditWatchlist'}>List</a>;
 
     var modLink = <a
+      key="watchlist-modifier-tab"
       className={isEditWatchlist ? '' : 'active' }
       onClick={props.onClickInternalLink}
       href={prefix + 'Special:Watchlist'}>Modified</a>;
