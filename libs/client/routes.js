@@ -66,16 +66,18 @@ function addSpecialPage( title, Class, handler ) {
     new RegExp( '^\/([a-z\-]*)\/wiki\/Special:' + title + '\/?(.*)|^\/wiki\/Special:' + title + '\/?(.*)$' ),
     function ( info, props ) {
       var lang = info[1] || 'en';
+      var params = info[3] || info[2];
+      var suffix = params ? '/' + params : '';
 
       props.lang = lang;
-      props.mobileUrl = utils.getAbsoluteUrl( 'Special:' + title, lang, 'm.' + props.project + '.org' );
-      props.desktopUrl = utils.getAbsoluteUrl( 'Special:' + title, lang, props.project + '.org' );
+      props.mobileUrl = utils.getAbsoluteUrl( 'Special:' + title + suffix, lang, 'm.' + props.project + '.org' );
+      props.desktopUrl = utils.getAbsoluteUrl( 'Special:' + title + suffix, lang, props.project + '.org' );
       props.children = [
         React.createElement( Class,
           Object.assign( {}, props, {
             title: title,
             key: 'page-special-' + title,
-            params: info[3] || info[2],
+            params: params,
             children: []
           } )
         )
