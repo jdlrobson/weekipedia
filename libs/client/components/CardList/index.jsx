@@ -121,15 +121,20 @@ export default React.createClass({
       } );
     }
   },
+  onScroll() {
+    var self = this;
+    if ( document.body.scrollHeight >= ( document.body.scrollTop + window.innerHeight ) / 2 ) {
+      self.loadMore();
+    }
+  },
+  componentWillUnmount() {
+    document.removeEventListener( 'scroll', this.onScroll );
+  },
   componentDidMount() {
     this.loadCards( this.props );
     // setup infinite scroll
     if ( this.props.infiniteScroll ) {
-      document.addEventListener( 'scroll', function () {
-        if ( document.body.scrollHeight >= ( document.body.scrollTop + window.innerHeight ) / 2 ) {
-          self.loadMore();
-        }
-      } );
+      document.addEventListener( 'scroll', this.onScroll );
     }
   },
   render: function () {
