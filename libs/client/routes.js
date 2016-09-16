@@ -75,7 +75,8 @@ function addSpecialPage( title, Class, handler ) {
           Object.assign( {}, props, {
             title: title,
             key: 'page-special-' + title,
-            params: info[3] || info[2]
+            params: info[3] || info[2],
+            children: []
           } )
         )
       ];
