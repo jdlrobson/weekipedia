@@ -554,13 +554,33 @@ app.get('/:lang?/*',(req, res) => {
   var route = shared.router.matchRoute( req.path, '#', config, req.query );
 
   function render( data ) {
+    var lead,
+      desc = '',
+      title = SITE_TITLE,
+      image = '/home-icon.png';
+
     data = data || {};
+
+    if ( data.fallbackProps && data.fallbackProps.lead ) {
+      lead = data.fallbackProps.lead;
+      desc = lead.description;
+      title = lead.displaytitle || '';
+      title += ' - ' + SITE_TITLE;
+      if ( lead.image && lead.image.urls ) {
+        image = lead.image.urls['320'];
+      }
+    }
+
     // not ideal. Duplicates HTML content of article in config. Relying on gzip
     Object.assign( config, data );
     res.setHeader('Vary', 'Cookie');
     res.status(200).render('index.html', {
+      touch_icon: '/home-icon.png',
+      url: req.url,
+      image: image,
+      description: desc,
+      page_title: title,
       isRTL: isRTL( req.params.lang ),
-      title: SITE_TITLE,
       config: JSON.stringify( config ),
       body: SERVER_SIDE_RENDERING ? ReactDOMServer.renderToString( shared.render( req.path, '#', data, req.query ) ) : ''
     });

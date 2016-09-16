@@ -1,13 +1,17 @@
 <!DOCTYPE HTML>
-<html>
+<html prefix="og: http://ogp.me/ns#">
 	<head>
-		<title>{{title}}</title>
+		<title>{{page_title}}</title>
 		<link href="/style.css" rel="stylesheet">
 		{{#isRTL}}<link href="/style.rtl.css" rel="stylesheet">{{/isRTL}}
 		<meta name="viewport" content="initial-scale=1.0, user-scalable=yes, minimum-scale=0.25, maximum-scale=5.0, width=device-width"/>
 		<link rel="manifest" href="/manifest.json">
 		<meta name="apple-mobile-web-app-status-bar-style" content="white">
-		<link rel="apple-touch-icon" href="/home-icon.png">
+		<link rel="apple-touch-icon" href="{{touch_icon}}">
+		<meta property="og:title" content="{{page_title}}" />
+		<meta property="og:url" content="{{url}}" />
+		<meta property="og:image" content="{{image}}" />
+		<meta property="og:description" content="{{description}}" />
 		<meta name="apple-mobile-web-app-capable" content="yes">
 	</head>
 	<body data-config="{{config}}">
