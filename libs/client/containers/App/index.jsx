@@ -18,6 +18,7 @@ import initOffline from './../../offline'
 export default React.createClass({
   getInitialState() {
     return {
+      pageviews: 0,
       isMenuOpen: false,
       notification: '',
       isRTL: false,
@@ -48,10 +49,13 @@ export default React.createClass({
       showNotification: this.showNotification,
       showOverlay: this.showOverlay,
       onClickInternalLink: this.onClickInternalLink
-    } : ( this.props.fallbackProps || {} );
+    } : {};
+    if ( this.state.pageviews === 0 ) {
+      Object.assign( childProps, props.fallbackProps || {} );
+    }
 
     var children = React.Children.map( props.children, ( child ) => React.cloneElement( child, childProps ) );
-    this.setState( { children: children } );
+    this.setState( { children: children, pageviews: this.state.pageviews + 1 } );
   },
   mountLanguage( props ) {
     var newStylesheet,
