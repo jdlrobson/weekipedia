@@ -32,6 +32,7 @@ export default React.createClass({
     var endpoint = '/api/diff/' + this.props.lang + '/' + revId;
     this.props.api.fetch( endpoint ).then( function ( diff ) {
       self.setState( { diff: diff } );
+      window.scrollTo( 0, 0 );
     } );
   },
   render(){
