@@ -42,7 +42,7 @@ import isRTL from './../client/is-rtl'
 
 const cachedResponse = cachedResponses.cachedResponse
 const invalidate = cachedResponses.invalidate
-const project = process.env.PROJECT || 'wikipedia';
+const DEFAULT_PROJECT = process.env.PROJECT || 'wikipedia';
 const EN_MESSAGE_PATH = './i18n/en.json';
 
 const SITE_WORDMARK_PATH = process.env.SITE_WORDMARK_PATH
@@ -61,7 +61,8 @@ const SITE_EXPAND_ARTICLE = process.env.SITE_EXPAND_ARTICLE ?
 
 const SERVER_SIDE_RENDERING = Boolean( process.env.SERVER_SIDE_RENDERING );
 
-console.log( 'Init for project', project );
+console.log( 'The default project is: ', DEFAULT_PROJECT );
+
 // Express
 const app = express()
 const https = process.env.USE_HTTPS;
@@ -175,7 +176,7 @@ if ( SIGN_IN_SUPPORTED ) {
     var p = req.params;
     var body = req.body;
     respond( res, function () {
-      return edit( p.lang, p.title, body.text, body.summary, p.section, project, req.user )
+      return edit( p.lang, p.title, body.text, body.summary, p.section, DEFAULT_PROJECT, req.user )
         .then( function ( data ) {
           invalidate( '/api/page/' + p.lang + '/' + encodeURIComponent( p.title ) );
           return data;
@@ -189,7 +190,7 @@ if ( SIGN_IN_SUPPORTED ) {
       res.status( 200 );
       res.send( JSON.stringify( data ) );
     };
-    watchlistfeed( req.params.lang, project, req.params.ns, req.user, req.query ).then( callback );
+    watchlistfeed( req.params.lang, DEFAULT_PROJECT, req.params.ns, req.user, req.query ).then( callback );
   });
 
   app.all('/api/private/:lang/collection/:id/:action/:title?', ensureAuthenticated, function(req, res){
@@ -201,15 +202,15 @@ if ( SIGN_IN_SUPPORTED ) {
 
     respond( res, function () {
       if ( action === 'create' ) {
-        return collection.create( lang, project, req.body.title, req.body.description, profile );
+        return collection.create( lang, DEFAULT_PROJECT, req.body.title, req.body.description, profile );
       } if ( action === 'edit' ) {
-        return collection.edit( lang, project, id, req.body.title, req.body.description, profile );
+        return collection.edit( lang, DEFAULT_PROJECT, id, req.body.title, req.body.description, profile );
       } else if ( action === 'with' ) {
-        return collection.includes( lang, project, title, profile );
+        return collection.includes( lang, DEFAULT_PROJECT, title, profile );
       } else if ( action === 'has' ) {
-        return collection.member( lang, project, id, [ title ], profile );
+        return collection.member( lang, DEFAULT_PROJECT, id, [ title ], profile );
       } else {
-        return collection.update( lang, project, id, [ title ], profile, action === 'remove' );
+        return collection.update( lang, DEFAULT_PROJECT, id, [ title ], profile, action === 'remove' );
       }
     } );
   });
@@ -221,14 +222,14 @@ if ( SIGN_IN_SUPPORTED ) {
       res.send( JSON.stringify( data ) );
     };
     if ( req.params.title ) {
-      watched( req.params.lang, project, [ req.params.title ], req.user ).then( callback );
+      watched( req.params.lang, DEFAULT_PROJECT, [ req.params.title ], req.user ).then( callback );
     } else {
-      watchlist( req.params.lang, project, 0, req.user, req.query ).then( callback );
+      watchlist( req.params.lang, DEFAULT_PROJECT, 0, req.user, req.query ).then( callback );
     }
   });
 
   app.post('/api/private/watch/:lang/:title', function(req, res){
-    watch( req.params.lang, project, [ req.params.title ], req.user ).then( function ( data ) {
+    watch( req.params.lang, DEFAULT_PROJECT, [ req.params.title ], req.user ).then( function ( data ) {
       res.setHeader('Content-Type', 'application/json');
       res.status( 200 );
       res.send( JSON.stringify( data ) );
@@ -236,7 +237,7 @@ if ( SIGN_IN_SUPPORTED ) {
   });
 
   app.post('/api/private/unwatch/:lang/:title', function(req, res){
-    watch( req.params.lang, project, [ req.params.title ], req.user, true ).then( function ( data ) {
+    watch( req.params.lang, DEFAULT_PROJECT, [ req.params.title ], req.user, true ).then( function ( data ) {
       res.setHeader('Content-Type', 'application/json');
       res.status( 200 );
       res.send( JSON.stringify( data ) );
@@ -321,13 +322,13 @@ app.get('/api/trending/:wiki/:halflife',(req, res) => {
   var halflife = parseFloat( req.params.halflife );
 
   cachedResponse( res, req.url, function() {
-    return trending( wiki, halflife, project );
+    return trending( wiki, halflife, DEFAULT_PROJECT );
   } );
 } )
 
 app.get('/api/trending-debug/:wiki/:title',(req, res) => {
   cachedResponse( res, req.url, function() {
-    return trending( req.params.wiki, 0.1, project, req.params.title );
+    return trending( req.params.wiki, 0.1, DEFAULT_PROJECT, req.params.title );
   } );
 } )
 
@@ -341,70 +342,70 @@ app.get('/api/random/:lang/',(req, res) => {
       }
     }
 
-    return random( req.params.lang, 0, project, params );
+    return random( req.params.lang, 0, DEFAULT_PROJECT, params );
   } );
 } );
 
 app.get('/api/categories/:lang/:title?/',(req, res) => {
   return cachedResponse( res, null, function () {
     var p = req.params;
-    return categories( p.lang, p.title, project, req.query );
+    return categories( p.lang, p.title, DEFAULT_PROJECT, req.query );
   } );
 } );
 
 app.get('/api/file/:lang/:width,:height/:title/',(req, res) => {
   return cachedResponse( res, null, function () {
     var p = req.params;
-    return file( p.lang, p.title, p.width, p.height, project );
+    return file( p.lang, p.title, p.width, p.height, DEFAULT_PROJECT );
   } );
 } );
 
 app.get('/api/related/:lang/:title',(req, res) => {
   return cachedResponse( res, null, function () {
-    return related( req.params.lang, req.params.title, project );
+    return related( req.params.lang, req.params.title, DEFAULT_PROJECT );
   } );
 } );
 
 app.get('/api/search/:lang/:term',(req, res) => {
   return cachedResponse( res, null, function () {
-    return search( req.params.lang, req.params.term, 0, project );
+    return search( req.params.lang, req.params.term, 0, DEFAULT_PROJECT );
   } );
 } );
 
 app.get('/api/search-full/:lang/:term',(req, res) => {
   return cachedResponse( res, null, function () {
-    return search( req.params.lang, req.params.term, 0, project, true );
+    return search( req.params.lang, req.params.term, 0, DEFAULT_PROJECT, true );
   } );
 } );
 
 app.get('/api/nearby/:lang/:latitude,:longitude',(req, res) => {
   return cachedResponse( res, req.url, function () {
-    return nearby( req.params.latitude, req.params.longitude, req.params.lang, 0, project );
+    return nearby( req.params.latitude, req.params.longitude, req.params.lang, 0, DEFAULT_PROJECT );
   } );
 } );
 
 app.get('/api/diff/:lang/:revId',(req, res) => {
   cachedResponse( res, req.url, function () {
-    return diff( req.params.lang, req.params.revId, project )
+    return diff( req.params.lang, req.params.revId, DEFAULT_PROJECT )
   });
 } );
 
 
 app.get('/api/page/:lang/:title',(req, res) => {
   cachedResponse( res, req.url, function () {
-    return page( req.params.title, req.params.lang, project )
+    return page( req.params.title, req.params.lang, DEFAULT_PROJECT )
   });
 } );
 
 app.get('/api/visits/:lang/',(req, res) => {
   cachedResponse( res, req.url, function () {
-    return visits( req.params.lang, project )
+    return visits( req.params.lang, DEFAULT_PROJECT )
   } );
 } );
 
 app.get('/api/page-languages/:lang/:title',(req, res) => {
   cachedResponse( res, req.url, function () {
-    return languages( req.params.title, req.params.lang, project );
+    return languages( req.params.title, req.params.lang, DEFAULT_PROJECT );
   });
 } );
 
@@ -421,7 +422,7 @@ app.get('/api/:lang/collection/by/:user/:id?', function(req, res){
   }
 
   respond( res, function () {
-    return id !== undefined ? collection.members( lang, project, id, user ) : collection.list( lang, project, user );
+    return id !== undefined ? collection.members( lang, DEFAULT_PROJECT, id, user ) : collection.list( lang, DEFAULT_PROJECT, user );
   } );
 });
 
@@ -429,21 +430,21 @@ app.get('/api/:lang/collection/', function(req, res){
   var lang = req.params.lang;
 
   respond( res, function () {
-    return collection.all( lang, project, req.query );
+    return collection.all( lang, DEFAULT_PROJECT, req.query );
   } );
 });
 
 app.get('/api/contributions/:lang/:ns/:username?',(req, res) => {
   cachedResponse( res, req.url, function() {
     var p = req.params;
-    return contributions( p.lang, p.username, p.ns, req.query, project );
+    return contributions( p.lang, p.username, p.ns, req.query, DEFAULT_PROJECT );
   } );
 } );
 
 app.get('/api/pagehistory/:lang/:title',(req, res) => {
   cachedResponse( res, req.url, function() {
     var p = req.params;
-    return pagehistory( p.lang, p.title, req.query, project );
+    return pagehistory( p.lang, p.title, req.query, DEFAULT_PROJECT );
   } );
 } );
 
@@ -454,7 +455,7 @@ app.get('/api/web-push/service/trending/',(req, res) => {
 app.get('/api/wikitext/:lang/:title/:section?',(req, res) => {
   var p = req.params;
   respond( res, function () {
-    return wikitext( p.lang, p.title, p.section, project );
+    return wikitext( p.lang, p.title, p.section, DEFAULT_PROJECT );
   } );
 } );
 
@@ -518,7 +519,7 @@ app.get('/:lang?/*',(req, res) => {
     session: session,
     i18n: getMessages( req.query.uselang || req.params.lang || LANGUAGE_CODE ),
     canAuthenticate: Boolean( SIGN_IN_SUPPORTED ),
-    project: process.env.PROJECT || 'wikipedia',
+    project: DEFAULT_PROJECT,
     offlineVersion: process.env.OFFLINE_VERSION
   };
 
