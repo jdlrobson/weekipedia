@@ -56,22 +56,13 @@ export default React.createClass({
       continue: null
     };
   },
-  loadPages( props ) {
-    if ( props.pages ) {
-      this.setState( { cards: getCards( { pages: props.pages }, props ) } );
-    }
-  },
   loadCards( props ) {
     if ( props.apiEndpoint ) {
       this.load( props.apiEndpoint );
     }
   },
-  componentWillMount() {
-    this.loadPages( this.props );
-  },
   componentWillReceiveProps( props ) {
     this.loadCards( props );
-    this.loadPages( props );
   },
   load( apiEndpoint ) {
     var self = this;
@@ -131,8 +122,6 @@ export default React.createClass({
     }
   },
   componentDidMount() {
-    var self = this;
-    this.loadPages( this.props );
     this.loadCards( this.props );
     // setup infinite scroll
     if ( this.props.infiniteScroll ) {
@@ -148,7 +137,7 @@ export default React.createClass({
     var props = this.props;
     var isDiffCardList = this.props.isDiffCardList;
     var isUnordered = props.unordered && !isDiffCardList;
-    var cards = this.state.cards;
+    var cards = props.pages ? getCards( { pages: props.pages }, props ) : this.state.cards;
     var cardsAndHeaders = [];
     var continuer = props.continue && props.endpoint ?
       <div className='gutter' /> : null;
