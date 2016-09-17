@@ -66,7 +66,7 @@ export default React.createClass({
       endpoint += this.props.section;
     }
     this.props.api.post( endpoint, data ).then( function ( data ) {
-      self.setState( { preview: data.text['*'] } );
+      self.setState( { preview: data.text } );
     } );
   },
   save() {
