@@ -141,7 +141,7 @@ export default React.createClass({
 
         // FIXME: Workaround for #5
         if ( href.substr( 0, 5 ) === '/wiki' ) {
-          if ( props.language_project ) {
+          if ( props.language_project && props.siteinfo.allowForeignProjects ) {
             href = '/' + props.language_project + href.substr( 5 );
           } else {
             href = '/' + props.lang + href;

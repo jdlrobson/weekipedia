@@ -46,6 +46,14 @@ const invalidate = cachedResponses.invalidate
 const DEFAULT_PROJECT = process.env.PROJECT || 'wikipedia';
 const EN_MESSAGE_PATH = './i18n/en.json';
 
+const ALL_PROJECTS = [ 'wikipedia', 'wikivoyage', 'wiktionary',
+  'wikisource', 'wikiquote', 'wikinews', 'wikibooks', 'wikiversity' ];
+
+const SITE_ALLOW_FOREIGN_PROJECTS = Boolean( process.env.SITE_ALLOW_FOREIGN_PROJECTS );
+const ALLOWED_PROJECTS = SITE_ALLOW_FOREIGN_PROJECTS ?
+  ( process.env.SITE_ALLOWED_PROJECTS ? process.env.SITE_ALLOWED_PROJECTS.split( '|' ) :  ALL_PROJECTS )
+  : [ DEFAULT_PROJECT ];
+
 const SITE_WORDMARK_PATH = process.env.SITE_WORDMARK_PATH
 const SITE_TITLE = process.env.SITE_TITLE || 'Weekipedia'
 const CONSUMER_SECRET = process.env.MEDIAWIKI_CONSUMER_SECRET;
@@ -117,6 +125,9 @@ function getProject( req ) {
       var tmp = req.params.lang.split( '.' );
       proj.lang = tmp[0];
       proj.project = tmp[1];
+      if ( ALLOWED_PROJECTS.indexOf( proj.project ) === -1 ) {
+        throw "The `" + proj.project + "` project is not supported by the web app.";
+      }
     }
   }
   return proj;
@@ -540,6 +551,7 @@ app.get('/:lang?/*',(req, res) => {
 
   var config = {
     siteinfo: {
+      allowForeignProjects: SITE_ALLOW_FOREIGN_PROJECTS,
       home: process.env.HOME_PAGE_PATH || '/wiki/Main Page',
       expandSectionsByDefault: SITE_EXPAND_SECTIONS,
       expandArticlesByDefault: SITE_EXPAND_ARTICLE,

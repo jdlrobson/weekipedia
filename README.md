@@ -93,3 +93,9 @@ Add offline support
 Enable server side rendering
 
 > export SERVER_SIDE_RENDERING=1
+
+Multi projects
+
+> export SITE_ALLOW_FOREIGN_PROJECTS=1
+
+> export SITE_ALLOWED_PROJECTS='wikivoyage|wikipedia'
