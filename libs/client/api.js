@@ -35,7 +35,7 @@ Api.prototype = {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify( data )
-    } );
+    } ).then( resp => resp.json() );
   },
   prefetch: function ( url, data ) {
     this.cache[url] = new Promise( function ( resolve ) {
