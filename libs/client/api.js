@@ -17,7 +17,6 @@ Api.prototype = {
   invalidatePage: function ( title, langOrProject ) {
     var s = langOrProject.split( '.' );
     var lang = s[0];
-    var proj = s[1];
     var keyPrefix = API_PATH + 'page/' + lang + '/';
     var keyPrefix2 = API_PATH + 'page/' + langOrProject + '/';
 

@@ -178,7 +178,6 @@ export default React.createClass({
       actions = [],
       secondaryActions = [],
       title = this.props.title,
-      lang = this.props.lang,
       lead = this.state.lead || this.props.lead || {},
       footer = this.getFooter( lead ),
       remainingSections = this.getSections();
