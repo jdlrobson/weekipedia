@@ -25,6 +25,7 @@ import subscribe from './endpoints/subscribe'
 import search from './endpoints/search'
 import related from './endpoints/related'
 import random from './endpoints/random'
+import parse from './endpoints/parse'
 import pagehistory from './endpoints/page-history'
 import page from './endpoints/page'
 import nearby from './endpoints/nearby'
@@ -281,6 +282,14 @@ function checkReqParams( req, res, required ) {
  * Begin POST routes
  *******************************************************
 */
+app.post('/api/:lang_project/parse/:section?', function( req, res ) {
+  if ( checkReqParams( req, res, [ 'title', 'wikitext' ] ) ) {
+    res.status( 200 );
+    respond( res, function () {
+      return parse( req.params.lang_project, req.body.title, req.body.wikitext, req.params.section );
+    } );
+  }
+} );
 
 app.post('/api/web-push/test', function( req, res ) {
   if ( checkReqParams( req, res, [ 'feature', 'token', 'browser' ] ) ) {
