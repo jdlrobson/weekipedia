@@ -588,7 +588,7 @@ app.get('/:lang?/*',(req, res) => {
       title = lead.displaytitle || '';
       title += ' - ' + SITE_TITLE;
       if ( lead.image && lead.image.urls ) {
-        image = lead.image.urls['320'];
+        image = lead.image.urls['1024'] || lead.image.urls['320'];
       }
     }
 
