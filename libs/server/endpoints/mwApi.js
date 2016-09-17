@@ -13,17 +13,23 @@ function flatten( pages ) {
   return pages;
 }
 
-export default function ( lang, params, project, options, session ) {
-  var url, fullParams,
+export default function ( langOrLanguageProject, params, projectOrOptions, optionsOrSession, session ) {
+  var url, fullParams, project, options,
     baseParams = {
       action: 'query',
       format: 'json',
       formatversion: 2
     };
 
-
-  project = project || 'wikipedia';
-  url = 'https://' + lang + '.' + project + '.org/w/api.php';
+  if ( langOrLanguageProject.indexOf( '.' ) > -1 ) {
+    url = 'https://' + langOrLanguageProject + '.org/w/api.php';
+    options = projectOrOptions;
+    session = optionsOrSession;
+  } else {
+    project = projectOrOptions || 'wikipedia';
+    url = 'https://' + langOrLanguageProject + '.' + project + '.org/w/api.php';
+    options = optionsOrSession;
+  }
 
   fullParams = Object.assign( {}, baseParams, params );
 
