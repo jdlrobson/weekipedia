@@ -603,7 +603,7 @@ app.get('/:lang?/*',(req, res) => {
       page_title: title,
       isRTL: isRTL( req.params.lang ),
       config: JSON.stringify( config ),
-      body: SERVER_SIDE_RENDERING ? ReactDOMServer.renderToString( shared.render( req.path, '#', data, req.query ) ) : ''
+      body: !session && SERVER_SIDE_RENDERING ? ReactDOMServer.renderToString( shared.render( req.path, '#', data, req.query ) ) : ''
     });
   }
   if ( route.fallback && SERVER_SIDE_RENDERING ) {
