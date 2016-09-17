@@ -1,6 +1,6 @@
 import fetch from 'isomorphic-fetch'
 
-export default function ( language_project, title, wikitext, section ) {
+export default function ( language_project, title, wikitext ) {
   var params = {
     wikitext: wikitext,
     body_only: true,
