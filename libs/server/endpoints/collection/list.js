@@ -2,22 +2,39 @@ import mwApi from './../mwApi'
 import extractInfo from './extract-info'
 import extractMembers from './extract-members'
 import thumbFromTitle from './thumbnail-from-title.js'
+import vars from './vars'
 
-function list( lang, project, username, title ) {
+function list( lang, project, username, title, query ) {
   var params = {
     prop: 'revisions|images',
-    generator: 'prefixsearch',
     rvprop: 'content|timestamp',
     gpslimit: 500,
-    gpssearch: 'User:' + username + '/lists/',
     gpsnamespace: 2
   };
+
+  if ( username ) {
+    params.gpssearch = 'User:' + username + '/lists/';
+    params.generator = 'prefixsearch';
+  } else {
+    params.generator = 'categorymembers';
+    params.gcmdir = 'descending';
+    params.gcmsort = 'timestamp';
+    params.gcmtitle = vars.category;
+  }
+
+  if ( query ) {
+    if ( query.gcmcontinue || query.continue ) {
+      params.continue = query.continue;
+      params.gcmcontinue = query.gcmcontinue;
+    }
+  }
+
   if ( !title ) {
     params.rvsection = 0;
   }
 
   return mwApi( lang, params, project ).then( function ( json ) {
-    var result = { collections: [] };
+    var result = { collections: [], continue: json.continue };
     json.pages.forEach( function ( page ) {
       var collection, split, head,
         members = [],
