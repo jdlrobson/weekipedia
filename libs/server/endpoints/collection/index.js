@@ -10,15 +10,26 @@ import all from './all'
 
 import addProps from './../prop-enricher'
 
-function membersWithProps( lang, project, collection, username ) {
+function membersWithProps( lang, project, collection, username, query ) {
   return members( lang, project, collection, username ).then( function ( titles ) {
+    var offset = query.offset ? parseInt( query.offset, 10 ) : 0;
+    var nextOffset;
+
     return getInfo( lang, project, collection, username ).then( function ( info ) {
+      if ( titles.length - offset > 50 ) {
+        nextOffset = offset + 50;
+      }
+      titles = titles.slice( offset, offset + 50 );
+
       return addProps( titles, [ 'pageterms', 'pageimages', 'coordinates' ], lang, project ).then( function ( pages ) {
         return {
           id: info.id,
           title: info.title,
           description: info.description,
-          pages: pages
+          pages: pages,
+          continue: nextOffset ? {
+            offset: nextOffset
+          } : undefined
         }
       } );
     } );

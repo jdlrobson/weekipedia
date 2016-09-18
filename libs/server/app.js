@@ -473,7 +473,8 @@ app.get('/api/:lang/collection/by/:user/:id?', function(req, res){
   }
 
   respond( res, function () {
-    return id !== undefined ? collection.members( lang, DEFAULT_PROJECT, id, user ) : collection.list( lang, DEFAULT_PROJECT, user );
+    return id !== undefined ? collection.members( lang, DEFAULT_PROJECT, id, user, req.query ) :
+      collection.list( lang, DEFAULT_PROJECT, user );
   } );
 });
 
