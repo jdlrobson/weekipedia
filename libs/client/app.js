@@ -7,10 +7,11 @@ import shared from './../shared'
 
 import routes from './routes.js'
 import overlayRoutes from './routesOverlays.js'
-import api from './api.js'
+import Api from './api.js'
 import mwStorage from './mediawiki-storage'
 
 var config = JSON.parse( document.body.getAttribute( 'data-config' ) || '{}' );
+var api = new Api( config.siteinfo.apiPath );
 
 // Add client side specific properties.
 config.storage = mwStorage;

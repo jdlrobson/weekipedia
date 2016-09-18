@@ -41,6 +41,7 @@ import respond from './respond'
 import cachedResponses from './cached-response.js'
 import isRTL from './../client/is-rtl'
 
+const API_PATH = '/api/'
 const cachedResponse = cachedResponses.cachedResponse
 const invalidate = cachedResponses.invalidate
 const DEFAULT_PROJECT = process.env.PROJECT || 'wikipedia';
@@ -206,7 +207,7 @@ if ( SIGN_IN_SUPPORTED ) {
         .then( function ( data ) {
           return new Promise( function ( resolve ) {
             setTimeout( function () {
-              invalidate( '/api/page/' + p.lang + '/' + encodeURIComponent( p.title ) );
+              invalidate( API_PATH + 'page/' + p.lang + '/' + encodeURIComponent( p.title ) );
               setTimeout( function () {
                 resolve( data );
               }, 1000 );
@@ -557,6 +558,7 @@ app.get('/:lang?/*',(req, res) => {
 
   var config = {
     siteinfo: {
+      apiPath: API_PATH,
       allowForeignProjects: SITE_ALLOW_FOREIGN_PROJECTS,
       home: process.env.HOME_PAGE_PATH || '/wiki/Main Page',
       expandSectionsByDefault: SITE_EXPAND_SECTIONS,

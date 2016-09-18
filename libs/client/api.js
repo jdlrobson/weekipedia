@@ -1,11 +1,10 @@
 import fetch from 'isomorphic-fetch'
 
-function Api() {
+function Api( basePath ) {
   this.cache = {};
   this.refCache = {};
+  this.path = basePath || '/api/';
 }
-
-const API_PATH = '/api/';
 
 Api.prototype = {
   invalidatePath: function ( path ) {
@@ -17,8 +16,8 @@ Api.prototype = {
   invalidatePage: function ( title, langOrProject ) {
     var s = langOrProject.split( '.' );
     var lang = s[0];
-    var keyPrefix = API_PATH + 'page/' + lang + '/';
-    var keyPrefix2 = API_PATH + 'page/' + langOrProject + '/';
+    var keyPrefix = this.path + 'page/' + lang + '/';
+    var keyPrefix2 = this.path + 'page/' + langOrProject + '/';
 
     this.invalidatePath( keyPrefix + title );
     this.invalidatePath( keyPrefix + encodeURIComponent( title ) );
@@ -64,7 +63,7 @@ Api.prototype = {
   },
   getPage: function ( title, lang ) {
     lang = lang || 'en';
-    return this.fetch( API_PATH + 'page/' + lang + '/' + encodeURIComponent( title ) );
+    return this.fetch( this.path + 'page/' + lang + '/' + encodeURIComponent( title ) );
   },
   getReference: function ( title, lang, refId ) {
     return this.getReferences( title, lang ).then( function ( refs ) {
@@ -109,4 +108,4 @@ Api.prototype = {
   }
 };
 
-export default new Api();
+export default Api;
