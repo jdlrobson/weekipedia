@@ -56,7 +56,8 @@ function propEnricher( arr, props, lang, project, params ) {
       }
     })
     arr.forEach(function(page){
-      var obj = index[page.title] || index[redirects[page.title]];
+      var t = page.title.replace( /_/gi, ' ' );
+      var obj = index[t] || index[redirects[t]] || {};
       page.thumbnail = obj.thumbnail;
       if ( obj.missing ) {
         page.missing = true;
