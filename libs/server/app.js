@@ -204,8 +204,14 @@ if ( SIGN_IN_SUPPORTED ) {
       var proj = getProject( req );
       return edit( proj.lang, p.title, body.text, body.summary, p.section, proj.project, req.user )
         .then( function ( data ) {
-          invalidate( '/api/page/' + p.lang + '/' + encodeURIComponent( p.title ) );
-          return data;
+          return new Promise( function ( resolve ) {
+            setTimeout( function () {
+              invalidate( '/api/page/' + p.lang + '/' + encodeURIComponent( p.title ) );
+              setTimeout( function () {
+                resolve( data );
+              }, 1000 );
+            }, 8000 );
+          } );
         } );
     } );
   } );
