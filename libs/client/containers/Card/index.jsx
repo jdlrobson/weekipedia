@@ -7,10 +7,13 @@ import './styles.less'
 
 class Card extends Component {
   navigateTo(ev) {
-    var href = ReactDOM.findDOMNode( this ).querySelector( 'a' ).getAttribute( 'href' );
+    var node = ReactDOM.findDOMNode( this );
+    var link = node.querySelector( 'a' );
+    var href = link.getAttribute( 'href' );
+    var title = link.getAttribute( 'title' );
     if ( href ) {
       ev.preventDefault();
-      this.props.router.navigateTo( href );
+      this.props.router.navigateTo( { pathname: href }, title );
     }
   }
   render(){
@@ -43,7 +46,7 @@ class Card extends Component {
         {illustration}
         <div className="card-detail">
           <h3>
-            <a href={url}>{title}</a>
+            <a title={title} href={url}>{title}</a>
           </h3>
           {extracts}
         </div>

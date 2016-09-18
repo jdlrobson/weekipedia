@@ -115,7 +115,7 @@ export default React.createClass({
     } );
   },
   onClickInternalLink( ev ) {
-    var href, match, refId;
+    var href, parts, match, refId, title;
     var link = ev.currentTarget;
     var childNode = link.firstChild;
     var parentNode = link.parentNode;
@@ -136,6 +136,7 @@ export default React.createClass({
       }
     } else {
       href = link.getAttribute( 'href' ) || '';
+      title = link.getAttribute( 'title' ) || '';
 
       if ( href.substr( 0, 5 ) !== '/auth' ) {
 
@@ -147,7 +148,11 @@ export default React.createClass({
             href = '/' + props.lang + href;
           }
         }
-        props.router.navigateTo( href );
+        parts = href.split( '?' );
+        props.router.navigateTo( {
+          pathname: parts[0],
+          search: parts[1]
+        }, title );
         ev.preventDefault();
       }
     }

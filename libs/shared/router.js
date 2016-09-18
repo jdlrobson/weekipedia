@@ -15,26 +15,43 @@ var router = {
     routes.unshift( [ regExp, handler ] );
   },
   matchRoute: matchRoute,
-  navigateTo: function ( path, hash, useReplaceState ) {
-    var currentPath = window.location.pathname + window.location.search,
+  navigateTo: function ( pathOrLocation, hashOrTitle, useReplaceState ) {
+    var path, hash, search, title, url;
+    if ( !pathOrLocation || typeof pathOrLocation === 'string' ) {
+      path = pathOrLocation;
+      hash = hashOrTitle;
+      search = window.location.search;
+    } else {
+      hash = pathOrLocation.hash;
+      path = pathOrLocation.pathname;
+      search = pathOrLocation.search;
+      title = hashOrTitle;
+    }
+
+    var currentPath = window.location.pathname,
       state = {
         scrollY: window.scrollY
       };
 
+    if ( search ) {
+      currentPath += '?' + search;
+    }
     if ( hash === undefined ) {
       hash = path.split( '#' );
       path = hash[0];
       hash = hash[1] ? '#' + hash[1] : '';
     }
     if ( path ) {
+      url = search ? path + '?' + search : path;
+
       if ( useReplaceState ) {
         // TODO: older browser support
-        history.replaceState( {}, null, path );
+        history.replaceState( {}, null, url );
       } else {
         // replace the existing state with information about the scroll position
         history.replaceState( state, null, currentPath );
         // navigate to new page
-        history.pushState( {}, null, path );
+        history.pushState( {}, null, url );
       }
       events.emit( 'onpushstate' );
     }
@@ -47,6 +64,9 @@ var router = {
         history.replaceState( state, null, window.location.pathname );
         window.location.hash = hash;
       }
+    }
+    if ( title && typeof document !== undefined ) {
+      document.title = title;
     }
   }
 };
