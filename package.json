@@ -6,7 +6,8 @@
     "node-server": "node weekipedia.js",
     "node-server-dev": "NODE_ENV=development node weekipedia.js",
     "compile:watch": "NODE_ENV=development webpack --watch",
-    "compile": "webpack --content-base public/ && grunt cssjanus"
+    "compile": "webpack --content-base public/ && grunt cssjanus",
+    "compile-prod": "npm run compile && grunt uglify && grunt cssmin"
   },
   "babel": {
     "presets": [
@@ -29,7 +30,9 @@
     "extract-text-webpack-plugin": "^1.0.1",
     "file-loader": "^0.9.0",
     "grunt": "^1.0.1",
+    "grunt-contrib-cssmin": "^1.0.2",
     "grunt-contrib-jshint": "^1.0.0",
+    "grunt-contrib-uglify": "^2.0.0",
     "grunt-cssjanus": "^0.3.2",
     "grunt-jsxhint": "^0.8.0",
     "grunt-stylelint": "^0.4.0",
@@ -42,6 +45,7 @@
     "mocha": "^3.0.2",
     "node-cache": "^3.2.1",
     "node-jquery-param": "0.0.2",
+    "oauth-fetch-json": "^0.3.0",
     "pageviews": "^1.1.0",
     "passport": "^0.3.2",
     "passport-mediawiki-oauth": "^0.1.0",
@@ -53,7 +57,6 @@
     "sw-toolbox": "^3.2.1",
     "timeago": "^0.2.0",
     "url-loader": "^0.5.7",
-    "oauth-fetch-json": "^0.3.0",
     "web-push-subscriber": "^0.2.0",
     "webpack": "^1.13.1",
     "webpack-dev-server": "^1.14.1",

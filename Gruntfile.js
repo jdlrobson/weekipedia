@@ -4,6 +4,8 @@ module.exports = function ( grunt ) {
   grunt.loadNpmTasks( 'grunt-stylelint' );
   grunt.loadNpmTasks('grunt-jsxhint');
   grunt.loadNpmTasks( 'grunt-cssjanus' );
+  grunt.loadNpmTasks('grunt-contrib-uglify');
+  grunt.loadNpmTasks('grunt-contrib-cssmin');
 
   grunt.initConfig( {
     jshint: {
@@ -21,6 +23,23 @@ module.exports = function ( grunt ) {
         generateExactDuplicates: false,
         files: {
           'public/style.rtl.css': 'public/style.css'
+        }
+      }
+    },
+    uglify: {
+      build: {
+        files: {
+          'public/main-bundle.js': ['public/main-bundle.js'],
+          'public/push-bundle.js': ['public/push-bundle.js'],
+          'public/sw-bundle.js': ['public/sw-bundle.js']
+        }
+      }
+    },
+    cssmin: {
+      build: {
+        files: {
+          'style.css': ['public/style.css'],
+          'public/style.rtl.css': ['public/style.rtl.css']
         }
       }
     },
