@@ -42,8 +42,12 @@ class Overlay extends Component {
       var icon = (<Icon glyph='close' onClick={this.onClose.bind(this)}/>);
 
       header = <Header fixed="1" primaryIcon={this.props.primaryIcon || icon} router={this.props.router}
+        search={this.props.search}
         secondaryIcon={this.props.secondaryIcon}
         main={this.props.header}></Header>;
+    }
+    if ( this.props.search ) {
+      overlayClass += ' overlay-with-search';
     }
 
     return (

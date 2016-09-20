@@ -8,10 +8,21 @@ import './icons.less'
 class Header extends Component {
   render(){
     var suffix = this.props.fixed ? ' position-fixed' : '';
+    var search;
+
+    if ( this.props.search ) {
+      search = (
+        <Content className="search-header">
+          <div className='main'>
+            {this.props.search}
+          </div>
+        </Content>
+      );
+    }
 
     return (
       <div className={"header-container" + suffix}>
-        <Content className="header">
+        <Content className="header toolbar">
           <div>
             {this.props.primaryIcon}
           </div>
@@ -22,6 +33,7 @@ class Header extends Component {
             {this.props.secondaryIcon}
           </div>
         </Content>
+        {search}
       </div>
     )
   }

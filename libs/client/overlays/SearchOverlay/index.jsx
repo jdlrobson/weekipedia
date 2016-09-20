@@ -3,6 +3,7 @@ import React from 'react'
 import Overlay from './../../containers/Overlay'
 import Content from './../../containers/Content'
 
+import ChromeHeader from './../../components/ChromeHeader'
 import CardList from './../../components/CardList'
 import SearchForm from './../../components/SearchForm'
 
@@ -50,12 +51,18 @@ export default React.createClass({
     }
   },
   render(){
-    var main = <SearchForm
+    var siteinfo = this.props.siteinfo;
+    var heading = siteinfo.includeSiteBranding ? <ChromeHeader {...this.props} /> : null;
+    var search = <SearchForm
       msg={this.props.msg}
       onSearch={this.onSearch} onSearchSubmit={this.onSearchSubmit} focusOnRender="1" />;
 
+    if ( !heading ) {
+      heading = search;
+      search = null;
+    }
     return (
-      <Overlay router={this.props.router} header={main} className="component-search-overlay">
+      <Overlay router={this.props.router} header={heading} search={search} className="component-search-overlay">
         <Content className="overlay-content">
         {this.state.list}
         </Content>

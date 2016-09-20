@@ -18,6 +18,10 @@
   z-index: 2;
   padding-top: @header-height;
   visibility: hidden;
+
+  &.overlay-with-search {
+    padding-top: @header-height + @search-form-height;
+  }
 }
 
 .overlay.visible {
@@ -91,7 +95,7 @@
 }
 
 @media (max-width: 768px) {
-  .overlay .content-container {
+  .overlay .content-container.overlay-content {
     margin: 0;
   }
 }

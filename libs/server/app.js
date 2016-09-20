@@ -559,6 +559,7 @@ app.get('/:lang?/*',(req, res) => {
 
   var config = {
     siteinfo: {
+      includeSiteBranding: Boolean( process.env.SITE_INCLUDE_BRANDING ),
       apiPath: API_PATH,
       allowForeignProjects: SITE_ALLOW_FOREIGN_PROJECTS,
       home: process.env.HOME_PAGE_PATH || '/wiki/Main Page',

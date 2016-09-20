@@ -99,3 +99,7 @@ Multi projects
 > export SITE_ALLOW_FOREIGN_PROJECTS=1
 
 > export SITE_ALLOWED_PROJECTS='wikivoyage|wikipedia'
+
+Setup site branding (logo in header)
+
+> export SITE_INCLUDE_BRANDING=1

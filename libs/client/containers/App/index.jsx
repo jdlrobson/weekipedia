@@ -7,6 +7,7 @@ import Header from './../../components/Header'
 import Icon from './../../components/Icon'
 import TransparentShield from './../../components/TransparentShield'
 import SearchForm from './../../components/SearchForm'
+import ChromeHeader from './../../components/ChromeHeader'
 
 import ReferenceDrawer from './../../overlays/ReferenceDrawer'
 import Toast from './../../overlays/Toast'
@@ -193,9 +194,15 @@ export default React.createClass({
     this.props.router.navigateTo( '#/search' );
   },
   render(){
-    var searchForm = (<SearchForm msg={this.props.msg}
+    var siteinfo = this.props.siteinfo;
+    var heading = siteinfo.includeSiteBranding ? <ChromeHeader {...this.props} /> : null;
+    var search = (<SearchForm msg={this.props.msg}
       onClickSearch={this.onClickSearch} />);
 
+    if ( !heading ) {
+      heading = search;
+      search = null;
+    }
     var navigationClasses = this.state.isMenuOpen ?
       'primary-navigation-enabled navigation-enabled' : '';
 
@@ -224,7 +231,8 @@ export default React.createClass({
         </nav>
         <div id="mw-mf-page-center" onClick={this.closePrimaryNav}>
           <Header key="header-bar" primaryIcon={icon}
-            main={searchForm}></Header>
+            main={heading}
+            search={search}></Header>
           {this.state.children}
           {shield}
         </div>
