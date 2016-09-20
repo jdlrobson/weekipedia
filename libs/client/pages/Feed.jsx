@@ -35,13 +35,16 @@ export default React.createClass({
     var prefix = '/wiki/Special:Feed/'
     
     var endpoint = '/api/trending/' + wiki + '/' + halflife;
-    var hrClass = '', dayClass = '', wkClass = '';
+    var hrClass = '', dayClass = '', wkClass = '', tClass = '';
     if ( halflife === HALF_LIFE_DAYS ) {
       dayClass = 'active';
     } else if ( halflife === HALF_LIFE_WEEKS ) {
       wkClass = 'active';
     } else if ( halflife === HALF_LIFE_HOURS ) {
       hrClass = 'active';
+    } else if ( halflife === 'n' ) {
+      tClass = 'active';
+      endpoint = '/api/web-push/service/trending';
     }
     links = [
       <a href={prefix + wiki + '/' + HALF_LIFE_HOURS} className={hrClass} key='hot-filter-1'
@@ -49,9 +52,11 @@ export default React.createClass({
       <a href={prefix + wiki +'/' + HALF_LIFE_DAYS} className={dayClass} key='hot-filter-2'
         onClick={this.props.onClickInternalLink}>by day</a>,
       <a href={prefix + wiki +'/' + HALF_LIFE_WEEKS} className={wkClass} key='hot-filter-3'
-        onClick={this.props.onClickInternalLink}>by week</a>
+        onClick={this.props.onClickInternalLink}>by week</a>,
+      <a href={prefix + wiki +'/n'} className={tClass} key='hot-filter-4'
+        onClick={this.props.onClickInternalLink}>notable</a>
     ];
-    if ( !hrClass && !dayClass && !wkClass ) {
+    if ( !hrClass && !dayClass && !wkClass && !tClass ) {
       links.push( <a href={'/hot/' + wiki +'/' + halflife} className='active' key='hot-filter-4'>custom</a> );
     }
 
