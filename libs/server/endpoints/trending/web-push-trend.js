@@ -20,6 +20,7 @@ function mightTrend( item ) {
 
 function isTrending( item ) {
   return mightTrend( item ) && item.contributors.length >= MIN_CONTRIBUTORS &&
+    item.edits > MIN_EDITS &&
     item.editsPerMinute() > EDITS_PER_MIN && item.getBias() <= BIAS;
 }
 
