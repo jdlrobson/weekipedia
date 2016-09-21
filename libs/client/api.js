@@ -41,7 +41,7 @@ Api.prototype = {
     } );
   },
   fetch: function ( url ) {
-    var promise, req,
+    var req,
       cache = this.cache;
 
     if ( cache[url] ) {
@@ -50,15 +50,15 @@ Api.prototype = {
       req = new Request( url, {
         credentials: 'same-origin'
       } );
-      promise = fetch( req ).then( function ( resp ) {
+      cache[url] = fetch( req ).then( function ( resp ) {
         if ( resp.status === 200 ) {
-          cache[url] = promise;
           return resp.json();
         } else {
+          delete cache[url];
           throw Error( resp.statusText );
         }
       } );
-      return promise;
+      return cache[url];
     }
   },
   getPage: function ( title, lang ) {
