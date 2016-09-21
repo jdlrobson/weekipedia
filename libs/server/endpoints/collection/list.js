@@ -35,7 +35,8 @@ function list( lang, project, username, title, query ) {
 
   return mwApi( lang, params, project ).then( function ( json ) {
     var result = { collections: [], continue: json.continue };
-    json.pages.forEach( function ( page ) {
+    var pages = json.pages || [];
+    pages.forEach( function ( page ) {
       var collection, split, head,
         members = [],
         revs = page.revisions;

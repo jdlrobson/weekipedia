@@ -38,7 +38,8 @@ export default React.createClass({
   mountOverlay( props ) {
     this.setState( {
       overlay: props.overlay ? React.cloneElement( props.overlay, {
-        showNotification: this.showNotification
+        showNotification: this.showNotification,
+        closeOverlay: this.closeOverlay
       } ) : null,
       isOverlayEnabled: props.overlay,
       isOverlayFullScreen: props.isOverlayFullScreen
@@ -49,6 +50,7 @@ export default React.createClass({
     var childProps = typeof document !== 'undefined' ? {
       showNotification: this.showNotification,
       showOverlay: this.showOverlay,
+      closeOverlay: this.closeOverlay,
       onClickInternalLink: this.onClickInternalLink
     } : {};
     if ( this.state.pageviews === 0 ) {

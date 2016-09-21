@@ -39,6 +39,9 @@ export default React.createClass({
   updateTitle( ev ) {
     this.setState( { title: ev.currentTarget.value } );
   },
+  exit() {
+    this.props.closeOverlay();
+  },
   save() {
     var props = this.props;
     var endpoint = '/api/private/' + props.lang + '/collection/';
@@ -51,8 +54,8 @@ export default React.createClass({
     props.api.post( endpoint, {
       title: this.state.title,
       description: this.state.description
-    } ).then( function ( resp ) {
-      if ( resp.status === 200 ) {
+    } ).then( function ( json ) {
+      if ( json && json.edit && json.edit.result === 'Success' ) {
         // Annoyingly this timeout doesn't always seem to be enough.
         setTimeout( function () {
           props.router.back();
@@ -77,6 +80,7 @@ export default React.createClass({
           <label>Description</label>
           <Input defaultValue={this.state.description} onInput={this.updateDescription} />
           <Button label="Save" isPrimary={true} onClick={this.save} />
+          <Button label="Cancel" onClick={this.exit} />
         </div>
       );
     } else {

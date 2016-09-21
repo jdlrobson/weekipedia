@@ -59,6 +59,8 @@ export default React.createClass({
       return (
         <Overlay {...this.props} className="collection-overlay" isDrawer={true}>
         <h2>Add to existing collection</h2>
+        <a key='edit-collection-cancel' className="cancel"
+          onClick={this.props.closeOverlay}>Cancel</a>
         <ul>
           {
             this.state.collections.map( function ( collection ) {
@@ -69,7 +71,10 @@ export default React.createClass({
             } )
           }
         </ul>
-        <a href={"#/edit-collection/" + this.props.session.username + '/'}>Create new collection</a>
+        <div className="collection-actions">
+          <a key='edit-collection-create'
+            href={"#/edit-collection/" + this.props.session.username + '/'}>Create new collection</a>
+        </div>
         </Overlay>
       );
     } else {
