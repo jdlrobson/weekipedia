@@ -153,7 +153,7 @@ export default React.createClass({
         overlayProps.primaryIcon = backBtn;
         previewPane = state.preview ?
           <SectionContent text={state.preview} /> :
-          <IntermediateState />;
+          <IntermediateState msg="Loading preview" />;
 
         content = [
           <Panel key="editor-summary">
@@ -170,7 +170,7 @@ export default React.createClass({
       } else {
         action = 'Saving';
         overlayProps.primaryIcon = backBtn;
-        content = <IntermediateState label='Please wait' />;
+        content = <IntermediateState msg='Saving your changes' />;
       }
     }
     overlayProps.header = <h2><TruncatedText><strong>{action}</strong> {props.title}</TruncatedText></h2>;
