@@ -151,12 +151,26 @@ export default React.createClass({
             href = '/' + props.lang + href;
           }
         }
-        parts = href.split( '?' );
-        props.router.navigateTo( {
-          pathname: parts[0],
-          search: parts[1]
-        }, title );
-        ev.preventDefault();
+
+        if ( href.indexOf( '//' ) === -1 ) {
+          parts = href.split( '?' );
+          props.router.navigateTo( {
+            pathname: parts[0],
+            search: parts[1]
+          }, title );
+          ev.preventDefault();
+        } else if ( props.siteinfo.allowForeignProjects ){
+          props.supportedProjects.forEach( function( project ) {
+            var reg = new RegExp( '\/\/([a-z\-]*)\.' + project + '\.org\/wiki\/(.*)' );
+            var m = href.match( reg );
+            if ( m && m[1] && m[2] ) {
+              props.router.navigateTo( {
+                pathname: '/' + m[1] + '.' + project + '/' + m[2]
+              }, m[2] );
+              ev.preventDefault();
+            }
+          } );
+        }
       }
     }
   },

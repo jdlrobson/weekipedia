@@ -578,6 +578,7 @@ app.get('/:lang?/*',(req, res) => {
     i18n: getMessages( req.query.uselang || req.params.lang || LANGUAGE_CODE ),
     canAuthenticate: Boolean( SIGN_IN_SUPPORTED ),
     project: DEFAULT_PROJECT,
+    supportedProjects: ALL_PROJECTS,
     offlineVersion: process.env.OFFLINE_VERSION
   };
 
