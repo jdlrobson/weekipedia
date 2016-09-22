@@ -39,7 +39,8 @@ export default React.createClass({
     var options = [
       [ 'expandArticlesByDefault', 'Expand all articles by default' ],
       [ 'expandSectionsByDefault', 'Expand all sections by default' ],
-      [ 'includeSiteBranding', 'Include site branding' ]
+      [ 'includeSiteBranding', 'Include site branding' ],
+      [ 'allowForeignProjects', 'Load other wikimedia projects inside app (experimental)' ],
     ];
     var form = state && state.mobileOptions ? (
       <form>
