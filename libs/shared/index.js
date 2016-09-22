@@ -24,7 +24,7 @@ function init( config, routes ) {
       }
     ],
     [
-      /^\/([a-z\-]*)\/wiki\/Category(\%3A|:)(.*)|^\/wiki\/Category(\%3A|:)(.*)$/,
+      /^\/([a-z\-]*)\/wiki\/Category(\%3A|:)(.*)|^\/.*\/Category(\%3A|:)(.*)$/,
       function ( info, props ) {
         var lang = info[1] || 'en';
         var params = info[5] || info[3] || '';
