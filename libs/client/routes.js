@@ -11,6 +11,7 @@ import MobileDiff from './pages/MobileDiff'
 import MobileOptions from './pages/MobileOptions'
 import MostRead from './pages/MostRead'
 import Random from './pages/Random'
+import Search from './pages/Search'
 import Nearby from './pages/Nearby'
 import Watchlist from './pages/Watchlist'
 import UserLogin from './pages/UserLogin'
@@ -120,6 +121,7 @@ function initSpecialPages() {
   addSpecialPage( 'MobileOptions', MobileOptions );
   addSpecialPage( 'MostRead', MostRead );
   addSpecialPage( 'Random', Random );
+  addSpecialPage( 'Search', Search );
   addSpecialPage( 'Nearby', Nearby );
   addSpecialPage( 'UserLogin', UserLogin );
   addSpecialPage( 'Collections', Collections );

@@ -31,14 +31,10 @@ export default React.createClass({
     } );
   },
   onSearchSubmit( term ) {
-    var endpoint;
-    if ( term ) {
-      this.setState( { isSearching: true } );
-      endpoint = '/api/search-full/' + this.props.lang + '/' + encodeURIComponent( term );
-      this.showResults( endpoint );
-    } else {
-      this.setState( { list: <CardList emptyMessage={this.props.emptyMessage} /> } );
-    }
+    this.props.router.navigateTo( {
+      pathname: '/' + this.props.language_project + '/Special:Search/' + encodeURIComponent( term ),
+      search: ''
+    }, 'Search' );
   },
   onSearch( term ){
     var endpoint;

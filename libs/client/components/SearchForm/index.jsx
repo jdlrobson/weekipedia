@@ -6,6 +6,7 @@ import './styles.less'
 
 export default React.createClass({
   onDoSearch( ev ){
+    ev.preventDefault();
     this.props.onSearchSubmit( ev.currentTarget.querySelector( 'input' ).value );
   },
   render() {
