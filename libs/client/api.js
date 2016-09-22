@@ -7,6 +7,11 @@ function Api( basePath ) {
 }
 
 Api.prototype = {
+  cacheable: function ( url ) {
+    if ( url.indexOf( '/api/wikitext' ) === 0 ) {
+      return false;
+    }
+  },
   invalidatePath: function ( path ) {
     delete this.cache[path];
     if ( path[path.length - 1] === '/' ) {
@@ -42,9 +47,10 @@ Api.prototype = {
   },
   fetch: function ( url ) {
     var req,
+      canCache = this.cacheable( url ),
       cache = this.cache;
 
-    if ( cache[url] ) {
+    if ( canCache && cache[url] ) {
       return cache[url];
     } else {
       req = new Request( url, {
@@ -56,6 +62,9 @@ Api.prototype = {
         } else {
           delete cache[url];
           throw Error( resp.statusText );
+        }
+        if ( !canCache ) {
+          delete cache[url];
         }
       } );
       return cache[url];
