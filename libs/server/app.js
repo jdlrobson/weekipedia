@@ -41,42 +41,23 @@ import respond from './respond'
 import cachedResponses from './cached-response.js'
 import isRTL from './../client/is-rtl'
 
-import { SPECIAL_PROJECTS } from './config'
-
-const API_PATH = '/api/'
 const cachedResponse = cachedResponses.cachedResponse
 const invalidate = cachedResponses.invalidate
-const DEFAULT_PROJECT = process.env.PROJECT || 'wikipedia';
-const EN_MESSAGE_PATH = './i18n/en.json';
 
-const ALL_PROJECTS = [ 'wikipedia', 'wikivoyage', 'wiktionary',
-  'wikisource', 'wikiquote', 'wikinews', 'wikibooks', 'wikiversity' ].concat( SPECIAL_PROJECTS );
-
-const SITE_ALLOW_FOREIGN_PROJECTS = Boolean( process.env.SITE_ALLOW_FOREIGN_PROJECTS );
-const ALLOWED_PROJECTS = process.env.SITE_ALLOWED_PROJECTS ?
-  process.env.SITE_ALLOWED_PROJECTS.split( '|' ) :  ALL_PROJECTS;
-
-const SITE_WORDMARK_PATH = process.env.SITE_WORDMARK_PATH
-const SITE_TITLE = process.env.SITE_TITLE || 'Weekipedia'
-const CONSUMER_SECRET = process.env.MEDIAWIKI_CONSUMER_SECRET;
-const CONSUMER_KEY = process.env.MEDIAWIKI_CONSUMER_KEY
-
-const LANGUAGE_CODE = process.env.DEFAULT_LANGUAGE || 'en'
-const SIGN_IN_SUPPORTED = CONSUMER_SECRET && CONSUMER_KEY
-
-const SITE_EXPAND_SECTIONS = process.env.SITE_EXPAND_SECTIONS ?
-  Boolean( parseInt( process.env.SITE_EXPAND_SECTIONS, 10 ) ) : false;
-
-const SITE_EXPAND_ARTICLE = process.env.SITE_EXPAND_ARTICLE ?
-  Boolean( process.env.SITE_EXPAND_ARTICLE ) : SITE_EXPAND_SECTIONS;
-
-const SERVER_SIDE_RENDERING = Boolean( process.env.SERVER_SIDE_RENDERING );
+import { API_PATH, DEFAULT_PROJECT, EN_MESSAGE_PATH,
+  GCM_SENDER_ID, SITE_HOME_PATH,
+  SITE_ALLOW_FOREIGN_PROJECTS, ALLOWED_PROJECTS,
+  SITE_WORDMARK_PATH, SITE_TITLE, LANGUAGE_CODE, SIGN_IN_SUPPORTED, INCLUDE_SITE_BRANDING,
+  SITE_EXPAND_SECTIONS, SITE_EXPAND_ARTICLE,
+  CONSUMER_SECRET, CONSUMER_KEY,
+  SERVER_SIDE_RENDERING, USE_HTTPS, APP_PORT,
+  OFFLINE_VERSION, SITE_TERMS_OF_USE, SITE_PRIVACY_URL,
+} from './config'
 
 console.log( 'The default project is: ', DEFAULT_PROJECT );
 
 // Express
 const app = express()
-const https = process.env.USE_HTTPS;
 const manifest = {
   name: SITE_TITLE,
   short_name: SITE_TITLE,
@@ -95,7 +76,7 @@ const manifest = {
     }
   ],
   theme_color: 'white',
-  gcm_sender_id: process.env.GCM_SENDER_ID
+  gcm_sender_id: GCM_SENDER_ID
 };
 
 app.engine('html', hogan)
@@ -106,12 +87,12 @@ app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
   extended: true
 }));
 
-app.set('port', (process.env.PORT || 3000))
+app.set('port', (APP_PORT))
 
-if ( https ) {
+if ( USE_HTTPS ) {
   app.enable('trust proxy');
   app.use(function (req, res, next) {
-    if ( https && !req.secure ) {
+    if ( USE_HTTPS && !req.secure ) {
       res.redirect('https://' + req.headers.host + req.url);
     } else {
       next();
@@ -558,16 +539,16 @@ app.get('/:lang?/*',(req, res) => {
   var config = {
     siteinfo: {
       defaultProject: DEFAULT_PROJECT,
-      includeSiteBranding: Boolean( process.env.SITE_INCLUDE_BRANDING ),
+      includeSiteBranding: INCLUDE_SITE_BRANDING,
       apiPath: API_PATH,
       allowForeignProjects: SITE_ALLOW_FOREIGN_PROJECTS,
-      home: process.env.HOME_PAGE_PATH || '/wiki/Main Page',
+      home: SITE_HOME_PATH,
       expandSectionsByDefault: SITE_EXPAND_SECTIONS,
       expandArticlesByDefault: SITE_EXPAND_ARTICLE,
       wordmark: SITE_WORDMARK_PATH,
       title: SITE_TITLE,
-      privacyUrl: process.env.SITE_PRIVACY_URL,
-      termsUrl: process.env.SITE_TERMS_OF_USE,
+      privacyUrl: SITE_PRIVACY_URL,
+      termsUrl: SITE_TERMS_OF_USE,
       license: {
         url: '//creativecommons.org/licenses/by-sa/3.0/',
         name: 'CC BY-SA 3.0'
@@ -578,7 +559,7 @@ app.get('/:lang?/*',(req, res) => {
     canAuthenticate: Boolean( SIGN_IN_SUPPORTED ),
     project: DEFAULT_PROJECT,
     supportedProjects: ALLOWED_PROJECTS,
-    offlineVersion: process.env.OFFLINE_VERSION
+    offlineVersion: OFFLINE_VERSION
   };
 
   shared.init( config, routes );
@@ -629,6 +610,4 @@ app.get('/:lang?/*',(req, res) => {
 });
 
 app.listen(app.get('port'))
-
-console.info('==> Server is listening in ' + process.env.NODE_ENV + ' mode')
 console.info('==> Go to http://localhost:%s', app.get('port'))
