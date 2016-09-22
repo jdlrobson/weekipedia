@@ -161,11 +161,16 @@ export default React.createClass({
           ev.preventDefault();
         } else if ( props.siteinfo.allowForeignProjects ){
           props.supportedProjects.forEach( function( project ) {
-            var reg = new RegExp( '\/\/([a-z\-]*)\.' + project + '\.org\/wiki\/(.*)' );
+            var reg = new RegExp( '\/\/([a-z\-]*)\.' + project + '\.org\/wiki\/(.*)|\/\/' + project + '\.wikimedia\.org\/wiki\/(.*)|\/\/' );
             var m = href.match( reg );
             if ( m && m[1] && m[2] ) {
               props.router.navigateTo( {
                 pathname: '/' + m[1] + '.' + project + '/' + m[2]
+              }, m[2] );
+              ev.preventDefault();
+            } else if ( m && m[3] ) {
+              props.router.navigateTo( {
+                pathname: '/' + props.lang + '.' + project + '/' + m[3]
               }, m[2] );
               ev.preventDefault();
             }
