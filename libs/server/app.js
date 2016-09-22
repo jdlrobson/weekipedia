@@ -122,14 +122,15 @@ function getProject( req ) {
   var proj = { project: DEFAULT_PROJECT };
   if ( req.params.lang ) {
     proj.lang = req.params.lang;
+    proj.project = req.params.project;
     if ( req.params.lang.indexOf( '.' ) > -1 ) {
       var tmp = req.params.lang.split( '.' );
       proj.lang = tmp[0];
       proj.project = tmp[1];
-      if ( ALLOWED_PROJECTS.indexOf( proj.project ) === -1 ) {
-        throw "The `" + proj.project + "` project is not supported by the web app.";
-      }
     }
+  }
+  if ( ALLOWED_PROJECTS.indexOf( proj.project ) === -1 ) {
+    throw "The `" + proj.project + "` project is not supported by the web app.";
   }
   return proj;
 }
@@ -430,8 +431,9 @@ app.get('/api/diff/:lang/:revId',(req, res) => {
 
 
 app.get('/api/page/:lang.:project/:title',(req, res) => {
+  var proj = getProject(req);
   cachedResponse( res, req.url, function () {
-    return page( req.params.title, req.params.lang, req.params.project );
+    return page( req.params.title, proj.lang, proj.project );
   });
 } );
 
