@@ -115,6 +115,11 @@ export default React.createClass({
       }
     } );
     if ( allSections.length ) {
+      // If there is less than 2 sections do not make them collapsible.
+      // This helps projects like Wiktionary
+      if ( sections.length < 3 ) {
+        curSection.isCollapsible = false;
+      }
       // push the last one
       sections.push( <Section {...curSection } /> );
     }
