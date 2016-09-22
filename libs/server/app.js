@@ -554,6 +554,7 @@ app.get('/:lang?/*',(req, res) => {
 
   var config = {
     siteinfo: {
+      defaultProject: DEFAULT_PROJECT,
       includeSiteBranding: Boolean( process.env.SITE_INCLUDE_BRANDING ),
       apiPath: API_PATH,
       allowForeignProjects: SITE_ALLOW_FOREIGN_PROJECTS,

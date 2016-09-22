@@ -31,8 +31,10 @@ export default React.createClass({
     } );
   },
   onSearchSubmit( term ) {
-    this.props.router.navigateTo( {
-      pathname: '/' + this.props.language_project + '/Special:Search/' + encodeURIComponent( term ),
+    var props = this.props;
+    var proj = props.lang + '.' + props.siteinfo.defaultProject;
+    props.router.navigateTo( {
+      pathname: '/' + proj + '/Special:Search/' + encodeURIComponent( term ),
       search: ''
     }, 'Search' );
   },
