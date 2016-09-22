@@ -1,0 +1,38 @@
+@originalSize: 36px;
+
+.project-icon {
+  background-image: url(project-sprites.png);
+  position: absolute;
+  right: 8px;
+  top: 6px;
+  width: @originalSize;
+  height: @originalSize;
+  text-indent: -999px;
+  overflow: hidden;
+  background-repeat: no-repeat;
+
+  &.project-wiktionary {
+    background-position: 0 (-216px);
+  }
+  &.project-wikivoyage {
+    background-position: 0 (-111px);
+  }
+  &.project-wikiquote {
+    background-position: 0 (-405px);
+  }
+  &.project-wikiversity {
+    background-position: 0 (-52px);
+  }
+  &.project-wikibooks {
+    background-position: 0 (-146px);
+  }
+  &.project-wikinews {
+    background-position: 0 9px;
+  }
+  &.project-wikisource {
+    background-position: 0 (-287px);
+  }
+  &.project-wikipedia {
+    background-position: 0 (498px);
+  }
+}
