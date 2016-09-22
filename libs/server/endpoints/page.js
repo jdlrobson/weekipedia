@@ -1,6 +1,7 @@
 import fetch from 'isomorphic-fetch'
 import domino from 'domino'
 
+import { SPECIAL_PROJECTS } from './../config'
 import mwApi from './mwApi';
 
 function extractLeadParagraph(doc) {
@@ -41,9 +42,17 @@ function extractInfobox(doc) {
 const MONTHS = ['January','February','March','April','May','June',
   'July','August','September','October','November','December'];
 
+function getBaseHost( lang, project ) {
+  if ( SPECIAL_PROJECTS.indexOf( project ) > -1 ) {
+    return project + '.wikimedia';
+  } else {
+    return lang + '.' + project;
+  }
+}
+
 export default function ( title, lang, project ) {
   // FIXME: Handle this better please. Use better API.
-  var url = 'https://' + lang + '.' + project + '.org/api/rest_v1/page/mobile-sections/' +
+  var url = 'https://' + getBaseHost( lang, project ) + '.org/api/rest_v1/page/mobile-sections/' +
     encodeURIComponent( title );
 
   return fetch( url )

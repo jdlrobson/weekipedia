@@ -41,6 +41,8 @@ import respond from './respond'
 import cachedResponses from './cached-response.js'
 import isRTL from './../client/is-rtl'
 
+import { SPECIAL_PROJECTS } from './config'
+
 const API_PATH = '/api/'
 const cachedResponse = cachedResponses.cachedResponse
 const invalidate = cachedResponses.invalidate
@@ -48,7 +50,7 @@ const DEFAULT_PROJECT = process.env.PROJECT || 'wikipedia';
 const EN_MESSAGE_PATH = './i18n/en.json';
 
 const ALL_PROJECTS = [ 'wikipedia', 'wikivoyage', 'wiktionary',
-  'wikisource', 'wikiquote', 'wikinews', 'wikibooks', 'wikiversity' ];
+  'wikisource', 'wikiquote', 'wikinews', 'wikibooks', 'wikiversity' ].concat( SPECIAL_PROJECTS );
 
 const SITE_ALLOW_FOREIGN_PROJECTS = Boolean( process.env.SITE_ALLOW_FOREIGN_PROJECTS );
 const ALLOWED_PROJECTS = process.env.SITE_ALLOWED_PROJECTS ?
