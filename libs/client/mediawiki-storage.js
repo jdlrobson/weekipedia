@@ -8,7 +8,7 @@
  */
 var mwStorage = {
 
-  localStorage: window.localStorage,
+  localStorage: typeof window !== 'undefined' ? window.localStorage : null,
 
   /**
    * Retrieve value from device storage.

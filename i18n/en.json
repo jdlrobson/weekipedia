@@ -10,6 +10,7 @@
   "menu-nearby": "Nearby",
   "menu-contributions": "Contributions",
   "menu-watchlist": "Watchlist",
+  "menu-settings": "Settings",
   "menu-login": "Log in",
   "menu-logout": "Log out",
   "menu-about": "About {{SITENAME}}",
