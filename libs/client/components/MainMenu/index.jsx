@@ -82,13 +82,13 @@ class MainMenu extends Component {
               label={msg('menu-collections')} type="before" onClick={onMenuItemClick} />
           </li>
         </ul>
+        {this.getUserMenu()}
         <ul>
           <li>
             <Icon glyph="mf-settings-invert" href={'/' + this.props.lang + '/wiki/Special:MobileOptions' }
               label={msg('menu-settings')} type="before" onClick={onMenuItemClick} />
           </li>
         </ul>
-        {this.getUserMenu()}
         <HorizontalList>
           <a href="//github.com/jdlrobson/weekipedia">{msg('menu-about')}</a>
           <a href="/wiki/Wikipedia:General_disclaimer" onClick={onMenuItemClick}>{msg('menu-disclaimers')}</a>
