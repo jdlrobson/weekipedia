@@ -1,4 +1,5 @@
 const offlineVersion = process.env.OFFLINE_VERSION;
+const WORDMARK = process.env.SITE_WORDMARK_PATH;
 
 var webpack = require('webpack')
 var ExtractTextPlugin = require('extract-text-webpack-plugin')
@@ -18,7 +19,8 @@ module.exports = {
       new ExtractTextPlugin('style.css', { allChunks: true }),
       new webpack.DefinePlugin({
         'global.__VERSION__': JSON.stringify( {
-          number: offlineVersion
+          number: offlineVersion,
+          wordmark: WORDMARK
         } )
       }),
     ],

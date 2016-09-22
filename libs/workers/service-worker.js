@@ -9,7 +9,7 @@ options.cache.name = 'weekipedia-' + version.number;
 
 // Keep in sync with asset names needed for offline in
 // webpack/base.webpack.config.js
-const staticAssets = [
+var staticAssets = [
   '/home-icon.png',
   '/manifest.json',
   '/main-bundle.js',
@@ -17,6 +17,10 @@ const staticAssets = [
   '/style.rtl.css',
   '/',
 ]
+
+if ( version.wordmark ) {
+  staticAssets.push( version.wordmark );
+}
 
 // Prefetch static assets
 precache(staticAssets)
@@ -31,7 +35,7 @@ router.get('/api/(.*)', networkOnly)
 router.get('/auth/(.*)', networkOnly)
 
 // Serve any other url with the shell
-router.get('/(.*)', () => caches.match('/'))
+router.get('/(.*)\/(.*)', () => caches.match('/'))
 
 // Rest of calls go to network
 router.default = networkOnly
