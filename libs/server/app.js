@@ -51,9 +51,8 @@ const ALL_PROJECTS = [ 'wikipedia', 'wikivoyage', 'wiktionary',
   'wikisource', 'wikiquote', 'wikinews', 'wikibooks', 'wikiversity' ];
 
 const SITE_ALLOW_FOREIGN_PROJECTS = Boolean( process.env.SITE_ALLOW_FOREIGN_PROJECTS );
-const ALLOWED_PROJECTS = SITE_ALLOW_FOREIGN_PROJECTS ?
-  ( process.env.SITE_ALLOWED_PROJECTS ? process.env.SITE_ALLOWED_PROJECTS.split( '|' ) :  ALL_PROJECTS )
-  : [ DEFAULT_PROJECT ];
+const ALLOWED_PROJECTS = process.env.SITE_ALLOWED_PROJECTS ?
+  process.env.SITE_ALLOWED_PROJECTS.split( '|' ) :  ALL_PROJECTS;
 
 const SITE_WORDMARK_PATH = process.env.SITE_WORDMARK_PATH
 const SITE_TITLE = process.env.SITE_TITLE || 'Weekipedia'
@@ -576,7 +575,7 @@ app.get('/:lang?/*',(req, res) => {
     i18n: getMessages( req.query.uselang || req.params.lang || LANGUAGE_CODE ),
     canAuthenticate: Boolean( SIGN_IN_SUPPORTED ),
     project: DEFAULT_PROJECT,
-    supportedProjects: ALL_PROJECTS,
+    supportedProjects: ALLOWED_PROJECTS,
     offlineVersion: process.env.OFFLINE_VERSION
   };
 
