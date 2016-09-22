@@ -1,16 +1,30 @@
-@originalSize: 36px;
+// See https://phabricator.wikimedia.org/T146408
+@originalSize: 35px;
 
 .project-icon {
   background-image: url(project-sprites.png);
   position: absolute;
   right: 8px;
-  top: 6px;
+  top: 8px;
   width: @originalSize;
   height: @originalSize;
   text-indent: -999px;
   overflow: hidden;
   background-repeat: no-repeat;
+  background-position: -100px 0;
 
+  &.project-meta {
+    background-position: 0 -181px;
+  }
+  &.project-species {
+    background-position: 0 -364px;
+    height: 40px;
+  }
+  &.project-commons {
+    top: 0;
+    height: 48px;
+    background-position: 0 -446px;
+  }
   &.project-wiktionary {
     background-position: 0 (-216px);
   }
@@ -18,15 +32,18 @@
     background-position: 0 (-111px);
   }
   &.project-wikiquote {
+    height: 40px;
     background-position: 0 (-405px);
   }
   &.project-wikiversity {
+    height: 28px;
     background-position: 0 (-52px);
   }
   &.project-wikibooks {
     background-position: 0 (-146px);
   }
   &.project-wikinews {
+    width: 48px;
     background-position: 0 9px;
   }
   &.project-wikisource {
