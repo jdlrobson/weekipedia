@@ -205,14 +205,9 @@ if ( SIGN_IN_SUPPORTED ) {
       var proj = getProject( req );
       return edit( proj.lang, p.title, body.text, body.summary, p.section, proj.project, req.user )
         .then( function ( data ) {
-          return new Promise( function ( resolve ) {
-            setTimeout( function () {
-              invalidate( API_PATH + 'page/' + p.lang + '/' + encodeURIComponent( p.title ) );
-              setTimeout( function () {
-                resolve( data );
-              }, 1000 );
-            }, 8000 );
-          } );
+          invalidate( API_PATH + 'page/' + proj.lang + '.' + proj.project + '/' + encodeURIComponent( p.title ) );
+          invalidate( API_PATH + 'page/' + p.lang + '/' + encodeURIComponent( p.title ) );
+          return data;
         } );
     } );
   } );
