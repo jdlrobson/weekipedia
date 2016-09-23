@@ -14,17 +14,14 @@ class Section extends Component {
     };
   }
   componentWillMount(){
-    this.setState( { jsEnabled: false } );
-    if ( this.isReferenceSection() ) {
-      this.setState( { isOpen: false } );
-    }
-    this.setState( { isOpen: this.props.siteinfo.expandSectionsByDefault } );
+    this.setState( {
+      jsEnabled: false,
+      isOpen: this.props.siteinfo.expandSectionsByDefault
+        && !this.props.isReferenceSection
+    } );
   }
   componentDidMount() {
     this.setState( { jsEnabled: true } );
-  }
-  isReferenceSection() {
-    return this.props.text.indexOf( 'class="mw-references' ) > -1;
   }
   onToggle() {
     if ( this.props.isCollapsible ) {
@@ -35,6 +32,8 @@ class Section extends Component {
     var isCollapsible = this.props.isCollapsible;
     var hLevel = this.props.toclevel + 1;
     var hMethod = React.DOM['h' + hLevel];
+    var isExpanded = this.state.isOpen !== undefined ? this.state.isOpen : !isCollapsible;
+
     var headingChildren = [
       <span dangerouslySetInnerHTML={{ __html: this.props.line}} key={"section-heading-span-" + this.props.id} />
     ];
@@ -49,7 +48,7 @@ class Section extends Component {
     }
     var heading = hMethod.call(React.DOM, { onClick: this.onToggle.bind(this), id: this.props.anchor }, headingChildren );
     return (
-      <div className={ this.state.isOpen || !isCollapsible ? 'section open-block' : 'section' }>
+      <div className={ isExpanded ? 'section open-block' : 'section' }>
         {heading}
         <SectionContent {...this.props} text={this.props.text}></SectionContent>
         {this.props.subsections}

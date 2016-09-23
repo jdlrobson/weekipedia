@@ -83,6 +83,22 @@ Api.prototype = {
       }
     } );
   },
+  getReferenceSections: function ( title, lang ) {
+    var references = [];
+    return this.getPage( title, lang ).then( function ( json ) {
+      json.remaining.sections.forEach( function ( section ) {
+        if ( section.isReferenceSection ) {
+          references.push( section );
+        }
+      } );
+
+      return {
+        references: {
+          sections: references
+        }
+      };
+    } );
+  },
   getReferences: function ( title, lang ) {
     var promise;
     var reflist = {};
@@ -92,22 +108,19 @@ Api.prototype = {
     if ( cache[ cacheKey ] ) {
       return cache[cacheKey];
     } else {
-      promise = this.getPage( title, lang ).then( function ( json ) {
+      promise = this.getReferenceSections( title, lang ).then( function ( json ) {
         var container = document.createElement( 'div' );
 
-        json.remaining.sections.forEach( function ( section ) {
+        json.references.sections.forEach( function ( section ) {
           var refNodes;
-          // check it's a reference section
-          if ( section.text.indexOf( 'class="mw-references' ) > -1 ) {
-            container.innerHTML = section.text;
-            refNodes = container.querySelectorAll( '[id]' );
-            Array.prototype.forEach.call( refNodes, function ( refNode ) {
-              var id = refNode.getAttribute( 'id' );
-              if ( id ) {
-                reflist[id] = refNode.innerHTML;
-              }
-            } );
-          }
+          container.innerHTML = section.text;
+          refNodes = container.querySelectorAll( '[id]' );
+          Array.prototype.forEach.call( refNodes, function ( refNode ) {
+            var id = refNode.getAttribute( 'id' );
+            if ( id ) {
+              reflist[id] = refNode.innerHTML;
+            }
+          } );
         } );
         return reflist;
       } );

@@ -39,6 +39,35 @@ function extractInfobox(doc) {
   return infobox;
 }
 
+function markReferenceSections( sections ) {
+  var topHeadingLevel = sections[0] ? sections[0].toclevel : 2;
+  var lastTopLevelSection,
+    isReferenceSection = false;
+
+  function mark( from, to ) {
+    if ( isReferenceSection && from !== undefined ) {
+      // Mark all the sections between the last heading and this one as reference sections
+      sections.slice( from, to ).forEach( function ( section ) {
+        section.isReferenceSection = true;
+      } );
+    }
+  }
+
+  sections.forEach( function ( section, i ) {
+    if ( section.toclevel === topHeadingLevel ) {
+      mark( lastTopLevelSection, i );
+      // reset the top level section and begin the hunt for references again.
+      lastTopLevelSection = i;
+      isReferenceSection = false;
+    }
+    if ( section.text.indexOf( 'class="mw-references' ) > -1 ) {
+      isReferenceSection = true;
+    }
+  } );
+  // the last section may have been a reference section
+  mark( lastTopLevelSection, sections.length - 1 );
+}
+
 const MONTHS = ['January','February','March','April','May','June',
   'July','August','September','October','November','December'];
 
@@ -76,6 +105,10 @@ export default function ( title, lang, project ) {
       }
     } ).then( function ( json ) {
       var username = title.indexOf( ':' ) > -1 ? title.split( ':' )[1] : title;
+      // mark references sections with a flag
+      if ( json.remaining.sections ) {
+        markReferenceSections( json.remaining.sections );
+      }
       if ( json.lead && json.lead.ns === 2 ) {
         // it's a user page so get more info
         return mwApi( lang, { meta: 'globaluserinfo', guiuser: username }, project ).then( function ( userInfo ) {
