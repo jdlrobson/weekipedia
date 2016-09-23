@@ -24,6 +24,7 @@ import trending from './endpoints/trending/trending'
 import subscribe from './endpoints/subscribe'
 import search from './endpoints/search'
 import related from './endpoints/related'
+import references from './endpoints/references'
 import random from './endpoints/random'
 import parse from './endpoints/parse'
 import pagehistory from './endpoints/page-history'
@@ -412,18 +413,24 @@ app.get('/api/diff/:lang/:revId',(req, res) => {
   });
 } );
 
+app.get('/api/page/references/:lang.:project/:title',(req, res) => {
+  var proj = getProject(req);
+  cachedResponse( res, req.url, function () {
+    return references( req.params.title, proj.lang, proj.project, true );
+  });
+} );
 
 app.get('/api/page/:lang.:project/:title',(req, res) => {
   var proj = getProject(req);
   cachedResponse( res, req.url, function () {
-    return page( req.params.title, proj.lang, proj.project );
+    return page( req.params.title, proj.lang, proj.project, true );
   });
 } );
 
 app.get('/api/page/:lang/:title',(req, res) => {
   var proj = getProject(req);
   cachedResponse( res, req.url, function () {
-    return page( req.params.title, proj.lang, proj.project )
+    return page( req.params.title, proj.lang, proj.project, true );
   });
 } );
 

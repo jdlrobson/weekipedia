@@ -39,7 +39,7 @@ function extractInfobox(doc) {
   return infobox;
 }
 
-function markReferenceSections( sections ) {
+function markReferenceSections( sections, removeText ) {
   var topHeadingLevel = sections[0] ? sections[0].toclevel : 2;
   var lastTopLevelSection,
     isReferenceSection = false;
@@ -49,6 +49,9 @@ function markReferenceSections( sections ) {
       // Mark all the sections between the last heading and this one as reference sections
       sections.slice( from, to ).forEach( function ( section ) {
         section.isReferenceSection = true;
+        if ( removeText ) {
+          delete section.text;
+        }
       } );
     }
   }
@@ -79,7 +82,7 @@ function getBaseHost( lang, project ) {
   }
 }
 
-export default function ( title, lang, project ) {
+export default function ( title, lang, project, includeReferences ) {
   // FIXME: Handle this better please. Use better API.
   var url = 'https://' + getBaseHost( lang, project ) + '.org/api/rest_v1/page/mobile-sections/' +
     encodeURIComponent( title );
@@ -107,8 +110,9 @@ export default function ( title, lang, project ) {
       var username = title.indexOf( ':' ) > -1 ? title.split( ':' )[1] : title;
       // mark references sections with a flag
       if ( json.remaining.sections ) {
-        markReferenceSections( json.remaining.sections );
+        markReferenceSections( json.remaining.sections, !includeReferences );
       }
+
       if ( json.lead && json.lead.ns === 2 ) {
         // it's a user page so get more info
         return mwApi( lang, { meta: 'globaluserinfo', guiuser: username }, project ).then( function ( userInfo ) {
