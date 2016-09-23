@@ -98,7 +98,7 @@ function addSpecialPage( title, Class, handler ) {
           Object.assign( {}, props, {
             title: title,
             key: 'page-special-' + title,
-            params: decodeURIComponent( params ),
+            params: params ? decodeURIComponent( params ).replace( /%2F/gi, '/' ) : params,
             children: []
           } )
         )
