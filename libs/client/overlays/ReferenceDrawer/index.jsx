@@ -19,7 +19,7 @@ export default React.createClass({
   },
   loadReference( refId ) {
     var self = this;
-    this.props.api.getReference( this.props.title, this.props.lang, refId )
+    this.props.api.getReference( this.props.title, this.props.language_project, refId )
       .then( function ( refHtml ) {
         self.setState( { text: refHtml, isLoading: false } );
       } ).catch( function () {

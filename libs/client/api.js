@@ -70,12 +70,12 @@ Api.prototype = {
       return cache[url];
     }
   },
-  getPage: function ( title, lang ) {
-    lang = lang || 'en';
-    return this.fetch( this.path + 'page/' + lang + '/' + encodeURIComponent( title ) );
+  getPage: function ( title, langOrLanguageProject ) {
+    langOrLanguageProject = langOrLanguageProject || 'en';
+    return this.fetch( this.path + 'page/' + langOrLanguageProject + '/' + encodeURIComponent( title ) );
   },
-  getReference: function ( title, lang, refId ) {
-    return this.getReferences( title, lang ).then( function ( refs ) {
+  getReference: function ( title, langOrLanguageProject, refId ) {
+    return this.getReferences( title, langOrLanguageProject ).then( function ( refs ) {
       if ( refs[refId] ) {
         return refs[refId];
       } else {
@@ -83,9 +83,9 @@ Api.prototype = {
       }
     } );
   },
-  getReferenceSections: function ( title, lang ) {
+  getReferenceSections: function ( title, langOrLanguageProject ) {
     var references = [];
-    return this.getPage( title, lang ).then( function ( json ) {
+    return this.getPage( title, langOrLanguageProject ).then( function ( json ) {
       json.remaining.sections.forEach( function ( section ) {
         if ( section.isReferenceSection ) {
           references.push( section );
@@ -99,16 +99,16 @@ Api.prototype = {
       };
     } );
   },
-  getReferences: function ( title, lang ) {
+  getReferences: function ( title, langOrLanguageProject ) {
     var promise;
     var reflist = {};
     var cache = this.refCache;
-    var cacheKey = lang + '#' + title;
+    var cacheKey = langOrLanguageProject + '#' + title;
 
     if ( cache[ cacheKey ] ) {
       return cache[cacheKey];
     } else {
-      promise = this.getReferenceSections( title, lang ).then( function ( json ) {
+      promise = this.getReferenceSections( title, langOrLanguageProject ).then( function ( json ) {
         var container = document.createElement( 'div' );
 
         json.references.sections.forEach( function ( section ) {
