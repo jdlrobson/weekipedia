@@ -57,13 +57,14 @@ function markReferenceSections( sections, removeText ) {
   }
 
   sections.forEach( function ( section, i ) {
+    var text = section.text;
     if ( section.toclevel === topHeadingLevel ) {
       mark( lastTopLevelSection, i );
       // reset the top level section and begin the hunt for references again.
       lastTopLevelSection = i;
       isReferenceSection = false;
     }
-    if ( section.text.indexOf( 'class="mw-references' ) > -1 ) {
+    if ( text.indexOf( 'class="mw-references' ) > -1 || text.indexOf( 'class="refbegin' ) > -1 ) {
       isReferenceSection = true;
     }
   } );
