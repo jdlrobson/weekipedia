@@ -111,6 +111,7 @@ function getProject( req ) {
       proj.project = tmp[1];
     }
   }
+  proj.project = proj.project || DEFAULT_PROJECT;
   if ( ALLOWED_PROJECTS.indexOf( proj.project ) === -1 ) {
     throw "The `" + proj.project + "` project is not supported by the web app.";
   }
