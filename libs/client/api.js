@@ -91,10 +91,7 @@ Api.prototype = {
     } );
   },
   getReferenceSections: function ( title, langOrLanguageProject ) {
-    var references = [];
-    return this.getPage( title, langOrLanguageProject, 'references' ).then( function ( json ) {
-      return json;
-    } );
+    return this.getPage( title, langOrLanguageProject, 'references' );
   },
   getReferences: function ( title, langOrLanguageProject ) {
     var promise;
