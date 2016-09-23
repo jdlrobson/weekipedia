@@ -10,7 +10,7 @@ export default React.createClass({
     var langProject = props.language_project;
     var lang = props.lang;
     var source = langProject || lang;
-    var endpoint = '/api/related/' + source + '/' + props.title;
+    var endpoint = '/api/related/' + source + '/' + encodeURIComponent( props.title );
 
     return (
       <div className="container-read-more">
