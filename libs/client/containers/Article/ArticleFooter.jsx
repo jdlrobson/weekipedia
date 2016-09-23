@@ -11,7 +11,7 @@ class ArticleFooter extends Component {
       siteinfo = this.props.siteinfo || {},
       license = siteinfo.license || {};
 
-    wordmark = siteinfo.wordmark ? <h2><img src={siteinfo.wordmark} alt={siteinfo.title} height="30" /></h2>
+    wordmark = siteinfo.wordmark ? <h2><img src={siteinfo.wordmark} alt={siteinfo.title} height="15" /></h2>
       : <h2>{siteinfo.title}</h2>;
 
     if ( siteinfo.termsUrl ) {
