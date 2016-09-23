@@ -423,14 +423,14 @@ app.get('/api/page/references/:lang.:project/:title',(req, res) => {
 app.get('/api/page/:lang.:project/:title',(req, res) => {
   var proj = getProject(req);
   cachedResponse( res, req.url, function () {
-    return page( req.params.title, proj.lang, proj.project, true );
+    return page( req.params.title, proj.lang, proj.project, false );
   });
 } );
 
 app.get('/api/page/:lang/:title',(req, res) => {
   var proj = getProject(req);
   cachedResponse( res, req.url, function () {
-    return page( req.params.title, proj.lang, proj.project, true );
+    return page( req.params.title, proj.lang, proj.project, false );
   });
 } );
 

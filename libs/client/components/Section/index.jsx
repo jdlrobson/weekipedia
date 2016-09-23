@@ -3,6 +3,10 @@ import React, { Component } from 'react'
 import Icon from './../Icon'
 import EditIcon from './../EditIcon'
 import SectionContent from './../SectionContent'
+import IntermediateState from './../IntermediateState'
+import ErrorBox from './../ErrorBox'
+
+import { getSections } from './../../react-helpers'
 
 import './styles.less'
 
@@ -10,7 +14,9 @@ class Section extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      isOpen: true
+      error: false,
+      isOpen: true,
+      isLoading: false
     };
   }
   componentWillMount(){
@@ -19,6 +25,30 @@ class Section extends Component {
       isOpen: this.props.siteinfo.expandSectionsByDefault
         && !this.props.isReferenceSection
     } );
+  }
+  componentDidUpdate() {
+    var self = this;
+    var props = this.props;
+    var id = props.id;
+
+    if ( this.state.isOpen && props.text === undefined && !this.state.isLoading ) {
+      this.setState( { isLoading: true } );
+      if ( props.isReferenceSection ) {
+        props.api.getReferenceSections( props.title, props.language_project ).then( function ( json ) {
+          var sectionComponents = getSections( json.references.sections, props );
+          sectionComponents.forEach( function ( section ) {
+            if ( section.props.id === id ) {
+              self.setState( {
+                text: section.props.text,
+                subsections: section.props.subsections
+              } )
+            }
+          } );
+        } );
+      } else {
+        this.setState( { error: true } );
+      }
+    }
   }
   componentDidMount() {
     this.setState( { jsEnabled: true } );
@@ -29,6 +59,8 @@ class Section extends Component {
     }
   }
   render(){
+    var props = this.props;
+    var state = this.state;
     var isCollapsible = this.props.isCollapsible;
     var hLevel = this.props.toclevel + 1;
     var hMethod = React.DOM['h' + hLevel];
@@ -47,11 +79,26 @@ class Section extends Component {
         className="indicator" key={"section-heading-toggle-" + this.props.id} /> );
     }
     var heading = hMethod.call(React.DOM, { onClick: this.onToggle.bind(this), id: this.props.anchor }, headingChildren );
+
+    var body;
+    var text = state.text !== undefined ? state.text : props.text;
+    var subsections = state.subsections !== undefined ? state.subsections : props.subsections;
+
+    if ( text === undefined ) {
+      if ( this.state.error ) {
+        body = <ErrorBox msg="An error occurred while trying to load this section." />;
+      } else {
+        body = <IntermediateState msg="Loading sub section" />;
+      }
+    } else {
+      body = subsections;
+    }
+
     return (
       <div className={ isExpanded ? 'section open-block' : 'section' }>
         {heading}
-        <SectionContent {...this.props} text={this.props.text}></SectionContent>
-        {this.props.subsections}
+        <SectionContent {...this.props} subsections={subsections} text={text}></SectionContent>
+        {body}
       </div>
     )
   }
