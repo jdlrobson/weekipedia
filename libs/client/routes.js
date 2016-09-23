@@ -48,7 +48,7 @@ var routes = [
             Object.assign( {}, props, {
               key: 'page-' + titleSansPrefix,
               title: titleSansPrefix,
-              params: titleParts.slice( 1 )
+              params: decodeURIComponent( titleParts.slice( 1 ) )
             } )
           )
         ];
@@ -98,7 +98,7 @@ function addSpecialPage( title, Class, handler ) {
           Object.assign( {}, props, {
             title: title,
             key: 'page-special-' + title,
-            params: params,
+            params: decodeURIComponent( params ),
             children: []
           } )
         )
