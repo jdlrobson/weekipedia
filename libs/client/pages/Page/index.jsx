@@ -1,7 +1,6 @@
 import React from 'react'
 
 import IntermediateState from './../../components/IntermediateState';
-import Section from './../../components/Section'
 import Button from './../../components/Button'
 import ErrorBox from './../../components/ErrorBox'
 import LanguageIcon from './../../components/LanguageIcon'
@@ -14,6 +13,8 @@ import TableOfContents from './../../components/TableOfContents'
 
 import Article from './../../containers/Article'
 import Content from './../../containers/Content'
+
+import { getSections } from './../../react-helpers'
 
 import './styles.less'
 import './tablet.less'
@@ -91,40 +92,6 @@ export default React.createClass({
       isExpanded: true
     } );
   },
-  getSections() {
-    var sections = [];
-    var remaining = this.state.remaining || this.props.remaining || {};
-    var allSections = remaining.sections || [];
-    var topLevelSection = allSections.length ? allSections[0].toclevel : 2;
-    var curSection;
-    var self = this;
-
-    allSections.forEach( function ( sectionProps ) {
-      var id = sectionProps.id;
-      if ( sectionProps.toclevel === topLevelSection ) {
-        if ( curSection ) {
-          sections.push( <Section {...curSection } /> );
-        }
-        curSection = Object.assign( {}, self.props, sectionProps, {
-          key: id,
-          subsections: []
-        } );
-      } else {
-        curSection.subsections.push( <Section {...self.props}
-          {...sectionProps} key={id} isCollapsible={false} /> );
-      }
-    } );
-    if ( allSections.length ) {
-      // If there is less than 2 sections do not make them collapsible.
-      // This helps projects like Wiktionary
-      if ( sections.length < 3 ) {
-        curSection.isCollapsible = false;
-      }
-      // push the last one
-      sections.push( <Section {...curSection } /> );
-    }
-    return sections;
-  },
   getLocalUrl( title, params ) {
     var source = this.props.language_project || this.props.lang + '/wiki';
     title = title ? encodeURIComponent( title ).replace( '%3A', ':' ) : '';
@@ -186,7 +153,9 @@ export default React.createClass({
       title = this.props.title,
       lead = this.state.lead || this.props.lead || {},
       footer = this.getFooter( lead ),
-      remainingSections = this.getSections();
+      remaining = this.state.remaining || this.props.remaining || {},
+      allSections = remaining.sections || [],
+      remainingSections = getSections( allSections, props );
 
     leadHtml = lead.sections && lead.sections.length ? lead.sections[0].text : undefined;
     lead.text = leadHtml;
