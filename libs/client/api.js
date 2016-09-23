@@ -76,8 +76,10 @@ Api.prototype = {
     langOrLanguageProject = langOrLanguageProject || 'en';
     var route = sections ? sections + '/' : '';
     route += langOrLanguageProject + '/';
+    // encode any '/' symbols in title (fixes #89)
+    title = encodeURIComponent( title ).replace( /\//gi, '%2F' );
 
-    return this.fetch( this.path + 'page/' + route + encodeURIComponent( title ) );
+    return this.fetch( this.path + 'page/' + route + title );
   },
   getReference: function ( title, langOrLanguageProject, refId ) {
     return this.getReferences( title, langOrLanguageProject ).then( function ( refs ) {

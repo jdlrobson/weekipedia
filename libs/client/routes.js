@@ -24,7 +24,7 @@ var routes = [
     // regex 1: /:lang/wiki/:title [1, 2]
     // regex 2: /wiki/:title [3]
     // regex3: /:lang.:project/:title [4,5,6]
-    /^\/([a-z\-]*)\/wiki\/(.*)|^\/wiki\/(.*)|^\/(.*)\.(.*)\/(.*)/,
+    /^\/([a-z\-]*)\/wiki\/(.*)|^\/wiki\/(.*)|^\/(.*)\.([^\/]*)\/(.*)/,
     function ( info, props ) {
       var title = info[2] || info[3] || info[6],
         titleDecoded = decodeURIComponent( title ),
