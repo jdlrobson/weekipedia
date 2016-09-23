@@ -125,11 +125,12 @@ export default React.createClass({
     }
     return sections;
   },
-  getLocalUrl( title ) {
+  getLocalUrl( title, params ) {
     var source = this.props.language_project || this.props.lang + '/wiki';
-    title = title || '';
+    title = title ? encodeURIComponent( title ).replace( '%3A', ':' ) : '';
+    params = params ? '/' + encodeURIComponent( params ) : '';
 
-    return '/' + source + '/' + title;
+    return '/' + source + '/' + title + params;
   },
   getTabs( lead ){
     var ns = lead.ns,
@@ -208,6 +209,11 @@ export default React.createClass({
     } else {
       if ( this.state.error ) {
         sections.push( <ErrorBox msg={this.state.errorMsg} key="article-error" /> );
+        sections.push( (
+          <p key="404-search">Why not search for <a
+            onClick={this.props.onClickInternalLink}
+            href={this.getLocalUrl( 'Special:Search', title )}>{title}</a>?</p>
+        ) );
       } else {
         sections.push( <IntermediateState key="article-loading" /> );
       }
