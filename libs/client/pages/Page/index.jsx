@@ -110,6 +110,9 @@ export default React.createClass({
         <a href={baseUrl + 'User talk:' + this.props.titleSansPrefix}
           onClick={this.props.onClickInternalLink}
           key="page-talk-tab">Talk</a>,
+        <a href={baseUrl + 'Special:Collections/by/' + this.props.titleSansPrefix }
+          onClick={this.props.onClickInternalLink}
+          key="page-collections-tab">Collections</a>,
         <a href={baseUrl + 'Special:Contributions/' + this.props.titleSansPrefix }
           onClick={this.props.onClickInternalLink}
           key="page-contrib-tab">Contributions</a>,
