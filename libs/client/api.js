@@ -72,9 +72,12 @@ Api.prototype = {
       return cache[url];
     }
   },
-  getPage: function ( title, langOrLanguageProject ) {
+  getPage: function ( title, langOrLanguageProject, sections ) {
     langOrLanguageProject = langOrLanguageProject || 'en';
-    return this.fetch( this.path + 'page/' + langOrLanguageProject + '/' + encodeURIComponent( title ) );
+    var route = sections ? sections + '/' : '';
+    route += langOrLanguageProject + '/';
+
+    return this.fetch( this.path + 'page/' + route + encodeURIComponent( title ) );
   },
   getReference: function ( title, langOrLanguageProject, refId ) {
     return this.getReferences( title, langOrLanguageProject ).then( function ( refs ) {
@@ -87,18 +90,8 @@ Api.prototype = {
   },
   getReferenceSections: function ( title, langOrLanguageProject ) {
     var references = [];
-    return this.getPage( title, langOrLanguageProject ).then( function ( json ) {
-      json.remaining.sections.forEach( function ( section ) {
-        if ( section.isReferenceSection ) {
-          references.push( section );
-        }
-      } );
-
-      return {
-        references: {
-          sections: references
-        }
-      };
+    return this.getPage( title, langOrLanguageProject, 'references' ).then( function ( json ) {
+      return json;
     } );
   },
   getReferences: function ( title, langOrLanguageProject ) {
