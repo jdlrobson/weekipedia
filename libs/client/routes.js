@@ -15,6 +15,7 @@ import Search from './pages/Search'
 import Nearby from './pages/Nearby'
 import Watchlist from './pages/Watchlist'
 import UserLogin from './pages/UserLogin'
+import Uploads from './pages/Uploads'
 
 import utils from './utils'
 
@@ -125,6 +126,7 @@ function initSpecialPages() {
   addSpecialPage( 'Nearby', Nearby );
   addSpecialPage( 'UserLogin', UserLogin );
   addSpecialPage( 'Collections', Collections );
+  addSpecialPage( 'Uploads', Uploads );
 }
 
 initSpecialPages();
