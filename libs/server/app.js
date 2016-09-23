@@ -477,6 +477,7 @@ app.get('/api/:lang/collection/', function(req, res){
 app.get('/api/contributions/:lang/:ns/:username?',(req, res) => {
   cachedResponse( res, req.url, function() {
     var p = req.params;
+    var pr = getProject( req );
     return contributions( pr.lang, p.username, p.ns, req.query, pr.project );
   } );
 } );
@@ -484,7 +485,6 @@ app.get('/api/contributions/:lang/:ns/:username?',(req, res) => {
 app.get('/api/uploads/:language_project/:username',(req, res) => {
   cachedResponse( res, req.url, function() {
     var p = req.params;
-    var pr = getProject( req );
     return uploads( p.language_project, p.username, req.query );
   } );
 } );
