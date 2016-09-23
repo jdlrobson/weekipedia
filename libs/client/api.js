@@ -10,6 +10,8 @@ Api.prototype = {
   cacheable: function ( url ) {
     if ( url.indexOf( '/api/wikitext' ) === 0 ) {
       return false;
+    } else {
+      return true;
     }
   },
   invalidatePath: function ( path ) {
