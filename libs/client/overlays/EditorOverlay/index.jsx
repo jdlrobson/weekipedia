@@ -74,7 +74,8 @@ export default React.createClass({
       self = this,
       props = this.props,
       source = props.language_project || props.lang,
-      endpoint = '/api/private/edit/' + source + '/' + encodeURIComponent( this.props.title );
+      title = props.normalizedtitle || props.title,
+      endpoint = '/api/private/edit/' + source + '/' + encodeURIComponent( title );
 
     if ( this.props.section ) {
       endpoint += '/' + this.props.section;
