@@ -11,7 +11,7 @@ export default React.createClass({
   getConfig() {
     var config = mwStorage.get( 'mobile-options' );
     if ( !config ) {
-      return this.props.siteinfo;
+      return this.props.siteoptions;
     } else {
       return JSON.parse( config );
     }

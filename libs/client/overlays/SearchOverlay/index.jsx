@@ -49,8 +49,8 @@ export default React.createClass({
     }
   },
   render(){
-    var siteinfo = this.props.siteinfo;
-    var heading = siteinfo.includeSiteBranding ? <ChromeHeader {...this.props} /> : null;
+    var options = this.props.siteoptions;
+    var heading = options.includeSiteBranding ? <ChromeHeader {...this.props} /> : null;
     var search = <SearchForm
       msg={this.props.msg}
       onSearch={this.onSearch} onSearchSubmit={this.onSearchSubmit} focusOnRender="1" />;

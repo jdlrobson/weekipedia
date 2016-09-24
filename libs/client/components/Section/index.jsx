@@ -22,7 +22,7 @@ class Section extends Component {
   componentWillMount(){
     this.setState( {
       jsEnabled: false,
-      isOpen: this.props.siteinfo.expandSectionsByDefault
+      isOpen: this.props.siteoptions.expandSectionsByDefault
         && !this.props.isReferenceSection
     } );
   }

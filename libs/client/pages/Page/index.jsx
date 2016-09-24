@@ -54,7 +54,7 @@ export default React.createClass({
   },
   checkExpandedState() {
     var expandQuery = this.props.query && this.props.query.expanded;
-    if ( expandQuery || this.props.siteinfo.expandArticlesByDefault ) {
+    if ( expandQuery || this.props.siteoptions.expandArticlesByDefault ) {
       this.setState( { isExpanded: true } );
     }
   },

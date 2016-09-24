@@ -12,7 +12,7 @@ import mwStorage from './mediawiki-storage'
 
 var config = JSON.parse( document.body.getAttribute( 'data-config' ) || '{}' );
 // add user opt in options
-Object.assign( config.siteinfo, JSON.parse( mwStorage.get( 'mobile-options' ) || '{}' ) );
+Object.assign( config.siteoptions, JSON.parse( mwStorage.get( 'mobile-options' ) || '{}' ) );
 
 var api = new Api( config.siteinfo.apiPath );
 

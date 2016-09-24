@@ -123,6 +123,7 @@ export default React.createClass({
     var childNode = link.firstChild;
     var parentNode = link.parentNode;
     var props = this.props;
+    var allowForeignProjects = props.siteoptions.allowForeignProjects;
 
     if ( parentNode.className === 'mw-ref' ) {
       ev.preventDefault();
@@ -145,7 +146,7 @@ export default React.createClass({
 
         // FIXME: Workaround for #5
         if ( href.substr( 0, 5 ) === '/wiki' ) {
-          if ( props.language_project && props.siteinfo.allowForeignProjects ) {
+          if ( props.language_project && allowForeignProjects ) {
             href = '/' + props.language_project + href.substr( 5 );
           } else {
             href = '/' + props.lang + href;
@@ -159,7 +160,7 @@ export default React.createClass({
             search: parts[1]
           }, title );
           ev.preventDefault();
-        } else if ( props.siteinfo.allowForeignProjects ){
+        } else if ( allowForeignProjects ){
           props.supportedProjects.forEach( function( project ) {
             var reg = new RegExp( '\/\/([a-z\-]*)\.' + project + '\.org\/wiki\/(.*)|\/\/' + project + '\.wikimedia\.org\/wiki\/(.*)|\/\/' );
             var m = href.match( reg );

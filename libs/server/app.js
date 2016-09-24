@@ -553,14 +553,16 @@ app.get('/:lang?/*',(req, res) => {
     } : null;
 
   var config = {
+    siteoptions: {
+      includeSiteBranding: INCLUDE_SITE_BRANDING,
+      allowForeignProjects: SITE_ALLOW_FOREIGN_PROJECTS,
+      expandSectionsByDefault: SITE_EXPAND_SECTIONS,
+      expandArticlesByDefault: SITE_EXPAND_ARTICLE
+    },
     siteinfo: {
       defaultProject: DEFAULT_PROJECT,
-      includeSiteBranding: INCLUDE_SITE_BRANDING,
-      apiPath: API_PATH,
-      allowForeignProjects: SITE_ALLOW_FOREIGN_PROJECTS,
       home: SITE_HOME_PATH,
-      expandSectionsByDefault: SITE_EXPAND_SECTIONS,
-      expandArticlesByDefault: SITE_EXPAND_ARTICLE,
+      apiPath: API_PATH,
       wordmark: SITE_WORDMARK_PATH,
       title: SITE_TITLE,
       privacyUrl: SITE_PRIVACY_URL,
