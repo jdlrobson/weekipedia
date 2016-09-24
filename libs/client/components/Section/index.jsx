@@ -20,10 +20,11 @@ class Section extends Component {
     };
   }
   componentWillMount(){
+    var props = this.props;
     this.setState( {
       jsEnabled: false,
-      isOpen: this.props.siteoptions.expandSectionsByDefault
-        && !this.props.isReferenceSection
+      isOpen: !props.isCollapsible ? !props.isCollapsible : ( props.siteoptions.expandSectionsByDefault
+        && !props.isReferenceSection )
     } );
   }
   componentDidUpdate() {
