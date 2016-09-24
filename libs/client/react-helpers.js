@@ -29,9 +29,9 @@ function getSections( allSections, props ) {
     }
   } );
   if ( allSections.length ) {
-    // If there is less than 2 sections do not make them collapsible.
+    // If there is only 1 section do not make it collapsible.
     // This helps projects like Wiktionary
-    if ( sections.length < 3 ) {
+    if ( sections.length === 0 ) {
       curSection.isCollapsible = false;
     }
     // push the last one
