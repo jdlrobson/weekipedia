@@ -24,7 +24,7 @@ function getCards( data, props, keyPrefix ) {
   if ( data.pages && data.pages.length ) {
     data.pages.forEach( function ( item, i ) {
       var id = item.revid || item.pageid || item.id;
-      item.key = keyPrefix + 'card-' + i + '-' + id;
+      item.key = keyPrefix + 'card-' + i + '-' + id + '-' + props.language_project;
       // If no title we can assume they are all the same page so promote username
       if ( !item.title ) {
         item.title = item.user;
@@ -167,7 +167,7 @@ export default React.createClass({
           ts = new Date( card.props.timestamp );
           if ( !lastTs || ( ts.getDate() !== lastTs.getDate() ) ) {
             header = (
-              <ListHeader key={'card-list-header-' + i}>
+              <ListHeader key={'card-list-header-' + i + '-' + props.language_project}>
                 {ts.getDate()} {MONTHS[ts.getMonth()]} {ts.getFullYear()}
               </ListHeader>
             );

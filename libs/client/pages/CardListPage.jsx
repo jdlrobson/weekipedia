@@ -25,8 +25,9 @@ export default React.createClass({
     };
   },
   render(){
-    var body = [ <CardList key="card-list-page-card-list" {...this.props} /> ]
-      .concat( this.props.children );
+    var props = this.props;
+    var body = [ <CardList key={"card-list-page-card-list-" + props.language_project} {...props} /> ]
+      .concat( props.children );
 
     return (
       <Article {...this.props} isSpecialPage="1" body={body} />
