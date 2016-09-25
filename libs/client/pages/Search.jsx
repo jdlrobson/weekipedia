@@ -14,12 +14,14 @@ export default React.createClass({
     }
   },
   getTabs() {
+    var proj = this.props.project;
     var term = this.props.params;
     var self = this;
     var prefix = '/' + this.props.lang + '.';
     return this.props.supportedProjects.map( function ( project, i ) {
       return <a key={'search-tab' + i}
         onClick={self.navigateTo}
+        className={proj === project ? 'active' : ''}
         title={'Search ' + project + ' for ' + term}
         href={prefix + project + '/Special:Search/' + term}>{project}</a>
     } );
