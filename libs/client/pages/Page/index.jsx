@@ -101,6 +101,7 @@ export default React.createClass({
   },
   getTabs( lead ){
     var ns = lead.ns,
+      props = this.props,
       baseUrl = this.getLocalUrl();
 
     if ( this.props.tabs ) {
@@ -112,7 +113,7 @@ export default React.createClass({
           key="page-talk-tab">Talk</a>,
         <a href={baseUrl + 'Special:Collections/by/' + this.props.titleSansPrefix }
           onClick={this.props.onClickInternalLink}
-          key="page-collections-tab">Collections</a>,
+          key="page-collections-tab">{props.msg( 'menu-collections' )}</a>,
         <a href={baseUrl + 'Special:Contributions/' + this.props.titleSansPrefix }
           onClick={this.props.onClickInternalLink}
           key="page-contrib-tab">Contributions</a>,

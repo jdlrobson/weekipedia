@@ -58,7 +58,7 @@ export default React.createClass({
     if ( this.state.collections ) {
       return (
         <Overlay {...this.props} className="collection-overlay" isDrawer={true}>
-        <h2>Add to existing collection</h2>
+        <h2>{this.props.msg( 'collection-title' )}</h2>
         <a key='edit-collection-cancel' className="cancel"
           onClick={this.props.closeOverlay}>Cancel</a>
         <ul>
@@ -73,7 +73,7 @@ export default React.createClass({
         </ul>
         <div className="collection-actions">
           <a key='edit-collection-create'
-            href={"#/edit-collection/" + this.props.session.username + '/'}>Create new collection</a>
+            href={"#/edit-collection/" + this.props.session.username + '/'}>{this.props.msg('collection-create')}</a>
         </div>
         </Overlay>
       );

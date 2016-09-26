@@ -97,6 +97,7 @@ export default React.createClass({
   },
   render() {
     var username, tagline, userUrl, actions, label, suffix, tabs,
+      props = this.props,
       lang = this.props.lang,
       session = this.props.session;
 
@@ -135,14 +136,14 @@ export default React.createClass({
       tagline = (
         <div>
           <div>by everyone</div>
-          Collections of pages from our community.
+          {props.msg( 'collections-all')}
         </div>
       );
     }
     return (
       <Article {...this.props} isSpecialPage='yes'
         tabs={tabs}
-        title={this.state.title || 'Collections'} tagline={tagline} body={this.getBody()}>
+        title={this.state.title || props.msg( 'menu-collections' )} tagline={tagline} body={this.getBody()}>
       </Article>
     )
   }

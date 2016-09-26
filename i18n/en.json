@@ -15,5 +15,8 @@
   "menu-logout": "Log out",
   "menu-about": "About {{SITENAME}}",
   "menu-disclaimers": "Disclaimers",
-  "search": "Search {{SITENAME}}"
+  "search": "Search {{SITENAME}}",
+  "collections-all": "Collections of pages from our community.",
+  "collection-title": "Add to existing collection",
+  "collection-create": "Create new collection"
 }
