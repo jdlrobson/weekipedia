@@ -91,10 +91,9 @@ function matchFragment( fragment, props ) {
 }
 
 function matchRoute( path, fragment, props, query ) {
-  query = query || props.query;
   if ( query === undefined ) {
     var i, vals,
-      args = window.location.search.split( '&' );
+      args = window.location.search.substr( 1 ).split( '&' );
 
     query = {};
     for ( i = 0; i < args.length; i++ ) {
