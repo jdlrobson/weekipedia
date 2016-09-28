@@ -7,7 +7,7 @@
     "node-server-dev": "NODE_ENV=development node weekipedia.js",
     "compile:watch": "NODE_ENV=development webpack --watch",
     "compile": "webpack --content-base public/ && grunt cssjanus",
-    "compile-prod": "npm run compile && grunt uglify && grunt cssmin"
+    "compile-prod": "NODE_ENV=production npm run compile && grunt uglify && grunt cssmin"
   },
   "babel": {
     "presets": [
