@@ -5,6 +5,7 @@ import './styles.less'
 
 import Icon from './../../components/Icon'
 import Header from './../../components/Header'
+import ChromeHeader from './../../components/ChromeHeader'
 
 // Main component
 
@@ -23,7 +24,9 @@ class Overlay extends Component {
     }, 0 );
   }
   render(){
-    var header;
+    var header, icon;
+    var headerProps = {};
+    var props = this.props;
     var baseClass = this.props.isDrawer ? 'drawer' : 'overlay visible'
     var overlayClass = baseClass +
       ( this.props.className ? ' ' + this.props.className : '' );
@@ -39,15 +42,25 @@ class Overlay extends Component {
         </div>);
       overlayClass += ' lightbox';
     } else {
-      var icon = (<Icon glyph='close' onClick={this.onClose.bind(this)}/>);
-
-      header = <Header fixed="1" primaryIcon={this.props.primaryIcon || icon} router={this.props.router}
-        search={this.props.search}
-        secondaryIcon={this.props.secondaryIcon}
-        main={this.props.header}></Header>;
-    }
-    if ( this.props.search ) {
-      overlayClass += ' overlay-with-search';
+      icon = (<Icon glyph='close' onClick={this.onClose.bind(this)}/>);
+      headerProps = {
+        fixed: true,
+        primaryIcon: this.props.primaryIcon || icon,
+        router: props.router,
+        siteoptions: props.siteoptions,
+        siteinfo: props.siteinfo,
+        search: props.search,
+        secondaryIcon: props.secondaryIcon,
+        main: props.header
+      };
+      if ( props.chromeHeader ) {
+        header = <ChromeHeader {...headerProps} />
+        if ( props.siteoptions.includeSiteBranding ) {
+          overlayClass += ' overlay-with-search';
+        }
+      } else {
+        header = <Header {...headerProps} />
+      }
     }
 
     return (

@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 
 import Content from './../../containers/Content'
-import Icon from './../Icon'
 
 import './styles.less'
 import './icons.less'
@@ -10,7 +9,6 @@ class Header extends Component {
   render(){
     var suffix = this.props.fixed ? ' position-fixed' : '';
     var search;
-    var secondaryIcon = this.props.secondaryIcon || <Icon />
 
     if ( this.props.search ) {
       search = (
@@ -32,7 +30,7 @@ class Header extends Component {
             {this.props.main}
           </div>
           <div>
-            {secondaryIcon}
+            {this.props.secondaryIcon}
           </div>
         </Content>
         {search}

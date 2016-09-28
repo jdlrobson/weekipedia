@@ -3,7 +3,6 @@ import React from 'react'
 import './styles.less'
 
 import MainMenu from './../../components/MainMenu'
-import Header from './../../components/Header'
 import Icon from './../../components/Icon'
 import TransparentShield from './../../components/TransparentShield'
 import SearchForm from './../../components/SearchForm'
@@ -216,15 +215,10 @@ export default React.createClass({
     this.props.router.navigateTo( '#/search' );
   },
   render(){
-    var siteinfo = this.props.siteinfo;
-    var heading = siteinfo.includeSiteBranding ? <ChromeHeader {...this.props} /> : null;
+    var props = this.props;
     var search = (<SearchForm msg={this.props.msg}
       onClickSearch={this.onClickSearch} />);
 
-    if ( !heading ) {
-      heading = search;
-      search = null;
-    }
     var navigationClasses = this.state.isMenuOpen ?
       'primary-navigation-enabled navigation-enabled' : '';
 
@@ -252,9 +246,7 @@ export default React.createClass({
             onItemClick={this.closePrimaryNav}/>
         </nav>
         <div id="mw-mf-page-center" onClick={this.closePrimaryNav}>
-          <Header key="header-bar" primaryIcon={icon}
-            main={heading}
-            search={search}></Header>
+          <ChromeHeader {...props} primaryIcon={icon} search={search}/>
           {this.state.children}
           {shield}
         </div>
