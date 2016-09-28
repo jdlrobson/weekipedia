@@ -2,11 +2,11 @@ import React from 'react'
 
 import './styles.less'
 
-import MainMenu from './../../components/MainMenu'
-import Icon from './../../components/Icon'
-import TransparentShield from './../../components/TransparentShield'
-import SearchForm from './../../components/SearchForm'
-import ChromeHeader from './../../components/ChromeHeader'
+import MainMenu from './../MainMenu'
+import Icon from './../Icon'
+import TransparentShield from './../TransparentShield'
+import SearchForm from './../SearchForm'
+import ChromeHeader from './../ChromeHeader'
 
 import ReferenceDrawer from './../../overlays/ReferenceDrawer'
 import Toast from './../../overlays/Toast'

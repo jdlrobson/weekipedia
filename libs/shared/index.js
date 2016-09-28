@@ -1,7 +1,7 @@
 import React from 'react'
 import messages, { msg } from 'mediawiki-messages'
 
-import App from './../client/containers/App'
+import App from './../client/components/App'
 
 import router from './router.js'
 import commonRoutes from './routes.js'
