@@ -169,7 +169,7 @@ export default React.createClass({
 
     if ( leadHtml !== undefined ) {
       if ( lead.ns === 2 && !leadHtml ) {
-        sections.push( <UserPageCta user={title}
+        sections.push( <UserPageCta user={title} key="page-user-cta"
           isReaderOwner={props.session && props.session.username === props.titleSanPrefix } /> );
       } else if ( this.state.isExpanded ) {
         if ( remainingSections.length && props.showTableOfContents ) {
