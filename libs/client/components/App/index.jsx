@@ -1,4 +1,5 @@
 import React from 'react'
+import ReactDOM from 'react-dom'
 
 import './styles.less'
 
@@ -34,6 +35,21 @@ export default React.createClass({
       isOverlayEnabled: false
     };
   },
+  hijackLinks( container ){
+    container = container || ReactDOM.findDOMNode( this );
+
+    var links = container.querySelectorAll( 'a' );
+    var self = this;
+
+    function navigateTo( ev ) {
+      self.onClickInternalLink( ev );
+    }
+
+    container.setAttribute( 'data-hijacked-prev', 1 );
+    Array.prototype.forEach.call( links, function ( link ) {
+      link.addEventListener( 'click', navigateTo );
+    } );
+  },
   mountOverlay( props ) {
     this.setState( {
       overlay: props.overlay ? React.cloneElement( props.overlay, {
@@ -50,6 +66,7 @@ export default React.createClass({
       showNotification: this.showNotification,
       showOverlay: this.showOverlay,
       closeOverlay: this.closeOverlay,
+      hijackLinks: this.hijackLinks,
       onClickInternalLink: this.onClickInternalLink
     } : {};
     if ( this.state.pageviews === 0 ) {
