@@ -2,12 +2,12 @@ import React from 'react'
 
 import Overlay from './../../containers/Overlay'
 import Content from './../../containers/Content'
+import Panel from './../../containers/Panel'
 import TruncatedText from './../../containers/TruncatedText'
 
 import Button from './../../components/Button'
 import SectionContent from './../../components/SectionContent'
 import IntermediateState from './../../components/IntermediateState'
-import Panel from './../../components/Panel'
 import Input from './../../components/Input'
 import Icon from './../../components/Icon'
 

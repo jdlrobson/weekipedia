@@ -3,8 +3,8 @@ import React from 'react'
 import Overlay from './../../containers/Overlay'
 import Content from './../../containers/Content'
 import LinkList from './../../containers/LinkList'
+import Panel from './../../containers/Panel'
 
-import Panel from './../../components/Panel'
 import IntermediateState from './../../components/IntermediateState';
 import SearchInput from './../../components/SearchInput'
 
