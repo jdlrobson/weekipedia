@@ -80,7 +80,6 @@ function matchRouteInternal( routes, path, props, query ) {
     if ( res ) {
       chosenRoute = route[1]( res, props, query );
       return true;
-    } else {
     }
   } );
   return chosenRoute;

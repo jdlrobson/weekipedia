@@ -6,7 +6,6 @@
   "disallowDanglingUnderscores": null,
   "requireVarDeclFirst": null,
   "requireMultipleVarDecl": null,
-  "disallowEmptyBlocks": null,
   "requireCamelCaseOrUpperCaseIdentifiers": null,
   "validateIndentation": 2,
   "disallowImplicitTypeConversion": ["numeric", "boolean", "binary", "string"],
