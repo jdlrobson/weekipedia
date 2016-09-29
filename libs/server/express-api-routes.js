@@ -29,6 +29,7 @@ import respond from './respond'
 import cachedResponses from './cached-response.js'
 import { DEFAULT_PROJECT, API_PATH, ALLOWED_PROJECTS } from './config'
 
+const RESPONSE_OKAY = JSON.stringify( { msg: 'OK' } );
 const cachedResponse = cachedResponses.cachedResponse
 const invalidate = cachedResponses.invalidate
 
@@ -185,7 +186,7 @@ function initPostMethods( app ) {
     if ( checkReqParams( req, res, [ 'feature', 'token', 'browser' ] ) ) {
       res.status( 200 );
       subscribe.ping( req.body.browser, req.body.feature, req.body.token );
-      res.send( 'OK' );
+      res.send( RESPONSE_OKAY );
     }
   } );
 
@@ -193,7 +194,7 @@ function initPostMethods( app ) {
     if ( checkReqParams( req, res, [ 'feature', 'token', 'browser' ] ) ) {
       res.status( 200 );
       subscribe.add( req.body.browser, req.body.feature, req.body.token );
-      res.send( 'OK' );
+      res.send( RESPONSE_OKAY );
     }
   } );
 
@@ -201,7 +202,7 @@ function initPostMethods( app ) {
     if ( checkReqParams( req, res, [ 'feature', 'token', 'browser' ] ) ) {
       res.status( 200 );
       subscribe.remove( req.body.browser, req.body.feature, req.body.token );
-      res.send( 'OK' );
+      res.send( RESPONSE_OKAY );
     }
   } );
 }
