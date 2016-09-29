@@ -1,6 +1,9 @@
 import React from 'react'
 
-import Button from './../../components/Button';
+import Button from './../Button';
+import ErrorBox from './../ErrorBox';
+
+import Panel from './../../containers/Panel'
 
 function getSubscriptionId( subscription ) {
   var provider = getPushProvider( subscription.endpoint );
@@ -113,19 +116,22 @@ export default React.createClass({
     }
   },
   render(){
-    var label, error, onClick;
+    var label, error, onClick,
+      msg = this.state.isEnabled ? 'Bored of push notifications?'
+        : 'Enable push notifications and receive trends as they happen.';
     if ( !this.state.isError ) {
       label = this.state.isEnabled ? 'Disable' : 'Enable';
       onClick = this.toggle;
     } else {
-      error = this.state.isBlocked ? 'Please enable push notifications.' : 'Not supported.';
+      error = this.state.isBlocked ? 'Please enable push notifications in your web browser.'
+        : 'Your web browser does not support push notifications.';
     }
 
-    return error ? null : (
-      <div>
-        <p>Enable push notifications and receive trends as they happen.</p>
+    return error ? <ErrorBox msg={error} /> : (
+      <Panel>
+        <p>{msg}</p>
         <Button className="push-button" onClick={onClick} label={label}></Button>
-      </div>
+      </Panel>
     )
   }
 })
