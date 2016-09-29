@@ -18,7 +18,6 @@
     "checkRedundantParams": true,
     "checkReturnTypes": true,
     "checkRedundantReturns": true,
-    "requireReturnTypes": true,
-    "@fixme": "https://github.com/jscs-dev/jscs-jsdoc/pull/138"
+    "requireReturnTypes": true
   }
 }
