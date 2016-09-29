@@ -15,7 +15,7 @@ export default function ( lang, project, title, description, profile ) {
 
     var collectionTitle = lookup( profile.displayName, id );
     title = title || 'Unnamed collection';
-    var body = ["'''" + title + "'''", '', description, '', '[[' + vars.category + ']]',
+    var body = ['\'\'\'' + title + '\'\'\'', '', description, '', '[[' + vars.category + ']]',
       '== Items ==', '' ].join( '\n' );
 
     return edit( lang, collectionTitle, body, 'Create collection', '0', project, profile );

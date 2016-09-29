@@ -15,7 +15,7 @@ function getInfo( lang, project, collection, username ) {
       rev = page.revisions[0];
       return extractInfo( page.title, rev.content );
     } else {
-      throw "Collection does not exist.";
+      throw 'Collection does not exist.';
     }
   } );
 }

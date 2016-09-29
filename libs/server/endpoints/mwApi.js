@@ -41,7 +41,9 @@ export default function ( langOrLanguageProject, params, projectOrOptions, optio
     if ( json.error ) {
       throw new Error( json.error.code + ': ' + json.error.info );
     } else if ( json.query && json.query.pages ) {
-      return { pages: flatten( json.query.pages ), continue: json.continue, redirects: json.query.redirects };
+      return { pages: flatten( json.query.pages ),
+        continue: json.continue,
+        redirects: json.query.redirects };
     } else if ( params.meta ) {
       return json.query[params.meta];
     } else {

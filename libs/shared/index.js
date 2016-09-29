@@ -19,7 +19,7 @@ function init( config, routes ) {
     [
       // Home page / Hot
       /^\/?$/,
-      function( info, props, query ) {
+      function ( info, props, query ) {
         return router.matchRoute( props.siteinfo.home, '#', props, query )
       }
     ],

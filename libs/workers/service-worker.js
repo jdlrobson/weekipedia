@@ -15,7 +15,7 @@ var staticAssets = [
   '/main-bundle.js',
   '/style.css',
   '/style.rtl.css',
-  '/',
+  '/'
 ]
 
 if ( version.wordmark ) {
@@ -23,23 +23,23 @@ if ( version.wordmark ) {
 }
 
 // Prefetch static assets
-precache(staticAssets)
+precache( staticAssets )
 
 // Serve static assets from cache first
-staticAssets.forEach((asset) => router.get(asset, cacheFirst))
+staticAssets.forEach( ( asset ) => router.get( asset, cacheFirst ) )
 
 // Serve API requests from the network
-router.get('/api/(.*)', networkOnly)
+router.get( '/api/(.*)', networkOnly )
 
 // Login must happen via network
-router.get('/auth/(.*)', networkOnly)
+router.get( '/auth/(.*)', networkOnly )
 
 // Serve any other url with the shell
-router.get('/(.*)\/(.*)', () => caches.match('/'))
+router.get( '/(.*)\/(.*)', () => caches.match( '/' ) )
 
 // Rest of calls go to network
 router.default = networkOnly
 
 // Boilerplate to ensure our service worker takes control of the page as soon as possible.
-addEventListener('install', event => event.waitUntil(skipWaiting()))
-addEventListener('activate', event => event.waitUntil(clients.claim()))
+addEventListener( 'install', event => event.waitUntil( skipWaiting() ) )
+addEventListener( 'activate', event => event.waitUntil( clients.claim() ) )

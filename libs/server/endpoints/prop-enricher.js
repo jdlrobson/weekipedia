@@ -19,34 +19,34 @@ function propEnricher( arr, props, lang, project, params ) {
   }
   arr.forEach( function ( page ) {
     titles.push( page.title );
-  });
+  } );
   params = Object.assign( params, {
     redirects: '',
-    prop: props.join('|'),
+    prop: props.join( '|' ),
     titles: titles.join( '|' )
   } );
-  if ( props.indexOf('pageimages') > -1 ) {
+  if ( props.indexOf( 'pageimages' ) > -1 ) {
     params.pilimit = 50;
     params.pithumbsize = 120;
   }
-  if ( props.indexOf('coordinates') > -1 ) {
+  if ( props.indexOf( 'coordinates' ) > -1 ) {
     params.colimit = 'max';
   }
-  if ( props.indexOf('pageterms') > -1 ) {
+  if ( props.indexOf( 'pageterms' ) > -1 ) {
     params.wbptterms = 'description';
   }
 
-  return mwApi( lang, params, project ).then( function( data ) {
+  return mwApi( lang, params, project ).then( function ( data ) {
     var index = {};
     var pages = data.pages;
     var redirects = {};
     if ( data.redirects ) {
-      data.redirects.forEach( (redirect) => {
+      data.redirects.forEach( ( redirect ) => {
         redirects[redirect.from] = redirect.to;
-      });
+      } );
     }
 
-    pages.forEach(function(page){
+    pages.forEach( function ( page ) {
       index[page.title] = {};
       index[page.title].description = page.description;
       index[page.title].thumbnail = page.thumbnail;
@@ -54,8 +54,8 @@ function propEnricher( arr, props, lang, project, params ) {
       if ( page.missing ) {
         index[page.title].missing = true;
       }
-    })
-    arr.forEach(function(page){
+    } )
+    arr.forEach( function ( page ) {
       var t = page.title.replace( /_/gi, ' ' );
       var obj = index[t] || index[redirects[t]] || {};
       page.thumbnail = obj.thumbnail;
@@ -66,12 +66,12 @@ function propEnricher( arr, props, lang, project, params ) {
       if ( obj.description && !page.description ) {
         page.description = obj.description;
       }
-    });
+    } );
     return arr;
-  }).catch( function () {
+  } ).catch( function () {
     // Looks like the endpoint is down or no internet connection - so return original array
     return arr;
-  });
+  } );
 }
 
 export default propEnricher

@@ -17,7 +17,7 @@ function getSections( allSections, props ) {
         key: id,
         subsections: []
       } );
-    } else if ( curSection.text !== undefined ){
+    } else if ( curSection.text !== undefined ) {
       curSection.subsections.push(
         React.createElement( Section,
           Object.assign( {}, props, sectionProps, {

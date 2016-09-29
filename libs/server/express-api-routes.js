@@ -37,8 +37,8 @@ const invalidate = cachedResponses.invalidate
 //   the request is authenticated (typically via a persistent login session),
 //   the request will proceed.  Otherwise, the user will be redirected to the
 //   login page.
-function ensureAuthenticated(req, res, next) {
-  if (req.isAuthenticated()) {
+function ensureAuthenticated( req, res, next ) {
+  if ( req.isAuthenticated() ) {
     return next();
   } else {
     res.status( 401 );
@@ -59,7 +59,7 @@ function getProject( req ) {
   }
   proj.project = proj.project || DEFAULT_PROJECT;
   if ( ALLOWED_PROJECTS.indexOf( proj.project ) === -1 ) {
-    throw "The `" + proj.project + "` project is not supported by the web app.";
+    throw 'The `' + proj.project + '` project is not supported by the web app.';
   }
   return proj;
 }
@@ -86,12 +86,12 @@ function initLoginRoutes( app ) {
    * Begin routes which require authenticated
    *******************************************************
   */
-  app.get('/auth/logout', ensureAuthenticated, function( req, res ) {
+  app.get( '/auth/logout', ensureAuthenticated, function ( req, res ) {
     req.logout();
-    res.redirect('/');
+    res.redirect( '/' );
   } );
 
-  app.post('/api/private/edit/:lang/:title/:section?',(req, res) => {
+  app.post( '/api/private/edit/:lang/:title/:section?', ( req, res ) => {
     var p = req.params;
     var body = req.body;
     respond( res, function () {
@@ -105,16 +105,16 @@ function initLoginRoutes( app ) {
     } );
   } );
 
-  app.get('/api/private/watchlist-feed/:lang/:ns?', ensureAuthenticated, function(req, res){
+  app.get( '/api/private/watchlist-feed/:lang/:ns?', ensureAuthenticated, function ( req, res ) {
     var callback = function ( data ) {
-      res.setHeader('Content-Type', 'application/json');
+      res.setHeader( 'Content-Type', 'application/json' );
       res.status( 200 );
       res.send( JSON.stringify( data ) );
     };
     watchlistfeed( req.params.lang, DEFAULT_PROJECT, req.params.ns, req.user, req.query ).then( callback );
-  });
+  } );
 
-  app.all('/api/private/:lang/collection/:id/:action/:title?', ensureAuthenticated, function(req, res){
+  app.all( '/api/private/:lang/collection/:id/:action/:title?', ensureAuthenticated, function ( req, res ) {
     var id = parseInt( req.params.id, 10 ) || 0
     var action = req.params.action;
     var lang = req.params.lang;
@@ -134,11 +134,11 @@ function initLoginRoutes( app ) {
         return collection.update( lang, DEFAULT_PROJECT, id, [ title ], profile, action === 'remove' );
       }
     } );
-  });
+  } );
 
-  app.get('/api/private/watchlist/:lang/:title?', ensureAuthenticated, function(req, res){
+  app.get( '/api/private/watchlist/:lang/:title?', ensureAuthenticated, function ( req, res ) {
     var callback = function ( data ) {
-      res.setHeader('Content-Type', 'application/json');
+      res.setHeader( 'Content-Type', 'application/json' );
       res.status( 200 );
       res.send( JSON.stringify( data ) );
     };
@@ -147,23 +147,23 @@ function initLoginRoutes( app ) {
     } else {
       watchlist( req.params.lang, DEFAULT_PROJECT, 0, req.user, req.query ).then( callback );
     }
-  });
+  } );
 
-  app.post('/api/private/watch/:lang/:title', function(req, res){
+  app.post( '/api/private/watch/:lang/:title', function ( req, res ) {
     watch( req.params.lang, DEFAULT_PROJECT, [ req.params.title ], req.user ).then( function ( data ) {
-      res.setHeader('Content-Type', 'application/json');
+      res.setHeader( 'Content-Type', 'application/json' );
       res.status( 200 );
       res.send( JSON.stringify( data ) );
     } );
-  });
+  } );
 
-  app.post('/api/private/unwatch/:lang/:title', function(req, res){
+  app.post( '/api/private/unwatch/:lang/:title', function ( req, res ) {
     watch( req.params.lang, DEFAULT_PROJECT, [ req.params.title ], req.user, true ).then( function ( data ) {
-      res.setHeader('Content-Type', 'application/json');
+      res.setHeader( 'Content-Type', 'application/json' );
       res.status( 200 );
       res.send( JSON.stringify( data ) );
     } );
-  });
+  } );
 }
 
 function initPostMethods( app ) {
@@ -172,7 +172,7 @@ function initPostMethods( app ) {
    * Begin POST routes
    *******************************************************
   */
-  app.post('/api/:lang_project/parse/:section?', function( req, res ) {
+  app.post( '/api/:lang_project/parse/:section?', function ( req, res ) {
     if ( checkReqParams( req, res, [ 'title', 'wikitext' ] ) ) {
       res.status( 200 );
       respond( res, function () {
@@ -181,7 +181,7 @@ function initPostMethods( app ) {
     }
   } );
 
-  app.post('/api/web-push/test', function( req, res ) {
+  app.post( '/api/web-push/test', function ( req, res ) {
     if ( checkReqParams( req, res, [ 'feature', 'token', 'browser' ] ) ) {
       res.status( 200 );
       subscribe.ping( req.body.browser, req.body.feature, req.body.token );
@@ -189,7 +189,7 @@ function initPostMethods( app ) {
     }
   } );
 
-  app.post('/api/web-push/subscribe', function( req, res ) {
+  app.post( '/api/web-push/subscribe', function ( req, res ) {
     if ( checkReqParams( req, res, [ 'feature', 'token', 'browser' ] ) ) {
       res.status( 200 );
       subscribe.add( req.body.browser, req.body.feature, req.body.token );
@@ -197,7 +197,7 @@ function initPostMethods( app ) {
     }
   } );
 
-  app.post('/api/web-push/unsubscribe', function( req, res ) {
+  app.post( '/api/web-push/unsubscribe', function ( req, res ) {
     if ( checkReqParams( req, res, [ 'feature', 'token', 'browser' ] ) ) {
       res.status( 200 );
       subscribe.remove( req.body.browser, req.body.feature, req.body.token );
@@ -207,22 +207,22 @@ function initPostMethods( app ) {
 }
 
 function initGetMethods( app ) {
-  app.get('/api/trending/:wiki/:halflife',(req, res) => {
+  app.get( '/api/trending/:wiki/:halflife', ( req, res ) => {
     var wiki = req.params.wiki;
     var halflife = parseFloat( req.params.halflife );
 
-    cachedResponse( res, req.url, function() {
+    cachedResponse( res, req.url, function () {
       return trending( wiki, halflife, DEFAULT_PROJECT );
     } );
   } )
 
-  app.get('/api/trending-debug/:wiki/:title',(req, res) => {
-    cachedResponse( res, req.url, function() {
+  app.get( '/api/trending-debug/:wiki/:title', ( req, res ) => {
+    cachedResponse( res, req.url, function () {
       return trending( req.params.wiki, 0.1, DEFAULT_PROJECT, req.params.title );
     } );
   } )
 
-  app.get('/api/random/:lang/',(req, res) => {
+  app.get( '/api/random/:lang/', ( req, res ) => {
     return cachedResponse( res, null, function () {
       var param,
         params = {};
@@ -236,87 +236,87 @@ function initGetMethods( app ) {
     } );
   } );
 
-  app.get('/api/categories/:lang/:title?/',(req, res) => {
+  app.get( '/api/categories/:lang/:title?/', ( req, res ) => {
     return cachedResponse( res, null, function () {
       var p = req.params;
       return categories( p.lang, p.title, DEFAULT_PROJECT, req.query );
     } );
   } );
 
-  app.get('/api/file/:lang/:width,:height/:title/',(req, res) => {
+  app.get( '/api/file/:lang/:width,:height/:title/', ( req, res ) => {
     return cachedResponse( res, null, function () {
       var p = req.params;
       return file( p.lang, p.title, p.width, p.height, DEFAULT_PROJECT );
     } );
   } );
 
-  app.get('/api/related/:lang/:title',(req, res) => {
+  app.get( '/api/related/:lang/:title', ( req, res ) => {
     return cachedResponse( res, null, function () {
       var p = getProject( req );
       return related( p.lang, req.params.title, p.project );
     } );
   } );
 
-  app.get('/api/search/:lang/:term',(req, res) => {
+  app.get( '/api/search/:lang/:term', ( req, res ) => {
     return cachedResponse( res, null, function () {
       return search( req.params.lang, req.params.term, 0, DEFAULT_PROJECT );
     } );
   } );
 
-  app.get('/api/search-full/:lang/:term',(req, res) => {
+  app.get( '/api/search-full/:lang/:term', ( req, res ) => {
     return cachedResponse( res, null, function () {
       return search( req.params.lang, req.params.term, 0, DEFAULT_PROJECT, true );
     } );
   } );
 
-  app.get('/api/nearby/:lang/:latitude,:longitude',(req, res) => {
+  app.get( '/api/nearby/:lang/:latitude,:longitude', ( req, res ) => {
     return cachedResponse( res, req.url, function () {
       return nearby( req.params.latitude, req.params.longitude, req.params.lang, 0, DEFAULT_PROJECT );
     } );
   } );
 
-  app.get('/api/diff/:lang/:revId',(req, res) => {
+  app.get( '/api/diff/:lang/:revId', ( req, res ) => {
     cachedResponse( res, req.url, function () {
       var p = getProject( req );
       return diff( p.lang, req.params.revId, p.project )
-    });
+    } );
   } );
 
-  app.get('/api/page/references/:lang.:project/:title',(req, res) => {
-    var proj = getProject(req);
+  app.get( '/api/page/references/:lang.:project/:title', ( req, res ) => {
+    var proj = getProject( req );
     cachedResponse( res, req.url, function () {
       return references( req.params.title, proj.lang, proj.project, true );
-    });
+    } );
   } );
 
-  app.get('/api/page/:lang.:project/:title',(req, res) => {
-    var proj = getProject(req);
+  app.get( '/api/page/:lang.:project/:title', ( req, res ) => {
+    var proj = getProject( req );
     cachedResponse( res, req.url, function () {
       return page( req.params.title, proj.lang, proj.project, false );
-    });
+    } );
   } );
 
-  app.get('/api/page/:lang/:title',(req, res) => {
-    var proj = getProject(req);
+  app.get( '/api/page/:lang/:title', ( req, res ) => {
+    var proj = getProject( req );
     cachedResponse( res, req.url, function () {
       return page( req.params.title, proj.lang, proj.project, false );
-    });
+    } );
   } );
 
-  app.get('/api/visits/:lang/',(req, res) => {
+  app.get( '/api/visits/:lang/', ( req, res ) => {
     cachedResponse( res, req.url, function () {
       return visits( req.params.lang, DEFAULT_PROJECT )
     } );
   } );
 
-  app.get('/api/page-languages/:lang/:title',(req, res) => {
-    var proj = getProject(req);
+  app.get( '/api/page-languages/:lang/:title', ( req, res ) => {
+    var proj = getProject( req );
     cachedResponse( res, req.url, function () {
       return languages( req.params.title, proj.lang, proj.project );
-    });
+    } );
   } );
 
-  app.get('/api/:lang/collection/by/:user/:id?', function(req, res){
+  app.get( '/api/:lang/collection/by/:user/:id?', function ( req, res ) {
     var id;
     var lang = req.params.lang;
     var user = req.params.user;
@@ -332,44 +332,44 @@ function initGetMethods( app ) {
       return id !== undefined ? collection.members( lang, DEFAULT_PROJECT, id, user, req.query ) :
         collection.list( lang, DEFAULT_PROJECT, user );
     } );
-  });
+  } );
 
-  app.get('/api/:lang/collection/', function(req, res){
+  app.get( '/api/:lang/collection/', function ( req, res ) {
     var lang = req.params.lang;
 
     respond( res, function () {
       return collection.all( lang, DEFAULT_PROJECT, req.query );
     } );
-  });
+  } );
 
-  app.get('/api/contributions/:lang/:ns/:username?',(req, res) => {
-    cachedResponse( res, req.url, function() {
+  app.get( '/api/contributions/:lang/:ns/:username?', ( req, res ) => {
+    cachedResponse( res, req.url, function () {
       var p = req.params;
       var pr = getProject( req );
       return contributions( pr.lang, p.username, p.ns, req.query, pr.project );
     } );
   } );
 
-  app.get('/api/uploads/:language_project/:username',(req, res) => {
-    cachedResponse( res, req.url, function() {
+  app.get( '/api/uploads/:language_project/:username', ( req, res ) => {
+    cachedResponse( res, req.url, function () {
       var p = req.params;
       return uploads( p.language_project, p.username, req.query );
     } );
   } );
 
-  app.get('/api/pagehistory/:lang/:title',(req, res) => {
-    cachedResponse( res, req.url, function() {
+  app.get( '/api/pagehistory/:lang/:title', ( req, res ) => {
+    cachedResponse( res, req.url, function () {
       var proj = getProject( req );
       var p = req.params;
       return pagehistory( proj.lang, p.title, req.query, proj.project );
     } );
   } );
 
-  app.get('/api/web-push/service/trending/',(req, res) => {
+  app.get( '/api/web-push/service/trending/', ( req, res ) => {
     cachedResponse( res, req.url, webPushTrend );
   } );
 
-  app.get('/api/wikitext/:lang/:title/:section?',(req, res) => {
+  app.get( '/api/wikitext/:lang/:title/:section?', ( req, res ) => {
     var p = req.params;
     var proj = getProject( req );
     respond( res, function () {
@@ -377,8 +377,8 @@ function initGetMethods( app ) {
     } );
   } );
 
-  app.get('/api/messages/:lang',(req, res) => {
-    cachedResponse( res, req.url, function() {
+  app.get( '/api/messages/:lang', ( req, res ) => {
+    cachedResponse( res, req.url, function () {
       return new Promise( function ( resolve ) {
         resolve( messages( req.params.lang ) );
       } );
@@ -388,10 +388,10 @@ function initGetMethods( app ) {
 
 function initRoutes( app, canLogin ) {
   if ( canLogin ) {
-    initLoginRoutes(app);
+    initLoginRoutes( app );
   }
-  initPostMethods(app);
-  initGetMethods(app);
+  initPostMethods( app );
+  initGetMethods( app );
 }
 
 export default initRoutes

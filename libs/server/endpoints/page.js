@@ -4,7 +4,7 @@ import domino from 'domino'
 import { SPECIAL_PROJECTS } from './../config'
 import mwApi from './mwApi';
 
-function extractLeadParagraph(doc) {
+function extractLeadParagraph( doc ) {
   var p = '';
   var node = doc.querySelector( 'p' );
   if ( node ) {
@@ -14,7 +14,7 @@ function extractLeadParagraph(doc) {
   }
   return p;
 }
-function extractHatnote(doc) {
+function extractHatnote( doc ) {
   // Workaround for https://phabricator.wikimedia.org/T143739
   // Do not remove it from the DOM has a reminder this is not fixed.
   var hatnoteNodes = doc.querySelectorAll( '.hatnote' );
@@ -28,7 +28,7 @@ function extractHatnote(doc) {
   }
   return hatnote;
 }
-function extractInfobox(doc) {
+function extractInfobox( doc ) {
   var infobox;
   var node = doc.querySelector( '.infobox' );
   if ( node ) {
@@ -116,7 +116,8 @@ export default function ( title, lang, project, includeReferences ) {
 
       if ( json.lead && json.lead.ns === 2 ) {
         // it's a user page so get more info
-        return mwApi( lang, { meta: 'globaluserinfo', guiuser: username }, project ).then( function ( userInfo ) {
+        return mwApi( lang, { meta: 'globaluserinfo',
+          guiuser: username }, project ).then( function ( userInfo ) {
           var registered;
           json.user =  userInfo;
           if ( userInfo.registration ) {
@@ -130,13 +131,13 @@ export default function ( title, lang, project, includeReferences ) {
         } )
       } else {
         // Workaround for https://phabricator.wikimedia.org/T145034
-        var doc = domino.createDocument(json.lead.sections.length && json.lead.sections[0] && json.lead.sections[0].text);
+        var doc = domino.createDocument( json.lead.sections.length && json.lead.sections[0] && json.lead.sections[0].text );
         if ( doc ) {
-          var infobox = extractInfobox(doc);
-          var leadParagraph = extractLeadParagraph(doc);
+          var infobox = extractInfobox( doc );
+          var leadParagraph = extractLeadParagraph( doc );
           json.lead.infobox = infobox;
           json.lead.paragraph = leadParagraph;
-          json.lead.hatnote = extractHatnote(doc);
+          json.lead.hatnote = extractHatnote( doc );
           json.lead.sections[0].text = doc.body.innerHTML;
         }
         return json;

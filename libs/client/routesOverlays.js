@@ -51,7 +51,7 @@ export default [
       return {
         overlay: React.createElement( LanguageOverlay, props )
       }
-    },
+    }
   ],
   // Search Overlay
   [
@@ -60,6 +60,6 @@ export default [
       return {
         overlay: React.createElement( SearchOverlay, props )
       }
-    },
+    }
   ]
 ];

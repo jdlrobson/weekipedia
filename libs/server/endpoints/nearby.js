@@ -14,7 +14,7 @@ export default function ( latitude, longitude, lang, ns, project ) {
     ggscoord: latitude + '|' + longitude
   };
 
-  return mwApi( lang, params, project ).then( function( data ) {
+  return mwApi( lang, params, project ).then( function ( data ) {
     data.pages = data.pages.sort( function ( a, b ) {
       return a.coordinates.dist < b.coordinates.dist ? -1 : 1;
     } );

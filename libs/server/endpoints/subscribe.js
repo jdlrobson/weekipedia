@@ -1,11 +1,11 @@
 import subscriber from 'web-push-subscriber'
 
-function remove ( browser, featureName, token ) {
+function remove( browser, featureName, token ) {
   subscriber.unsubscribe( browser, featureName, token );
   return true;
 }
 
-function add ( browser, featureName, token ) {
+function add( browser, featureName, token ) {
   subscriber.subscribe( browser, featureName, token );
   return true;
 }

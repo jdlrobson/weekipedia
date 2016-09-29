@@ -15,9 +15,10 @@ function extractMembers( body, expand ) {
         members.push( title );
 
         // extract description
-        m = line.match(/\[\[.*\]\] - (.*)/ );
+        m = line.match( /\[\[.*\]\] - (.*)/ );
         if ( m ) {
-          memberPages.push( { title: title, description: m[1] } );
+          memberPages.push( { title: title,
+            description: m[1] } );
         } else {
           memberPages.push( { title: title } );
         }

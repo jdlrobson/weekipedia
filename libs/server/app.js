@@ -1,4 +1,4 @@
-require('babel-core/register')
+require( 'babel-core/register' )
 
 import express from 'express'
 import hogan from 'hogan-express'
@@ -51,63 +51,63 @@ const manifest = {
   gcm_sender_id: GCM_SENDER_ID
 };
 
-app.engine('html', hogan)
-app.set('views', __dirname + '/views')
-app.use('/', express.static( __dirname + '/../../public/' ) )
-app.use(bodyParser.json()); // support json encoded bodies
-app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
+app.engine( 'html', hogan )
+app.set( 'views', __dirname + '/views' )
+app.use( '/', express.static( __dirname + '/../../public/' ) )
+app.use( bodyParser.json() ); // support json encoded bodies
+app.use( bodyParser.urlencoded( {     // to support URL-encoded bodies
   extended: true
-}));
+} ) );
 
-app.set('port', (APP_PORT))
+app.set( 'port', ( APP_PORT ) )
 
 if ( USE_HTTPS ) {
-  app.enable('trust proxy');
-  app.use(function (req, res, next) {
+  app.enable( 'trust proxy' );
+  app.use( function ( req, res, next ) {
     if ( USE_HTTPS && !req.secure ) {
-      res.redirect('https://' + req.headers.host + req.url);
+      res.redirect( 'https://' + req.headers.host + req.url );
     } else {
       next();
     }
-  });
+  } );
 }
 
 if ( SIGN_IN_SUPPORTED ) {
-  const MemcachedStore = connect(session);
+  const MemcachedStore = connect( session );
 
-  passport.serializeUser(function(user, done) {
-    done(null, user);
-  });
+  passport.serializeUser( function ( user, done ) {
+    done( null, user );
+  } );
 
-  passport.deserializeUser(function(obj, done) {
-    done(null, obj);
-  });
+  passport.deserializeUser( function ( obj, done ) {
+    done( null, obj );
+  } );
 
-  app.use(session({
+  app.use( session( {
     resave: false,
     saveUninitialized: true,
-    store: new MemcachedStore({
+    store: new MemcachedStore( {
       hosts: ['127.0.0.1:11211'],
       secret: CONSUMER_SECRET
-    }),
+    } ),
     secret: CONSUMER_SECRET
-  }));
-  app.use(passport.initialize());
-  app.use(passport.session());
+  } ) );
+  app.use( passport.initialize() );
+  app.use( passport.session() );
   passport.use(
-    new OAuthStrategy({
+    new OAuthStrategy( {
       consumerKey: CONSUMER_KEY,
       consumerSecret: CONSUMER_SECRET
     },
-    function(token, tokenSecret, profile, done) {
+    function ( token, tokenSecret, profile, done ) {
       // [ADDED] Twitter extended API calls using 'request' and 'querystring'
       profile.oauth = {
-        consumer_key : CONSUMER_KEY,
-        consumer_secret : CONSUMER_SECRET,
-        token : token,
-        token_secret : tokenSecret
+        consumer_key: CONSUMER_KEY,
+        consumer_secret: CONSUMER_SECRET,
+        token: token,
+        token_secret: tokenSecret
       }
-      return done(null, profile);
+      return done( null, profile );
     } )
   );
 }
@@ -118,30 +118,30 @@ if ( SIGN_IN_SUPPORTED ) {
  *******************************************************
 */
 
-app.get('/auth/mediawiki',
-  function (req, res, next) {
+app.get( '/auth/mediawiki',
+  function ( req, res, next ) {
     req.session.returnto = req.query.returnto || req.get( 'Referrer' );
     next();
-  }, passport.authenticate('mediawiki') );
+  }, passport.authenticate( 'mediawiki' ) );
 
-app.get('/auth/mediawiki/callback',
+app.get( '/auth/mediawiki/callback',
   passport.authenticate( 'mediawiki', { failureRedirect: '/login' } ),
-  function(req, res) {
+  function ( req, res ) {
     // Successful authentication, do redirect.
-    res.redirect(req.session.returnto || '/');
+    res.redirect( req.session.returnto || '/' );
     delete req.session.returnTo;
-  });
+  } );
 
-app.get('/manifest.json',(req, res) => {
-  res.setHeader('Content-Type', 'application/json');
+app.get( '/manifest.json', ( req, res ) => {
+  res.setHeader( 'Content-Type', 'application/json' );
   res.send( JSON.stringify( manifest ) );
 } );
 
-initApiRoutes(app, SIGN_IN_SUPPORTED);
+initApiRoutes( app, SIGN_IN_SUPPORTED );
 
-app.get('/:lang?/*',(req, res) => {
+app.get( '/:lang?/*', ( req, res ) => {
   var session = req.user ? {
-      username: req.user.displayName,
+      username: req.user.displayName
     } : null;
 
   var config = {
@@ -195,8 +195,8 @@ app.get('/:lang?/*',(req, res) => {
 
     // not ideal. Duplicates HTML content of article in config. Relying on gzip
     Object.assign( config, data );
-    res.setHeader('Vary', 'Cookie');
-    res.status(200).render('index.html', {
+    res.setHeader( 'Vary', 'Cookie' );
+    res.status( 200 ).render( 'index.html', {
       touch_icon: '/home-icon.png',
       url: req.url,
       image: image,
@@ -205,19 +205,20 @@ app.get('/:lang?/*',(req, res) => {
       isRTL: isRTL( req.params.lang ),
       config: JSON.stringify( config ),
       body: !session && SERVER_SIDE_RENDERING ? ReactDOMServer.renderToString( shared.render( req.path, '#', data, req.query ) ) : ''
-    });
+    } );
   }
   if ( route.fallback && SERVER_SIDE_RENDERING ) {
-    var fallbackUrl = req.protocol + '://' + req.get('host') + route.fallback;
+    var fallbackUrl = req.protocol + '://' + req.get( 'host' ) + route.fallback;
     fetch( fallbackUrl ).then( function ( resp ) {
       return resp.json();
     } ).then( function ( data ) {
-      render( { fallbackProps: data, fallbackPath: route.fallback } );
+      render( { fallbackProps: data,
+        fallbackPath: route.fallback } );
     } );
   } else {
     render();
   }
-});
+} );
 
-app.listen(app.get('port'))
-console.info('==> Go to http://localhost:%s', app.get('port'))
+app.listen( app.get( 'port' ) )
+console.info( '==> Go to http://localhost:%s', app.get( 'port' ) )

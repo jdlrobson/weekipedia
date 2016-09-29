@@ -81,17 +81,19 @@ function trending( wiki, halflife, project, title ) {
       var results = annotate( sortScoredPages( pages ), fn, 50 );
       if ( !results.length ) {
         resolve( {
-          pages: [], ts: new Date()
+          pages: [],
+          ts: new Date()
         } );
       } else {
-        addProps( results, [ 'pageimages','pageterms' ], lang, project ).then( function( results ) {
+        addProps( results, [ 'pageimages','pageterms' ], lang, project ).then( function ( results ) {
           resolve( {
-            pages: results, ts: new Date()
+            pages: results,
+            ts: new Date()
           } );
-        })
+        } )
       }
     } );
-  })
+  } )
 }
 
 export default trending

@@ -78,7 +78,7 @@ function addSpecialPage( title, Class, handler ) {
     // regex 2: /wiki/Special\::title [3]
     '^\/wiki\/Special:' + title + '\/?(.*)$',
     // // regex3: /:lang.:project/:title [4,5,6]
-    '^\/([^\.]*)\.(.*)\/Special:' + title + '\/?(.*)$',
+    '^\/([^\.]*)\.(.*)\/Special:' + title + '\/?(.*)$'
   ];
   routes.push( [
     new RegExp( regex.join( '|' ) ),

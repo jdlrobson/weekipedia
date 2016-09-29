@@ -34,12 +34,12 @@ function transform( body ) {
       }
     } );
     if ( context ) {
-      newDiff += '<div>' + context + '</div>'; 
+      newDiff += '<div>' + context + '</div>';
     }
     if ( removed && !added ) {
       newDiff += '<div class="diff-deletedline">' + removed + '</div>';
     } else if ( added && !removed ) {
-      newDiff += '<div class="diff-addedline">' + added + '</div>'; 
+      newDiff += '<div class="diff-addedline">' + added + '</div>';
     } else if ( added && removed ) {
       // must diffChars to avoid wrapping html codes e.g. &lt; with a ins or del tag
       charDiff = jsdiff.diffChars( getText( removed ), getText( added ) );

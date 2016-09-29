@@ -28,10 +28,13 @@ export default function ( lang, project ) {
     month: yesterday.getUTCMonth() + 1,
     day: yesterday.getUTCDate(),
     limit: 50
-  } ).then(function( result ) {
+  } ).then( function ( result ) {
     result.items[0].articles.forEach( function ( item ) {
       if ( !isBlacklisted( item.article ) ) {
-        results[item.article] = { title: item.article.replace( /_/gi, ' ' ), lang: lang, views: item.views, delta: item.views };
+        results[item.article] = { title: item.article.replace( /_/gi, ' ' ),
+          lang: lang,
+          views: item.views,
+          delta: item.views };
       }
     } );
     return pageviews.getTopPageviews( {
@@ -50,8 +53,8 @@ export default function ( lang, project ) {
   } ).then( function () {
     var pages = [];
     var key;
-    for( key in results ) {
-      if( results.hasOwnProperty( key ) ) {
+    for ( key in results ) {
+      if ( results.hasOwnProperty( key ) ) {
         pages.push( results[key] );
       }
     }

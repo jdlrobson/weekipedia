@@ -27,7 +27,6 @@ export default function ( lang, project, collection, titles, profile, unwatch ) 
         }
       } );
 
-
       var section = 1;
       var collectionTitle = lookup( profile.displayName, collection );
       var body = '== Items ==\n* ' + items.map( function ( item ) {

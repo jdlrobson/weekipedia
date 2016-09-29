@@ -17,7 +17,7 @@ Api.prototype = {
   invalidatePath: function ( path ) {
     delete this.cache[path];
     if ( path[path.length - 1] === '/' ) {
-      delete this.cache[path.substr(0, path.length -1)];
+      delete this.cache[path.substr( 0, path.length - 1 )];
     }
   },
   invalidatePage: function ( title, langOrProject ) {
@@ -36,7 +36,7 @@ Api.prototype = {
       method: 'post',
       credentials: 'same-origin',
       headers: {
-        'Accept': 'application/json',
+        Accept: 'application/json',
         'Content-Type': 'application/json'
       },
       body: JSON.stringify( data )
@@ -86,7 +86,7 @@ Api.prototype = {
       if ( refs[refId] ) {
         return refs[refId];
       } else {
-        throw "No reference";
+        throw 'No reference';
       }
     } );
   },

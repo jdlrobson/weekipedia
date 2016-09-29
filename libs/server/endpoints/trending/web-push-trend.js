@@ -75,12 +75,13 @@ function trend() {
     trended = trendSort( trended ).slice( 0, 10 );
 
     if ( trended.length ) {
-      addProps(  trended, [ 'pageimages','pageterms' ] ).then( function( pages ) {
+      addProps(  trended, [ 'pageimages','pageterms' ] ).then( function ( pages ) {
         pages = trendSort( pages );
         resolve( {
           // for old workers:
           page: pages[0],
-          pages: pages, ts: new Date()
+          pages: pages,
+          ts: new Date()
         } );
       } );
     } else {
