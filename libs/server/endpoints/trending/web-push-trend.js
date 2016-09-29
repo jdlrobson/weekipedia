@@ -69,10 +69,16 @@ function trend() {
         if ( typeof page.trendedAt === 'string' ) {
           page.trendedAt = new Date( page.trendedAt );
         }
-        trended.push( page );
+        trended.push( Object.assign( {}, page, { trendIndex: undefined } ) );
       }
     } );
-    trended = trendSort( trended ).slice( 0, 10 );
+    trended = trendSort( trended ).slice( 0, 50 );
+
+    // It's always getting less interesting as it gets older so assume the best and last position was 1.
+    trended.forEach( function ( trend, i ) {
+      trend.lastIndex = i === 0 ? 2 : 1;
+      trend.index = i + 1;
+    } );
 
     if ( trended.length ) {
       addProps(  trended, [ 'pageimages','pageterms' ] ).then( function ( pages ) {

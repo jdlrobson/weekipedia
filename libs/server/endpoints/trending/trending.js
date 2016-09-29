@@ -21,9 +21,11 @@ function sortScoredPages( pages ) {
   } );
 }
 
-function annotate( p, filter, limit ) {
+function annotate( p, filter, limit, key ) {
   var res = [];
   p.some( function ( item ) {
+    var trendIndex, curPosition, lastIndex;
+
     if ( !item.wiki ) {
       item.wiki = 'enwiki';
       item.lang = 'en';
@@ -34,15 +36,37 @@ function annotate( p, filter, limit ) {
     if ( res.length >= limit ) {
       return true;
     } else if ( filter && filter( item ) ) {
-      item.lastIndex = item.index ? item.index : limit;
-      item.index = res.length + 1;
-      if ( !item.bestIndex ) {
-        item.bestIndex = item.index;
-      } else if ( item.index < item.bestIndex ) {
-        item.bestIndex = item.index;
+      // access the last known position it was at
+      if ( item.trendIndex ) {
+        trendIndex = item.trendIndex;
+      } else {
+        trendIndex = {};
       }
+
+      // half life being used for the first time on this page
+      if ( !trendIndex[key] ) {
+        trendIndex[key] = {};
+      }
+
+      // what was the last index and what is the current one?
+      curPosition = res.length + 1;
+      lastIndex = trendIndex[key].cur || limit + 1;
+
+      trendIndex[key].prev = lastIndex;
+      trendIndex[key].cur = curPosition;
+
+      // update the reference on the page entity
+      item.trendIndex = trendIndex;
       item.bias = item.getBias();
-      res.push( item );
+      // we clone the object to clean out the trendIndex information
+      res.push( Object.assign( {},
+        item,
+        {
+          trendIndex: undefined,
+          lastIndex: lastIndex,
+          index: curPosition
+        } )
+      );
     }
   } );
   return res;
@@ -57,6 +81,7 @@ function annotate( p, filter, limit ) {
 function trending( wiki, halflife, project, title ) {
   var lang = wiki.replace( 'wiki', '' );
   project = project || 'wikipedia';
+  var key = wiki + '-' + halflife;
 
   return new Promise( function ( resolve, reject ) {
     var fn = function ( item ) {
@@ -78,7 +103,7 @@ function trending( wiki, halflife, project, title ) {
         } );
       }
       var pages = scorePages( halflife, visitLookup );
-      var results = annotate( sortScoredPages( pages ), fn, 50 );
+      var results = annotate( sortScoredPages( pages ), fn, 50, key );
       if ( !results.length ) {
         resolve( {
           pages: [],
