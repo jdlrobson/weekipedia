@@ -6,8 +6,17 @@ module.exports = function ( grunt ) {
   grunt.loadNpmTasks( 'grunt-cssjanus' );
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-cssmin');
+  grunt.loadNpmTasks("grunt-jscs");
 
   grunt.initConfig( {
+    jscs: {
+        src: 'libs/**/*.js',
+        options: {
+            config: ".jscsrc",
+            fix: true, // Autofix code style violations when possible.
+            requireCurlyBraces: [ "if" ]
+        }
+    },
     jshint: {
       options: {
         esversion: 6,
@@ -55,7 +64,7 @@ module.exports = function ( grunt ) {
   } );
 
   grunt.registerTask( 'lint', [ 'jshint', 'stylelint' ] );
-  grunt.registerTask( 'test', [ 'lint' ] );
+  grunt.registerTask( 'test', [ 'lint', 'jscs' ] );
 
   grunt.registerTask( 'default', [ 'test' ] );
 };

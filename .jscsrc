@@ -1,0 +1,25 @@
+{
+  "preset": "wikimedia",
+
+  "requireObjectKeysOnNewLine": true,
+  "requireSpacesInsideBrackets": null,
+  "disallowDanglingUnderscores": null,
+  "requireVarDeclFirst": null,
+  "requireMultipleVarDecl": null,
+  "disallowEmptyBlocks": null,
+  "requireCamelCaseOrUpperCaseIdentifiers": null,
+  "validateIndentation": 2,
+  "disallowImplicitTypeConversion": ["numeric", "boolean", "binary", "string"],
+  "excludeFiles": [
+    "node_modules/**"
+  ],
+  "jsDoc": {
+    "checkParamExistence": true,
+    "checkParamNames": true,
+    "checkRedundantParams": true,
+    "checkReturnTypes": true,
+    "checkRedundantReturns": true,
+    "requireReturnTypes": true,
+    "@fixme": "https://github.com/jscs-dev/jscs-jsdoc/pull/138"
+  }
+}
