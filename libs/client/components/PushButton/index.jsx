@@ -44,32 +44,31 @@ export default React.createClass({
       serviceWorker: '/push-bundle.js'
     };
   },
-  load( serviceWorkerPath ) {
+  loadServiceWorker( serviceWorkerPath ) {
     var self = this;
-    window.addEventListener( 'load', function () {
-      var serviceWorkerSupport = 'serviceWorker' in navigator,
-        pushManagerSupport = 'PushManager' in window,
-        notificationSupport = serviceWorkerSupport && 'showNotification' in ServiceWorkerRegistration.prototype;
-
-      // Check that service workers are supported, if so, progressively
-      // enhance and add push messaging support, otherwise continue without it.
-      if ( serviceWorkerSupport && pushManagerSupport && notificationSupport ) {
-        if ( Notification.permission === 'denied' ) {
-          self.setState( { isError: true, isBlocked: true } );
-        } else {
-          navigator.serviceWorker.register( serviceWorkerPath ).then( function ( serviceWorkerRegistration ) {
-            // Work out whether enabled or not.
-            self.setState( { serviceWorkerRegistration: serviceWorkerRegistration } );
-            serviceWorkerRegistration.pushManager.getSubscription().then( function ( subscription ) {
-              self.setState( { isEnabled: subscription ? true : false, isLoading: false, subscription: subscription } );
-            } );
-          } );
-        }
-      } else {
-        self.setState( { isError: true } );
-      }
+    navigator.serviceWorker.register( serviceWorkerPath ).then( function ( serviceWorkerRegistration ) {
+      self.setState( { serviceWorkerRegistration: serviceWorkerRegistration } );
+      serviceWorkerRegistration.pushManager.getSubscription().then( function ( subscription ) {
+        self.setState( { isEnabled: subscription ? true : false, isLoading: false, subscription: subscription } );
       } );
+    } );
+  },
+  load( serviceWorkerPath ) {
+    var serviceWorkerSupport = 'serviceWorker' in navigator,
+      pushManagerSupport = 'PushManager' in window,
+      notificationSupport = serviceWorkerSupport && 'showNotification' in ServiceWorkerRegistration.prototype;
 
+    // Check that service workers are supported, if so, progressively
+    // enhance and add push messaging support, otherwise continue without it.
+    if ( serviceWorkerSupport && pushManagerSupport && notificationSupport ) {
+      if ( Notification.permission === 'denied' ) {
+        this.setState( { isError: true, isBlocked: true } );
+      } else {
+        this.loadServiceWorker( serviceWorkerPath );
+      }
+    } else {
+      this.setState( { isError: true } );
+    }
   },
   doAction( action ) {
     var self = this;
@@ -96,7 +95,7 @@ export default React.createClass({
           self.doAction( 'unsubscribe' );
         }
       } );
-    } else {
+    } else if ( this.state.serviceWorkerRegistration ) {
       this.state.serviceWorkerRegistration.pushManager.subscribe( {
         userVisibleOnly: true
       } ).then( function ( subscription ) {
@@ -112,7 +111,7 @@ export default React.createClass({
     if ( !this.props.serviceWorker ) {
       this.setState( { isError: true } );
     } else {
-      this.load( this.props.serviceWorker );
+      this.loadServiceWorker( this.props.serviceWorker );
     }
   },
   render(){
