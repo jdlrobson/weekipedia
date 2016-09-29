@@ -1,4 +1,4 @@
-#Weekipedia
+#Weekipedia ![Build status](https://travis-ci.org/jdlrobson/weekipedia.svg?branch=master&r=1)
 
 Weekipedia is the Wikipedia mobile site reimagined in React.js. It is a 10% project and not officially supported by the Wikimedia Foundation.
 
