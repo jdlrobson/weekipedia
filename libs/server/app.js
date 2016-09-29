@@ -7,7 +7,6 @@ import { OAuthStrategy } from 'passport-mediawiki-oauth'
 import passport from 'passport'
 import session from 'express-session'
 import connect from 'connect-memcached'
-import fs from 'fs'
 import ReactDOMServer from 'react-dom/server'
 
 import shared from './../shared'
@@ -39,6 +38,7 @@ import contributions from './endpoints/contributions'
 import collection from './endpoints/collection'
 import categories from './endpoints/categories'
 
+import messages from './messages'
 import respond from './respond'
 import cachedResponses from './cached-response.js'
 import isRTL from './../client/is-rtl'
@@ -46,7 +46,7 @@ import isRTL from './../client/is-rtl'
 const cachedResponse = cachedResponses.cachedResponse
 const invalidate = cachedResponses.invalidate
 
-import { API_PATH, DEFAULT_PROJECT, EN_MESSAGE_PATH,
+import { API_PATH, DEFAULT_PROJECT,
   GCM_SENDER_ID, SITE_HOME_PATH,
   SITE_ALLOW_FOREIGN_PROJECTS, ALLOWED_PROJECTS,
   SITE_WORDMARK_PATH, SITE_TITLE, LANGUAGE_CODE, SIGN_IN_SUPPORTED, INCLUDE_SITE_BRANDING,
@@ -509,40 +509,10 @@ app.get('/api/wikitext/:lang/:title/:section?',(req, res) => {
   } );
 } );
 
-function getMessages( language ) {
-  var i, messages, jsonPath, enMessages,
-    qqx = language === 'qqx';
-
-  if ( qqx ) {
-    jsonPath = EN_MESSAGE_PATH;
-  } else {
-    jsonPath = './i18n/' + language + '.json'
-  }
-
-  try {
-    messages = JSON.parse( fs.readFileSync( jsonPath, 'utf8' ) );
-  } catch ( e ) {
-    messages = {};
-  }
-
-  enMessages = JSON.parse( fs.readFileSync( EN_MESSAGE_PATH, 'utf8' ) );
-  messages = Object.assign( {}, enMessages, messages );
-
-  for ( i in messages ) {
-    if ( messages.hasOwnProperty( i ) ) {
-      if ( qqx ) {
-        messages[i] = '{' + i + '}';
-      } else {
-        messages[i] = messages[i].replace( '{{SITENAME}}', SITE_TITLE );
-      }
-    }
-  }
-  return messages;
-}
 app.get('/api/messages/:lang',(req, res) => {
   cachedResponse( res, req.url, function() {
     return new Promise( function ( resolve ) {
-      resolve( getMessages( req.params.lang ) );
+      resolve( messages( req.params.lang ) );
     } );
   } );
 } );
@@ -573,7 +543,7 @@ app.get('/:lang?/*',(req, res) => {
       }
     },
     session: session,
-    i18n: getMessages( req.query.uselang || req.params.lang || LANGUAGE_CODE ),
+    i18n: messages( req.query.uselang || req.params.lang || LANGUAGE_CODE ),
     canAuthenticate: Boolean( SIGN_IN_SUPPORTED ),
     project: DEFAULT_PROJECT,
     supportedProjects: ALLOWED_PROJECTS,
