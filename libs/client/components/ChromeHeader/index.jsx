@@ -20,7 +20,7 @@ class ChromeHeader extends Component {
       if ( project !== siteinfo.defaultProject ) {
         icon = <div className={"project-icon project-" + project}>{project}</div>
       }
-      heading = <h1>{content} {icon}</h1>;
+      heading = <h1 key="chrome-header-heading">{content} {icon}</h1>;
     } else {
       heading = search;
       search = null;

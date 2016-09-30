@@ -9,80 +9,89 @@
   margin-top: -1px;
   border-spacing: 0;
   border-collapse: collapse;
-}
 
-.header.content-container {
-  margin-left: 0;
-  margin-right: 0;
-}
-
-.header > * {
-  vertical-align: middle;
-  display: table-cell;
-}
-
-.header > div {
-  width: @header-height;
-  position: relative;
-
-  &:last-child {
-    // magic. don't ask.
-    padding-right: 0.31em;
+  &.content-container {
+    margin-left: 0;
+    margin-right: 0;
   }
 
-  > .mw-ui-button {
-    display: table-cell;
+  > * {
     vertical-align: middle;
-    height: @header-height;
+    display: table-cell;
   }
-}
 
-.header > div a {
-  display: block;
+  > div {
+    width: @header-height;
+    position: relative;
+
+    &:last-child {
+      // magic. don't ask.
+      padding-right: 0.31em;
+    }
+
+    > .mw-ui-button {
+      display: table-cell;
+      vertical-align: middle;
+      height: @header-height;
+    }
+  }
+
+  > div a {
+    display: block;
+  }
+
+  > div.main {
+    width: 100%;
+    vertical-align: middle;
+    padding: .15em 1em .15em 0;
+
+    h2 {
+        display: table;
+        width: 100%;
+        font-size: 1em;
+        > * {
+          display: table-cell;
+          padding-right: 0.4em;
+          width: auto;
+          max-width: 1em;
+        }
+      }
+  }
+
+  &.toolbar {
+    > div.main {
+      padding-right: 0;
+    }
+  }
+
+  h1 {
+    text-align: center;
+    font-size: 22px;
+    font-family: serif;
+    line-height: 1;
+    margin-top: 5px;
+  }
 }
 
 .header-container {
   background-color: @header-bg-color;
   border-bottom: 1px solid transparent;
+
+  &.position-fixed {
+    left: 0;
+    right: 0;
+    position: fixed;
+    top: 0;
+    border-bottom-color: @header-border-color;
+  }
 }
 
-.header-container.position-fixed {
-  left: 0;
-  right: 0;
-  position: fixed;
-  top: 0;
-  border-bottom-color: @header-border-color;
-}
-
-.header > div.main {
-  width: 100%;
-  vertical-align: middle;
-  padding: .15em 1em .15em 0;
-}
-
-.header .main h2 {
-  display: table;
-  width: 100%;
-  font-size: 1em;
-}
-
-.search-header .search-form {
+.search-header {
   height: @search-form-height;
-}
 
-.header .main h2 > * {
-  display: table-cell;
-  padding-right: 0.4em;
-  width: auto;
-  max-width: 1em;
-}
-
-.header h1 {
-  text-align: center;
-  font-size: 22px;
-  font-family: serif;
-  line-height: 1;
-  margin-top: 1px;
+  .search {
+    text-align: center;
+  }
 }
 
 .toolbar > div > div {
