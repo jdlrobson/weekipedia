@@ -69,7 +69,7 @@ function markReferenceSections( sections, removeText ) {
     }
   } );
   // the last section may have been a reference section
-  mark( lastTopLevelSection, sections.length - 1 );
+  mark( lastTopLevelSection, sections.length );
 }
 
 const MONTHS = ['January','February','March','April','May','June',
