@@ -159,16 +159,6 @@ export default React.createClass({
       title = link.getAttribute( 'title' ) || '';
 
       if ( href.substr( 0, 5 ) !== '/auth' ) {
-
-        // FIXME: Workaround for #5
-        if ( href.substr( 0, 5 ) === '/wiki' ) {
-          if ( props.language_project && allowForeignProjects ) {
-            href = '/' + props.language_project + href.substr( 5 );
-          } else {
-            href = '/' + props.lang + href;
-          }
-        }
-
         if ( href.indexOf( '//' ) === -1 ) {
           parts = href.split( '?' );
           props.router.navigateTo( {

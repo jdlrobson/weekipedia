@@ -39,6 +39,20 @@ function extractInfobox( doc ) {
   return infobox;
 }
 
+// Undo the work in mobile-content-service (https://phabricator.wikimedia.org/T147043)
+function undoLinkRewrite( doc ) {
+  var idx = 0;
+  var ps = doc.querySelectorAll( 'a' ) || [],
+      value;
+  for ( idx = 0; idx < ps.length; idx++ ) {
+    var node = ps[idx];
+    value = node.getAttribute( 'href' );
+    if ( value ) {
+      value = value.replace( /^\/wiki\//, '' );
+      node.setAttribute( 'href', value );
+    }
+  }
+}
 function markReferenceSections( sections, removeText ) {
   var topHeadingLevel = sections[0] ? sections[0].toclevel : 2;
   var lastTopLevelSection,
@@ -114,6 +128,14 @@ export default function ( title, lang, project, includeReferences ) {
         markReferenceSections( json.remaining.sections, !includeReferences );
       }
 
+      json.remaining.sections.forEach( function ( section ) {
+        if ( section.text ) {
+          var doc = domino.createDocument( section.text );
+          undoLinkRewrite( doc );
+          section.text = doc.body.innerHTML;
+        }
+      } );
+
       if ( json.lead && json.lead.ns === 2 ) {
         // it's a user page so get more info
         return mwApi( lang, { meta: 'globaluserinfo',
@@ -133,6 +155,7 @@ export default function ( title, lang, project, includeReferences ) {
         // Workaround for https://phabricator.wikimedia.org/T145034
         var doc = domino.createDocument( json.lead.sections.length && json.lead.sections[0] && json.lead.sections[0].text );
         if ( doc ) {
+          undoLinkRewrite( doc );
           var infobox = extractInfobox( doc );
           var leadParagraph = extractLeadParagraph( doc );
           json.lead.infobox = infobox;
