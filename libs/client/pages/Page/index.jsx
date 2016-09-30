@@ -149,7 +149,7 @@ export default React.createClass({
     }
   },
   render(){
-    var leadHtml,
+    var leadHtml, toc,
       props = this.props,
       sections = [],
       actions = [],
@@ -172,8 +172,9 @@ export default React.createClass({
         sections.push( <UserPageCta user={title} key="page-user-cta"
           isReaderOwner={props.session && props.session.username === props.titleSanPrefix } /> );
       } else if ( this.state.isExpanded ) {
+        toc = <TableOfContents sections={remainingSections} />;
         if ( remainingSections.length && props.showTableOfContents ) {
-          sections.push( <TableOfContents sections={remainingSections} /> );
+          sections.push( toc );
         }
         sections = sections.concat( remainingSections );
       } else {
@@ -210,6 +211,7 @@ export default React.createClass({
 
     return (
       <Article {...this.props} actions={actions} tabs={this.getTabs(lead)}
+        toc={toc}
         lead={lead}
         body={sections}
         secondaryActions={secondaryActions}
