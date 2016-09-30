@@ -24,9 +24,10 @@ export default React.createClass({
       lang: 'en'
     }
   },
-  showResults( endpoint ) {
+  showResults( endpoint, project ) {
+    var language_proj = this.props.lang + '.' + project;
     this.setState( {
-      list: <CardList {...this.props} apiEndpoint={endpoint} infiniteScroll={false} />
+      list: <CardList {...this.props} language_project={language_proj} apiEndpoint={endpoint} infiniteScroll={false} />
     } );
   },
   onSearchSubmit( term ) {
@@ -38,11 +39,19 @@ export default React.createClass({
     }, 'Search' );
   },
   onSearch( term ){
-    var endpoint;
+    var endpoint, lowerTerm;
+    var lang = this.props.lang;
+    var project = this.props.siteinfo.defaultProject;
+
     if ( term ) {
       this.setState( { isSearching: true } );
-      endpoint = '/api/search/' + this.props.lang + '/' + encodeURIComponent( term );
-      this.showResults( endpoint );
+      lowerTerm = term.toLowerCase();
+      if ( lowerTerm.indexOf( 'define:' ) === 0 ) {
+        project = 'wiktionary';
+        term = lowerTerm.split( ':' )[1];
+      }
+      endpoint = '/api/search/' + lang + '.' + project + '/' + encodeURIComponent( term );
+      this.showResults( endpoint, project );
     } else {
       this.setState( { cards: [] } );
     }
