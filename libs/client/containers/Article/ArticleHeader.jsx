@@ -11,8 +11,10 @@ class ArticleHeader extends Component {
   render(){
     var
       header = [],
-      lead = this.props.lead || {},
-      nsClass = this.props.isSpecialPage ? ' special-page-heading' : ' standard-page-heading';
+      additionalClasses = [],
+      lead = this.props.lead || {}
+
+    additionalClasses.push( this.props.isSpecialPage ? ' special-page-heading' : ' standard-page-heading' );
 
     if ( typeof lead === 'string' ) {
       lead = { text: lead };
@@ -44,8 +46,11 @@ class ArticleHeader extends Component {
         key="article-header-tabs">{this.props.tabs}</HorizontalList> );
     }
 
+    if ( lead.infobox ) {
+      additionalClasses.push( 'article-feature-infobox' );
+    }
     return (
-      <Content key="article-row-0" className={"pre-content " + nsClass}>
+      <Content key="article-row-0" className={"pre-content " + additionalClasses.join( ' ' )}>
         <div className="heading-holder">{header}</div>
         <SectionContent {...this.props} className="lead-paragraph" text={lead.paragraph} />
         <Infobox {...this.props} text={lead.infobox} />
