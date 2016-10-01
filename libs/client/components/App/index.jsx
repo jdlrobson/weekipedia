@@ -113,7 +113,11 @@ export default React.createClass({
       this.mountLanguage( props );
       this.mountOverlay( props );
     }
-    this.mountChildren( props );
+    if ( !this.state.session ) {
+      this.login().then(()=>this.mountChildren( props ));
+    } else {
+      this.mountChildren( props );
+    }
   },
   componentWillReceiveProps( nextProps ) {
     this.mount( nextProps );
@@ -121,20 +125,22 @@ export default React.createClass({
   componentWillMount() {
     this.mount( this.props );
   },
+  login() {
+    var self = this;
+    return this.props.api.fetch( '/auth/whoamithistime', {
+      credentials: 'include'
+    } ).then( function ( session ) {
+      self.setState( { session: session } );
+    } ).catch( function () {
+      self.setState( { session: null } );
+    } );
+  },
   componentDidMount() {
     var showNotification = this.showNotification;
     var msg = this.props.msg;
-    var self = this;
     if ( this.props.offlineVersion ) {
       initOffline( function () {
         showNotification( msg( 'offline-ready' ) );
-      } );
-    }
-    if ( !this.state.session ) {
-      this.props.api.fetch( '/auth/whoamithistime', {
-        credentials: 'include'
-      } ).then( function ( session ) {
-        self.setState( { session: session } );
       } );
     }
   },
