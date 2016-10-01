@@ -14,6 +14,7 @@ import routes from './../client/routes'
 
 import initApiRoutes from './express-api-routes'
 import messages from './messages'
+import respond from './respond'
 import isRTL from './../client/is-rtl'
 
 import { API_PATH, DEFAULT_PROJECT,
@@ -21,7 +22,7 @@ import { API_PATH, DEFAULT_PROJECT,
   SITE_ALLOW_FOREIGN_PROJECTS, ALLOWED_PROJECTS,
   SITE_WORDMARK_PATH, SITE_TITLE, LANGUAGE_CODE, SIGN_IN_SUPPORTED, INCLUDE_SITE_BRANDING,
   SITE_EXPAND_SECTIONS, SITE_EXPAND_ARTICLE,
-  CONSUMER_SECRET, CONSUMER_KEY,
+  CONSUMER_SECRET, CONSUMER_KEY, DUMMY_SESSION,
   SERVER_SIDE_RENDERING, USE_HTTPS, APP_PORT,
   OFFLINE_VERSION, SITE_TERMS_OF_USE, SITE_PRIVACY_URL,
 } from './config'
@@ -118,6 +119,25 @@ if ( SIGN_IN_SUPPORTED ) {
  *******************************************************
 */
 
+function getUserSession( req ) {
+  return req.user ? {
+      username: req.user.displayName
+    } : DUMMY_SESSION || null;
+}
+
+app.get( '/auth/whoamithistime', function ( req, res ) {
+  var user = getUserSession( req );
+  respond( res, function () {
+    return new Promise( function ( resolve ) {
+      if ( user ) {
+        resolve( user );
+      } else {
+        throw 'Not logged in';
+      }
+    } );
+  } );
+} );
+
 app.get( '/auth/mediawiki',
   function ( req, res, next ) {
     req.session.returnto = req.query.returnto || req.get( 'Referrer' );
@@ -140,10 +160,6 @@ app.get( '/manifest.json', ( req, res ) => {
 initApiRoutes( app, SIGN_IN_SUPPORTED );
 
 app.get( '/:lang?/*', ( req, res ) => {
-  var session = req.user ? {
-      username: req.user.displayName
-    } : null;
-
   var config = {
     siteoptions: {
       includeSiteBranding: INCLUDE_SITE_BRANDING,
@@ -164,7 +180,6 @@ app.get( '/:lang?/*', ( req, res ) => {
         name: 'CC BY-SA 3.0'
       }
     },
-    session: session,
     i18n: messages( req.query.uselang || req.params.lang || LANGUAGE_CODE ),
     canAuthenticate: Boolean( SIGN_IN_SUPPORTED ),
     project: DEFAULT_PROJECT,

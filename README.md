@@ -24,6 +24,12 @@ The goals of this project include but are not limited to:
 Before commiting code please remember to run:
 > npm test
 
+## Development
+
+Fake login via
+
+> export DEV_DUMMY_USER=Dummy
+
 ##Running in production
 
 > export PROJECT='wikipedia'
