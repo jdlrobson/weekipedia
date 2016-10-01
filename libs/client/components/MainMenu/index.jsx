@@ -13,6 +13,18 @@ class MainMenu extends Component {
       this.props.onClickInternalLink.apply( this, arguments );
     }
   }
+  onLoginClick() {
+    if ( this.props.onLoginClick ) {
+      this.props.onLoginClick();
+    }
+    this.onMenuItemClick();
+  }
+  onLogoutClick() {
+    if ( this.props.onLogoutClick ) {
+      this.props.onLogoutClick();
+    }
+    this.onMenuItemClick();
+  }
   getUserMenu() {
     var login, username, usertools,
       msg = this.props.msg,
@@ -27,7 +39,7 @@ class MainMenu extends Component {
            label={username} type="before" onClick={onMenuItemClick} />,
           <Icon glyph="mf-logout-invert" href='/auth/logout'
             key="menu-item-logout"
-            label={msg('menu-logout')} onClick={onMenuItemClick} />
+            label={msg('menu-logout')} onClick={this.onLogoutClick.bind(this)} />
         ];
         usertools = [
           <li key="menu-item-watchlist">
@@ -41,7 +53,7 @@ class MainMenu extends Component {
         ];
       } else {
         login = <Icon glyph="mf-anonymous-invert" href={'/auth/mediawiki' }
-          label={msg('menu-login')} type="before" onClick={onMenuItemClick} />;
+          label={msg('menu-login')} type="before" onClick={this.onLoginClick.bind(this)} />;
       }
       return (
         <ul>

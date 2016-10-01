@@ -16,6 +16,8 @@ import Toast from './../../overlays/Toast'
 import isRTL from './../../is-rtl'
 import initOffline from './../../offline'
 
+const APP_SESSION_KEY = 'app-session'
+
 // Main component
 export default React.createClass({
   getInitialState() {
@@ -63,14 +65,14 @@ export default React.createClass({
       isOverlayFullScreen: props.isOverlayFullScreen
     } );
   },
-  mountChildren( props ) {
+  mountChildren( props, session ) {
     // clone each child and pass them the notifier
     var childProps = typeof document !== 'undefined' ? {
       showNotification: this.showNotification,
       showOverlay: this.showOverlay,
       closeOverlay: this.closeOverlay,
       hijackLinks: this.hijackLinks,
-      session: this.state.session,
+      session: session || this.state.session,
       onClickInternalLink: this.onClickInternalLink
     } : {};
     if ( this.state.pageviews === 0 ) {
@@ -109,12 +111,21 @@ export default React.createClass({
     }
   },
   mount( props ) {
+    var localSession = this.props.storage.get( APP_SESSION_KEY );
+
     if ( typeof document !== 'undefined' ) {
       this.mountLanguage( props );
       this.mountOverlay( props );
     }
     if ( !this.state.session ) {
-      this.login().then(()=>this.mountChildren( props ));
+      if ( localSession ) {
+        localSession = localSession === 'false' ? null : JSON.parse( localSession );
+        // load session from local storage
+        this.setState( { session: localSession } );
+        this.mountChildren( props, localSession );
+      } else {
+        this.login().then(()=>this.mountChildren( props ));
+      }
     } else {
       this.mountChildren( props );
     }
@@ -130,10 +141,16 @@ export default React.createClass({
     return this.props.api.fetch( '/auth/whoamithistime', {
       credentials: 'include'
     } ).then( function ( session ) {
+      // cache for next session
+      self.props.storage.set( APP_SESSION_KEY, JSON.stringify( session ) );
       self.setState( { session: session } );
     } ).catch( function () {
+      self.props.storage.set( APP_SESSION_KEY, 'false' );
       self.setState( { session: null } );
     } );
+  },
+  clearSession() {
+    this.props.storage.remove( APP_SESSION_KEY );
   },
   componentDidMount() {
     var showNotification = this.showNotification;
@@ -273,7 +290,8 @@ export default React.createClass({
       <div id="mw-mf-viewport" className={navigationClasses}
         lang={this.props.lang} dir={isRTL ? 'rtl' : 'ltr'}>
         <nav id="mw-mf-page-left">
-          <MainMenu {...this.props} onClickInternalLink={this.onClickInternalLink}
+        <MainMenu {...this.props} onClickInternalLink={this.onClickInternalLink} onLogoutClick={this.clearSession}
+            onLoginClick={this.clearSession}
             onItemClick={this.closePrimaryNav} session={this.state.session}/>
         </nav>
         <div id="mw-mf-page-center" onClick={this.closePrimaryNav}>
