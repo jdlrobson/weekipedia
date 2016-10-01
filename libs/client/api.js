@@ -47,7 +47,7 @@ Api.prototype = {
       resolve( data );
     } );
   },
-  fetch: function ( url ) {
+  fetch: function ( url, options ) {
     var req,
       canCache = this.cacheable( url ),
       cache = this.cache;
@@ -55,7 +55,7 @@ Api.prototype = {
     if ( canCache && cache[url] ) {
       return cache[url];
     } else {
-      req = new Request( url, {
+      req = new Request( url, options || {
         credentials: 'same-origin'
       } );
       cache[url] = fetch( req ).then( function ( resp ) {
