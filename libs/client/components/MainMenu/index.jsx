@@ -28,13 +28,14 @@ class MainMenu extends Component {
   getUserMenu() {
     var login, username, usertools,
       msg = this.props.msg,
+      prefix = '/' + this.props.lang + '/wiki/',
       onMenuItemClick = this.onMenuItemClick.bind(this);
 
     if ( this.props.canAuthenticate ) {
       if ( this.props.session ) {
         username = this.props.session.username;
         login = [
-          <Icon glyph="mf-profile-invert" href={'/' + this.props.lang + '/wiki/User:' + username }
+          <Icon glyph="mf-profile-invert" href={prefix + 'User:' + username }
             key="menu-item-profile"
            label={username} type="before" onClick={onMenuItemClick} />,
           <Icon glyph="mf-logout-invert" href='/auth/logout'
@@ -43,16 +44,16 @@ class MainMenu extends Component {
         ];
         usertools = [
           <li key="menu-item-watchlist">
-            <Icon glyph="mf-watchlist-invert" href={'/' + this.props.lang + '/wiki/Special:Watchlist' }
+            <Icon glyph="mf-watchlist-invert" href={prefix + 'Special:Watchlist' }
               label={msg('menu-watchlist')} type="before" onClick={onMenuItemClick} />
           </li>,
           <li key="menu-item-contribs">
-            <Icon glyph="mf-contributions-invert" href={'/' + this.props.lang + '/wiki/Special:Contributions/' + username }
+            <Icon glyph="mf-contributions-invert" href={prefix + 'Special:Contributions/' + username }
               label={msg('menu-contributions')} type="before" onClick={onMenuItemClick} />
           </li>
         ];
       } else {
-        login = <Icon glyph="mf-anonymous-invert" href={'/auth/mediawiki' }
+        login = <Icon glyph="mf-anonymous-invert" href={prefix + 'Special:UserLogin'}
           label={msg('menu-login')} type="before" onClick={this.onLoginClick.bind(this)} />;
       }
       return (
