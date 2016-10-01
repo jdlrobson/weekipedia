@@ -13,8 +13,7 @@ export default React.createClass({
   },
   render(){
     var url = this.props.mobileUrl;
-    var children = this.props.children ?
-      this.props.children : (
+    var children = (
         <div>This special page is not currently available in the web app.
         <br/>In the meantime you can <a href={url}>use Wikipedia</a>.</div>
       );
