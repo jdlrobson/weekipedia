@@ -66,6 +66,10 @@ export default React.createClass({
     this.load( props );
   },
   getBody(){
+    var session = this.props.session;
+    var msg = session ? <p><a href={'#/edit-collection/' + session.username}>Create your own collection</a></p>
+      : <p><a href="/wiki/Special:UserLogin">Sign in</a> to use collections.</p>
+
     if ( this.state.title ) {
       return <CardList key="collection-list" {...this.props} unordered={COLLECTIONS_ARE_NOT_ORDERED} apiEndpoint={this.state.endpoint} />
     } else if ( this.state.collections ) {
@@ -81,7 +85,7 @@ export default React.createClass({
              CardClass={CollectionCard}
              emptyMessage="There are no collections."
              apiEndpoint={this.state.endpoint} />
-          <a href="/wiki/Special:UserLogin">Sign in</a> to use collections.
+          {msg}
         </div>
       );
     } else {
