@@ -2,6 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 
 import './styles.less'
+import './icons.less'
 
 import MainMenu from './../MainMenu'
 import Icon from './../Icon'
@@ -24,6 +25,7 @@ export default React.createClass({
       notification: '',
       isRTL: false,
       lang: 'en',
+      session: null,
       isOverlayFullScreen: true,
       isOverlayEnabled: false
     }
@@ -57,6 +59,7 @@ export default React.createClass({
         closeOverlay: this.closeOverlay
       } ) : null,
       isOverlayEnabled: props.overlay,
+      session: this.state.session,
       isOverlayFullScreen: props.isOverlayFullScreen
     } );
   },
@@ -67,6 +70,7 @@ export default React.createClass({
       showOverlay: this.showOverlay,
       closeOverlay: this.closeOverlay,
       hijackLinks: this.hijackLinks,
+      session: this.state.session,
       onClickInternalLink: this.onClickInternalLink
     } : {};
     if ( this.state.pageviews === 0 ) {
@@ -120,9 +124,17 @@ export default React.createClass({
   componentDidMount() {
     var showNotification = this.showNotification;
     var msg = this.props.msg;
+    var self = this;
     if ( this.props.offlineVersion ) {
       initOffline( function () {
         showNotification( msg( 'offline-ready' ) );
+      } );
+    }
+    if ( !this.state.session ) {
+      this.props.api.fetch( '/auth/whoamithistime', {
+        credentials: 'include'
+      } ).then( function ( session ) {
+        self.setState( { session: session } );
       } );
     }
   },
@@ -233,7 +245,7 @@ export default React.createClass({
       onClick={this.openPrimaryNav}/>;
     var shield = this.state.isMenuOpen ? <TransparentShield /> : null;
 
-    var toast,
+    var toast, secondaryIcon,
       isRTL = this.state.isRTL,
       overlay = this.state.isOverlayEnabled ? this.state.overlay : null;
 
@@ -245,15 +257,21 @@ export default React.createClass({
      toast = <Toast>{this.state.notification}</Toast>;
     }
 
+    if ( this.state.session ) {
+      secondaryIcon = <Icon glyph="notifications"
+        onClick={this.onClickInternalLink}
+        href={'/' + this.props.language_project + '/Special:Notifications'}/>
+    }
+
     return (
       <div id="mw-mf-viewport" className={navigationClasses}
         lang={this.props.lang} dir={isRTL ? 'rtl' : 'ltr'}>
         <nav id="mw-mf-page-left">
           <MainMenu {...this.props} onClickInternalLink={this.onClickInternalLink}
-            onItemClick={this.closePrimaryNav}/>
+            onItemClick={this.closePrimaryNav} session={this.state.session}/>
         </nav>
         <div id="mw-mf-page-center" onClick={this.closePrimaryNav}>
-          <ChromeHeader {...props} primaryIcon={icon} search={search}/>
+          <ChromeHeader {...props} primaryIcon={icon} search={search} secondaryIcon={secondaryIcon}/>
           {this.state.children}
           {shield}
         </div>

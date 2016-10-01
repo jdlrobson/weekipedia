@@ -11,6 +11,10 @@ class ChromeHeader extends Component {
     var props = this.props;
     var search = props.search;
     var useSiteBranding = props.siteoptions.includeSiteBranding;
+    var secondaryIcon = useSiteBranding ? <Icon /> : null;
+    if ( this.props.secondaryIcon ) {
+      secondaryIcon = this.props.secondaryIcon;
+    }
     if ( useSiteBranding ) {
       siteinfo = props.siteinfo;
       content = siteinfo.wordmark ? <img src={siteinfo.wordmark} alt={siteinfo.title} height="18" /> :
@@ -29,7 +33,7 @@ class ChromeHeader extends Component {
     return <Header key="header-bar" primaryIcon={props.primaryIcon}
       fixed={props.fixed}
       main={heading}
-      secondaryIcon={useSiteBranding ? <Icon /> : null}
+      secondaryIcon={secondaryIcon}
       search={search}></Header>
   }
 }
