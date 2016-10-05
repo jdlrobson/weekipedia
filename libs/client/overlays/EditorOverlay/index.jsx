@@ -39,9 +39,11 @@ export default React.createClass({
     this.loadWikiText();
   },
   showEditor() {
+    window.scrollTo(0,0);
     this.setState( { step: EDIT_STEP } );
   },
   showPreview() {
+    window.scrollTo(0,0);
     this.setState( { step: PREVIEW_STEP } );
     if ( !this.state.preview ) {
       this.loadPreview();
@@ -70,6 +72,7 @@ export default React.createClass({
     } );
   },
   save() {
+    window.scrollTo(0,0);
     var data,
       self = this,
       props = this.props,
