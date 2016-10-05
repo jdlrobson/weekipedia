@@ -73,7 +73,7 @@ if ( USE_HTTPS ) {
   } );
 }
 
-if ( SIGN_IN_SUPPORTED ) {
+if ( SIGN_IN_SUPPORTED && !DUMMY_SESSION ) {
   const MemcachedStore = connect( session );
 
   passport.serializeUser( function ( user, done ) {
