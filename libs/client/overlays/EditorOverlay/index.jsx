@@ -29,6 +29,8 @@ export default React.createClass({
   },
   getDefaultProps() {
     return {
+      wikitext: null,
+      placeholder: 'A new page begins here. Start typing!',
       emptyMessage: '',
       loadingMessage: 'Searching',
       api: null,
@@ -132,8 +134,9 @@ export default React.createClass({
         className={state.step === SAVE_STEP ? 'disabled' : ''} onClick={this.save} />,
       summary = <Input placeholder="Example: Fixed typo, added content"
         textarea={true} onInput={this.updateSummary} />,
-      editField = <Input defaultValue={state.text} textarea={true} className="editor"
-        placeholder="A new page begins here. Start typing!"
+      editField = <Input defaultValue={state.text || props.wikitext}
+        textarea={true} className="editor"
+        placeholder={props.placeholder}
         onInput={this.updateText }/>,
       secondaryIcon = state.step === EDIT_STEP ? previewBtn : saveBtn;
 

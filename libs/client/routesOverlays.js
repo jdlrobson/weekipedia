@@ -9,11 +9,14 @@ import SearchOverlay from './overlays/SearchOverlay'
 export default [
   // Edit Overlay
   [
-    /^#\/editor\/?(.*)$/,
+    /^#\/editor\/?([^\/]*)\/?(.*)$/,
     function ( info, props ) {
       var overlayProps = Object.assign( {}, props, {
         section: info[1]
       } );
+      if ( info[2] ) {
+        overlayProps.wikitext = atob( info[2] );
+      }
       return {
         overlay: React.createElement( EditorOverlay, overlayProps )
       }
