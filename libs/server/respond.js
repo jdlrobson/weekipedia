@@ -6,7 +6,13 @@ function respond( res, method ) {
     return responseText;
   } ).catch( function ( error ) {
     var msg = error.toString();
-    res.status( msg.indexOf( '404' ) > -1 ? 404 : 500 );
+    var code = 500;
+    if ( msg.indexOf( 'Not logged in' ) > -1 ) {
+      code = 401;
+    } else if ( msg.indexOf( '404' ) > -1 ) {
+      code = 404;
+    }
+    res.status( code );
     res.send( JSON.stringify( {
       msg: msg
     } ) );
