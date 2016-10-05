@@ -138,19 +138,29 @@ app.get( '/auth/whoamithistime', function ( req, res ) {
   } );
 } );
 
+function authCallback( req, res ) {
+  // Successful authentication, do redirect.
+  res.redirect( req.session.returnto || '/' );
+  delete req.session.returnTo;
+}
+
 app.get( '/auth/mediawiki',
   function ( req, res, next ) {
-    req.session.returnto = req.query.returnto || req.get( 'Referrer' );
+    if ( !req.isAuthenticated() && !req.query.oauth_verifier ) {
+      req.session.returnto = req.query.returnto || req.get( 'Referrer' );
+    }
     next();
   }, passport.authenticate( 'mediawiki' ) );
 
-app.get( '/auth/mediawiki/callback',
-  passport.authenticate( 'mediawiki', { failureRedirect: '/login' } ),
+// The default auth callback if configured in MediaWiki as '/'
+// This one only works if the user has logged in already
+app.get( '/auth/mediawiki',
   function ( req, res ) {
-    // Successful authentication, do redirect.
-    res.redirect( req.session.returnto || '/' );
-    delete req.session.returnTo;
+    authCallback( req, res );
   } );
+
+app.get( '/auth/mediawiki/callback',
+  passport.authenticate( 'mediawiki', { failureRedirect: '/login' } ), authCallback );
 
 app.get( '/manifest.json', ( req, res ) => {
   res.setHeader( 'Content-Type', 'application/json' );
