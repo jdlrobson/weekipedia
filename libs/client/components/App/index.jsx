@@ -110,8 +110,21 @@ export default React.createClass({
       } );
     }
   },
-  mount( props ) {
+  getLocalSession() {
     var localSession = this.props.storage.get( APP_SESSION_KEY );
+    localSession = localSession === 'false' ? null : JSON.parse( localSession );
+    if ( localSession && localSession.timestamp ) {
+      // is it greater than 1 hours old?
+      if ( ( new Date() - new Date( localSession.ts ) ) / 1000 > 60 * 60 ) {
+        localSession = null;
+      }
+    } else if ( localSession && !localSession.timestamp ) {
+      localSession = null;
+    }
+    return localSession;
+  },
+  mount( props ) {
+    var localSession = this.getLocalSession();
 
     if ( typeof document !== 'undefined' ) {
       this.mountLanguage( props );
@@ -119,7 +132,6 @@ export default React.createClass({
     }
     if ( !this.state.session ) {
       if ( localSession ) {
-        localSession = localSession === 'false' ? null : JSON.parse( localSession );
         // load session from local storage
         this.setState( { session: localSession } );
         this.mountChildren( props, localSession );
@@ -142,6 +154,7 @@ export default React.createClass({
       credentials: 'include'
     } ).then( function ( session ) {
       // cache for next session
+      session.timestamp = new Date();
       self.props.storage.set( APP_SESSION_KEY, JSON.stringify( session ) );
       self.setState( { session: session } );
     } ).catch( function () {
