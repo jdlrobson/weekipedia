@@ -42,7 +42,7 @@ class Overlay extends Component {
         </div>);
       overlayClass += ' lightbox';
     } else {
-      icon = (<Icon glyph='close' onClick={this.onClose.bind(this)}/>);
+      icon = (<Icon glyph='close' onClick={this.onClose.bind(this)} className="cancel" />);
       headerProps = {
         fixed: true,
         primaryIcon: this.props.primaryIcon || icon,

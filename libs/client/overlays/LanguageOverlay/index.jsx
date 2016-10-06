@@ -113,7 +113,7 @@ export default React.createClass({
       otherLangs = this.getLanguagesForDisplay();
 
       prefLang = preferredLangs.length ? <LinkList>{preferredLangs.map( mapLanguage )}</LinkList> : null;
-      content = <LinkList>{otherLangs.map( mapLanguage )}</LinkList>;
+      content = <LinkList className="all-languages">{otherLangs.map( mapLanguage )}</LinkList>;
     }
 
     var count = this.state.isLoading ? null : otherLangs.length;
