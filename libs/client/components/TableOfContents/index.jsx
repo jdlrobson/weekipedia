@@ -29,17 +29,18 @@ export default React.createClass({
   render() {
     // FIXME: class `toc-mobile` is only added for consistency with MobileFrontend
     return (
-      <div className="component-table-of-contents toc-mobile" id="table-toc">
-        <h2>
-          <Icon glyph="toc"/>
-          <Icon glyph="arrow" className="chevron"/>
-          <span>Contents</span></h2>
-        <div>
+      <details className="component-table-of-contents toc-mobile" id="table-toc">
+          <summary>
+            <Icon glyph="toc"/>
+            <Icon glyph="arrow" className="chevron"/>
+            <span>Contents</span>
+          </summary>
+          <div>
           <ul>
             { getListItems( this.props.sections ) }
           </ul>
-        </div>
-      </div>
+          </div>
+      </details>
     );
   }
 } );
