@@ -3,6 +3,7 @@ import React from 'react'
 import CardListPage from './CardListPage'
 
 import CardDiff from './../components/CardDiff'
+import Icon from './../components/Icon'
 
 // Pages
 export default React.createClass({
@@ -14,8 +15,14 @@ export default React.createClass({
 
     if ( username ) {
       title = 'User Contributions';
-      tagline = <a href={'/' + this.props.lang + '/wiki/User:' + username}
-        onClick={this.props.onClickInternalLink}>{username}</a>;
+      tagline = (
+        <h2>
+          <Icon glyph='user'
+            href={'/' + this.props.lang + '/wiki/User:' + username}
+            type="before"
+            onClick={this.props.onClickInternalLink} label={username} />
+        </h2>
+      );
       endpoint += username;
     } else {
       title = 'Recent Changes';
