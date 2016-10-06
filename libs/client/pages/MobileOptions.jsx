@@ -41,6 +41,7 @@ export default React.createClass({
       [ 'expandSectionsByDefault', 'Expand all sections by default' ],
       [ 'includeSiteBranding', 'Include site branding' ],
       [ 'allowForeignProjects', 'Load other wikimedia projects inside app (experimental)' ],
+      [ 'includeTableOfContents', 'Show the table of contents to tablet users' ]
     ];
     var form = state && state.mobileOptions ? (
       <form>

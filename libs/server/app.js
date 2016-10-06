@@ -18,7 +18,7 @@ import respond from './respond'
 import isRTL from './../client/is-rtl'
 
 import { API_PATH, DEFAULT_PROJECT,
-  GCM_SENDER_ID, SITE_HOME_PATH,
+  GCM_SENDER_ID, SITE_HOME_PATH, TABLE_OF_CONTENTS,
   SITE_ALLOW_FOREIGN_PROJECTS, ALLOWED_PROJECTS,
   SITE_WORDMARK_PATH, SITE_TITLE, LANGUAGE_CODE, SIGN_IN_SUPPORTED, INCLUDE_SITE_BRANDING,
   SITE_EXPAND_SECTIONS, SITE_EXPAND_ARTICLE,
@@ -172,6 +172,7 @@ initApiRoutes( app, SIGN_IN_SUPPORTED );
 app.get( '/:lang?/*', ( req, res ) => {
   var config = {
     siteoptions: {
+      includeTableOfContents: TABLE_OF_CONTENTS,
       includeSiteBranding: INCLUDE_SITE_BRANDING,
       allowForeignProjects: SITE_ALLOW_FOREIGN_PROJECTS,
       expandSectionsByDefault: SITE_EXPAND_SECTIONS,

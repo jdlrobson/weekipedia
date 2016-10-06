@@ -24,7 +24,6 @@ export default React.createClass({
   getDefaultProps: function () {
     return {
       api: null,
-      showTableOfContents: false,
       lang: 'en'
     };
   },
@@ -148,6 +147,7 @@ export default React.createClass({
   render(){
     var leadHtml, toc,
       props = this.props,
+      siteOptions = props.siteoptions,
       sections = [],
       secondaryActions = [],
       title = this.props.title,
@@ -169,7 +169,7 @@ export default React.createClass({
           isReaderOwner={props.session && props.session.username === props.titleSanPrefix } /> );
       } else if ( this.state.isExpanded ) {
         toc = <TableOfContents sections={remainingSections} />;
-        if ( remainingSections.length && props.showTableOfContents ) {
+        if ( remainingSections.length && siteOptions.includeTableOfContents ) {
           sections.push( toc );
         }
         sections = sections.concat( remainingSections );

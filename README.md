@@ -115,3 +115,7 @@ Multi projects
 Setup site branding (logo in header)
 
 > export SITE_INCLUDE_BRANDING=1
+
+Enable table of contents
+
+> export TABLE_OF_CONTENTS=1

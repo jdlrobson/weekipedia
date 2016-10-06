@@ -3,7 +3,7 @@
 .component-table-of-contents {
   background-color: #f9f9f9;
   border: solid 1px #eee;
-  display: block;
+  display: none;
   visibility: visible;
   position: relative;
   font-size: 1.3em;
@@ -23,8 +23,15 @@
     border-bottom: 0;
     padding: 0.7em 0;
 
-    span {
-      display: inline-block;
+    > div {
+      float: left;
+      display: block;
+      font-size: 0.8em;
+    }
+
+    .chevron {
+      float: right;
+      visibility: hidden;
     }
   }
 
@@ -45,5 +52,21 @@
     margin-bottom: 0;
     padding-top: 0.8em;
     line-height: 1.2;
+
+    &:last-child {
+      padding-bottom: 1.3em;
+    }
+  }
+
+  ul ul {
+    li:last-child {
+      padding-bottom: 0;
+    }
+  }
+}
+
+@media (min-width: @deviceWidthTablet) {
+  .component-table-of-contents {
+    display: block;
   }
 }
