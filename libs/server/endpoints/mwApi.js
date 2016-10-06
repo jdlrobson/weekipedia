@@ -1,5 +1,5 @@
 import oauthFetchJson from 'oauth-fetch-json'
-import { SPECIAL_PROJECTS } from './../config'
+import { SPECIAL_PROJECTS, HOST_SUFFIX } from './../config'
 
 function flatten( pages ) {
   pages.forEach( function ( page ) {
@@ -25,13 +25,13 @@ export default function ( langOrLanguageProject, params, projectOrOptions, optio
   if ( langOrLanguageProject.indexOf( '.' ) > -1 ) {
     s = langOrLanguageProject.split( '.' )
     baseHost = SPECIAL_PROJECTS.indexOf( s[1] ) > -1 ? s[1] + '.wikimedia' : langOrLanguageProject;
-    url = 'https://' + baseHost + '.org/w/api.php';
+    url = 'https://' + baseHost + HOST_SUFFIX + '/w/api.php';
     options = projectOrOptions;
     session = optionsOrSession;
   } else {
     project = projectOrOptions || 'wikipedia';
     baseHost = SPECIAL_PROJECTS.indexOf( project ) > -1 ? project + '.wikimedia' : langOrLanguageProject + '.' + project;
-    url = 'https://' + baseHost  + '.org/w/api.php';
+    url = 'https://' + baseHost  + HOST_SUFFIX + '/w/api.php';
     options = optionsOrSession;
   }
 

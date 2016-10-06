@@ -1,7 +1,7 @@
 import fetch from 'isomorphic-fetch'
 import domino from 'domino'
 
-import { SPECIAL_PROJECTS } from './../config'
+import { SPECIAL_PROJECTS, HOST_SUFFIX } from './../config'
 import mwApi from './mwApi';
 
 function extractLeadParagraph( doc ) {
@@ -99,7 +99,7 @@ function getBaseHost( lang, project ) {
 
 export default function ( title, lang, project, includeReferences ) {
   // FIXME: Handle this better please. Use better API.
-  var url = 'https://' + getBaseHost( lang, project ) + '.org/api/rest_v1/page/mobile-sections/' +
+  var url = 'https://' + getBaseHost( lang, project ) + HOST_SUFFIX + '/api/rest_v1/page/mobile-sections/' +
     encodeURIComponent( title );
 
   return fetch( url )

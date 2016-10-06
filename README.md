@@ -30,7 +30,13 @@ Fake login via
 
 > export DEV_DUMMY_USER=Dummy
 
+Test against the Wikimedia beta cluster
+
+> export HOST_SUFFIX=.beta.wmflabs.org
+
 ##Running in production
+
+> export HOST_SUFFIX=.org
 
 > export PROJECT='wikipedia'
 
