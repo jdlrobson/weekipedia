@@ -70,7 +70,7 @@ export default React.createClass({
     var iconProps = {
       key: 'watch',
       glyph: state.isWatched ? 'watched' : 'watch',
-      label: 'Read in another language',
+      label: 'Watch this page',
       onClick: this.dispatch
     };
 

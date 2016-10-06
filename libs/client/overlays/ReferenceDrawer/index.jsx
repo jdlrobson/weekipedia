@@ -49,9 +49,10 @@ export default React.createClass({
           dangerouslySetInnerHTML={{ __html: this.state.text }}></span>
       ];
     }
-    // FIXME: create Drawer container
+    // FIXME: references class name should not be necessary and is only added for consistency
+    // with MobileFrontend output
     return (
-      <Overlay {...this.props} className="references-drawer" isDrawer="1">
+      <Overlay {...this.props} className="references-drawer references" isDrawer="1">
         <div className="cite">
           <Icon type="before" glyph="citation" label="Citation" className="text"/>
         </div>

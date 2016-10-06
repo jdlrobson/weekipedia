@@ -68,7 +68,8 @@ class Section extends Component {
     var isExpanded = this.state.isOpen !== undefined ? this.state.isOpen : !isCollapsible;
 
     var headingChildren = [
-      <span dangerouslySetInnerHTML={{ __html: this.props.line}} key={"section-heading-span-" + this.props.id} />
+      <span id={props.anchor}
+        dangerouslySetInnerHTML={{ __html: this.props.line}} key={"section-heading-span-" + this.props.id} />
     ];
     if ( this.props.canAuthenticate && this.props.isEditable ) {
       headingChildren.push( <EditIcon {...this.props} section={this.props.id}
@@ -79,7 +80,10 @@ class Section extends Component {
       headingChildren.unshift( <Icon glyph={this.state.jsEnabled ? "arrow" : ""} small={true}
         className="indicator" key={"section-heading-toggle-" + this.props.id} /> );
     }
-    var heading = hMethod.call(React.DOM, { onClick: this.onToggle.bind(this), id: this.props.anchor }, headingChildren );
+    var heading = hMethod.call(React.DOM, {
+      className: 'section-heading',
+      onClick: this.onToggle.bind(this)
+     }, headingChildren );
 
     var body;
     var text = state.text !== undefined ? state.text : props.text;

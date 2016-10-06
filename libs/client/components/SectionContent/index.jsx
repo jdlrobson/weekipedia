@@ -18,12 +18,19 @@ class SectionContent extends Component {
     this.setState( { contentChanged: nextProps.text !== this.props.text } );
   }
   render(){
+    var divId;
+    var id = this.props.id;
+    if ( id ) {
+      // For consistency with MobileFrontend the id uses the section number - the lead section
+      divId = 'content-collapsible-block-' + ( id - 1 );
+    }
     var classSuffix = this.props.className ? ' ' + this.props.className : '';
     if ( this.props.id ) {
-      classSuffix += ' section-' + this.props.id;
+      classSuffix += ' section-' + id;
     }
     return (
-      <div data-section={this.props.id}
+      <div data-section={id}
+        id={divId}
         className={"component-section-content content" + classSuffix}
         dangerouslySetInnerHTML={{ __html: this.props.text}}></div>
     )

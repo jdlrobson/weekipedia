@@ -14,6 +14,7 @@ export default React.createClass({
   },
   dispatch( ev ) {
     ev.stopPropagation();
+    ev.preventDefault();
     if ( this.props.session ) {
       this.launchEditor();
     } else {
@@ -25,6 +26,7 @@ export default React.createClass({
       key: 'edit',
       glyph: 'edit',
       label: 'Edit',
+      href: '#',
       className: 'component-edit-icon',
       onClick: this.dispatch
     };

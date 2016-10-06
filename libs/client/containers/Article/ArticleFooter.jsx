@@ -27,7 +27,9 @@ class ArticleFooter extends Component {
     }
 
     if ( this.props.desktopUrl ) {
-      places.push( <a key="article-footer-desktop-url" href={this.props.desktopUrl}>Desktop</a> );
+      // FIXME: The stopMobileRedirectToggle class is only needed for compatibility with MobileFrontend browser tests
+      places.push( <a key="article-footer-desktop-url"
+        className="stopMobileRedirectToggle" href={this.props.desktopUrl}>Desktop</a> );
     }
 
     return (
@@ -35,7 +37,7 @@ class ArticleFooter extends Component {
         {this.props.footer}
         <Content className="footer-info">
           {wordmark}
-          <div>Content is available under <a className="external" rel="nofollow" href={license.url}>{license.name}</a> unless otherwise noted.</div>
+          <div id="footer-info-mobile-license">Content is available under <a className="external" rel="nofollow" href={license.url}>{license.name}</a> unless otherwise noted.</div>
           <HorizontalList isSeparated="1">{places}</HorizontalList>
         </Content>
       </div>

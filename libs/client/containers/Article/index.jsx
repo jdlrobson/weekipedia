@@ -22,7 +22,7 @@ class Article extends Component {
   }
   render(){
     return (
-      <div className="component-article mw-body">
+      <div className="component-article mw-body" id={this.props.id}>
         <ArticleHeader {...this.props} />
         <Content key="page-row-1" className={this.props.isSpecialPage ? '' : 'content'}>
           {this.props.body}

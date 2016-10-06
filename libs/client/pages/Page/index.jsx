@@ -196,8 +196,10 @@ export default React.createClass({
         label="Talk" />);
     }
 
+    // Note id `#content` is added for consistency with MobileFrontend
     return (
       <Article {...this.props} isWikiPage={true} tabs={this.getTabs(lead)}
+        id="content"
         toc={toc}
         lead={lead}
         body={sections}
