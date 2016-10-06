@@ -39,7 +39,9 @@ class ArticleHeader extends Component {
         id="section_0" dangerouslySetInnerHTML={{ __html: lead.displaytitle }}></h1>
       );
     }
-    header.push(<div className="tagline" key="article-tagline">{lead.description}</div>)
+    if ( !lead.mainpage ) {
+      header.push(<div className="tagline" key="article-tagline">{lead.description}</div>)
+    }
     if ( lead.hatnote ) {
       header.push( <p key="article-header-hatnote"
         className="hatnote" dangerouslySetInnerHTML={{ __html: lead.hatnote}} /> );
