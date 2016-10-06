@@ -3,6 +3,7 @@ import React, { Component } from 'react'
 import HorizontalList from './../../components/HorizontalList'
 import SectionContent from './../../components/SectionContent'
 import Infobox from './../../components/Infobox'
+import PageActions from './../../components/PageActions'
 
 import Content from './../../containers/Content'
 
@@ -26,9 +27,12 @@ class ArticleHeader extends Component {
       lead.displaytitle = this.props.title;
     }
 
-    if ( this.props.actions ) {
-      header.push( <HorizontalList className="page-actions" key="page-actions">{this.props.actions}</HorizontalList> );
+    if ( this.props.isWikiPage ) {
+      header.push( <PageActions {...this.props}
+        id="page-actions"
+        disableLanguages={lead.languagecount === 0} /> );
     }
+
     if ( lead.displaytitle ) {
       header.push(
         <h1 key="article-title"

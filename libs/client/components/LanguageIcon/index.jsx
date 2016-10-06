@@ -10,11 +10,13 @@ class LanguageIcon extends Component {
     var iconProps = {
       key: 'lang-view',
       glyph: 'language-switcher',
+      // This is only needed for compatibility with MobileFrontend browser tests
+      className: 'language-selector',
       label: 'Read in another language'
     };
 
     if ( props.disabled ) {
-      iconProps.className = 'disabled';
+      iconProps.className += ' disabled';
       iconProps.onClick = function ( ev ) {
         ev.stopPropagation();
         props.showNotification( 'This page is not available in other languages.' );

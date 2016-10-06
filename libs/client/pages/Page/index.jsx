@@ -3,9 +3,6 @@ import React from 'react'
 import IntermediateState from './../../components/IntermediateState';
 import Button from './../../components/Button'
 import ErrorBox from './../../components/ErrorBox'
-import LanguageIcon from './../../components/LanguageIcon'
-import EditIcon from './../../components/EditIcon'
-import WatchIcon from './../../components/WatchIcon'
 import LastModifiedBar from './../../components/LastModifiedBar'
 import ReadMore from './../../components/ReadMore'
 import UserPageCta from './../../components/UserPageCta'
@@ -152,7 +149,6 @@ export default React.createClass({
     var leadHtml, toc,
       props = this.props,
       sections = [],
-      actions = [],
       secondaryActions = [],
       title = this.props.title,
       lead = this.state.lead || this.props.lead || {},
@@ -193,15 +189,6 @@ export default React.createClass({
       }
     }
 
-    actions.push(<LanguageIcon key="article-page-action-language"
-      showNotification={this.props.showNotification}
-      disabled={lead.languagecount === 0} />);
-
-    if ( this.props.canAuthenticate ) {
-      actions.push(<EditIcon {...this.props} key="page-action-edit"/>);
-      actions.push(<WatchIcon {...this.props} key="page-action-watch"/>);
-    }
-
     if ( lead.ns === 0 ) {
       secondaryActions.push(<Button
         onClick={this.props.onClickInternalLink}
@@ -210,7 +197,7 @@ export default React.createClass({
     }
 
     return (
-      <Article {...this.props} actions={actions} tabs={this.getTabs(lead)}
+      <Article {...this.props} isWikiPage={true} tabs={this.getTabs(lead)}
         toc={toc}
         lead={lead}
         body={sections}
