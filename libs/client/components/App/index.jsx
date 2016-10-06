@@ -277,7 +277,10 @@ export default React.createClass({
     var navigationClasses = this.state.isMenuOpen ?
       'primary-navigation-enabled navigation-enabled' : '';
 
+    // FIXME: link should point to Special:MobileMenu
     var icon = <Icon glyph="mainmenu" label="Home"
+      id="mw-mf-main-menu-button"
+      href="#"
       onClick={this.openPrimaryNav}/>;
     var shield = this.state.isMenuOpen ? <TransparentShield /> : null;
 

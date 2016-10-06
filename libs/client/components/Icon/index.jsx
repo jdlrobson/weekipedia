@@ -25,6 +25,7 @@ export default React.createClass({
       className: (props.className || '') + ' mw-ui-icon mw-ui-icon-' + glyph + ' mw-ui-icon-' +
         ( props.type || 'element' ),
       href: props.href,
+      id: props.id,
       onClick: props.onClick
     };
     if ( props.small ) {
