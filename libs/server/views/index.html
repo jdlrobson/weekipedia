@@ -18,4 +18,16 @@
 		<div id="app">{{{body}}}</div>
 	</body>
 	<script src="/main-bundle.js"></script>
+	{{#isDevMode}}
+	<script type="text/javascript">
+		// Allows MobileFrontend browser tests to be run on Weekipedia
+		window.mw = {
+			loader: {
+				getState: function () {
+					return 'ready';
+				}
+			}
+		};
+	</script>
+	{{/isDevMode}}
 </html>

@@ -17,7 +17,7 @@ import messages from './messages'
 import respond from './respond'
 import isRTL from './../client/is-rtl'
 
-import { API_PATH, DEFAULT_PROJECT,
+import { API_PATH, DEFAULT_PROJECT, IS_DEV_MODE,
   GCM_SENDER_ID, SITE_HOME_PATH, TABLE_OF_CONTENTS,
   SITE_ALLOW_FOREIGN_PROJECTS, ALLOWED_PROJECTS,
   SITE_WORDMARK_PATH, SITE_TITLE, LANGUAGE_CODE, SIGN_IN_SUPPORTED, INCLUDE_SITE_BRANDING,
@@ -223,6 +223,7 @@ app.get( '/:lang?/*', ( req, res ) => {
     Object.assign( config, data );
     res.setHeader( 'Vary', 'Cookie' );
     res.status( 200 ).render( 'index.html', {
+      isDevMode: IS_DEV_MODE,
       touch_icon: '/home-icon.png',
       url: req.url,
       image: image,

@@ -16,6 +16,26 @@ The goals of this project include but are not limited to:
 * Explore how push notifications, service workers can fit into the MediaWiki ecosystem.
 * Fun!
 
+## Parity with MobileFrontend
+
+Weekipedia should be capable of everything that MobileFrontend does. This can be shown by cloning
+the [MobileFrontend repo](https://github.com/wikimedia/mediawiki-extensions-MobileFrontend) and running [the browser tests](https://github.com/wikimedia/mediawiki-extensions-MobileFrontend/tree/master/tests/browser) against Weekipedia like so:
+
+	export MEDIAWIKI_URL=http://localhost:8142/wiki/
+	export DEV_DUMMY_USER=
+	export HOST_SUFFIX=.beta.wmflabs.org
+	export SERVER_SIDE_RENDERING=1
+	export SITE_PRIVACY_URL=//wikimediafoundation.org/wiki/Privacy_policy
+	export MEDIAWIKI_API_URL=https://en.wikipedia.beta.wmflabs.org/w/api.php
+	export MEDIAWIKI_ENVIRONMENT=beta
+	export SITE_EXPAND_ARTICLE=1
+	export TABLE_OF_CONTENTS=1
+	export MEDIAWIKI_USER=<must exist on https://en.wikipedia.beta.wmflabs.org>
+	export MEDIAWIKI_PASSWORD=<password for account on https://en.wikipedia.beta.wmflabs.org>
+	bundle exec cucumber features/ --tags ~@login --tags ~@feature-anon-editing-support --tags ~@adminuser --tags @chrome
+
+Where there is not parity please raise a Github issue.
+
 ## Contribute
 
 > npm install
