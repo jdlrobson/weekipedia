@@ -1,4 +1,5 @@
 import React from 'react'
+import ReactDOM from 'react-dom'
 
 import IntermediateState from './../../components/IntermediateState'
 import ErrorBox from './../../components/ErrorBox'
@@ -22,6 +23,9 @@ export default React.createClass({
     this.props.api.getReference( this.props.title, this.props.language_project, refId )
       .then( function ( refHtml ) {
         self.setState( { text: refHtml, isLoading: false } );
+        if ( self.props.hijackLinks ) {
+          self.props.hijackLinks( ReactDOM.findDOMNode( self ) );
+        }
       } ).catch( function () {
         self.setState( { isError: true } );
       } );

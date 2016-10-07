@@ -193,7 +193,7 @@ export default React.createClass({
       ev.preventDefault();
       ev.stopPropagation();
       refId = link.getAttribute( 'href' ).substr( 1 );
-      this.showOverlay( <ReferenceDrawer {...props} refId={refId} /> );
+      this.showOverlay( <ReferenceDrawer {...props} refId={refId} hijackLinks={this.hijackLinks} /> );
 
     } else if ( childNode && childNode.nodeName === 'IMG' ) {
       href = link.getAttribute( 'href' ) || '';
