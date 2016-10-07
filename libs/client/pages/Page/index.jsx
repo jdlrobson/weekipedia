@@ -29,6 +29,7 @@ export default React.createClass({
   },
   getInitialState() {
     return {
+      fragment: null,
       isExpanded: false,
       lead: null,
       user: {},
@@ -39,7 +40,11 @@ export default React.createClass({
   },
   // You want to load subscriptions not only when the component update but also when it gets mounted.
   componentDidMount(){
+    var fragment = window.location.hash;
     this.load();
+    if ( fragment ) {
+      this.setState( { fragment: fragment.replace(/ /i, '_' ).substr( 1 ) } );
+    }
   },
   componentWillMount() {
     this.setState( this.props );
@@ -155,7 +160,7 @@ export default React.createClass({
       footer = this.getFooter( lead ),
       remaining = this.state.remaining || this.props.remaining || {},
       allSections = remaining.sections || [],
-      remainingSections = getSections( allSections, props );
+      remainingSections = getSections( allSections, props, this.state.fragment );
 
     leadHtml = lead.sections && lead.sections.length ? lead.sections[0].text : undefined;
     lead.text = leadHtml;

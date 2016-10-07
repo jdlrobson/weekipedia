@@ -20,11 +20,19 @@ class Section extends Component {
     };
   }
   componentWillMount(){
-    var props = this.props;
+    var isOpen,
+      props = this.props;
+
+    if ( props.isExpandedByDefault ) {
+      isOpen = true;
+    } else {
+      isOpen = !props.isCollapsible ? !props.isCollapsible :
+        ( props.siteoptions.expandSectionsByDefault && !props.isReferenceSection );
+    }
+
     this.setState( {
       jsEnabled: false,
-      isOpen: !props.isCollapsible ? !props.isCollapsible : ( props.siteoptions.expandSectionsByDefault
-        && !props.isReferenceSection )
+      isOpen: isOpen
     } );
   }
   componentDidUpdate() {

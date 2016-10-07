@@ -2,7 +2,7 @@ import React from 'react'
 
 import Section from './components/Section'
 
-function getSections( allSections, props ) {
+function getSections( allSections, props, fragment ) {
   var sections = [];
   var topLevelSection = allSections.length ? allSections[0].toclevel : 2;
   var curSection;
@@ -26,6 +26,9 @@ function getSections( allSections, props ) {
           } )
         )
       );
+    }
+    if ( sectionProps.anchor === fragment ) {
+      curSection.isExpandedByDefault = true;
     }
   } );
   if ( allSections.length ) {
