@@ -39,6 +39,29 @@ function extractInfobox( doc ) {
   return infobox;
 }
 
+// Can be removed when https://gerrit.wikimedia.org/r/309191 deployed
+function extractPageIssues( doc ) {
+  var nodesToDelete;
+  var issues = false;
+  var nodes = doc.querySelectorAll( '.ambox-multiple_issues table .mbox-text-span' );
+  // If no nodes found proceed to look for single page issues.
+  nodes = nodes.length ? nodes : doc.querySelectorAll( '.ambox .mbox-text-span' );
+  if ( nodes.length ) {
+    issues = Array.prototype.map.call( nodes, function ( span ) {
+      return {
+        text: span.innerHTML
+      };
+    } );
+
+    // delete all the nodes we found.
+    nodesToDelete = doc.querySelectorAll( '.ambox-multiple_issues,.ambox' );
+    Array.prototype.forEach.call( nodesToDelete, function ( node ) {
+      node.parentNode.removeChild( node );
+    } );
+  }
+  return issues;
+}
+
 // Undo the work in mobile-content-service (https://phabricator.wikimedia.org/T147043)
 function undoLinkRewrite( doc ) {
   var idx = 0;
@@ -158,6 +181,8 @@ export default function ( title, lang, project, includeReferences ) {
           undoLinkRewrite( doc );
           var infobox = extractInfobox( doc );
           var leadParagraph = extractLeadParagraph( doc );
+          var issues = extractPageIssues( doc );
+          json.lead.issues = issues;
           json.lead.infobox = infobox;
           json.lead.paragraph = leadParagraph;
           json.lead.hatnote = extractHatnote( doc );
