@@ -54,7 +54,7 @@ export default ({ editor, language_project, lang, title, timestamp, onClickInter
   );
 
   return (
-    <div className={className} id="mw-mf-last-modified">
+    <div className={className}>
       <Content>
       <Icon glyph={'clock' + iconVariant} type="before" small={true}
           label={modifierTagline} className="last-modifier-tagline" />
