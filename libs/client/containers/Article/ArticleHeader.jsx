@@ -42,6 +42,9 @@ class ArticleHeader extends Component {
     if ( !lead.mainpage ) {
       header.push(<div className="tagline" key="article-tagline">{lead.description}</div>)
     }
+    if ( lead.issues ) {
+      header.push(<a href="#/issues" className="mw-mf-cleanup" key="article-issues">Page issues</a>)
+    }
     if ( lead.hatnote ) {
       header.push( <p key="article-header-hatnote"
         className="hatnote" dangerouslySetInnerHTML={{ __html: lead.hatnote}} /> );

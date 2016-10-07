@@ -5,6 +5,7 @@ import CollectionEditorOverlay from './overlays/CollectionEditorOverlay'
 import ImageOverlay from './overlays/ImageOverlay'
 import LanguageOverlay from './overlays/LanguageOverlay'
 import SearchOverlay from './overlays/SearchOverlay'
+import IssuesOverlay from './overlays/IssuesOverlay'
 
 export default [
   // Edit Overlay
@@ -53,6 +54,15 @@ export default [
     function ( info, props ) {
       return {
         overlay: React.createElement( LanguageOverlay, props )
+      }
+    }
+  ],
+  // Issues
+  [
+    /^#\/issues$/,
+    function ( info, props ) {
+      return {
+        overlay: React.createElement( IssuesOverlay, props )
       }
     }
   ],
