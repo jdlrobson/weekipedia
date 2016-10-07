@@ -58,10 +58,10 @@ export default [
   ],
   // Search Overlay
   [
-    /^#\/search$/,
+    /^#\/search\/?(.*)$/,
     function ( info, props ) {
       return {
-        overlay: React.createElement( SearchOverlay, props )
+        overlay: React.createElement( SearchOverlay, Object.assign( props, { defaultValue: info[1] } ) )
       }
     }
   ]

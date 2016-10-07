@@ -14,7 +14,7 @@ export default React.createClass({
     return (
       <form className="search-form" onSubmit={this.onDoSearch}>
         <SearchInput onClick={props.onClickSearch} onSearch={props.onSearch}
-          placeholder={props.msg( 'search' )}
+          placeholder={props.msg( 'search' )} defaultValue={props.defaultValue}
           focusOnRender={props.focusOnRender} />
       </form>
     )

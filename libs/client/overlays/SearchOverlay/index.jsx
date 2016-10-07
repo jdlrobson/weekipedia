@@ -33,6 +33,7 @@ export default React.createClass({
   onSearchSubmit( term ) {
     var props = this.props;
     var proj = props.lang + '.' + props.siteinfo.defaultProject;
+    props.router.navigateTo( null, '#' );
     props.router.navigateTo( {
       pathname: '/' + proj + '/Special:Search/' + encodeURIComponent( term ),
       search: ''
@@ -52,6 +53,7 @@ export default React.createClass({
       }
       endpoint = '/api/search/' + lang + '.' + project + '/' + encodeURIComponent( term );
       this.showResults( endpoint, project );
+      this.props.router.navigateTo( null, '#/search/' + term, true );
     } else {
       this.setState( { cards: [] } );
     }
@@ -60,7 +62,7 @@ export default React.createClass({
     var heading;
     var props = this.props;
     var search = <SearchForm
-      msg={props.msg}
+      msg={props.msg} defaultValue={props.defaultValue}
       onSearch={this.onSearch} onSearchSubmit={this.onSearchSubmit} focusOnRender="1" />;
 
     return (
