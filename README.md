@@ -29,6 +29,8 @@ the [MobileFrontend repo](https://github.com/wikimedia/mediawiki-extensions-Mobi
 	export MEDIAWIKI_API_URL=https://en.wikipedia.beta.wmflabs.org/w/api.php
 	export MEDIAWIKI_ENVIRONMENT=beta
 	export SITE_EXPAND_ARTICLE=1
+	export SITE_EXPAND_SECTIONS=0
+	export SITE_EXPAND_SECTIONS_TABLET=1
 	export TABLE_OF_CONTENTS=1
 	export MEDIAWIKI_USER=<must exist on https://en.wikipedia.beta.wmflabs.org>
 	export MEDIAWIKI_PASSWORD=<password for account on https://en.wikipedia.beta.wmflabs.org>
@@ -92,7 +94,10 @@ To expand articles by default
 
 > export SITE_EXPAND_ARTICLE=1
 
-To expand sections by default. If true overrides SITE_EXPAND_ARTICLE.
+To expand sections by default only on tablet. If true overrides SITE_EXPAND_ARTICLE.
+> export SITE_EXPAND_SECTIONS_TABLET_=1
+
+To expand sections by default. If true overrides SITE_EXPAND_ARTICLE and SITE_EXPAND_SECTIONS_TABLET
 > export SITE_EXPAND_SECTIONS=1
 
 To change the default home page

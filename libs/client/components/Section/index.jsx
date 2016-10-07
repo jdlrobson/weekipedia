@@ -25,7 +25,7 @@ class Section extends Component {
 
     if ( props.isExpandedByDefault ) {
       isOpen = true;
-    } else {
+    } else if ( !props.siteoptions.isExpandedByDefaultTablet ){
       isOpen = !props.isCollapsible ? !props.isCollapsible :
         ( props.siteoptions.expandSectionsByDefault && !props.isReferenceSection );
     }
@@ -61,6 +61,11 @@ class Section extends Component {
   }
   componentDidMount() {
     this.setState( { jsEnabled: true } );
+    if ( this.props.siteoptions.expandSectionsByDefaultTablet && window.innerWidth > 768 ) {
+      this.setState( {
+        isOpen: true
+      } );
+    }
   }
   onToggle() {
     if ( this.props.isCollapsible ) {
