@@ -5,9 +5,22 @@ import CollectionEditorOverlay from './overlays/CollectionEditorOverlay'
 import ImageOverlay from './overlays/ImageOverlay'
 import LanguageOverlay from './overlays/LanguageOverlay'
 import SearchOverlay from './overlays/SearchOverlay'
+import TalkOverlay from './overlays/TalkOverlay'
 import IssuesOverlay from './overlays/IssuesOverlay'
 
 export default [
+  // Talk Overlay
+  [
+    /^#\/talk\/?([^\/]*)$/,
+    function ( info, props ) {
+      var overlayProps = Object.assign( {}, props, {
+        section: info[1]
+      } );
+      return {
+        overlay: React.createElement( TalkOverlay, overlayProps )
+      }
+    }
+  ],
   // Edit Overlay
   [
     /^#\/editor\/?([^\/]*)\/?(.*)$/,

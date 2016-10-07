@@ -29,6 +29,7 @@ export default React.createClass({
   },
   getInitialState() {
     return {
+      jsEnabled: false,
       fragment: null,
       isExpanded: false,
       lead: null,
@@ -45,6 +46,7 @@ export default React.createClass({
     if ( fragment ) {
       this.setState( { fragment: fragment.replace(/ /i, '_' ).substr( 1 ) } );
     }
+    this.setState( { jsEnabled: true } );
   },
   componentWillMount() {
     this.setState( this.props );
@@ -152,6 +154,7 @@ export default React.createClass({
   render(){
     var leadHtml, toc,
       props = this.props,
+      state = this.state,
       siteOptions = props.siteoptions,
       sections = [],
       secondaryActions = [],
@@ -196,8 +199,7 @@ export default React.createClass({
 
     if ( lead.ns === 0 ) {
       secondaryActions.push(<Button
-        onClick={this.props.onClickInternalLink}
-        key="article-talk" href={ this.getLocalUrl( 'Talk:' + title ) }
+        key="article-talk" href={ state.jsEnabled ? '#/talk' : this.getLocalUrl( 'Talk:' + title ) }
         label="Talk" />);
     }
 
