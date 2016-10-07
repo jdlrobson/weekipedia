@@ -49,7 +49,7 @@ var router = {
         history.replaceState( {}, null, url );
       } else {
         // replace the existing state with information about the scroll position
-        history.replaceState( state, null, currentPath );
+        history.replaceState( state, null, currentPath + window.location.hash );
         // navigate to new page
         history.pushState( {}, null, url );
       }
