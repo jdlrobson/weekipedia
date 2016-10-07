@@ -18,6 +18,8 @@ export default React.createClass({
 
     if ( !this.state.jsEnabled && props.onClick && !props.href ) {
       disabled = true;
+    } else {
+      disabled = props.disabled;
     }
     var btnProps = {
       className: 'mw-ui-button ' + modifiers,

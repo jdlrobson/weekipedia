@@ -8,6 +8,7 @@ const Input = (props) => {
     className: 'mw-ui-input' + suffix,
     placeholder: props.placeholder,
     onInput: props.onInput,
+    disabled: props.disabled,
     defaultValue: props.defaultValue
   };
 
