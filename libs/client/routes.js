@@ -6,6 +6,7 @@ import Contributions from './pages/Contributions'
 import History from './pages/History'
 import Feed from './pages/Feed'
 import Page from './pages/Page'
+import PageInfo from './pages/PageInfo'
 import SpecialPage from './pages/SpecialPage'
 import MobileDiff from './pages/MobileDiff'
 import MobileOptions from './pages/MobileOptions'
@@ -27,11 +28,13 @@ var routes = [
     // regex3: /:lang.:project/:title [4,5,6]
     /^\/([a-z\-]*)\/wiki\/(.*)|^\/wiki\/(.*)|^\/(.*)\.([^\/]*)\/(.*)/,
     function ( info, props ) {
-      var title = info[2] || info[3] || info[6],
+      var View,
+        title = info[2] || info[3] || info[6],
         titleDecoded = decodeURIComponent( title ),
         titleSansPrefix = titleDecoded.substr( titleDecoded.indexOf( ':' ) + 1 ),
         titleParts = titleSansPrefix.split( '/' ),
         project = info[5],
+        action = props.query && props.query.action || 'view',
         lang = info[1] || info[4] || 'en',
         articleSource = project ? lang + '.' + project : lang;
 
@@ -54,10 +57,15 @@ var routes = [
           )
         ];
       } else {
+        if ( action === 'info' ) {
+          View = PageInfo;
+        } else {
+          View = Page;
+        }
         props.title = titleDecoded;
         props.fallback = '/api/page/' + articleSource + '/' + title;
         props.children = [
-          React.createElement( Page,
+          React.createElement( View,
             Object.assign( {}, props, {
               key: 'page-' + title,
               titleSansPrefix: titleSansPrefix,

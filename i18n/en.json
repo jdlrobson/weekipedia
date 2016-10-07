@@ -18,5 +18,7 @@
   "search": "Search {{SITENAME}}",
   "collections-all": "Collections of pages from our community.",
   "collection-title": "Add to existing collection",
-  "collection-create": "Create new collection"
+  "collection-create": "Create new collection",
+  "action-info-not-available": "No information currently available.",
+  "action-info-title": "Information for \"$1\""
 }
