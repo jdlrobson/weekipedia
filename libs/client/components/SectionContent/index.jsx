@@ -5,13 +5,15 @@ import './styles.less'
 
 class SectionContent extends Component {
   componentDidMount(){
-    if ( this.props.text ) {
-      this.props.hijackLinks( ReactDOM.findDOMNode( this ) );
+    var props = this.props;
+    if ( props.text && props.hijackLinks ) {
+      props.hijackLinks( ReactDOM.findDOMNode( this ) );
     }
   }
   componentDidUpdate(){
-    if ( this.props.text && this.state.contentChanged ) {
-      this.props.hijackLinks( ReactDOM.findDOMNode( this ) );
+    var props = this.props;
+    if ( props.text && this.state.contentChanged && props.hijackLinks ) {
+      props.hijackLinks( ReactDOM.findDOMNode( this ) );
     }
   }
   componentWillReceiveProps( nextProps ) {
