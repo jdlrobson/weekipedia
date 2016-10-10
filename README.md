@@ -102,7 +102,7 @@ To expand sections by default. If true overrides SITE_EXPAND_ARTICLE and SITE_EX
 
 To change the default home page
 
-> export HOME_PAGE_PATH='/wiki/Special:Feed'
+	export SITE_HOME='Special:Feed'
 
 Setup push notifications
 > export TREND_ENABLED=1

@@ -1,7 +1,7 @@
 import fetch from 'isomorphic-fetch'
 import domino from 'domino'
 
-import { SPECIAL_PROJECTS, HOST_SUFFIX } from './../config'
+import { SPECIAL_PROJECTS, HOST_SUFFIX, SITE_HOME } from './../config'
 import mwApi from './mwApi';
 
 function extractLeadParagraph( doc ) {
@@ -178,7 +178,10 @@ export default function ( title, lang, project, includeReferences ) {
         // Workaround for https://phabricator.wikimedia.org/T145034
         var doc = domino.createDocument( json.lead.sections.length && json.lead.sections[0] && json.lead.sections[0].text );
         if ( doc ) {
-          undoLinkRewrite( doc );
+          // See https://github.com/jdlrobson/weekipedia/issues/99 - preserve links in main page
+          if ( SITE_HOME.replace( /_/g, ' ' ) !== title.replace( /_/g, ' ') ) {
+            undoLinkRewrite( doc );
+          }
           var infobox = extractInfobox( doc );
           var leadParagraph = extractLeadParagraph( doc );
           var issues = extractPageIssues( doc );
