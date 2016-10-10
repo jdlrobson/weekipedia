@@ -271,6 +271,13 @@ export default React.createClass({
   onClickSearch(){
     this.props.router.navigateTo( '#/search' );
   },
+  getLocalUrl( title, params ) {
+    var source = this.props.language_project || this.props.lang + '/wiki';
+    title = title ? encodeURIComponent( title ).replace( '%3A', ':' ) : '';
+    params = params ? '/' + encodeURIComponent( params ) : '';
+
+    return '/' + source + '/' + title + params;
+  },
   render(){
     var props = this.props;
     var search = (<SearchForm msg={this.props.msg}
@@ -283,7 +290,7 @@ export default React.createClass({
     // FIXME: link should point to Special:MobileMenu
     var icon = <Icon glyph="mainmenu" label="Home"
       id="mw-mf-main-menu-button"
-      href="#"
+      href={this.getLocalUrl( 'Special:MobileMenu' )}
       onClick={this.openPrimaryNav}/>;
     var shield = this.state.isMenuOpen ? <TransparentShield /> : null;
 
@@ -303,6 +310,10 @@ export default React.createClass({
       secondaryIcon = <Icon glyph="notifications"
         onClick={this.onClickInternalLink}
         href={'/' + this.props.language_project + '/Special:Notifications'}/>
+    }
+
+    if ( props.showMenuNoJavaScript ) {
+      navigationClasses += ' navigation-full-screen';
     }
 
     return (

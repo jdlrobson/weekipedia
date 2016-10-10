@@ -9,6 +9,7 @@ import Page from './../client/pages/Page'
 import PageInfo from './../client/pages/PageInfo'
 import SpecialPage from './../client/pages/SpecialPage'
 import MobileDiff from './../client/pages/MobileDiff'
+import MobileMenu from './../client/pages/MobileMenu'
 import MobileOptions from './../client/pages/MobileOptions'
 import MostRead from './../client/pages/MostRead'
 import Random from './../client/pages/Random'
@@ -131,6 +132,10 @@ function initSpecialPages() {
   addSpecialPage( 'MostRead', MostRead );
   addSpecialPage( 'Random', Random );
   addSpecialPage( 'Search', Search );
+  addSpecialPage( 'MobileMenu', MobileMenu, function ( info, props ) {
+    props.showMenuNoJavaScript = true;
+    return props;
+  } );
   addSpecialPage( 'Nearby', Nearby );
   addSpecialPage( 'UserLogin', UserLogin );
   addSpecialPage( 'Collections', Collections );
