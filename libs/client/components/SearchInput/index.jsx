@@ -20,8 +20,11 @@ export default React.createClass({
     }
   },
   render() {
+    var props = this.props;
     return (
-      <input className="search" type="search" placeholder={this.props.placeholder} ref="input" onClick={this.props.onClick} onInput={this.onDoSearch} defaultValue={this.props.defaultValue}
+      <input className="search" type="search" placeholder={props.placeholder} ref="input"
+        name={props.name}
+        onClick={props.onClick} onInput={this.onDoSearch} defaultValue={props.defaultValue}
         onKeyUp={this.onDoSearch}/>
     )
   }

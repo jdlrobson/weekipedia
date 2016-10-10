@@ -13,9 +13,13 @@ export default React.createClass({
       this.props.router.navigateTo( { pathname: href }, title );
     }
   },
+  getTerm() {
+    var props = this.props;
+    return props.query.search ? props.query.search : props.params;
+  },
   getTabs() {
     var proj = this.props.project;
-    var term = this.props.params;
+    var term = this.getTerm();
     var self = this;
     var prefix = '/' + this.props.lang + '.';
     return this.props.supportedProjects.map( function ( project, i ) {
@@ -28,8 +32,9 @@ export default React.createClass({
   },
   render(){
     var props = this.props;
-    var endpoint = '/api/search-full/' + props.language_project + '/' + encodeURIComponent( props.params );
-    var tagline = <p>Showing you all search results for <strong>{decodeURIComponent(props.params)}</strong> on <strong>{props.project}</strong></p>
+    var term = this.getTerm();
+    var endpoint = '/api/search-full/' + props.language_project + '/' + encodeURIComponent( term );
+    var tagline = <p>Showing you all search results for <strong>{decodeURIComponent(term)}</strong> on <strong>{props.project}</strong></p>
     return (
       <CardListPage {...this.props} apiEndpoint={endpoint}
         tabs={this.getTabs()}

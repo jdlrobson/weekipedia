@@ -274,6 +274,7 @@ export default React.createClass({
   render(){
     var props = this.props;
     var search = (<SearchForm msg={this.props.msg}
+      language_project={props.language_project}
       onClickSearch={this.onClickSearch} />);
 
     var navigationClasses = this.state.isMenuOpen ?
