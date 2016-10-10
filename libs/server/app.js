@@ -10,7 +10,6 @@ import connect from 'connect-memcached'
 import ReactDOMServer from 'react-dom/server'
 
 import shared from './../shared'
-import routes from './../client/routes'
 
 import initApiRoutes from './express-api-routes'
 import messages from './messages'
@@ -199,7 +198,7 @@ app.get( '/:lang?/*', ( req, res ) => {
     offlineVersion: OFFLINE_VERSION
   };
 
-  shared.init( config, routes );
+  shared.init( config );
   var route = shared.router.matchRoute( req.path, '#', config, req.query );
 
   function render( data ) {

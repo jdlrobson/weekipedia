@@ -5,7 +5,6 @@ import './main.less'
 
 import shared from './../shared'
 
-import routes from './routes.js'
 import overlayRoutes from './routesOverlays.js'
 import Api from './api.js'
 import mwStorage from './mediawiki-storage'
@@ -22,7 +21,7 @@ config.api = api;
 if ( config.fallbackPath ) {
   api.prefetch( config.fallbackPath, config.fallbackProps );
 }
-shared.init( config, routes.concat( overlayRoutes ) );
+shared.init( config, overlayRoutes );
 
 function renderCurrentRoute( ev ) {
   var props = ev ? ev.state : {};
