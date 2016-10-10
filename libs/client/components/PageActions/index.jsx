@@ -21,7 +21,7 @@ class PageActions extends Component {
     }
 
     return (
-      <HorizontalList className="page-actions" key="page-actions" id={props.id}>
+      <HorizontalList className="page-actions" id={props.id}>
         {actions}
       </HorizontalList>
     )

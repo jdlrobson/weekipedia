@@ -29,6 +29,7 @@ class ArticleHeader extends Component {
 
     if ( this.props.isWikiPage ) {
       header.push( <PageActions {...this.props}
+        key="page-actions"
         id="page-actions"
         disableLanguages={lead.languagecount === 0} /> );
     }
