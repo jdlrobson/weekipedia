@@ -124,19 +124,21 @@ export default React.createClass({
     return localSession;
   },
   mount( props ) {
-    var localSession = this.getLocalSession();
-
     if ( typeof document !== 'undefined' ) {
       this.mountLanguage( props );
       this.mountOverlay( props );
-    }
-    if ( !this.state.session ) {
-      if ( localSession ) {
-        // load session from local storage
-        this.setState( { session: localSession } );
-        this.mountChildren( props, localSession );
+
+      var localSession = this.getLocalSession();
+      if ( !this.state.session ) {
+        if ( localSession ) {
+          // load session from local storage
+          this.setState( { session: localSession } );
+          this.mountChildren( props, localSession );
+        } else {
+          this.login().then(()=>this.mountChildren( props ));
+        }
       } else {
-        this.login().then(()=>this.mountChildren( props ));
+        this.mountChildren( props );
       }
     } else {
       this.mountChildren( props );
