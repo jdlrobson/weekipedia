@@ -70,6 +70,7 @@ export default React.createClass({
     var childProps = typeof document !== 'undefined' ? {
       showNotification: this.showNotification,
       showOverlay: this.showOverlay,
+      getLocalUrl: this.getLocalUrl,
       closeOverlay: this.closeOverlay,
       hijackLinks: this.hijackLinks,
       session: session || this.state.session,
