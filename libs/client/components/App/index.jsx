@@ -275,7 +275,7 @@ export default React.createClass({
   getLocalUrl( title, params ) {
     var source = this.props.language_project || this.props.lang + '/wiki';
     title = title ? encodeURIComponent( title ).replace( '%3A', ':' ) : '';
-    params = params ? '/' + encodeURIComponent( params ) : '';
+    params = params ? '/' + encodeURIComponent( params ).replace( /%2F/g, '/' ) : '';
 
     return '/' + source + '/' + title + params;
   },
