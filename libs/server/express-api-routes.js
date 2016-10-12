@@ -92,18 +92,26 @@ function initLoginRoutes( app ) {
     res.redirect( '/' );
   } );
 
-  app.post( '/api/private/edit/:lang/:title/:section?', ( req, res ) => {
+  function doEdit( req, res, action ) {
     var p = req.params;
     var body = req.body;
     respond( res, function () {
       var proj = getProject( req );
-      return edit( proj.lang, p.title, body.text, body.summary, p.section, proj.project, req.user )
+      return edit( proj.lang, p.title, body.text, body.summary, p.section, proj.project, req.user, action )
         .then( function ( data ) {
           invalidate( API_PATH + 'page/' + proj.lang + '.' + proj.project + '/' + encodeURIComponent( p.title ) );
           invalidate( API_PATH + 'page/' + p.lang + '/' + encodeURIComponent( p.title ) );
           return data;
         } );
     } );
+  }
+
+  app.post( '/api/private/edit/:lang/:title/:section?', ( req, res ) => {
+    return doEdit( req, res );
+  } );
+
+  app.post( '/api/private/edit-append/:lang/:title/:section?', ( req, res ) => {
+    return doEdit( req, res, 'appendtext' );
   } );
 
   app.get( '/api/private/watchlist-feed/:lang/:ns?', ensureAuthenticated, function ( req, res ) {
