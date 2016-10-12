@@ -14,6 +14,30 @@ Api.prototype = {
       return true;
     }
   },
+  edit: function ( source, title, section, text, summary, appendText ) {
+    var data;
+    var action = appendText ? 'edit-append' : 'edit';
+    var self = this;
+    var endpoint = '/api/private/' + action + '/' + source + '/' + encodeURIComponent( title );
+
+    if ( section ) {
+      endpoint += '/' + section;
+    }
+    data = {
+      text: text,
+      summary: summary
+    };
+
+    return this.post( endpoint, data ).then( function ( res ) {
+      return new Promise( function ( resolve ) {
+        // wait 2s before doing this to give cache time to warm.
+        setTimeout( function () {
+          self.invalidatePage( title, source );
+          resolve( res );
+        }, 2000 );
+      } );
+    } );
+  },
   invalidatePath: function ( path ) {
     delete this.cache[path];
     if ( path[path.length - 1] === '/' ) {
