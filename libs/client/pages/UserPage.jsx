@@ -6,6 +6,10 @@ import UserPageCta from './../components/UserPageCta'
 
 // Pages
 export default React.createClass({
+  onTalkClick( ev ) {
+    ev.preventDefault();
+    this.props.router.navigateTo( '#/talk/' );
+  },
   getTabs(){
     var props = this.props,
       onClickInternalLink = props.onClickInternalLink,
@@ -14,7 +18,7 @@ export default React.createClass({
 
     return [
       <a href={getLocalUrl('User talk:' + titleSansPrefix)}
-        onClick={onClickInternalLink}
+        onClick={this.onTalkClick}
         key="page-talk-tab">Talk</a>,
       <a href={getLocalUrl('Special:Collections', 'by/' + titleSansPrefix)}
         onClick={onClickInternalLink}
