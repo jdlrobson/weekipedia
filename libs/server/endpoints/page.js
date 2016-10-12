@@ -179,7 +179,7 @@ export default function ( title, lang, project, includeReferences ) {
         var doc = domino.createDocument( json.lead.sections.length && json.lead.sections[0] && json.lead.sections[0].text );
         if ( doc ) {
           // See https://github.com/jdlrobson/weekipedia/issues/99 - preserve links in main page
-          if ( SITE_HOME.replace( /_/g, ' ' ) !== title.replace( /_/g, ' ') ) {
+          if ( SITE_HOME.replace( /_/g, ' ' ) !== title.replace( /_/g, ' ' ) ) {
             undoLinkRewrite( doc );
           }
           var infobox = extractInfobox( doc );
