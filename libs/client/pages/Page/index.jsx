@@ -5,11 +5,12 @@ import Button from './../../components/Button'
 import ErrorBox from './../../components/ErrorBox'
 import LastModifiedBar from './../../components/LastModifiedBar'
 import ReadMore from './../../components/ReadMore'
-import UserPageCta from './../../components/UserPageCta'
 import TableOfContents from './../../components/TableOfContents'
 
-import Article from './../../containers/Article'
 import Content from './../../containers/Content'
+import WikiPage from './../../containers/WikiPage'
+
+import UserPage from './../UserPage'
 
 import { getSections } from './../../react-helpers'
 
@@ -102,32 +103,6 @@ export default React.createClass({
 
     return '/' + source + '/' + title + params;
   },
-  getTabs( lead ){
-    var ns = lead.ns,
-      props = this.props,
-      baseUrl = this.getLocalUrl();
-
-    if ( this.props.tabs ) {
-      return this.props.tabs;
-    } else if ( ns === 2 ) {
-      return [
-        <a href={baseUrl + 'User talk:' + this.props.titleSansPrefix}
-          onClick={this.props.onClickInternalLink}
-          key="page-talk-tab">Talk</a>,
-        <a href={baseUrl + 'Special:Collections/by/' + this.props.titleSansPrefix }
-          onClick={this.props.onClickInternalLink}
-          key="page-collections-tab">{props.msg( 'menu-collections' )}</a>,
-        <a href={baseUrl + 'Special:Contributions/' + this.props.titleSansPrefix }
-          onClick={this.props.onClickInternalLink}
-          key="page-contrib-tab">Contributions</a>,
-        <a href={baseUrl + 'Special:Uploads/' + this.props.titleSansPrefix }
-          onClick={this.props.onClickInternalLink}
-          key="page-upload-tab">Uploads</a>
-      ];
-    } else {
-      return [];
-    }
-  },
   getFooter( lead ) {
     var footer = [];
     var props = this.props;
@@ -153,6 +128,7 @@ export default React.createClass({
   },
   render(){
     var leadHtml, toc,
+      wikiPageProps = {},
       props = this.props,
       state = this.state,
       siteOptions = props.siteoptions,
@@ -160,6 +136,7 @@ export default React.createClass({
       secondaryActions = [],
       title = this.props.title,
       lead = this.state.lead || this.props.lead || {},
+      ns = lead && lead.ns || 0,
       footer = this.getFooter( lead ),
       remaining = this.state.remaining || this.props.remaining || {},
       allSections = remaining.sections || [],
@@ -172,10 +149,7 @@ export default React.createClass({
     }
 
     if ( leadHtml !== undefined ) {
-      if ( lead.ns === 2 && !leadHtml ) {
-        sections.push( <UserPageCta user={title} key="page-user-cta"
-          isReaderOwner={props.session && props.session.username === props.titleSanPrefix } /> );
-      } else if ( this.state.isExpanded ) {
+      if ( this.state.isExpanded ) {
         toc = <TableOfContents sections={remainingSections} />;
         if ( remainingSections.length && siteOptions.includeTableOfContents ) {
           sections.push( toc );
@@ -197,21 +171,26 @@ export default React.createClass({
       }
     }
 
-    if ( lead.ns === 0 ) {
+    if ( ns === 0 ) {
       secondaryActions.push(<Button
         key="article-talk" href={ state.jsEnabled ? '#/talk' : this.getLocalUrl( 'Talk:' + title ) }
         label="Talk" />);
     }
 
-    // Note id `#content` is added for consistency with MobileFrontend
-    return (
-      <Article {...this.props} isWikiPage={true} tabs={this.getTabs(lead)}
-        id="content"
-        toc={toc}
-        lead={lead}
-        body={sections}
-        secondaryActions={secondaryActions}
-        footer={footer} />
-    )
+    wikiPageProps = Object.assign( {}, this.props, {
+      lead: lead,
+      toc: toc,
+      body: sections,
+      secondaryActions: secondaryActions,
+      footer: footer
+    } );
+
+    if ( ns === 2 ) {
+      return <UserPage {...wikiPageProps} />;
+    } else {
+      return (
+        <WikiPage {...wikiPageProps} />
+      );
+    }
   }
 } );
