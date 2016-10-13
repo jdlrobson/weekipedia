@@ -135,7 +135,7 @@ export default React.createClass({
           // load session from local storage
           this.setState( { session: localSession } );
           this.mountChildren( props, localSession );
-        } else {
+        } else if ( !this.state.anon ) {
           this.login().then(()=>this.mountChildren( props ));
         }
       } else {
@@ -162,7 +162,7 @@ export default React.createClass({
       self.setState( { session: session } );
     } ).catch( function () {
       self.props.storage.set( APP_SESSION_KEY, 'false' );
-      self.setState( { session: null } );
+      self.setState( { session: null, anon: true } );
     } );
   },
   clearSession() {
