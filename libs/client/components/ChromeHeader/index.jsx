@@ -6,6 +6,10 @@ import Icon from './../Icon'
 import './styles.less'
 
 class ChromeHeader extends Component {
+  componentDidMount() {
+    // cache the request so it doesn't get requested multiple times.
+    new Image( this.props.siteinfo.wordmark );
+  }
   render(){
     var heading, project, icon, siteinfo, content;
     var props = this.props;
