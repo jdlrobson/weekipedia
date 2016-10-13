@@ -75,28 +75,17 @@ export default React.createClass({
   },
   save() {
     window.scrollTo(0,0);
-    var data,
+    var
       self = this,
       props = this.props,
+      state = this.state,
       source = props.language_project || props.lang,
-      title = props.normalizedtitle || props.title,
-      endpoint = '/api/private/edit/' + source + '/' + encodeURIComponent( title );
+      title = props.normalizedtitle || props.title;
 
-    if ( this.props.section ) {
-      endpoint += '/' + this.props.section;
-    }
-    data = {
-      text: this.state.text,
-      summary: this.state.summary
-    };
     this.setState( { step: SAVE_STEP } );
-    this.props.api.post( endpoint, data ).then( function () {
-      self.props.api.invalidatePage( props.title, source );
-      // wait 2s before doing this to give cache time to warm.
-      setTimeout( function () {
-        self.props.router.navigateTo( window.location.pathname + '?referer=editor&cachebuster=' + Math.random() );
-        self.props.showNotification( 'Your edit was successful!' );
-      }, 2000 );
+    props.api.edit( source, title, props.section, state.text, state.summary ).then( function () {
+      props.router.navigateTo( window.location.pathname + '?referer=editor&cachebuster=' + Math.random() );
+      props.showNotification( 'Your edit was successful!' );
     } ).catch( function () {
       self.showPreview();
     } );
