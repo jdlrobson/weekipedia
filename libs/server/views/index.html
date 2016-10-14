@@ -18,7 +18,7 @@
 		<div id="app">{{{body}}}</div>
 	</body>
 	<script src="/main-bundle.js"></script>
-	{{#isDevMode}}
+	{{#isMediaWikiCompatibilityMode}}
 	<script type="text/javascript">
 		// Allows MobileFrontend browser tests to be run on Weekipedia
 		window.mw = {
@@ -29,5 +29,5 @@
 			}
 		};
 	</script>
-	{{/isDevMode}}
+	{{/isMediaWikiCompatibilityMode}}
 </html>
