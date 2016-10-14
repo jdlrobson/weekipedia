@@ -153,9 +153,12 @@ export default React.createClass({
   },
   login() {
     var self = this;
-    return this.props.api.fetch( '/auth/whoamithistime', {
-      credentials: 'include'
-    } ).then( function ( session ) {
+    if ( !this._loginRequest ) {
+      this._loginRequest = this.props.api.fetch( '/auth/whoamithistime', {
+        credentials: 'include'
+      } );
+    }
+    return this._loginRequest.then( function ( session ) {
       // cache for next session
       session.timestamp = new Date();
       self.props.storage.set( APP_SESSION_KEY, JSON.stringify( session ) );
