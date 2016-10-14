@@ -24,7 +24,7 @@
 		window.mw = {
 			loader: {
 				getState: function () {
-					return 'ready';
+					return  document.body.className.indexOf( 'client-js' ) > -1 ? 'ready' : 'loading';
 				}
 			}
 		};
