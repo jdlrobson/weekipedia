@@ -49,6 +49,9 @@ export default React.createClass({
     }
     this.setState( { jsEnabled: true } );
   },
+  componentWillUnmount() {
+    this.setState( { lead: null } );
+  },
   componentWillMount() {
     this.setState( this.props );
     this.checkExpandedState();
@@ -172,7 +175,7 @@ export default React.createClass({
     }
 
     if ( ns === 0 ) {
-      secondaryActions.push(<Button
+      secondaryActions.push(<Button className="talk"
         key="article-talk" href={ state.jsEnabled ? '#/talk' : this.getLocalUrl( 'Talk:' + title ) }
         label="Talk" />);
     }
