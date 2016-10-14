@@ -160,7 +160,8 @@ export default React.createClass({
     }
 
     if ( isDiffCardList ) {
-      className += ' diff-list';
+      // FIXME: Consolidate side-list class (in MobileFrontend) with diff-list class
+      className += ' diff-list side-list';
       cards.forEach( function ( card, i ) {
         var ts, header;
         if ( card.props.timestamp ) {

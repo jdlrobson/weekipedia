@@ -20,13 +20,14 @@ class Header extends Component {
       );
     }
 
+    // FIXME: overlay-title is used for consistency with MobileFrontend but not needed
     return (
       <div className={"header-container" + suffix}>
         <Content className="header toolbar">
           <div>
             {this.props.primaryIcon}
           </div>
-          <div className='main'>
+          <div className='main overlay-title'>
             {this.props.main}
           </div>
           <div>
