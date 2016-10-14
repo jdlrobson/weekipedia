@@ -16,36 +16,12 @@ The goals of this project include but are not limited to:
 * Explore how push notifications, service workers can fit into the MediaWiki ecosystem.
 * Fun!
 
-## Parity with MobileFrontend
+## Parity with MobileFrontend [![Parity status](https://travis-ci.org/jdlrobson/wikipedia-mobile-browser-tests.svg?branch=master&r=1)](https://travis-ci.org/jdlrobson/wikipedia-mobile-browser-tests)
 
-Weekipedia should be capable of everything that MobileFrontend does. This can be shown by cloning
-the [MobileFrontend repo](https://github.com/wikimedia/mediawiki-extensions-MobileFrontend) and running [the browser tests](https://github.com/wikimedia/mediawiki-extensions-MobileFrontend/tree/master/tests/browser) against Weekipedia like so:
 
-Configure your instance of Weekipedia like so:
+Weekipedia is capable of everything that MobileFrontend does. All [anonymous MobileFrontend browser tests](https://github.com/jdlrobson/wikipedia-mobile-browser-tests) are run against Weekipedia.
 
-	export DEV_DUMMY_USER=
-	export HOST_SUFFIX=.beta.wmflabs.org
-	export SERVER_SIDE_RENDERING=1
-	export SITE_PRIVACY_URL=//wikimediafoundation.org/wiki/Privacy_policy
-	export SITE_EXPAND_ARTICLE=1
-	export SITE_EXPAND_SECTIONS=0
-	export SITE_EXPAND_SECTIONS_TABLET=1
-	export NODE_ENV=production
-	export MEDIAWIKI_COMPATIBILITY_MODE=1
-	export USE_POLYFILLS=1
-	export DEV_DUMMY_USER=0
-	export TABLE_OF_CONTENTS=1
-
-Configure MobileFrontend browser tests:
-
-	export MEDIAWIKI_URL= https://weekipediatest.herokuapp.com/wiki/
-	export MEDIAWIKI_API_URL=https://en.wikipedia.beta.wmflabs.org/w/api.php
-	export MEDIAWIKI_ENVIRONMENT=beta
-	export MEDIAWIKI_USER=<must exist on https://en.wikipedia.beta.wmflabs.org>
-	export MEDIAWIKI_PASSWORD=<password for account on https://en.wikipedia.beta.wmflabs.org>
-	bundle exec cucumber features/ --tags ~@login --tags ~@feature-anon-editing-support --tags ~@adminuser --tags @chrome
-
-Where there is not parity please raise a Github issue.
+Information on how to run browser tests is available [here](https://gist.github.com/jdlrobson/9e97205d232a70967f97675b8f2209a5). Where there is not parity please raise a Github issue.
 
 ## Contribute
 
