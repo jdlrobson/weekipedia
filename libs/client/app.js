@@ -38,4 +38,5 @@ if ( 'onpopstate' in window ) {
   shared.router.on( 'onreplacestate', renderCurrentRoute );
 }
 
+document.body.className += ' client-js';
 renderCurrentRoute();

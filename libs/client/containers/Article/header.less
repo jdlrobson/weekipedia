@@ -4,10 +4,15 @@
 
 .mw-mf-cleanup {
   display: block;
+  visibility: hidden;
   margin: 0;
   padding: 0;
   font-size: 0.8em;
   color: #72777d;
+
+  .client-js & {
+    visibility: visible;
+  }
 }
 
 .page-actions {
