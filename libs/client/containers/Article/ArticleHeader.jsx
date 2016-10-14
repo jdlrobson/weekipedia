@@ -27,7 +27,7 @@ class ArticleHeader extends Component {
       lead.displaytitle = this.props.title;
     }
 
-    if ( this.props.isWikiPage ) {
+    if ( this.props.isWikiPage && lead && lead.text ) {
       header.push( <PageActions {...this.props}
         key="page-actions"
         id="page-actions"
