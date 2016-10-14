@@ -1,12 +1,12 @@
 @import './../../globals.less';
 
-.footer,
+footer,
 .footer-info {
   overflow: auto;
   margin-top: 42px;
 }
 
-.footer {
+footer {
   border-top: solid 1px @footer-border-color;
   background-color: @footer-bg-color;
 
@@ -21,7 +21,8 @@
   }
 
   > * {
-    margin-top: 42px;
+    // Important needed to avoid incompatibility with .content-container
+    margin-top: 42px !important;
   }
 
   .footer-info {

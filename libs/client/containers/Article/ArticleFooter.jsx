@@ -33,14 +33,14 @@ class ArticleFooter extends Component {
     }
 
     return (
-      <div key="footer" className="post-content footer">
+      <footer key="footer" className="post-content footer">
         {this.props.footer}
         <Content className="footer-info">
           {wordmark}
           <div id="footer-info-mobile-license">Content is available under <a className="external" rel="nofollow" href={license.url}>{license.name}</a> unless otherwise noted.</div>
           <HorizontalList isSeparated="1">{places}</HorizontalList>
         </Content>
-      </div>
+      </footer>
     )
   }
 }
