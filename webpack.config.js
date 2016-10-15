@@ -1,13 +1,17 @@
 const offlineVersion = process.env.OFFLINE_VERSION;
 const WORDMARK = process.env.SITE_WORDMARK_PATH;
 const NODE_ENV = process.env.NODE_ENV
+const USE_POLYFILLS = Boolean( process.env.USE_POLYFILLS );
 
 var webpack = require('webpack')
 var ExtractTextPlugin = require('extract-text-webpack-plugin')
 
+// There are two possibly entry points. One with polyfills and one without.
+var mainEntryPoint = USE_POLYFILLS ? "./libs/client/app-shimmed.js" : "./libs/client/app.js";
+
 module.exports = {
     entry: {
-      main: "./libs/client/app.js",
+      main: mainEntryPoint,
       sw: "./libs/workers/service-worker.js",
       push: "./libs/workers/web-push.js"
     },

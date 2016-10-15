@@ -32,6 +32,7 @@ Configure your instance of Weekipedia like so:
 	export SITE_EXPAND_SECTIONS_TABLET=1
 	export NODE_ENV=production
 	export MEDIAWIKI_COMPATIBILITY_MODE=1
+	export USE_POLYFILLS=1
 	export DEV_DUMMY_USER=0
 	export TABLE_OF_CONTENTS=1
 
@@ -130,6 +131,13 @@ Setup push notifications
 	export TREND_MAX_AGE=100000
 	export TREND_MIN_TOTAL_EDITS=2
 	export TREND_MIN_CONTRIBUTORS=1
+
+### Older browsers
+
+Weekipedia by default uses Promises, Map, Object.assign and Function.prototype.bind
+Support a larger set of browsers (including phantomjs for headless testing) by enabling polyfill mode.
+
+	export USE_POLYFILLS=1
 
 ### Offline support
 
