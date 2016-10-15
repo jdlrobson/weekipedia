@@ -65,12 +65,13 @@ export default React.createClass({
       msg={props.msg} defaultValue={props.defaultValue}
       onSearch={this.onSearch} onSearchSubmit={this.onSearchSubmit} focusOnRender="1" />;
 
+    // FIXME: search-overlay class is added only for consistency with MobileFrontend
     return (
       <Overlay router={props.router} header={heading} search={search}
         siteinfo={props.siteinfo}
         siteoptions={props.siteoptions}
           chromeHeader={true}
-        className="component-search-overlay">
+        className="component-search-overlay search-overlay">
         <Content className="overlay-content">
         {this.state.list}
         </Content>
