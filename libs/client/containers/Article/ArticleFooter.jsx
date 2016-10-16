@@ -37,7 +37,7 @@ class ArticleFooter extends Component {
         {this.props.footer}
         <Content className="footer-info">
           {wordmark}
-          <div id="footer-info-mobile-license">Content is available under <a className="external" rel="nofollow" href={license.url}>{license.name}</a> unless otherwise noted.</div>
+          <div className="license">Content is available under <a className="external" rel="nofollow" href={license.url}>{license.name}</a> unless otherwise noted.</div>
           <HorizontalList isSeparated="1">{places}</HorizontalList>
         </Content>
       </footer>
