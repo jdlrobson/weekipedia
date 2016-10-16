@@ -159,6 +159,10 @@ export default React.createClass({
       return <Content key="card-list-loading"><IntermediateState msg={this.props.loadingMessage} /></Content>;
     }
 
+    if ( props.className ) {
+      className += ' ' + props.className;
+    }
+
     if ( isDiffCardList ) {
       // FIXME: Consolidate side-list class (in MobileFrontend) with diff-list class
       className += ' diff-list side-list';

@@ -34,9 +34,12 @@ export default React.createClass({
     var props = this.props;
     var term = this.getTerm();
     var endpoint = '/api/search-full/' + props.language_project + '/' + encodeURIComponent( term );
-    var tagline = <p>Showing you all search results for <strong>{decodeURIComponent(term)}</strong> on <strong>{props.project}</strong></p>
+    var tagline = <p>Showing you all search results for <strong>{decodeURIComponent(term)}</strong> on <strong>{props.project}</strong></p>;
+
+    // mw-search-results class added for consistency with MediaWiki
     return (
       <CardListPage {...this.props} apiEndpoint={endpoint}
+        className="mw-search-results"
         tabs={this.getTabs()}
         tagline={tagline}
         title='Search' />
