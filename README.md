@@ -119,6 +119,10 @@ Enable table of contents
 
 	export TABLE_OF_CONTENTS=1
 
+Enable talk button for anonymous users
+
+	export SHOW_TALK_ANONS=1
+
 ### Push notifications
 Setup push notifications
 

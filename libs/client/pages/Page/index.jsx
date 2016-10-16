@@ -174,7 +174,7 @@ export default React.createClass({
       }
     }
 
-    if ( ns === 0 ) {
+    if ( ns === 0 && siteOptions.showTalkToAnons ) {
       secondaryActions.push(<Button className="talk"
         key="article-talk" href={ state.jsEnabled ? '#/talk' : this.getLocalUrl( 'Talk:' + title ) }
         label="Talk" />);
