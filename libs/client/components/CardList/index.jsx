@@ -25,10 +25,6 @@ function getCards( data, props, keyPrefix ) {
     data.pages.forEach( function ( item, i ) {
       var id = item.revid || item.pageid || item.id;
       item.key = keyPrefix + 'card-' + i + '-' + id + '-' + props.language_project;
-      // If no title we can assume they are all the same page so promote username
-      if ( !item.title ) {
-        item.title = item.user;
-      }
       cards.push( React.createElement( CardClass, Object.assign( {}, props, item ) ) );
     } );
   }

@@ -2,11 +2,18 @@ import React, { Component } from 'react'
 
 import './styles.less'
 
+import Icon from './../Icon'
+
 import Card from './../../containers/Card'
 
 class CardDiff extends Component {
   render(){
+    var username = this.props.user;
     var extracts = [ this.props.comment ];
+    if ( !this.props.title && username ) {
+      extracts.unshift( <Icon glyph="user" type="before" label={username} className="mw-mf-user"
+        href={'/' + this.props.language_project + '/User:' + encodeURIComponent( username )} /> );
+    }
     var date = new Date( this.props.timestamp );
     var bytes = this.props.newlen ? this.props.newlen - this.props.oldlen : this.props.sizediff;
     var bytesDeltaClass = bytes < 0 ? 'bytes-removed' : 'bytes-added';

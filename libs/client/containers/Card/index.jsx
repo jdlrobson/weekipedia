@@ -17,6 +17,7 @@ class Card extends Component {
     }
   }
   render(){
+    var heading;
     var props = this.props;
     var title = this.props.title;
     var className = this.props.className ? 'card ' + this.props.className : 'card';
@@ -41,14 +42,20 @@ class Card extends Component {
       illustration =<div className="card-thumb" style={styles}>{this.props.metaInfo}</div>;
     }
 
+    if ( title ) {
+      heading = (
+        <h3>
+          <a title={title} href={url}>{title}</a>
+        </h3>
+      );
+    }
+
     return (
       <div className={className} onClick={this.navigateTo.bind(this)}>
         {this.props.indicator}
         {illustration}
         <div className="card-detail">
-          <h3>
-            <a title={title} href={url}>{title}</a>
-          </h3>
+          {heading}
           {extracts}
         </div>
       </div>
