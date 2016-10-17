@@ -28,12 +28,14 @@ export default React.createClass({
   },
   showResults( endpoint, project ) {
     var self = this;
+    var props = this.props;
     var language_proj = this.props.lang + '.' + project;
     this.props.api.fetch( endpoint ).then( function ( data ) {
-      self.setState( { noResults: data.pages.length === 0 } );
-    } );
-    this.setState( {
-      list: <CardList {...this.props} language_project={language_proj} apiEndpoint={endpoint} infiniteScroll={false} />
+      self.setState( {
+        noResults: data.pages.length === 0,
+        list: <CardList {...props} language_project={language_proj}
+          apiEndpoint={endpoint} infiniteScroll={false} />
+      } );
     } );
   },
   onSearchWithinPages() {
