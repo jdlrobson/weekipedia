@@ -64,6 +64,7 @@ export default React.createClass({
     var self = this;
     var api = this.props.api;
     var props = this.props;
+    var onEmpty = props.onEmpty;
     var cardListProps = {
       lang: props.lang,
       language_project: props.language_project,
@@ -77,6 +78,9 @@ export default React.createClass({
     this.setState({ list : null });
     this.fetchCardListProps( apiEndpoint, cardListProps ).then( function ( state ) {
       self.setState( state );
+      if ( state.cards.length === 0 ) {
+        onEmpty();
+      }
     } ).catch( function ( error ) {
       if ( error.message.indexOf( 'Failed to fetch' ) > -1 ) {
         self.setState({ errorMsg: OFFLINE_ERROR });
