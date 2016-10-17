@@ -10,7 +10,7 @@ class CardDiff extends Component {
   render(){
     var username = this.props.user;
     var extracts = [
-      <span className="edit-summary">{this.props.comment}</span>
+      <span className="edit-summary">{this.props.comment || 'No edit summary'}</span>
     ];
     if ( !this.props.title && username ) {
       extracts.unshift( <Icon glyph="user" type="before" label={username} className="mw-mf-user"
