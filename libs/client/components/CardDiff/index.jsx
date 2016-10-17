@@ -9,7 +9,9 @@ import Card from './../../containers/Card'
 class CardDiff extends Component {
   render(){
     var username = this.props.user;
-    var extracts = [ this.props.comment ];
+    var extracts = [
+      <span className="edit-summary">{this.props.comment}</span>
+    ];
     if ( !this.props.title && username ) {
       extracts.unshift( <Icon glyph="user" type="before" label={username} className="mw-mf-user"
         href={'/' + this.props.language_project + '/User:' + encodeURIComponent( username )} /> );
