@@ -30,13 +30,17 @@ export default React.createClass({
     var self = this;
     var props = this.props;
     var language_proj = this.props.lang + '.' + project;
-    this.props.api.fetch( endpoint ).then( function ( data ) {
-      self.setState( {
-        noResults: data.pages.length === 0,
-        list: <CardList {...props} language_project={language_proj}
-          apiEndpoint={endpoint} infiniteScroll={false} />
+    clearTimeout( this._timeout );
+    // account for fast key presses before firing off an api request
+    this._timeout = setTimeout( function () {
+      props.api.fetch( endpoint ).then( function ( data ) {
+        self.setState( {
+          noResults: data.pages.length === 0,
+          list: <CardList {...props} language_project={language_proj}
+            apiEndpoint={endpoint} infiniteScroll={false} />
+        } );
       } );
-    } );
+    }, 200 )
   },
   onSearchWithinPages() {
     this.onSearchSubmit( this.state.term );
