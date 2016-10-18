@@ -1,5 +1,3 @@
-/* stylelint-disable selector-max-specificity */
-
 /*
 https://en.wikipedia.org/w/load.php?debug=false&lang=en&modules=mediawiki.ui.button&only=styles&debug=true
 */
@@ -16,46 +14,63 @@ https://en.wikipedia.org/w/load.php?debug=false&lang=en&modules=mediawiki.ui.but
   -moz-box-sizing: border-box;
   box-sizing: border-box;
   -webkit-appearance: none;
+  *display: inline;
   zoom: 1;
   vertical-align: middle;
-  background: #ffffff;
-  color: #555555;
-  border: 1px solid #cccccc;
+  background-color: #f8f9fa;
+  color: #222222;
+  border: 1px solid #9aa0a7;
   text-align: center;
   font-weight: bold;
   cursor: pointer;
 }
+.mw-ui-button:visited {
+  color: #222222;
+}
 .mw-ui-button:hover {
-  background-color: #cccccc;
+  background-color: #ffffff;
+  color: #444444;
+  border-color: #a2a9b1;
 }
 .mw-ui-button:focus {
-  border-color: #ffffff;
-  box-shadow: inset 0 0 0 1px #ffffff, inset 0 0 0 2px #ffffff;
+  background-color: #ffffff;
+  color: #222222;
+  border-color: #3366cc;
+  box-shadow: inset 0 0 0 1px #3366cc, inset 0 0 0 2px #ffffff;
+}
+.mw-ui-button:active,
+.mw-ui-button.is-on,
+.mw-ui-button.mw-ui-checked {
+  background-color: #d9d9d9;
+  color: #000000;
+  border-color: #72777d;
+  box-shadow: none;
+}
+.mw-ui-button:disabled {
+  background-color: #c8ccd1;
+  color: #fff;
+  border-color: #c8ccd1;
+}
+.mw-ui-button:disabled:hover,
+.mw-ui-button:disabled:active {
+  background-color: #c8ccd1;
+  color: #fff;
+  box-shadow: none;
+  border-color: #c8ccd1;
+}
+.mw-ui-button:focus {
   outline-width: 0;
-  background-color: #cccccc;
 }
 .mw-ui-button:focus::-moz-focus-inner {
   border-color: transparent;
   padding: 0;
 }
-.mw-ui-button:active,
-.mw-ui-button.is-on,
-.mw-ui-button.mw-ui-checked {
-  background-color: #777777;
-  box-shadow: none;
-}
-.mw-ui-button:hover,
-.mw-ui-button:active,
-.mw-ui-button:visited {
-  color: #555555;
-}
-.mw-ui-button:disabled:hover,
-.mw-ui-button:disabled:active {
-  background: #ffffff;
-  box-shadow: none;
+.mw-ui-button:not( :disabled ) {
+  -webkit-transition: background-color 100ms, color 100ms, border-color 100ms, box-shadow 100ms;
+  -moz-transition: background-color 100ms, color 100ms, border-color 100ms, box-shadow 100ms;
+  transition: background-color 100ms, color 100ms, border-color 100ms, box-shadow 100ms;
 }
 .mw-ui-button:disabled {
-  color: #cccccc;
   text-shadow: none;
   cursor: default;
 }
@@ -68,168 +83,164 @@ https://en.wikipedia.org/w/load.php?debug=false&lang=en&modules=mediawiki.ui.but
   margin-left: auto;
   margin-right: auto;
 }
+.mw-ui-button.mw-ui-progressive,
+.mw-ui-button.mw-ui-constructive,
 .mw-ui-button.mw-ui-primary {
-  background: #347bff;
+  background-color: #3366cc;
   color: #fff;
-  border: 1px solid #347bff;
+  border: 1px solid #3366cc;
   text-shadow: 0 1px rgba(0, 0, 0, 0.1);
 }
+.mw-ui-button.mw-ui-progressive:hover,
+.mw-ui-button.mw-ui-constructive:hover,
 .mw-ui-button.mw-ui-primary:hover {
-  background-color: #2962cc;
+  background-color: #447ff5;
+  border-color: #447ff5;
 }
+.mw-ui-button.mw-ui-progressive:focus,
+.mw-ui-button.mw-ui-constructive:focus,
 .mw-ui-button.mw-ui-primary:focus {
-  border-color: #ffffff;
-  box-shadow: inset 0 0 0 1px #347bff, inset 0 0 0 2px #ffffff;
-  outline-width: 0;
+  box-shadow: inset 0 0 0 1px #3366cc, inset 0 0 0 2px #ffffff;
 }
-.mw-ui-button.mw-ui-primary:focus::-moz-focus-inner {
-  border-color: transparent;
-  padding: 0;
-}
+.mw-ui-button.mw-ui-progressive:active,
+.mw-ui-button.mw-ui-constructive:active,
 .mw-ui-button.mw-ui-primary:active,
+.mw-ui-button.mw-ui-progressive.is-on,
+.mw-ui-button.mw-ui-constructive.is-on,
 .mw-ui-button.mw-ui-primary.is-on,
+.mw-ui-button.mw-ui-progressive.mw-ui-checked,
+.mw-ui-button.mw-ui-constructive.mw-ui-checked,
 .mw-ui-button.mw-ui-primary.mw-ui-checked {
-  background-color: #2962cc;
+  background-color: #2a4b8d;
+  border-color: #2a4b8d;
   box-shadow: none;
 }
+.mw-ui-button.mw-ui-progressive:disabled,
+.mw-ui-button.mw-ui-constructive:disabled,
 .mw-ui-button.mw-ui-primary:disabled {
-  background-color: #dddddd;
-  border-color: #dddddd;
+  background-color: #c8ccd1;
+  color: #fff;
+  border-color: #c8ccd1;
 }
+.mw-ui-button.mw-ui-progressive:disabled:hover,
+.mw-ui-button.mw-ui-constructive:disabled:hover,
 .mw-ui-button.mw-ui-primary:disabled:hover,
+.mw-ui-button.mw-ui-progressive:disabled:active,
+.mw-ui-button.mw-ui-constructive:disabled:active,
 .mw-ui-button.mw-ui-primary:disabled:active,
+.mw-ui-button.mw-ui-progressive:disabled.mw-ui-checked,
+.mw-ui-button.mw-ui-constructive:disabled.mw-ui-checked,
 .mw-ui-button.mw-ui-primary:disabled.mw-ui-checked {
+  background-color: #c8ccd1;
+  color: #fff;
+  border-color: #c8ccd1;
   box-shadow: none;
 }
+.mw-ui-button.mw-ui-progressive.mw-ui-quiet,
+.mw-ui-button.mw-ui-constructive.mw-ui-quiet,
 .mw-ui-button.mw-ui-primary.mw-ui-quiet {
-  color: #555555;
+  color: #222222;
 }
-.mw-ui-button.mw-ui-primary.mw-ui-quiet:hover,
+.mw-ui-button.mw-ui-progressive.mw-ui-quiet:hover,
+.mw-ui-button.mw-ui-constructive.mw-ui-quiet:hover,
+.mw-ui-button.mw-ui-primary.mw-ui-quiet:hover {
+  background-color: transparent;
+  color: #447ff5;
+}
+.mw-ui-button.mw-ui-progressive.mw-ui-quiet:active,
+.mw-ui-button.mw-ui-constructive.mw-ui-quiet:active,
+.mw-ui-button.mw-ui-primary.mw-ui-quiet:active,
+.mw-ui-button.mw-ui-progressive.mw-ui-quiet.mw-ui-checked,
+.mw-ui-button.mw-ui-constructive.mw-ui-quiet.mw-ui-checked,
+.mw-ui-button.mw-ui-primary.mw-ui-quiet.mw-ui-checked {
+  color: #2a4b8d;
+}
+.mw-ui-button.mw-ui-progressive.mw-ui-quiet:focus,
+.mw-ui-button.mw-ui-constructive.mw-ui-quiet:focus,
 .mw-ui-button.mw-ui-primary.mw-ui-quiet:focus {
   background-color: transparent;
-  color: #347bff;
+  color: #3366cc;
 }
-.mw-ui-button.mw-ui-primary.mw-ui-quiet:active,
-.mw-ui-button.mw-ui-primary.mw-ui-quiet.mw-ui-checked {
-  color: #2962cc;
-}
+.mw-ui-button.mw-ui-progressive.mw-ui-quiet:disabled,
+.mw-ui-button.mw-ui-constructive.mw-ui-quiet:disabled,
 .mw-ui-button.mw-ui-primary.mw-ui-quiet:disabled {
-  color: #cccccc;
-}
-.mw-ui-button.mw-ui-constructive {
-  background: #347bff;
-  color: #fff;
-  border: 1px solid #347bff;
-  text-shadow: 0 1px rgba(0, 0, 0, 0.1);
-}
-.mw-ui-button.mw-ui-constructive:hover {
-  background-color: #2962cc;
-}
-.mw-ui-button.mw-ui-constructive:focus {
-  border-color: #ffffff;
-  box-shadow: inset 0 0 0 1px #347bff, inset 0 0 0 2px #ffffff;
-  outline-width: 0;
-}
-.mw-ui-button.mw-ui-constructive:focus::-moz-focus-inner {
-  border-color: transparent;
-  padding: 0;
-}
-.mw-ui-button.mw-ui-constructive:active,
-.mw-ui-button.mw-ui-constructive.is-on,
-.mw-ui-button.mw-ui-constructive.mw-ui-checked {
-  background-color: #2962cc;
-  box-shadow: none;
-}
-.mw-ui-button.mw-ui-constructive:disabled {
-  background-color: #dddddd;
-  border-color: #dddddd;
-}
-.mw-ui-button.mw-ui-constructive:disabled:hover,
-.mw-ui-button.mw-ui-constructive:disabled:active,
-.mw-ui-button.mw-ui-constructive:disabled.mw-ui-checked {
-  box-shadow: none;
-}
-.mw-ui-button.mw-ui-constructive.mw-ui-quiet {
-  color: #555555;
-}
-.mw-ui-button.mw-ui-constructive.mw-ui-quiet:hover,
-.mw-ui-button.mw-ui-constructive.mw-ui-quiet:focus {
-  background-color: transparent;
-  color: #347bff;
-}
-.mw-ui-button.mw-ui-constructive.mw-ui-quiet:active,
-.mw-ui-button.mw-ui-constructive.mw-ui-quiet.mw-ui-checked {
-  color: #2962cc;
-}
-.mw-ui-button.mw-ui-constructive.mw-ui-quiet:disabled {
-  color: #cccccc;
+  color: #c8ccd1;
 }
 .mw-ui-button.mw-ui-destructive {
-  background: #d11d13;
+  background-color: #cc3333;
   color: #fff;
-  border: 1px solid #d11d13;
+  border: 1px solid #cc3333;
   text-shadow: 0 1px rgba(0, 0, 0, 0.1);
 }
 .mw-ui-button.mw-ui-destructive:hover {
-  background-color: #a7170f;
+  background-color: #e53939;
+  border-color: #e53939;
 }
 .mw-ui-button.mw-ui-destructive:focus {
-  border-color: #ffffff;
-  box-shadow: inset 0 0 0 1px #d11d13, inset 0 0 0 2px #ffffff;
-  outline-width: 0;
-}
-.mw-ui-button.mw-ui-destructive:focus::-moz-focus-inner {
-  border-color: transparent;
-  padding: 0;
+  box-shadow: inset 0 0 0 1px #cc3333, inset 0 0 0 2px #ffffff;
 }
 .mw-ui-button.mw-ui-destructive:active,
 .mw-ui-button.mw-ui-destructive.is-on,
 .mw-ui-button.mw-ui-destructive.mw-ui-checked {
-  background-color: #a7170f;
+  background-color: #873636;
+  border-color: #873636;
   box-shadow: none;
 }
 .mw-ui-button.mw-ui-destructive:disabled {
-  background-color: #dddddd;
-  border-color: #dddddd;
+  background-color: #c8ccd1;
+  color: #fff;
+  border-color: #c8ccd1;
 }
 .mw-ui-button.mw-ui-destructive:disabled:hover,
 .mw-ui-button.mw-ui-destructive:disabled:active,
 .mw-ui-button.mw-ui-destructive:disabled.mw-ui-checked {
+  background-color: #c8ccd1;
+  color: #fff;
+  border-color: #c8ccd1;
   box-shadow: none;
 }
 .mw-ui-button.mw-ui-destructive.mw-ui-quiet {
-  color: #555555;
+  color: #222222;
 }
-.mw-ui-button.mw-ui-destructive.mw-ui-quiet:hover,
-.mw-ui-button.mw-ui-destructive.mw-ui-quiet:focus {
+.mw-ui-button.mw-ui-destructive.mw-ui-quiet:hover {
   background-color: transparent;
-  color: #d11d13;
+  color: #e53939;
 }
 .mw-ui-button.mw-ui-destructive.mw-ui-quiet:active,
 .mw-ui-button.mw-ui-destructive.mw-ui-quiet.mw-ui-checked {
-  color: #a7170f;
+  color: #873636;
+}
+.mw-ui-button.mw-ui-destructive.mw-ui-quiet:focus {
+  background-color: transparent;
+  color: #cc3333;
 }
 .mw-ui-button.mw-ui-destructive.mw-ui-quiet:disabled {
-  color: #cccccc;
+  color: #c8ccd1;
 }
 .mw-ui-button.mw-ui-quiet {
   background: transparent;
   border: 0;
   text-shadow: none;
-  color: #555555;
+  color: #222222;
 }
-.mw-ui-button.mw-ui-quiet:hover,
-.mw-ui-button.mw-ui-quiet:focus {
+.mw-ui-button.mw-ui-quiet:hover {
   background-color: transparent;
-  color: #555555;
-  box-shadow: none;
+  color: #444444;
 }
 .mw-ui-button.mw-ui-quiet:active,
 .mw-ui-button.mw-ui-quiet.mw-ui-checked {
-  color: #777777;
+  color: #000000;
+}
+.mw-ui-button.mw-ui-quiet:focus {
+  background-color: transparent;
+  color: #222222;
 }
 .mw-ui-button.mw-ui-quiet:disabled {
-  color: #cccccc;
+  color: #c8ccd1;
+}
+.mw-ui-button.mw-ui-quiet:hover,
+.mw-ui-button.mw-ui-quiet:focus {
+  box-shadow: none;
 }
 .mw-ui-button.mw-ui-quiet:active,
 .mw-ui-button.mw-ui-quiet:disabled {

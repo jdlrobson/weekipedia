@@ -1,47 +1,62 @@
-/* stylelint-disable selector-no-vendor-prefix */
-/* stylelint-disable string-quotes */
+/* Imported from https://en.wikipedia.org/w/load.php?debug=false&lang=en&modules=mediawiki.ui.input&only=styles&debug=true */
 
 .mw-ui-input {
+  background-color: #fff;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
   display: block;
   width: 100%;
-  border: 1px solid #cccccc;
+  border: 1px solid #9aa0a7;
   border-radius: 2px;
   padding: 0.3em 0.3em 0.3em 0.6em;
+  box-shadow: inset 0 0 0 0.1em #fff;
   font-family: inherit;
   font-size: inherit;
   line-height: inherit;
   vertical-align: middle;
 }
-.mw-ui-input::-webkit-input-placeholder {
+.mw-ui-input:-moz-placeholder {
+  color: #72777d;
   font-style: italic;
-  font-weight: normal;
+  opacity: 1;
 }
 .mw-ui-input::-moz-placeholder {
+  color: #72777d;
   font-style: italic;
-  font-weight: normal;
-}
-.mw-ui-input:-moz-placeholder {
-  font-style: italic;
-  font-weight: normal;
+  opacity: 1;
 }
 .mw-ui-input:-ms-input-placeholder {
+  color: #72777d;
   font-style: italic;
-  font-weight: normal;
+}
+.mw-ui-input::-webkit-input-placeholder {
+  color: #72777d;
+  font-style: italic;
+}
+.mw-ui-input:placeholder-shown {
+  color: #72777d;
+  font-style: italic;
 }
 .mw-ui-input:invalid {
   box-shadow: none;
 }
+.mw-ui-input:hover {
+  border-color: #72777d;
+}
 .mw-ui-input:focus {
-  border-color: #347bff;
-  box-shadow: inset 0 0 0 1px #347bff;
+  border-color: #3366cc;
+  box-shadow: inset 0 0 0 1px #3366cc;
   outline: 0;
 }
+.mw-ui-input:not( :disabled ) {
+  -webkit-transition: color 100ms, border-color 100ms, box-shadow 100ms;
+  -moz-transition: color 100ms, border-color 100ms, box-shadow 100ms;
+  transition: color 100ms, border-color 100ms, box-shadow 100ms;
+}
 .mw-ui-input:disabled {
-  border-color: #eeeeee;
-  color: #cccccc;
+  border-color: #eaecf0;
+  color: #c8ccd1;
 }
 .mw-ui-input[type="search"] {
   -webkit-appearance: textfield;
