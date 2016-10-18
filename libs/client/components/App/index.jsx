@@ -73,6 +73,7 @@ export default React.createClass({
       getLocalUrl: this.getLocalUrl,
       closeOverlay: this.closeOverlay,
       hijackLinks: this.hijackLinks,
+      isRTL: isRTL( props.lang ),
       session: session || this.state.session,
       onClickInternalLink: this.onClickInternalLink
     } : {};

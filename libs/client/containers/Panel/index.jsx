@@ -9,6 +9,9 @@ export default (props) => {
   if ( props.isHeading ) {
     className += ' panel-heading';
   }
+  if ( props.className ) {
+    className += props.className;
+  }
   return <div className={className}><Content>{props.children}</Content></div>
 }
 

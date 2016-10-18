@@ -28,6 +28,9 @@ export default React.createClass({
   render(){
     // show intermediate state if still loading, otherwise show list
     var push;
+    var emptyProps = {
+      msg: 'Nothing has trended recently.'
+    };
     var links = [];
     var args = this.props.params.split( '/' );
     var wiki = args[0] || 'enwiki';
@@ -37,11 +40,14 @@ export default React.createClass({
     var endpoint = '/api/trending/' + wiki + '/' + halflife;
     var hrClass = '', dayClass = '', wkClass = '', tClass = '';
     if ( halflife === HALF_LIFE_DAYS ) {
+      emptyProps.msg = 'Nothing has happened today.';
       dayClass = 'active';
     } else if ( halflife === HALF_LIFE_WEEKS ) {
       wkClass = 'active';
+      emptyProps.msg = 'Nothing has happened this week.';
     } else if ( halflife === HALF_LIFE_HOURS ) {
       hrClass = 'active';
+      emptyProps.msg = 'Nothing has happened in the last hour.';
     } else if ( halflife === 'n' ) {
       tClass = 'active';
       endpoint = '/api/web-push/service/trending';
@@ -66,7 +72,7 @@ export default React.createClass({
 
     return (
       <CardListPage {...this.props} apiEndpoint={endpoint} tabs={links}
-        emptyMessage="Nothing is trending right now." CardClass={TrendingCard}
+        emptyProps={emptyProps} CardClass={TrendingCard}
         title='Hot' tagline="The wiki in real time">{push}</CardListPage>
     )
   }

@@ -8,6 +8,10 @@ import CardListPage from './../CardListPage'
 export default React.createClass({
   render() {
     var ns;
+    var emptyProps = {
+      msg: 'There are no pages with recent changes.',
+      image: ''
+    };
     var endpoint = '/api/private/watchlist-feed/' + this.props.lang + '/';
 
     if ( this.props.query && this.props.query.filter ) {
@@ -19,7 +23,7 @@ export default React.createClass({
     }
 
     return (
-      <CardListPage {...this.props} apiEndpoint={endpoint}
+      <CardListPage {...this.props} apiEndpoint={endpoint} emptyProps={emptyProps}
         CardClass={DiffCard} isDiffCardList={true} />
     )
   }

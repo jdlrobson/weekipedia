@@ -83,6 +83,10 @@ export default React.createClass({
       var west = lng - 1 / 69;
       var baseUrl = '/' + props.lang + '/wiki/Special:Nearby/';
 
+      var emptyProps = {
+        msg: 'There is nothing near you.'
+      };
+
       var content = (
         <Content className="post-content">Explore 1 mile:
           <HorizontalList>
@@ -100,6 +104,7 @@ export default React.createClass({
 
       return (
         <CardListPage {...this.props} apiEndpoint={endpoint}
+          emptyProps={emptyProps}
           title='Nearby' tagline="Pages that are near you">{content}</CardListPage>
       )
     } else {
