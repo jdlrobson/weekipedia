@@ -131,7 +131,13 @@ function initSpecialPages() {
   addSpecialPage( 'MobileOptions', MobileOptions );
   addSpecialPage( 'MostRead', MostRead );
   addSpecialPage( 'Random', Random );
-  addSpecialPage( 'Search', Search );
+  addSpecialPage( 'Search', Search, function ( info, props ) {
+    var query = props.query.search;
+    if ( query ) {
+      props.fallback = '/api/search-full/' + props.language_project + '/' + query;
+    }
+    return props;
+  } );
   addSpecialPage( 'MobileMenu', MobileMenu, function ( info, props ) {
     props.showMenuNoJavaScript = true;
     return props;
