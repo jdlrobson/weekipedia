@@ -48,6 +48,8 @@ class Card extends Component {
           <a title={title} href={url}>{title}</a>
         </h3>
       );
+    } else {
+      heading = <a className="card-link" href={url} />
     }
 
     return (
