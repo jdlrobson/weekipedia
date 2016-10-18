@@ -73,6 +73,20 @@ var deaths2016 = new Page( {
   contributors: Array( 46 )
 } );
 
+var attaUr = new Page( {
+  anonEdits: 5,
+  anons: Array(2),
+  bias: 0.3076923076923077,
+  edits: 13,
+  reverts: 1,
+  start: "2016-10-18T18:13:17.987Z",
+  trendedAt: "2016-10-18T20:12:34.933Z",
+  contributors: new Array( 4 ),
+  views: 0,
+  notabilityFlags: 0,
+  volatileFlags: 1
+} );
+
 describe('isTrending', function() {
   it('Agaric acid is not trending', function() {
     assert.ok( !evaluator.isTrending( agaricAcid ) );
@@ -84,5 +98,9 @@ describe('isTrending', function() {
 
   it('Deaths in 2016 is not trending', function() {
     assert.ok( !evaluator.isTrending( deaths2016 ), 'has lived long enough to capture views' );
+  });
+
+  it('Atta ur Rehman Khan is not trending', function() {
+    assert.ok( !evaluator.isTrending( attaUr ), 'has a vandalism flag' );
   });
 });

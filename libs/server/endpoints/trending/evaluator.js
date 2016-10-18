@@ -9,7 +9,7 @@ TrendEvaluator.prototype = {
       age < this.options.maxAge;
   },
   isTrending: function ( item ) {
-    return !item.views && this.mightTrend( item ) && item.contributors.length >= this.options.minContributors &&
+    return !item.views && !item.volatileFlags && this.mightTrend( item ) && item.contributors.length >= this.options.minContributors &&
       item.edits > this.options.minEdits &&
       item.editsPerMinute() > this.options.minSpeed && item.getBias() <= this.options.maxBias;
   }
