@@ -59,6 +59,20 @@ var battleMosul = new Page( {
   contributors: Array( 11 )
 } );
 
+var deaths2016 = new Page( {
+  anonEdits: 0,
+  edits: 130,
+  reverts: 2,
+  anons: [],
+  views: 9807,
+  notabilityFlags: 0,
+  volatileFlags: 0,
+  start: "2016-10-14T23:35:44.813Z",
+  trendedAt: "2016-10-15T00:25:54.960Z",
+  bias: 0.15384615384615385,
+  contributors: Array( 46 )
+} );
+
 describe('isTrending', function() {
   it('Agaric acid is not trending', function() {
     assert.ok( !evaluator.isTrending( agaricAcid ) );
@@ -66,5 +80,9 @@ describe('isTrending', function() {
 
   it('Battle of Mosul is trending', function() {
     assert.ok( evaluator.isTrending( battleMosul ) );
+  });
+
+  it('Deaths in 2016 is not trending', function() {
+    assert.ok( !evaluator.isTrending( deaths2016 ), 'has lived long enough to capture views' );
   });
 });
