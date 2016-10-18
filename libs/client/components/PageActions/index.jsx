@@ -16,7 +16,7 @@ class PageActions extends Component {
     ];
 
     if ( props.canAuthenticate ) {
-      actions.push(<EditIcon {...props} key="page-action-edit"/>);
+      actions.push(<EditIcon {...props} key="page-action-edit" section={0}/>);
       actions.push(<WatchIcon {...props} key="page-action-watch"/>);
     }
 
