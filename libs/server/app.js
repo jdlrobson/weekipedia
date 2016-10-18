@@ -241,11 +241,15 @@ app.get( '/:lang?/*', ( req, res ) => {
   if ( route.fallback && SERVER_SIDE_RENDERING ) {
     var fallbackUrl = req.protocol + '://' + req.get( 'host' ) + route.fallback;
     fetch( fallbackUrl ).then( function ( resp ) {
-      return resp.json();
+      if ( resp.status === 200 ) {
+        return resp.json();
+      } else {
+        throw "Error";
+      }
     } ).then( function ( data ) {
       render( { fallbackProps: data,
         fallbackPath: route.fallback } );
-    } );
+    } ).catch( () => render() );
   } else {
     render();
   }
