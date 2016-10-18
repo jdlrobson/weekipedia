@@ -1,6 +1,7 @@
 import subscriber from 'web-push-subscriber'
 
 import collection from './collection'
+import Evaluator from './evaluator'
 
 import addProps from './../prop-enricher'
 import cachedResponse from './../../cached-response.js'
@@ -12,17 +13,14 @@ const MAX_AGE = process.env.TREND_MAX_AGE || 50;
 const MIN_EDITS = process.env.TREND_MIN_TOTAL_EDITS || 20;
 const MIN_CONTRIBUTORS = process.env.TREND_MIN_CONTRIBUTORS || 2;
 
-function mightTrend( item ) {
-  var age = item.age();
-  return age > MIN_AGE && item.edits > ( MIN_EDITS / 2 ) &&
-    age < MAX_AGE;
-}
-
-function isTrending( item ) {
-  return mightTrend( item ) && item.contributors.length >= MIN_CONTRIBUTORS &&
-    item.edits > MIN_EDITS &&
-    item.editsPerMinute() > EDITS_PER_MIN && item.getBias() <= BIAS;
-}
+var evaluator = new Evaluator( {
+  minEdits: MIN_EDITS,
+  minContributors: MIN_CONTRIBUTORS,
+  maxSpeed: EDITS_PER_MIN,
+  minBias: BIAS,
+  minAge: MIN_AGE,
+  maxAge: MAX_AGE
+} );
 
 if ( collection ) {
   console.log( '# Trending setup:', EDITS_PER_MIN, BIAS, MIN_AGE,
@@ -31,7 +29,7 @@ if ( collection ) {
   collection.on( 'edit', function ( item, collection ) {
     if ( item.wiki === 'enwiki' ) {
 
-      if ( isTrending( item ) ) {
+      if ( evaluator.isTrending( item ) ) {
         collection.markSafe( item.id );
         if ( !item.trendedAt ) {
           // tell me
@@ -41,7 +39,7 @@ if ( collection ) {
           // ping people
           subscriber.broadcast( 'trending' );
         }
-      } else if ( mightTrend( item ) ) {
+      } else if ( evaluator.mightTrend( item ) ) {
         collection.markSafe( item.id );
       }
     }

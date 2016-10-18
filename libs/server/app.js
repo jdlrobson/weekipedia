@@ -244,7 +244,7 @@ app.get( '/:lang?/*', ( req, res ) => {
       if ( resp.status === 200 ) {
         return resp.json();
       } else {
-        throw "Error";
+        throw 'Error';
       }
     } ).then( function ( data ) {
       render( { fallbackProps: data,
