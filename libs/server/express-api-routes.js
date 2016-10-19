@@ -27,7 +27,7 @@ import categories from './endpoints/categories'
 import messages from './messages'
 import respond from './respond'
 import cachedResponses from './cached-response.js'
-import { DEFAULT_PROJECT, API_PATH, ALLOWED_PROJECTS } from './config'
+import { DEFAULT_PROJECT, API_PATH, ALLOWED_PROJECTS, DUMMY_SESSION } from './config'
 
 const RESPONSE_OKAY = JSON.stringify( { msg: 'OK' } );
 const cachedResponse = cachedResponses.cachedResponse
@@ -39,7 +39,7 @@ const invalidate = cachedResponses.invalidate
 //   the request will proceed.  Otherwise, the user will be redirected to the
 //   login page.
 function ensureAuthenticated( req, res, next ) {
-  if ( req.isAuthenticated() ) {
+  if ( req.isAuthenticated() || DUMMY_SESSION ) {
     return next();
   } else {
     res.status( 401 );
