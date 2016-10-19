@@ -116,7 +116,7 @@ export default React.createClass({
     localSession = localSession === 'false' ? null : JSON.parse( localSession );
     if ( localSession && localSession.timestamp ) {
       // is it greater than 1 hours old?
-      if ( ( new Date() - new Date( localSession.ts ) ) / 1000 > 60 * 60 ) {
+      if ( ( new Date() - new Date( localSession.timestamp ) ) / 1000 > 60 * 60 ) {
         localSession = null;
       }
     } else if ( localSession && !localSession.timestamp ) {
