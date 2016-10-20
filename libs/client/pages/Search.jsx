@@ -31,6 +31,9 @@ export default React.createClass({
     } );
   },
   render(){
+    var emptyProps = {
+      msg: 'No pages matched your search query for this project. Why not try one of our other projects?'
+    };
     var props = this.props;
     var term = this.getTerm();
     var endpoint = '/api/search-full/' + props.language_project + '/' + encodeURIComponent( term );
@@ -40,6 +43,7 @@ export default React.createClass({
     return (
       <CardListPage {...this.props} apiEndpoint={endpoint}
         className="mw-search-results"
+        emptyProps={emptyProps}
         tabs={this.getTabs()}
         tagline={tagline}
         title='Search' />
