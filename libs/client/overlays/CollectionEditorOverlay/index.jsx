@@ -3,7 +3,7 @@ import React from 'react'
 import Overlay from './../../containers/Overlay'
 import Input from './../../components/Input'
 import IntermediateState from './../../components/IntermediateState'
-import Button from './../../components/Button'
+import { Button } from 'wikipedia-react-components'
 
 import './styles.less'
 

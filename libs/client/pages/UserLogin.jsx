@@ -1,6 +1,6 @@
 import React from 'react'
 
-import Button from './../components/Button'
+import { Button } from 'wikipedia-react-components'
 
 import Article from './../containers/Article'
 import Content from './../containers/Content'

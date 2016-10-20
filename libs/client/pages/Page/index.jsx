@@ -1,7 +1,7 @@
 import React from 'react'
 
 import IntermediateState from './../../components/IntermediateState';
-import Button from './../../components/Button'
+import { Button } from 'wikipedia-react-components'
 import ErrorBox from './../../components/ErrorBox'
 import LastModifiedBar from './../../components/LastModifiedBar'
 import ReadMore from './../../components/ReadMore'

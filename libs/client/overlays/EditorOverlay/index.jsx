@@ -5,7 +5,7 @@ import Content from './../../containers/Content'
 import Panel from './../../containers/Panel'
 import TruncatedText from './../../containers/TruncatedText'
 
-import Button from './../../components/Button'
+import { Button } from 'wikipedia-react-components'
 import SectionContent from './../../components/SectionContent'
 import IntermediateState from './../../components/IntermediateState'
 import Input from './../../components/Input'
