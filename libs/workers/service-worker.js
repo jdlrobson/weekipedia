@@ -34,6 +34,9 @@ router.get( '/api/(.*)', networkOnly )
 // Login must happen via network
 router.get( '/auth/(.*)', networkOnly )
 
+// Images (#120)
+router.get( '/images/(.*)', cacheFirst );
+
 // Serve any other url with the shell
 router.get( '/(.*)\/(.*)', () => caches.match( '/' ) )
 
