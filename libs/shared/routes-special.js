@@ -14,6 +14,7 @@ import MobileOptions from './../client/pages/MobileOptions'
 import MostRead from './../client/pages/MostRead'
 import Random from './../client/pages/Random'
 import Search from './../client/pages/Search'
+import Shell from './../client/pages/Shell'
 import Nearby from './../client/pages/Nearby'
 import Watchlist from './../client/pages/Watchlist'
 import UserLogin from './../client/pages/UserLogin'
@@ -138,6 +139,7 @@ function initSpecialPages() {
     }
     return props;
   } );
+  addSpecialPage( 'Shell', Shell );
   addSpecialPage( 'MobileMenu', MobileMenu, function ( info, props ) {
     props.showMenuNoJavaScript = true;
     return props;

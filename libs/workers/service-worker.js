@@ -15,7 +15,7 @@ var staticAssets = [
   '/main-bundle.js',
   '/style.css',
   '/style.rtl.css',
-  '/'
+  '/wiki/Special:Shell'
 ]
 
 if ( version.wordmark ) {
@@ -38,7 +38,7 @@ router.get( '/auth/(.*)', networkOnly )
 router.get( '/images/(.*)', cacheFirst );
 
 // Serve any other url with the shell
-router.get( '/(.*)\/(.*)', () => caches.match( '/' ) )
+router.get( '/(.*)\/(.*)', () => caches.match( '/wiki/Special:Shell' ) )
 
 // Rest of calls go to network
 router.default = networkOnly
