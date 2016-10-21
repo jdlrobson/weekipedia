@@ -1,9 +1,8 @@
 import React from 'react'
-import { IntermediateState, LinkList, SearchInput } from 'wikipedia-react-components'
+import { IntermediateState, LinkList, Panel, SearchInput } from 'wikipedia-react-components'
 
 import Overlay from './../../containers/Overlay'
 import Content from './../../containers/Content'
-import Panel from './../../containers/Panel'
 
 import './styles.less'
 
@@ -122,7 +121,10 @@ export default React.createClass({
       <Overlay router={this.props.router} className="language-overlay"
         header={<h2><strong>Languages</strong></h2>}>
         <Panel>
-          <SearchInput value={this.state.term} onSearch={this.filterLanguages} placeholder="Search for a language" />
+          <Content>
+            <SearchInput value={this.state.term}
+              onSearch={this.filterLanguages} placeholder="Search for a language" />
+          </Content>
         </Panel>
         <div className="overlay-content">
           <Content>

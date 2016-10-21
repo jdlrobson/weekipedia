@@ -1,8 +1,5 @@
 import React from 'react'
-
-import { Button, ErrorBox } from 'wikipedia-react-components';
-
-import Panel from './../../containers/Panel'
+import { Button, ErrorBox, Panel } from 'wikipedia-react-components';
 
 function getSubscriptionId( subscription ) {
   var provider = getPushProvider( subscription.endpoint );

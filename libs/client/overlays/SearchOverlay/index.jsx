@@ -1,9 +1,8 @@
 import React from 'react'
-import { Icon, SearchForm } from 'wikipedia-react-components'
+import { Icon, SearchForm, Panel } from 'wikipedia-react-components'
 
 import Overlay from './../../containers/Overlay'
 import Content from './../../containers/Content'
-import Panel from './../../containers/Panel'
 
 import CardList from './../../components/CardList'
 

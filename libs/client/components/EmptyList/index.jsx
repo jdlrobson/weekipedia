@@ -1,8 +1,5 @@
 import React, { Component } from 'react'
-
-import { Button } from 'wikipedia-react-components'
-
-import Panel from './../../containers/Panel'
+import { Button, Panel } from 'wikipedia-react-components'
 
 import './styles.less'
 
