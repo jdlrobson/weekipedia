@@ -12,19 +12,21 @@ const MIN_AGE = process.env.TREND_MIN_AGE || 5;
 const MAX_AGE = process.env.TREND_MAX_AGE || 50;
 const MIN_EDITS = process.env.TREND_MIN_TOTAL_EDITS || 20;
 const MIN_CONTRIBUTORS = process.env.TREND_MIN_CONTRIBUTORS || 2;
+const TREND_MIN_ANON_EDITS = process.env.TREND_MIN_ANON_EDITS || 1;
 
 var evaluator = new Evaluator( {
   minEdits: MIN_EDITS,
   minContributors: MIN_CONTRIBUTORS,
   maxSpeed: EDITS_PER_MIN,
   minBias: BIAS,
+  minAnonEdits: 1,
   minAge: MIN_AGE,
   maxAge: MAX_AGE
 } );
 
 if ( collection ) {
   console.log( '# Trending setup:', EDITS_PER_MIN, BIAS, MIN_AGE,
-    MAX_AGE, MIN_EDITS, MIN_CONTRIBUTORS );
+    MAX_AGE, MIN_EDITS, MIN_CONTRIBUTORS, TREND_MIN_ANON_EDITS );
 
   collection.on( 'edit', function ( item, collection ) {
     if ( item.wiki === 'enwiki' ) {

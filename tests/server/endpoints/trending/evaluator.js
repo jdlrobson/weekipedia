@@ -26,7 +26,8 @@ var evaluator = new TrendEvaluator( {
   minEdits: 6,
   minContributors: 4,
   minSpeed: 0.1,
-  maxBias: 0.5,
+  minAnonEdits: 1,
+  maxBias: 0.6,
   minAge: 5,
   maxAge: 180
 } );
@@ -87,9 +88,23 @@ var attaUr = new Page( {
   volatileFlags: 1
 } );
 
+var cyberAttacks = new Page( {
+  anonEdits: 1,
+  anons: new Array(1),
+  bias: 0.5172413793103449,
+  edits: 29,
+  reverts: 1,
+  start: '2016-10-21T18:03:51.387Z',
+  trendedAt: '2016-10-21T19:02:27.229Z',
+  contributors: new Array(4),
+  views: 0,
+  notabilityFlags: 0,
+  volatileFlags: 0
+} );
+
 describe('isTrending', function() {
   it('Agaric acid is not trending', function() {
-    assert.ok( !evaluator.isTrending( agaricAcid ) );
+    assert.ok( !evaluator.isTrending( agaricAcid ), 'no anonymous edits whatsoever' );
   });
 
   it('Battle of Mosul is trending', function() {
@@ -103,4 +118,8 @@ describe('isTrending', function() {
   it('Atta ur Rehman Khan is not trending', function() {
     assert.ok( !evaluator.isTrending( attaUr ), 'has a vandalism flag' );
   });
+
+  it( 'October 2016 Dyn cyberattack is trending', function () {
+    assert.ok( evaluator.isTrending( cyberAttacks ) );
+  } );
 });
