@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 
-import TruncatedText from '../../containers/TruncatedText'
+import { TruncatedText } from 'wikipedia-react-components'
 
 import './styles.less'
 
