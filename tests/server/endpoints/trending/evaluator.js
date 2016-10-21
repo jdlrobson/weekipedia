@@ -1,6 +1,8 @@
 var assert = require( 'assert' );
 
-import { agaricAcid, battleMosul, deaths2016, attaUr, cyberAttacks } from './examples'
+import { agaricAcid, battleMosul, deaths2016, attaUr, cyberAttacks,
+  NintendoSwitch,
+  WideAreaNetwork, AmericanFootball, JoanneAlbum } from './examples'
 
 import TrendEvaluator from './../../../../libs/server/endpoints/trending/evaluator'
 
@@ -34,4 +36,20 @@ describe('isTrending', function() {
   it( 'October 2016 Dyn cyberattack is trending', function () {
     assert.ok( evaluator.isTrending( cyberAttacks ) );
   } );
+
+  it( 'WideAreaNetwork is not trending', function () {
+    assert.ok( !evaluator.isTrending( WideAreaNetwork ) );
+  })
+
+  it( 'American Football is not trending', function () {
+    assert.ok( !evaluator.isTrending( AmericanFootball ) );
+  })
+
+  it( 'JoanneAlbum is not trending', function () {
+    assert.ok( !evaluator.isTrending( JoanneAlbum ), 'no anonymous edit interest' );
+  })
+
+  it( 'NintendoSwitch is trending', function () {
+    assert.ok( evaluator.isTrending( NintendoSwitch ) );
+  })
 });
