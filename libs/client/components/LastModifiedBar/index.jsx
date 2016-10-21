@@ -4,7 +4,7 @@ import timeago from 'timeago'
 import './styles.less'
 import './icons.less'
 
-import Icon from './../Icon'
+import { Icon } from 'wikipedia-react-components'
 
 import Content from './../../containers/Content'
 import TruncatedText from './../../containers/TruncatedText'

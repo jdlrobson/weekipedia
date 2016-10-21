@@ -5,7 +5,7 @@ import './styles.less'
 import './icons.less'
 
 import MainMenu from './../MainMenu'
-import Icon from './../Icon'
+import { Icon } from 'wikipedia-react-components'
 import TransparentShield from './../TransparentShield'
 import SearchForm from './../SearchForm'
 import ChromeHeader from './../ChromeHeader'

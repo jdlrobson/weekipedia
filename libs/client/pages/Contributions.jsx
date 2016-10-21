@@ -3,7 +3,7 @@ import React from 'react'
 import CardListPage from './CardListPage'
 
 import CardDiff from './../components/CardDiff'
-import Icon from './../components/Icon'
+import { Icon } from 'wikipedia-react-components'
 
 // Pages
 export default React.createClass({

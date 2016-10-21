@@ -9,7 +9,7 @@ import { Button } from 'wikipedia-react-components'
 import SectionContent from './../../components/SectionContent'
 import IntermediateState from './../../components/IntermediateState'
 import Input from './../../components/Input'
-import Icon from './../../components/Icon'
+import { Icon } from 'wikipedia-react-components'
 
 import './styles.less'
 import './icons.less'

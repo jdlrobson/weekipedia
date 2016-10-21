@@ -6,7 +6,7 @@ import Panel from './../../containers/Panel'
 
 import CardList from './../../components/CardList'
 import SearchForm from './../../components/SearchForm'
-import Icon from './../../components/Icon'
+import { Icon } from 'wikipedia-react-components'
 
 import './styles.less'
 

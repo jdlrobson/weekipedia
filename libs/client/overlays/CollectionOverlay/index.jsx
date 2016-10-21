@@ -1,7 +1,7 @@
 import React from 'react'
 
 import Overlay from './../../containers/Overlay'
-import Icon from './../../components/Icon'
+import { Icon } from 'wikipedia-react-components'
 
 import './styles.less'
 import './icons.less'
