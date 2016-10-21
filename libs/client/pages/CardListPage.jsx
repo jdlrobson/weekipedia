@@ -31,6 +31,7 @@ export default React.createClass({
   render(){
     var props = this.props;
     var body = [ <CardList key={"card-list-page-card-list-" + props.language_project} {...props}
+      title={undefined}
       onEmpty={this.onEmpty}/> ]
       .concat( props.children );
 
