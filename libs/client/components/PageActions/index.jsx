@@ -4,7 +4,7 @@ import LanguageIcon from './../../components/LanguageIcon'
 import EditIcon from './../../components/EditIcon'
 import WatchIcon from './../../components/WatchIcon'
 
-import HorizontalList from './../HorizontalList'
+import { HorizontalList } from 'wikipedia-react-components'
 
 class PageActions extends Component {
   render(){

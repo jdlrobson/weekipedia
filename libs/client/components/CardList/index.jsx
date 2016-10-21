@@ -1,8 +1,7 @@
 import React from 'react'
 
-import ListHeader from './../ListHeader'
 import PreviewCard from './../PreviewCard'
-import { ErrorBox, IntermediateState } from 'wikipedia-react-components';
+import { ErrorBox, IntermediateState, ListHeader } from 'wikipedia-react-components';
 
 import Content from './../../containers/Content'
 

@@ -5,8 +5,7 @@ import './styles.less'
 import Overlay from './../../containers/Overlay'
 import TruncatedText from './../../containers/TruncatedText'
 
-import { Button, IntermediateState } from 'wikipedia-react-components';
-import HorizontalList from './../../components/HorizontalList';
+import { Button, HorizontalList, IntermediateState } from 'wikipedia-react-components';
 
 export default React.createClass({
   getInitialState() {

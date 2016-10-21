@@ -1,7 +1,5 @@
 import React from 'react'
-
-import { ErrorBox, IntermediateState } from 'wikipedia-react-components';
-import HorizontalList from './../components/HorizontalList'
+import { ErrorBox, HorizontalList, IntermediateState } from 'wikipedia-react-components'
 
 import Article from './../containers/Article'
 import Content from './../containers/Content'
