@@ -4,7 +4,7 @@ import mwStorage from './../mediawiki-storage'
 
 import Article from './../containers/Article'
 
-import IntermediateState from './../components/IntermediateState'
+import { IntermediateState } from 'wikipedia-react-components'
 
 // Pages
 export default React.createClass({

@@ -5,7 +5,7 @@ import Content from './../../containers/Content'
 import LinkList from './../../containers/LinkList'
 import Panel from './../../containers/Panel'
 
-import IntermediateState from './../../components/IntermediateState';
+import { IntermediateState } from 'wikipedia-react-components';
 import SearchInput from './../../components/SearchInput'
 
 import './styles.less'

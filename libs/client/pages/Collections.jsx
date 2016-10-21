@@ -3,9 +3,7 @@ import ReactDOM from 'react-dom'
 
 import CardList from './../components/CardList'
 import CollectionCard from './../components/CollectionCard'
-import IntermediateState from './../components/IntermediateState'
-import ErrorBox from './../components/ErrorBox'
-import { Button } from 'wikipedia-react-components'
+import { ErrorBox, Button, IntermediateState } from 'wikipedia-react-components'
 
 import Article from './../containers/Article'
 

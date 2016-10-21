@@ -1,7 +1,6 @@
 import React from 'react'
 
-import { Icon } from 'wikipedia-react-components'
-import { Button } from 'wikipedia-react-components'
+import { Button, Icon } from 'wikipedia-react-components'
 
 import './styles.less'
 import './icons.less'

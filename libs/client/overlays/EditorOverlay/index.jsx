@@ -5,11 +5,9 @@ import Content from './../../containers/Content'
 import Panel from './../../containers/Panel'
 import TruncatedText from './../../containers/TruncatedText'
 
-import { Button } from 'wikipedia-react-components'
 import SectionContent from './../../components/SectionContent'
-import IntermediateState from './../../components/IntermediateState'
+import { IntermediateState, Button, Icon } from 'wikipedia-react-components'
 import Input from './../../components/Input'
-import { Icon } from 'wikipedia-react-components'
 
 import './styles.less'
 import './icons.less'

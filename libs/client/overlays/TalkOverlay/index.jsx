@@ -6,12 +6,9 @@ import Panel from './../../containers/Panel'
 import TruncatedText from './../../containers/TruncatedText'
 import LinkList from './../../containers/LinkList'
 
-import { Button } from 'wikipedia-react-components'
+import { Button, ErrorBox, Icon, IntermediateState } from 'wikipedia-react-components'
 import SectionContent from './../../components/SectionContent'
-import IntermediateState from './../../components/IntermediateState'
 import Input from './../../components/Input'
-import { Icon } from 'wikipedia-react-components'
-import ErrorBox from './../../components/ErrorBox'
 
 import './styles.less'
 
