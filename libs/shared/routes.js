@@ -1,5 +1,5 @@
 import Content from './../client/containers/Content'
-import ErrorBox from './../client/components/ErrorBox'
+import { ErrorBox } from 'wikipedia-react-components'
 
 var routes = [
   // 404

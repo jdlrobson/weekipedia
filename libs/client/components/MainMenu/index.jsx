@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 
-import Icon from './../Icon'
-import HorizontalList from './../HorizontalList'
+import { Icon, HorizontalList } from 'wikipedia-react-components'
 
 import './styles.less'
 import './icons.less'

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-import HorizontalList from './../../components/HorizontalList'
+import { HorizontalList } from 'wikipedia-react-components'
 
 import Content from './../../containers/Content'
 

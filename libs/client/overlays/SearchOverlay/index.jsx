@@ -1,12 +1,11 @@
 import React from 'react'
+import { Icon, SearchForm } from 'wikipedia-react-components'
 
 import Overlay from './../../containers/Overlay'
 import Content from './../../containers/Content'
 import Panel from './../../containers/Panel'
 
 import CardList from './../../components/CardList'
-import SearchForm from './../../components/SearchForm'
-import Icon from './../../components/Icon'
 
 import './styles.less'
 

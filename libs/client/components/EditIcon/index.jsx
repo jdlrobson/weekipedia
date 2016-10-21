@@ -1,6 +1,6 @@
 import React from 'react'
 
-import Icon from './../Icon'
+import { Icon } from 'wikipedia-react-components'
 
 import CtaDrawer from './../../overlays/CtaDrawer'
 

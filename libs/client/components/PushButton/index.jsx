@@ -1,7 +1,6 @@
 import React from 'react'
 
-import Button from './../Button';
-import ErrorBox from './../ErrorBox';
+import { Button, ErrorBox } from 'wikipedia-react-components';
 
 import Panel from './../../containers/Panel'
 

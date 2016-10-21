@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom'
 
 import './styles.less'
 
-import Icon from './../../components/Icon'
+import { Icon } from 'wikipedia-react-components'
 import Header from './../../components/Header'
 import ChromeHeader from './../../components/ChromeHeader'
 

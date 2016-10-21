@@ -1,7 +1,7 @@
 import React from 'react'
 
 import CardList from './../components/CardList'
-import IntermediateState from './../components/IntermediateState'
+import { IntermediateState } from 'wikipedia-react-components'
 
 import Article from './../containers/Article'
 

@@ -1,13 +1,9 @@
 import React from 'react'
+import { Button, HorizontalList, IntermediateState, TruncatedText } from 'wikipedia-react-components'
 
 import './styles.less'
 
 import Overlay from './../../containers/Overlay'
-import TruncatedText from './../../containers/TruncatedText'
-
-import IntermediateState from './../../components/IntermediateState';
-import Button from './../../components/Button';
-import HorizontalList from './../../components/HorizontalList';
 
 export default React.createClass({
   getInitialState() {

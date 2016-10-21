@@ -1,9 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 
-import IntermediateState from './../../components/IntermediateState'
-import ErrorBox from './../../components/ErrorBox'
-import Icon from './../../components/Icon'
+import { ErrorBox, Icon, IntermediateState } from 'wikipedia-react-components'
 
 import Overlay from './../../containers/Overlay'
 

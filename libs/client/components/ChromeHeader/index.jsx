@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 
 import Header from './../../components/Header'
-import Icon from './../Icon'
+import { Icon } from 'wikipedia-react-components'
 
 import './styles.less'
 

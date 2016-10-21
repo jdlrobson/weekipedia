@@ -4,8 +4,7 @@ import Overlay from './../../containers/Overlay'
 import Content from './../../containers/Content'
 import Panel from './../../containers/Panel'
 
-import IntermediateState from './../../components/IntermediateState';
-import Icon from './../../components/Icon'
+import { Icon, IntermediateState } from 'wikipedia-react-components';
 
 import './styles.less'
 import './icons.less'

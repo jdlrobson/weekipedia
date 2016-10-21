@@ -1,7 +1,7 @@
 import React from 'react'
 
 import Overlay from './../../containers/Overlay'
-import Button from './../../components/Button'
+import { Button } from 'wikipedia-react-components'
 
 export default React.createClass({
   getDefaultProps() {

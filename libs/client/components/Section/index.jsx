@@ -1,10 +1,8 @@
 import React, { Component } from 'react'
 
-import Icon from './../Icon'
+import { Icon, ErrorBox, IntermediateState } from 'wikipedia-react-components'
 import EditIcon from './../EditIcon'
 import SectionContent from './../SectionContent'
-import IntermediateState from './../IntermediateState'
-import ErrorBox from './../ErrorBox'
 
 import { getSections } from './../../react-helpers'
 
