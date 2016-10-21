@@ -165,11 +165,11 @@ export default React.createClass({
     } else {
       secondaryIcon = addDiscussionBtn;
       content = [
-        <Panel isHeading={true}>
+        <Panel isHeading={true} key="active-header-panel">
           The following conversations are currently active
         </Panel>
       ].concat(
-        <LinkList className="scrollable">
+        <LinkList className="scrollable" key="talk-topics-list">
           {
             sections.map( function ( section, i ) {
               return <a href={"#/talk/" + ( i + 1 ) }>{section.line}</a>
