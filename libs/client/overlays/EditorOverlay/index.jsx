@@ -1,12 +1,11 @@
 import React from 'react'
-import { Button, Icon, IntermediateState, TruncatedText } from 'wikipedia-react-components'
+import { Button, Icon, Input, IntermediateState, TruncatedText } from 'wikipedia-react-components'
 
 import Overlay from './../../containers/Overlay'
 import Content from './../../containers/Content'
 import Panel from './../../containers/Panel'
 
 import SectionContent from './../../components/SectionContent'
-import Input from './../../components/Input'
 
 import './styles.less'
 import './icons.less'

@@ -1,8 +1,7 @@
 import React from 'react'
+import { Button, Input, IntermediateState } from 'wikipedia-react-components'
 
 import Overlay from './../../containers/Overlay'
-import Input from './../../components/Input'
-import { Button, IntermediateState } from 'wikipedia-react-components'
 
 import './styles.less'
 
