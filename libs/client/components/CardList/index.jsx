@@ -90,7 +90,7 @@ export default React.createClass({
     this.setState({ list : null });
     this.fetchCardListProps( apiEndpoint, cardListProps ).then( function ( state ) {
       self.setState( state );
-      if ( state.cards.length === 0 ) {
+      if ( state.cards.length === 0 && props.onEmpty ) {
         onEmpty();
       }
     } ).catch( function ( error ) {
