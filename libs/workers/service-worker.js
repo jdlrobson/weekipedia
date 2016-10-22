@@ -2,7 +2,7 @@
 const version = global.__VERSION__;
 
 import {
-  precache, router, cacheFirst, networkOnly, options
+  precache, router, cacheFirst, networkOnly, options, networkFirst
 } from 'sw-toolbox'
 
 options.cache.name = 'weekipedia-' + version.number;
@@ -17,6 +17,11 @@ var staticAssets = [
   '/style.rtl.css',
   '/wiki/Special:Shell'
 ]
+const API_PATH = process.env.API_PATH
+const OFFLINE_STRATEGY = process.env.OFFLINE_STRATEGY
+
+// In addition to the static assets store the last 50 page views
+options.cache.maxEntries = 50 + staticAssets.length;
 
 if ( version.wordmark ) {
   staticAssets.push( version.wordmark );
@@ -27,6 +32,11 @@ precache( staticAssets )
 
 // Serve static assets from cache first
 staticAssets.forEach( ( asset ) => router.get( asset, cacheFirst ) )
+
+// The all offline strategy will cache every page you visit
+if ( OFFLINE_STRATEGY === 'all' ) {
+  router.get( API_PATH + 'page/(.*)', networkFirst );
+}
 
 // Serve API requests from the network
 router.get( '/api/(.*)', networkOnly )

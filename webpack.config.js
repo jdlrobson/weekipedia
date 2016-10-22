@@ -2,6 +2,8 @@ const offlineVersion = process.env.OFFLINE_VERSION;
 const WORDMARK = process.env.SITE_WORDMARK_PATH;
 const NODE_ENV = process.env.NODE_ENV
 const USE_POLYFILLS = Boolean( process.env.USE_POLYFILLS );
+const OFFLINE_STRATEGY = process.env.OFFLINE_STRATEGY || 'none';
+const API_PATH = process.env.API_PATH || '/api/';
 
 var webpack = require('webpack')
 var ExtractTextPlugin = require('extract-text-webpack-plugin')
@@ -23,7 +25,11 @@ module.exports = {
     plugins: [
       new ExtractTextPlugin('style.css', { allChunks: true }),
       new webpack.DefinePlugin({
-        'process.env': {NODE_ENV: `"${process.env.NODE_ENV}"`},
+        'process.env': {
+          OFFLINE_STRATEGY: `"${OFFLINE_STRATEGY}"`,
+          API_PATH: `"${API_PATH}"`,
+          NODE_ENV: `"${process.env.NODE_ENV}"`
+        },
         'global.__VERSION__': JSON.stringify( {
           number: offlineVersion,
           wordmark: WORDMARK

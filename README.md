@@ -121,6 +121,15 @@ Support a larger set of browsers (including phantomjs for headless testing) by e
 
 ### Offline support
 
+First you'll need to chose an offline strategy.
+
+	export OFFLINE_STRATEGY=all # all pages when visited will be cached locally
+	export OFFLINE_STRATEGY=shell # only shell will be cached
+
+
+You'll need to set an offline version. Please bump this whenever you want to trigger updates to your users.
+It's recommended you use the commit id if working with git.
+
 	OFFLINE_VERSION=$(git log | head -n1 | awk '{print $2}')
 	export OFFLINE_VERSION=$OFFLINE_VERSION
 	npm run compile
