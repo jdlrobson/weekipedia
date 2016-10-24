@@ -7,7 +7,8 @@ Page.prototype = {
     return this.bias;
   },
   age: function () {
-    return this._age ? this._age : ( new Date( this.trendedAt ) - new Date( this.start ) ) /
+    return this._age ? this._age :
+      ( new Date( this.trendedAt || this.updated ) - new Date( this.start ) ) /
       1000 / 60;
   },
   editsPerMinute: function () {
@@ -20,7 +21,7 @@ Page.prototype = {
 Page.fromJSON = function ( json ) {
   var d = new Date();
   if ( !json.trendedAt ) {
-    json.trendedAt = d.toISOString();
+    json.trendedAt = json.updated || d.toISOString();
   }
   return new Page( json );
 };
