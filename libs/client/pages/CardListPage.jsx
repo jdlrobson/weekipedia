@@ -30,7 +30,9 @@ export default React.createClass({
   },
   render(){
     var props = this.props;
-    var body = [ <CardList key={"card-list-page-card-list-" + props.language_project} {...props}
+    // api endpoint may change...
+    var key = 'card-list-page-card-list-' + props.language_project + '-' + props.apiEndpoint;
+    var body = [ <CardList key={key} {...props}
       title={undefined}
       onEmpty={this.onEmpty}/> ]
       .concat( props.children );
