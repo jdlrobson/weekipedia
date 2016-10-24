@@ -1,6 +1,7 @@
 var assert = require( 'assert' );
 
 import { page, page2, page3, page4,
+    PeteBurns2,
    CascadeMall,PacificTyphoon, Liliuokalani, ShimonPeres, Hoboken } from './examples'
 
 import calcScore from './../../../../libs/server/endpoints/trending/scoring.js'
@@ -32,5 +33,9 @@ describe('calcScore', function() {
 
   it('number of contributors weighs more heavily than number of edits - even if only half the number of edits', function() {
     assert.ok( calcScore( CascadeMall, 84 ) > calcScore( PacificTyphoon, 84 ) );
+  });
+
+  it('Negative bytes is not a bad thing and results in a positive score.', function() {
+    assert.ok( calcScore( PeteBurns2, 84 ) > 0 );
   });
 });

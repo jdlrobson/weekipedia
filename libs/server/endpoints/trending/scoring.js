@@ -6,6 +6,9 @@ function calcScore( q, hrs ) {
   var editScore = ( ( -4 * q.volatileFlags ) + ( q.edits - q.anonEdits - ( q.reverts / 2 ) - MIN_EDITS ) + ( q.anonEdits * 0.2 ) );
   var numContributors = q.anons.length + q.contributors.length;
   var byteScore = ( q.bytesChanged / ( q.edits / numContributors ) );
+  if ( byteScore < 0 ) {
+    byteScore = -byteScore;
+  }
   var contributionScore = byteScore * ( q.contributors.length / 2 );
 
   if ( q.views > 0 && hrs < 84 ) {
