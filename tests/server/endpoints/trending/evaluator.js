@@ -1,7 +1,7 @@
 var assert = require( 'assert' );
 
 import { agaricAcid, battleMosul, deaths2016, attaUr, cyberAttacks,
-  NintendoSwitch,
+  NintendoSwitch, PeteBurns, Newspaper,
   WideAreaNetwork, AmericanFootball, JoanneAlbum } from './examples'
 
 import TrendEvaluator from './../../../../libs/server/endpoints/trending/evaluator'
@@ -51,5 +51,9 @@ describe('isTrending', function() {
 
   it( 'NintendoSwitch is trending', function () {
     assert.ok( evaluator.isTrending( NintendoSwitch ) );
+  })
+
+  it( 'PeteBurns is trending', function () {
+    assert.ok( evaluator.isTrending( PeteBurns ) );
   })
 });

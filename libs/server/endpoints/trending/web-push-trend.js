@@ -17,8 +17,8 @@ const TREND_MIN_ANON_EDITS = process.env.TREND_MIN_ANON_EDITS || 1;
 var evaluator = new Evaluator( {
   minEdits: MIN_EDITS,
   minContributors: MIN_CONTRIBUTORS,
-  maxSpeed: EDITS_PER_MIN,
-  minBias: BIAS,
+  minSpeed: EDITS_PER_MIN,
+  maxBias: BIAS,
   minAnonEdits: 1,
   minAge: MIN_AGE,
   maxAge: MAX_AGE
