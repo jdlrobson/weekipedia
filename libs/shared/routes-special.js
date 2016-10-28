@@ -44,8 +44,8 @@ var routes = [
       titleSansPrefix = titleParts[0];
       props.project = project || props.project;
       props.language_project = lang + '.' + props.project;
-      props.mobileUrl = utils.getAbsoluteUrl( title, lang, 'm.' + props.project + '.org' );
-      props.desktopUrl = utils.getAbsoluteUrl( title, lang, props.project + '.org' );
+      props.mobileUrl = utils.getAbsoluteUrl( title, lang, props.project, true );
+      props.desktopUrl = utils.getAbsoluteUrl( title, lang, props.project );
 
       // FIXME: i18n
       if ( title.indexOf( 'Special:' ) === 0 ) {
@@ -102,8 +102,8 @@ function addSpecialPage( title, Class, handler ) {
       props.language_project = lang + '.' + props.project;
 
       props.lang = lang;
-      props.mobileUrl = utils.getAbsoluteUrl( 'Special:' + title + suffix, lang, 'm.' + props.project + '.org' );
-      props.desktopUrl = utils.getAbsoluteUrl( 'Special:' + title + suffix, lang, props.project + '.org' );
+      props.mobileUrl = utils.getAbsoluteUrl( 'Special:' + title + suffix, lang, props.project, true );
+      props.desktopUrl = utils.getAbsoluteUrl( 'Special:' + title + suffix, lang, props.project );
       props.children = [
         React.createElement( Class,
           Object.assign( {}, props, {
