@@ -188,7 +188,7 @@ export default React.createClass({
     } );
   },
   onClickInternalLink( ev ) {
-    var href, parts, match, refId, title;
+    var href, parts, match, refId, title, path;
     var link = ev.currentTarget;
     var childNode = link.firstChild;
     var parentNode = link.parentNode;
@@ -203,10 +203,12 @@ export default React.createClass({
 
     } else if ( childNode && childNode.nodeName === 'IMG' ) {
       href = link.getAttribute( 'href' ) || '';
-      match = href.match( /\/wiki\/File\:(.*)/ );
-      if ( match && match[1] ) {
+      match = href.match( /\/wiki\/File\:(.*)|^File\:(.*)$/ );
+      if ( match ) {
         ev.preventDefault();
-        props.router.navigateTo( '#/media/' + match[1] );
+        ev.stopPropagation();
+        path = match[1] || match[2];
+        props.router.navigateTo( { hash: '#/media/' + path } );
       }
     } else {
       href = link.getAttribute( 'href' ) || '';
