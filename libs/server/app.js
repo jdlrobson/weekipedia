@@ -147,7 +147,11 @@ function authCallback( req, res ) {
 app.get( '/auth/mediawiki',
   function ( req, res, next ) {
     if ( !req.isAuthenticated() && !req.query.oauth_verifier ) {
-      req.session.returnto = req.query.returnto || req.get( 'Referrer' );
+      if ( req.query.returnto && req.query.project ) {
+        req.session.returnto = '/' + req.query.project + '/' + req.query.returnto;
+      } else {
+        req.session.returnto = req.get( 'Referrer' );
+      }
     }
     next();
   }, passport.authenticate( 'mediawiki' ) );

@@ -10,12 +10,13 @@ export default React.createClass({
     };
   },
   render(){
-
+    var props = this.props;
+    var loginUrl = '/' + props.language_project + '/Special:UserLogin?returnto=' + encodeURIComponent( props.title );
     return (
-      <Overlay {...this.props} isDrawer="1">
-        <p>{this.props.message}</p>
+      <Overlay {...props} isDrawer="1">
+        <p>{props.message}</p>
         <div>
-          <Button label='Log in' href='/auth/mediawiki' isPrimary="1" />
+          <Button label='Log in' href={loginUrl} isPrimary="1" />
         </div>
         <p>
           <a href="https://www.mediawiki.org/wiki/Special:CreateAccount">Sign up at MediaWiki.org</a>

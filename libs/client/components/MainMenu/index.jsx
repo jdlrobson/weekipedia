@@ -26,6 +26,7 @@ class MainMenu extends Component {
   }
   getUserMenu() {
     var login, username, usertools,
+      props = this.props,
       msg = this.props.msg,
       prefix = '/' + this.props.lang + '/wiki/',
       onMenuItemClick = this.onMenuItemClick.bind(this);
@@ -52,7 +53,8 @@ class MainMenu extends Component {
           </li>
         ];
       } else {
-        login = <Icon glyph="mf-anonymous-invert" href={prefix + 'Special:UserLogin'}
+        login = <Icon glyph="mf-anonymous-invert"
+          href={prefix + 'Special:UserLogin?returnto=' + props.title}
           label={msg('menu-login')} type="before" onClick={this.onLoginClick.bind(this)} />;
       }
       return (

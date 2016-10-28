@@ -8,7 +8,10 @@ import Content from './../containers/Content'
 // Pages
 export default React.createClass({
   render() {
+    var props = this.props;
     var createAccountUrl = "https://meta.wikimedia.org/wiki/Special:CreateAccount?campaign=weekipedia";
+    var url = '/auth/mediawiki?project=' + props.language_project + '&returnto=' + props.query.returnto;
+
     var body = (
       <Content className="content">
         <p>Logged in users enjoy the additional benefits of <strong>managing lists of articles via collections</strong> and
@@ -16,7 +19,7 @@ export default React.createClass({
         <p>To login you'll need a Wikimedia account that allows editing to projects owned by the Wikimedia Foundation.<br/>If you use <strong>Wikipedia</strong> you already have one.</p>
         <div style={{ textAlign: 'center' }}>
           <p>
-            <Button label="Sign in via Wikimedia" href="/auth/mediawiki" isPrimary={true} />
+            <Button label="Sign in via Wikimedia" href={url} isPrimary={true} />
           </p>
           <p>
             <Button label="Create a Wikimedia account" href={createAccountUrl} />
@@ -26,7 +29,7 @@ export default React.createClass({
     );
 
     return (
-      <Article {...this.props} isSpecialPage='yes' title={'Sign in'} body={body}>
+      <Article {...props} isSpecialPage='yes' title={'Sign in'} body={body}>
       </Article>
     )
   }
