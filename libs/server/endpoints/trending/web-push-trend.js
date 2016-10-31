@@ -20,6 +20,7 @@ var evaluator = new Evaluator( {
   minSpeed: EDITS_PER_MIN,
   maxBias: BIAS,
   minAnonEdits: 1,
+  maxAnonEditRatio: 0.51,
   minAge: MIN_AGE,
   maxAge: MAX_AGE
 } );

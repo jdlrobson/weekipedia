@@ -11,6 +11,7 @@ TrendEvaluator.prototype = {
   isTrending: function ( item ) {
     return !item.views && !item.volatileFlags && this.mightTrend( item ) && item.contributors.length >= this.options.minContributors && item.anonEdits >= this.options.minAnonEdits &&
       item.edits > this.options.minEdits &&
+      ( item.anonEdits === 0 || ( item.anonEdits / item.edits ) < this.options.maxAnonEditRatio ) &&
       item.editsPerMinute() > this.options.minSpeed && item.getBias() <= this.options.maxBias;
   }
 };

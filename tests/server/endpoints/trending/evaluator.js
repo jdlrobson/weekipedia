@@ -2,6 +2,7 @@ var assert = require( 'assert' );
 
 import { agaricAcid, battleMosul, deaths2016, attaUr, cyberAttacks,
   NintendoSwitch, PeteBurns, Newspaper,
+  Keijo, IcelandElection, NotreDame, Rainbow,
   WideAreaNetwork, AmericanFootball, JoanneAlbum } from './examples'
 
 import TrendEvaluator from './../../../../libs/server/endpoints/trending/evaluator'
@@ -11,6 +12,7 @@ var evaluator = new TrendEvaluator( {
   minContributors: 4,
   minSpeed: 0.1,
   minAnonEdits: 1,
+  maxAnonEditRatio: 0.51,
   maxBias: 0.6,
   minAge: 5,
   maxAge: 180
@@ -55,5 +57,21 @@ describe('isTrending', function() {
 
   it( 'PeteBurns is trending', function () {
     assert.ok( evaluator.isTrending( PeteBurns ) );
+  })
+
+  it( 'Keijo is not trending', function () {
+    assert.ok( !evaluator.isTrending( Keijo ), 'when anonymous edits account for over half edits' );
+  })
+
+  it( 'IcelandElection is trending', function () {
+    assert.ok( evaluator.isTrending( IcelandElection ) );
+  })
+
+  it( 'NotreDame is not trending', function () {
+    assert.ok( !evaluator.isTrending( NotreDame ), 'too many anons' );
+  })
+
+  it( 'Rainbow is not trending', function () {
+    assert.ok( evaluator.isTrending( Rainbow ), 'band disbanded' );
   })
 });
