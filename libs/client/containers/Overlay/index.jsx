@@ -50,6 +50,8 @@ class Overlay extends Component {
         siteoptions: props.siteoptions,
         siteinfo: props.siteinfo,
         search: props.search,
+        includeSiteBranding: props.siteoptions &&
+          ( props.siteoptions.includeSiteBranding && !props.siteoptions.searchIcon ),
         secondaryIcon: props.secondaryIcon,
         main: props.header
       };

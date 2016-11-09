@@ -322,6 +322,11 @@ export default React.createClass({
       navigationClasses += ' navigation-full-screen';
     }
 
+    if ( props.siteoptions.searchIcon ) {
+      secondaryIcon = <div>{secondaryIcon}<Icon glyph="search" onClick={this.onClickSearch}/></div>
+      search = null;
+    }
+
     return (
       <div id="mw-mf-viewport" className={navigationClasses}
         lang={this.props.lang} dir={isRTL ? 'rtl' : 'ltr'}>
@@ -331,7 +336,9 @@ export default React.createClass({
             onItemClick={this.closePrimaryNav} session={this.state.session}/>
         </nav>
         <div id="mw-mf-page-center" onClick={this.closePrimaryNav}>
-          <ChromeHeader {...props} primaryIcon={icon} search={search} secondaryIcon={secondaryIcon}/>
+          <ChromeHeader {...props} primaryIcon={icon}
+            includeSiteBranding={props.siteoptions.includeSiteBranding}
+            search={search} secondaryIcon={secondaryIcon}/>
           {this.state.children}
           {shield}
         </div>

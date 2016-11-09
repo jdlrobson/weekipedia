@@ -40,6 +40,7 @@ export default React.createClass({
       [ 'expandArticlesByDefault', 'Expand all articles by default' ],
       [ 'expandSectionsByDefault', 'Expand all sections by default' ],
       [ 'includeSiteBranding', 'Include site branding' ],
+      [ 'searchIcon', 'Replace the search input with an icon' ],
       [ 'allowForeignProjects', 'Load other wikimedia projects inside app (experimental)' ],
       [ 'includeTableOfContents', 'Show the table of contents to tablet users' ]
     ];

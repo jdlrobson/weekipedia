@@ -14,7 +14,7 @@ class ChromeHeader extends Component {
     var heading, project, icon, siteinfo, content;
     var props = this.props;
     var search = props.search;
-    var useSiteBranding = props.siteoptions.includeSiteBranding;
+    var useSiteBranding = props.includeSiteBranding;
     var secondaryIcon = useSiteBranding ? <Icon /> : null;
     if ( this.props.secondaryIcon ) {
       secondaryIcon = this.props.secondaryIcon;

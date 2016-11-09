@@ -91,6 +91,10 @@ Setup site branding (logo in header)
 
 	export SITE_INCLUDE_BRANDING=1
 
+Replace the search input in the header with a search button
+
+	export CHROME_HEADER_SEARCH_ICON=1
+
 Enable table of contents
 
 	export TABLE_OF_CONTENTS=1
