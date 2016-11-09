@@ -286,7 +286,9 @@ export default React.createClass({
   },
   render(){
     var props = this.props;
+    // FIXME: Remove msg when using wikipedia-react-components > 0.9.3
     var search = (<SearchForm msg={this.props.msg}
+      placeholder={props.msg( 'search' )}
       language_project={props.language_project}
       onClickSearch={this.onClickSearch} />);
 
