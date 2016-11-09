@@ -75,10 +75,8 @@ export default React.createClass({
   render(){
     var heading, panel, msg;
     var props = this.props;
-    // FIXME: Remove msg when using wikipedia-react-components > 0.9.3
     var search = <SearchForm
       placeholder={props.msg( 'search' )}
-      msg={props.msg}
       defaultValue={props.defaultValue}
       onSearch={this.onSearch} onSearchSubmit={this.onSearchSubmit} focusOnRender="1" />;
 

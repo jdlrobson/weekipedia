@@ -4,7 +4,7 @@ import mwStorage from './../mediawiki-storage'
 
 import Article from './../containers/Article'
 
-import { IntermediateState } from 'wikipedia-react-components'
+import { IntermediateState, Checkbox } from 'wikipedia-react-components'
 
 // Pages
 export default React.createClass({
@@ -16,10 +16,9 @@ export default React.createClass({
       return JSON.parse( config );
     }
   },
-  updateSetting( ev ) {
-    var el = ev.currentTarget;
+  updateSetting( name, value ) {
     var config = this.state.mobileOptions;
-    config[el.getAttribute( 'name' )] = el.checked;
+    config[name] = value;
     this.setState( { mobileOptions: config } );
     this.save( config );
     this.props.showNotification( 'Setting saved. You will need to refresh your browser for the changes to go into effect.' );
@@ -54,12 +53,11 @@ export default React.createClass({
             var desc = args[1];
 
             return (
-              <div key={"mobile-option-" + i}>
-                <input type="checkbox" name={name}
-                  checked={state.mobileOptions[name]}
-                  onChange={self.updateSetting} />
-                <label>{desc}</label>
-              </div>
+              <Checkbox key={"mobile-option-" + i}
+                name={name}
+                checked={state.mobileOptions[name]}
+                onToggle={self.updateSetting}
+                label={desc} />
             );
           } )
         }
