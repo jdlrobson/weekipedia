@@ -3,6 +3,7 @@ var assert = require( 'assert' );
 import { agaricAcid, battleMosul, deaths2016, attaUr, cyberAttacks,
   NintendoSwitch, PeteBurns, Newspaper,
   Keijo, IcelandElection, NotreDame, Rainbow,
+  TrumpPresident, Rupee,
   WideAreaNetwork, AmericanFootball, JoanneAlbum } from './examples'
 
 import TrendEvaluator from './../../../../libs/server/endpoints/trending/evaluator'
@@ -73,5 +74,13 @@ describe('isTrending', function() {
 
   it( 'Rainbow is not trending', function () {
     assert.ok( evaluator.isTrending( Rainbow ), 'band disbanded' );
+  })
+
+  it( 'Trump is trending', function () {
+    assert.ok( evaluator.isTrending( TrumpPresident ) );
+  })
+
+  it( 'Rupee is trending', function () {
+    assert.ok( evaluator.isTrending( Rupee ), '(Modi\'s ban)' );
   })
 });
