@@ -10,7 +10,7 @@ import Content from './../../containers/Content'
 // Main component
 class ArticleHeader extends Component {
   render(){
-    var
+    var content = [],
       header = [],
       additionalClasses = [],
       lead = this.props.lead || {}
@@ -59,11 +59,25 @@ class ArticleHeader extends Component {
     if ( lead.infobox ) {
       additionalClasses.push( 'article-feature-infobox' );
     }
+
+    if ( !lead.mainpage ) {
+      content.push( <div className="heading-holder"
+        key="article-header-heading">{header}</div> );
+    }
+
+    if ( lead.paragraph ) {
+      content.push( <SectionContent {...this.props}
+        key="article-header-paragraph"
+        className="lead-paragraph" text={lead.paragraph} /> );
+    }
+
+    if ( lead.infobox ) {
+      content.push( <Infobox {...this.props} text={lead.infobox}
+        key="article-header-infobox" /> );
+    }
     return (
       <Content key="article-row-0" className={"pre-content " + additionalClasses.join( ' ' )}>
-        <div className="heading-holder">{header}</div>
-        <SectionContent {...this.props} className="lead-paragraph" text={lead.paragraph} />
-        <Infobox {...this.props} text={lead.infobox} />
+        {content}
         <SectionContent {...this.props} className="lead-section" text={lead.text} />
       </Content>
     )
