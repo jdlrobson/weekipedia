@@ -22,7 +22,7 @@ class SectionContent extends Component {
   render(){
     var divId;
     var id = this.props.id;
-    if ( id ) {
+    if ( id && typeof id === 'number' ) {
       // For consistency with MobileFrontend the id uses the section number - the lead section
       divId = 'content-collapsible-block-' + ( id - 1 );
     }
