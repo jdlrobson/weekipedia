@@ -128,6 +128,14 @@ export default React.createClass({
     }
   },
   render(){
+    var lead = this.state.lead || this.props.lead || {};
+    if ( !lead || !lead.id ) {
+      return <Content><IntermediateState key="article-loading" /></Content>;
+    } else {
+      return this.renderPage();
+    }
+  },
+  renderPage(){
     var leadHtml, toc,
       wikiPageProps = {},
       props = this.props,
