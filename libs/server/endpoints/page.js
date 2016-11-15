@@ -183,11 +183,13 @@ export default function ( title, lang, project, includeReferences ) {
             undoLinkRewrite( doc );
           }
           var infobox = extractInfobox( doc );
-          var leadParagraph = extractLeadParagraph( doc );
+          if ( !json.lead.mainpage ) {
+            var leadParagraph = extractLeadParagraph( doc );
+            json.lead.paragraph = leadParagraph;
+          }
           var issues = extractPageIssues( doc );
           json.lead.issues = issues;
           json.lead.infobox = infobox;
-          json.lead.paragraph = leadParagraph;
           json.lead.hatnote = extractHatnote( doc );
           json.lead.sections[0].text = doc.body.innerHTML;
         }
