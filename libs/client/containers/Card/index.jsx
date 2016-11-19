@@ -1,21 +1,10 @@
 import React, { Component } from 'react'
-import ReactDOM from 'react-dom'
 
 import { TruncatedText } from 'wikipedia-react-components'
 
 import './styles.less'
 
 class Card extends Component {
-  navigateTo(ev) {
-    var node = ReactDOM.findDOMNode( this );
-    var link = node.querySelector( 'a' );
-    var href = link.getAttribute( 'href' );
-    var title = link.getAttribute( 'title' );
-    if ( href ) {
-      ev.preventDefault();
-      this.props.router.navigateTo( { pathname: href }, title );
-    }
-  }
   render(){
     var heading;
     var props = this.props;
@@ -53,7 +42,7 @@ class Card extends Component {
     }
 
     return (
-      <div className={className} onClick={this.navigateTo.bind(this)}>
+      <div className={className} onClick={props.onClick}>
         {this.props.indicator}
         {illustration}
         <div className="card-detail">

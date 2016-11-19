@@ -23,6 +23,16 @@ function getCards( data, props, keyPrefix ) {
     data.pages.forEach( function ( item, i ) {
       var id = item.revid || item.pageid || item.id;
       item.key = keyPrefix + 'card-' + i + '-' + id + '-' + props.language_project;
+      item.onClick = function ( ev ) {
+        var node = ev.currentTarget;
+        var link = node.tagName === 'A' ? node : node.querySelector( 'a' );
+        var href = link.getAttribute( 'href' );
+        var title = link.getAttribute( 'title' );
+        if ( href ) {
+          ev.preventDefault();
+          props.router.navigateTo( { pathname: href }, title );
+        }
+      };
       cards.push( React.createElement( CardClass, Object.assign( {}, props, item ) ) );
     } );
   }
