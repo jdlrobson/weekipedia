@@ -4,6 +4,7 @@ import { agaricAcid, battleMosul, deaths2016, attaUr, cyberAttacks,
   NintendoSwitch, PeteBurns, Newspaper,
   Keijo, IcelandElection, NotreDame, Rainbow,
   TrumpPresident, Rupee,
+  AmistadMemorial, JeffSessions,
   WideAreaNetwork, AmericanFootball, JoanneAlbum } from './examples'
 
 import TrendEvaluator from './../../../../libs/server/endpoints/trending/evaluator'
@@ -14,7 +15,7 @@ var evaluator = new TrendEvaluator( {
   minSpeed: 0.1,
   minAnonEdits: 1,
   maxAnonEditRatio: 0.51,
-  maxBias: 0.6,
+  maxBias: 0.55,
   minAge: 5,
   maxAge: 180
 } );
@@ -82,5 +83,13 @@ describe('isTrending', function() {
 
   it( 'Rupee is trending', function () {
     assert.ok( evaluator.isTrending( Rupee ), '(Modi\'s ban)' );
+  })
+
+  it( 'JeffSessions is trending', function () {
+    assert.ok( evaluator.isTrending( JeffSessions ) );
+  })
+
+  it( 'AmistadMemorial is not trending', function () {
+    assert.ok( !evaluator.isTrending( AmistadMemorial ) );
   })
 });

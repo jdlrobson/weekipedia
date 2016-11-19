@@ -7,7 +7,7 @@ import addProps from './../prop-enricher'
 import cachedResponse from './../../cached-response.js'
 
 const EDITS_PER_MIN = process.env.TREND_EDITS_PER_MIN || 20 / 60;
-const BIAS = process.env.TREND_BIAS || 0.6;
+const BIAS = process.env.TREND_BIAS || 0.55;
 const MIN_AGE = process.env.TREND_MIN_AGE || 5;
 const MAX_AGE = process.env.TREND_MAX_AGE || 50;
 const MIN_EDITS = process.env.TREND_MIN_TOTAL_EDITS || 20;
