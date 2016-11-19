@@ -4,8 +4,7 @@ import messages, { msg } from 'mediawiki-messages'
 import App from './../client/components/App'
 
 import router from './router.js'
-import commonRoutes from './routes.js'
-import specialRoutes from './routes-special.js'
+import sharedRoutes from './routes.js'
 
 var globalProps;
 
@@ -13,7 +12,7 @@ function init( config, routes ) {
   routes = routes || [];
 
   // merge common and global routes
-  routes = commonRoutes.concat( specialRoutes ).concat( routes );
+  routes = sharedRoutes.concat( routes );
 
   // add home page route to end so it gets added last.
   routes.push(
