@@ -5,6 +5,7 @@ import { agaricAcid, battleMosul, deaths2016, attaUr, cyberAttacks,
   Keijo, IcelandElection, NotreDame, Rainbow,
   TrumpPresident, Rupee,
   AmistadMemorial, JeffSessions,
+  PukhrayanTrain,
   WideAreaNetwork, AmericanFootball, JoanneAlbum } from './examples'
 
 import TrendEvaluator from './../../../../libs/server/endpoints/trending/evaluator'
@@ -17,7 +18,7 @@ var evaluator = new TrendEvaluator( {
   maxAnonEditRatio: 0.51,
   maxBias: 0.55,
   minAge: 5,
-  maxAge: 180
+  maxAge: 300
 } );
 
 describe('isTrending', function() {
@@ -87,6 +88,10 @@ describe('isTrending', function() {
 
   it( 'JeffSessions is trending', function () {
     assert.ok( evaluator.isTrending( JeffSessions ) );
+  })
+
+  it( 'PukhrayanTrain is trending', function () {
+    assert.ok( evaluator.isTrending( PukhrayanTrain ), 'Some events may need 5 hours to trend as the develop.' );
   })
 
   it( 'AmistadMemorial is not trending', function () {
