@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-import Card from './../../containers/Card'
+import { Card } from 'wikipedia-react-components'
 
 import './styles.less'
 

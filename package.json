@@ -67,7 +67,7 @@
     "webpack": "^1.13.1",
     "webpack-dev-server": "^1.14.1",
     "wmui-base": "wikimedia/WikimediaUI-Base",
-    "wikipedia-react-components": "^0.10.0",
+    "wikipedia-react-components": "^1.0.1",
     "wikitrender": "jdlrobson/wikitrender"
   },
   "dependencies": {

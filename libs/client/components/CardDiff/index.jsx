@@ -2,9 +2,7 @@ import React, { Component } from 'react'
 
 import './styles.less'
 
-import { Icon } from 'wikipedia-react-components'
-
-import Card from './../../containers/Card'
+import { Icon, Card } from 'wikipedia-react-components'
 
 class CardDiff extends Component {
   render(){

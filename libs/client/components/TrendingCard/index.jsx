@@ -1,8 +1,6 @@
 import React, { Component } from 'react'
 
-import { Icon } from 'wikipedia-react-components'
-
-import Card from './../../containers/Card'
+import { Icon, Card } from 'wikipedia-react-components'
 
 import './styles.less'
 
