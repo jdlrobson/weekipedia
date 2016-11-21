@@ -1,7 +1,8 @@
 import React from 'react'
 
+import { CardWithLocation } from 'wikipedia-react-components'
+
 import CardList from './../components/CardList'
-import PreviewCard from './../components/PreviewCard'
 import EmptyList from './../components/EmptyList'
 
 import Article from './../containers/Article'
@@ -9,7 +10,7 @@ import Article from './../containers/Article'
 export default React.createClass({
   getDefaultProps: function () {
     return {
-      CardClass: PreviewCard,
+      CardClass: CardWithLocation,
       api: null,
       apiEndpoint: null,
       title: null,

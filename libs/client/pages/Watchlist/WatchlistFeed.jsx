@@ -1,6 +1,6 @@
 import React from 'react'
 
-import DiffCard from './../../components/CardDiff'
+import { CardDiff } from 'wikipedia-react-components'
 
 import CardListPage from './../CardListPage'
 
@@ -24,7 +24,7 @@ export default React.createClass({
 
     return (
       <CardListPage {...this.props} apiEndpoint={endpoint} emptyProps={emptyProps}
-        CardClass={DiffCard} isDiffCardList={true} />
+        CardClass={CardDiff} isDiffCardList={true} />
     )
   }
 })

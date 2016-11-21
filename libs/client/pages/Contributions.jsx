@@ -2,8 +2,7 @@ import React from 'react'
 
 import CardListPage from './CardListPage'
 
-import CardDiff from './../components/CardDiff'
-import { Icon } from 'wikipedia-react-components'
+import { Icon, CardDiff } from 'wikipedia-react-components'
 
 // Pages
 export default React.createClass({

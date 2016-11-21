@@ -6,7 +6,6 @@ import Article from './../../containers/Article'
 import Content from './../../containers/Content'
 
 import './styles.less'
-import './icons.less'
 
 const IGNORED_GROUPS = [ 'user', 'autoconfirmed', '*' ];
 

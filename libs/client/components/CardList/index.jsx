@@ -1,7 +1,7 @@
 import React from 'react'
 
-import PreviewCard from './../PreviewCard'
-import { ErrorBox, IntermediateState, ListHeader } from 'wikipedia-react-components';
+import { ErrorBox, IntermediateState, ListHeader,
+  CardWithLocation } from 'wikipedia-react-components';
 
 import Content from './../../containers/Content'
 
@@ -12,6 +12,7 @@ const MONTHS = ['January','February','March','April','May','June',
   'July','August','September','October','November','December'];
 
 function getCards( data, props, keyPrefix ) {
+  var source = props.language_project || '/wiki';
   var cards = [],
     CardClass = props.CardClass;
 
@@ -33,6 +34,9 @@ function getCards( data, props, keyPrefix ) {
           props.router.navigateTo( { pathname: href }, title );
         }
       };
+      if ( item.revid ) {
+        item.url = '/' + source + '/Special:MobileDiff/' + item.revid;
+      }
       cards.push( React.createElement( CardClass, Object.assign( {}, props, item ) ) );
     } );
   }
@@ -42,7 +46,7 @@ function getCards( data, props, keyPrefix ) {
 export default React.createClass({
   getDefaultProps: function () {
     return {
-      CardClass: PreviewCard,
+      CardClass: CardWithLocation,
       infiniteScroll: true,
       isDiffCardList: false,
       endpoint: null,

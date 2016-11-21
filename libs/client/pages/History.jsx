@@ -1,6 +1,6 @@
 import React from 'react'
 
-import DiffCard from './../components/CardDiff'
+import { CardDiff } from 'wikipedia-react-components'
 
 import CardListPage from './CardListPage'
 
@@ -31,7 +31,7 @@ export default React.createClass({
       apiEndpoint: endpoint,
       title: 'Page History',
       tagline: tagline,
-      CardClass: DiffCard
+      CardClass: CardDiff
     } );
 
     return (
