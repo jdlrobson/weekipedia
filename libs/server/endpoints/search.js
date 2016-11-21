@@ -1,15 +1,14 @@
 import mwApi from './mwApi'
+import { PAGEIMAGES_API_PROPS } from './consts'
 
 export default function ( lang, term, ns, project, isFullTextSearch ) {
-  var params = {
+  var params = Object.assign( {
     prop: 'pageterms|pageimages|pageprops',
     ppprop: 'displaytitle',
     piprop: 'thumbnail',
-    pithumbsize: '80',
-    pilimit: 15,
     wbpterms: 'description',
     generator: isFullTextSearch ? 'search' : 'prefixsearch'
-  };
+  }, PAGEIMAGES_API_PROPS );
 
   if ( isFullTextSearch ) {
     params.gsrlimit = 50;

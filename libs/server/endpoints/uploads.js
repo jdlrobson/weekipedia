@@ -1,4 +1,5 @@
 import mwApi from './mwApi'
+import { PAGEIMAGES_API_PROPS } from './consts'
 
 // request/lib/oauth.js
 export default function ( langProject, username, query ) {
@@ -7,15 +8,13 @@ export default function ( langProject, username, query ) {
     ppprop: 'displaytitle',
     wbpterms: 'description',
     piprop: 'thumbnail',
-    pithumbsize: '80',
-    pilimit: 50,
     iiurlwidth: 150,
     generator: 'allimages',
     gaiuser: username,
     gaisort: 'timestamp',
     gaidir: 'descending',
     gailimit: 50
-  }, query || {} );
+  }, PAGEIMAGES_API_PROPS, query || {} );
 
   return mwApi( langProject, params );
 }

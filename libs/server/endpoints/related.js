@@ -1,17 +1,16 @@
 import mwApi from './mwApi'
+import { PAGEIMAGES_API_PROPS } from './consts'
 
 export default function ( lang, title, project ) {
-  var params = {
+  var params = Object.assign( {
     prop: 'pageterms|pageimages',
     wbptterms: 'description',
-    pilimit: 3,
-    pithumbsize: 160,
     generator: 'search',
     gsrqiprofile: 'classic_noboostlinks',
     gsrnamespace: 0,
     gsrlimit: 3,
     gsrsearch: 'morelike:' + title
-  };
+  }, PAGEIMAGES_API_PROPS );
 
   return mwApi( lang, params, project );
 }

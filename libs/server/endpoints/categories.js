@@ -1,13 +1,12 @@
 import mwApi from './mwApi';
+import { PAGEIMAGES_API_PROPS } from './consts'
 
 // request/lib/oauth.js
 export default function ( lang, title, project, query ) {
   var params = Object.assign( {
     prop: 'pageterms|pageimages',
-    wbptterms: 'description',
-    pithumbsize: 120,
-    pilimit: 50
-  }, query || {} );
+    wbptterms: 'description'
+  }, PAGEIMAGES_API_PROPS, query || {} );
   if ( title ) {
     params.gcmtitle = 'Category:' + title;
     params.generator = 'categorymembers';

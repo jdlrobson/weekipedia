@@ -1,7 +1,8 @@
 import mwApi from './mwApi'
+import { PAGEIMAGES_API_PROPS } from './consts'
 
 export default function ( latitude, longitude, lang, ns, project ) {
-  var params = {
+  var params = Object.assign( {
     colimit: 'max',
     prop: 'coordinates|pageterms|pageimages',
     codistancefrompoint: latitude + '|' + longitude,
@@ -9,10 +10,8 @@ export default function ( latitude, longitude, lang, ns, project ) {
     ggsradius: 1000,
     ggsnamespace: ns || 0,
     ggslimit: 50,
-    pithumbsize: 120,
-    pilimit: 50,
     ggscoord: latitude + '|' + longitude
-  };
+  }, PAGEIMAGES_API_PROPS );
 
   return mwApi( lang, params, project ).then( function ( data ) {
     data.pages = data.pages ? data.pages.sort( function ( a, b ) {
