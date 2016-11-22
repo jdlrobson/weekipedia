@@ -215,7 +215,7 @@ app.get( '/:lang?/*', ( req, res ) => {
     if ( data.fallbackProps && data.fallbackProps.lead ) {
       lead = data.fallbackProps.lead;
       desc = lead.description;
-      title = lead.displaytitle || '';
+      title = lead.normalizedtitle || lead.displaytitle || '';
       title += ' - ' + SITE_TITLE;
       if ( lead.image && lead.image.urls ) {
         image = lead.image.urls['1024'] || lead.image.urls['320'];
