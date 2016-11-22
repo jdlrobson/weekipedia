@@ -15,7 +15,7 @@ export default function ( lang, username, ns, query, project ) {
     params.ucnamespace = ns;
   } else {
     params.rclimit = 50;
-    params.rcprop = feedProps + '|sizes';
+    params.rcprop = feedProps + '|sizes|user';
     params.rcnamespace = ns;
   }
 
