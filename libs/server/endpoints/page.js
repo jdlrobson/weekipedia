@@ -4,6 +4,22 @@ import domino from 'domino'
 import { SPECIAL_PROJECTS, HOST_SUFFIX, SITE_HOME } from './../config'
 import mwApi from './mwApi';
 
+function getMedia( sections ) {
+  var html = '';
+  sections.forEach( function ( section ) {
+    if ( section.text ) {
+      html += section.text;
+    }
+  } );
+  var doc = domino.createDocument( html );
+  var imageNodes = doc.querySelectorAll( '.mw-default-size a > img, figure a > img' );
+  var images = [];
+  Array.prototype.forEach.call( imageNodes, function ( imageNode ) {
+    var href = imageNode.parentNode.getAttribute( 'href' ).split( '/' );
+    images.push( href[href.length - 1] );
+  } );
+  return images;
+}
 function extractLeadParagraph( doc ) {
   var p = '';
   var node = doc.querySelector( 'p' );
@@ -177,6 +193,7 @@ export default function ( title, lang, project, includeReferences ) {
       } else {
         // Workaround for https://phabricator.wikimedia.org/T145034
         var doc = domino.createDocument( json.lead.sections.length && json.lead.sections[0] && json.lead.sections[0].text );
+        json.lead.media = getMedia( json.lead.sections.concat( json.remaining.sections ) )
         if ( doc ) {
           // See https://github.com/jdlrobson/weekipedia/issues/99 - preserve links in main page
           if ( SITE_HOME.replace( /_/g, ' ' ) !== title.replace( /_/g, ' ' ) ) {

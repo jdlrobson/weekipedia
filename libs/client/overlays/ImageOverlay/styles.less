@@ -1,5 +1,33 @@
 @import './../../globals.less';
 
+.gutter {
+  position: absolute;
+  top: 10px;
+  bottom: 0;
+  background-color: #000;
+  width: 40px;
+  text-align: center;
+
+  &:first-child {
+    left: 0;
+  }
+
+  &:last-child {
+    right: 0;
+
+    .mw-ui-icon {
+      transform: rotate(-90deg);
+    }
+  }
+
+  .mw-ui-icon {
+    position: absolute;
+    top: 50%;
+    margin-top: -50%;
+    transform: rotate(90deg);
+    left: -10px;
+  }
+}
 .image-wrapper {
   width: 100%;
   height: 100%;

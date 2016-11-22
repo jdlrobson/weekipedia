@@ -41,7 +41,7 @@ export default [
     /^#\/media\/(.*)$/,
     function ( info, props ) {
       var overlayProps = Object.assign( {}, props, {
-        title: info[1]
+        image: info[1]
       } );
       return {
         overlay: React.createElement( ImageOverlay, overlayProps )
