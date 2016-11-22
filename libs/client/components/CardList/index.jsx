@@ -113,19 +113,8 @@ export default React.createClass({
       continuer = this.state.continue,
       self = this;
 
-    // Issue with node-jquery-param
-    function param( args ) {
-      var key,
-        array = [];
-
-      for( key in args ) {
-         array.push( encodeURIComponent(key) + '=' + encodeURIComponent( args[key] ) );
-      }
-      return array.join( '&' );
-    }
-
     if ( !this.state.isPending && this.props.api && continuer ) {
-      url = this.props.apiEndpoint + '?' + param( continuer );
+      url = this.props.apiEndpoint + '?' + this.props.api.param( continuer );
       this.setState( { isPending: true } );
       this.fetchCardListProps( url, this.props ).then( function ( props ) {
         // this wont work again without the continue

@@ -14,6 +14,16 @@ Api.prototype = {
       return true;
     }
   },
+  // Issue with node-jquery-param
+  param: function ( args ) {
+    var key,
+      array = [];
+
+    for ( key in args ) {
+      array.push( encodeURIComponent( key ) + '=' + encodeURIComponent( args[key] ) );
+    }
+    return array.join( '&' );
+  },
   edit: function ( source, title, section, text, summary, appendText ) {
     var data;
     var action = appendText ? 'edit-append' : 'edit';
@@ -73,9 +83,11 @@ Api.prototype = {
   },
   fetch: function ( url, options ) {
     var req,
-      canCache = this.cacheable( url ),
+      qs = options && options.query ? this.param( options.query ) : '',
+      canCache = this.cacheable( url + '?' + qs ),
       cache = this.cache;
 
+    url = url + '?' + qs;
     if ( canCache && cache[url] ) {
       return cache[url];
     } else {
