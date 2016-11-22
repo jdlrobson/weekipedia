@@ -24,6 +24,7 @@ import contributions from './endpoints/contributions'
 import collection from './endpoints/collection'
 import categories from './endpoints/categories'
 
+import phpApi from './endpoints/phpApi'
 import messages from './messages'
 import respond from './respond'
 import cachedResponses from './cached-response.js'
@@ -390,6 +391,14 @@ function initGetMethods( app ) {
     cachedResponse( res, req.url, function () {
       return new Promise( function ( resolve ) {
         resolve( messages( req.params.lang ) );
+      } );
+    } );
+  } );
+
+  app.get( '/api/:language_project/phpApi', ( req, res ) => {
+    respond( res, function () {
+      return new Promise( function ( resolve ) {
+        resolve( phpApi( req.params.language_project, req.query ) )
       } );
     } );
   } );
