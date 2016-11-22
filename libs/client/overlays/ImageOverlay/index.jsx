@@ -21,29 +21,56 @@ export default React.createClass({
     }
   },
   componentDidMount() {
-    this.loadCurrentImage( this.props.image );
-    this.loadGallery().then( (media) => this.setState( { media: media } ) );
+    var self = this;
+    var w = this.state.width;
+    var h = this.state.height;
+    var props = this.props;
+    var route = '/api/' + this.props.language_project + '/phpApi';
+
+    this.loadGallery().then( (media) => {
+      self.setState( { media: media } );
+      props.api.fetch( route, {
+        query: {
+          titles: media.join( '|' ),
+          prop: 'imageinfo',
+          iiprop: 'url|extmetadata',
+          iiurlwidth: w,
+          iirurlheight: h
+        }
+      } ).then( function ( data ) {
+        var images = {};
+        data.pages.forEach( function ( page ) {
+          images[page.title] = page;
+        } );
+        self.setState( { images: images } );
+        self.loadCurrentImage( props.image );
+      } );
+    } );
   },
   componentWillReceiveProps( newProps ) {
     this.loadCurrentImage( newProps.image );
   },
   loadCurrentImage( image ){
-    var w = this.state.width;
-    var h = this.state.height;
-    var route = '/api/file/' + this.props.lang + '/' + w + ',' + h + '/' + encodeURIComponent( image );
-    var self = this;
-    this.setState( { img: null } );
+    var imgData,
+      self = this,
+      fileData = this.state.images['File:' + image.replace( /_/gi, ' ' )] || {};
 
-    this.props.api.fetch( route ).then( function ( imgData ) {
-      var img = new Image();
-      function updateState() {
-        self.setState( { img: imgData } );
-      }
+    var img = new Image();
+    function updateState() {
+      self.setState( { img: imgData } );
+    }
+
+    if ( fileData.imageinfo ) {
+      imgData = fileData.imageinfo[0];
+      this.setState( { img: null } );
 
       img.addEventListener( 'load', updateState );
       img.addEventListener( 'complete', updateState );
       img.src = imgData.thumburl;
-    } );
+    } else {
+      // If bad image is given jump to first image.
+      this.nextImage();
+    }
   },
   loadGallery() {
     var props = this.props;
