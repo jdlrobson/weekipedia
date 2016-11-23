@@ -75,7 +75,7 @@ export default React.createClass({
   loadGallery() {
     var props = this.props;
     return props.api.getPage( props.title,
-      props.langOrLanguageProject
+      props.language_project
     ).then( function ( page ) {
       return page.lead.media || [];
     } );
