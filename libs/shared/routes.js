@@ -120,12 +120,16 @@ function addSpecialPage( title, Class, handler ) {
       var params = info[3] || info[2] || info[6];
       var suffix = params ? '/' + params : '';
 
-      props.project = project || props.project;
-      props.language_project = lang + '.' + props.project;
-
-      props.lang = lang;
-      props.mobileUrl = utils.getAbsoluteUrl( 'Special:' + title + suffix, lang, props.project, true );
-      props.desktopUrl = utils.getAbsoluteUrl( 'Special:' + title + suffix, lang, props.project );
+      Object.assign( props, {
+        project: project || props.project,
+        language_project: lang + '.' + props.project,
+        lang: lang,
+        mobileUrl: utils.getAbsoluteUrl( 'Special:' + title + suffix,
+          lang, props.project, true ),
+        desktopUrl: utils.getAbsoluteUrl( 'Special:' + title + suffix,
+          lang, props.project ),
+        title: 'Special:' + title
+      } );
       props.children = [
         React.createElement( Class,
           Object.assign( {}, props, {
