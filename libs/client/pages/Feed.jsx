@@ -16,7 +16,7 @@ export default React.createClass({
       router: null,
       wiki: 'enwiki',
       params: '',
-      halflife: HALF_LIFE_HOURS
+      halflife: HALF_LIFE_DAYS
     };
   },
   getInitialState() {
@@ -32,9 +32,10 @@ export default React.createClass({
       msg: 'Nothing has trended recently.'
     };
     var links = [];
+	var props = this.props;
     var args = this.props.params.split( '/' );
     var wiki = args[0] || 'enwiki';
-    var halflife = args[1] || HALF_LIFE_HOURS;
+    var halflife = args[1] || props.halflife;
     var prefix = '/wiki/Special:Feed/'
     
     var endpoint = '/api/trending/' + wiki + '/' + halflife;
