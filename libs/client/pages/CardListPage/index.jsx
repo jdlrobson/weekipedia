@@ -2,10 +2,14 @@ import React from 'react'
 
 import { CardWithLocation } from 'wikipedia-react-components'
 
-import CardList from './../components/CardList'
-import EmptyList from './../components/EmptyList'
+import EmptyList from './EmptyList'
 
-import Article from './../containers/Article'
+import CardList from './../../components/CardList'
+
+import Article from './../../containers/Article'
+
+import './styles.less'
+
 // Pages
 export default React.createClass({
   getDefaultProps: function () {

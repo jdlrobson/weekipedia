@@ -1,8 +1,11 @@
 import React from 'react'
 
-import WikiPage from './../containers/WikiPage'
+import { Icon, Button } from 'wikipedia-react-components';
 
-import UserPageCta from './../components/UserPageCta'
+import WikiPage from './../../containers/WikiPage'
+
+import './icons.less'
+import './styles.less'
 
 // Pages
 export default React.createClass({
@@ -37,9 +40,24 @@ export default React.createClass({
       lead = props.lead || {},
       leadHtml = lead.sections && lead.sections.length ? lead.sections[0].text : undefined;
 
+    var user = props.title;
+    var editUrl = "#/editor/0";
+    var isReaderOwner = props.session && props.session.username === props.titleSanPrefix;
+    var msg = isReaderOwner ? 'You don\'t have a user page yet' : 'No user page for ' + props.user;
+    var pText = isReaderOwner ? 'You can describe yourself to fellow editors on your user page' :
+      'This page should be created and edited by ' + user;
+    var btn = isReaderOwner ? <Button label="Create your own" href={editUrl} isPrimary="1" /> :
+      <a href={editUrl} className="mw-ui-progressive ">Create a page called User:{user}</a>
+
     if ( !leadHtml ) {
-      body.push( <UserPageCta user={props.title} key="page-user-cta"
-        isReaderOwner={props.session && props.session.username === props.titleSanPrefix } /> );
+      body.push(
+        <div className="component-user-page-cta" key="page-user-cta">
+          <Icon glyph="user-page" large={true} />
+          <h3>{msg}</h3>
+          <p>{pText}</p>
+          {btn}
+        </div>
+      );
     } else {
       body = props.body;
     }
