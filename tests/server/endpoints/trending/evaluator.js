@@ -6,6 +6,7 @@ import { agaricAcid, battleMosul, deaths2016, attaUr, cyberAttacks,
   TrumpPresident, Rupee,
   AmistadMemorial, JeffSessions,
   PukhrayanTrain,
+  Maximiliano, Henderson, DavidHamilton, PierrepontPlace,
   WideAreaNetwork, AmericanFootball, JoanneAlbum } from './examples'
 
 import TrendEvaluator from './../../../../libs/server/endpoints/trending/evaluator'
@@ -96,5 +97,23 @@ describe('isTrending', function() {
 
   it( 'AmistadMemorial is not trending', function () {
     assert.ok( !evaluator.isTrending( AmistadMemorial ) );
+  })
+
+  it( 'Maximiliano is not trending', function () {
+    assert.ok( !evaluator.isTrending( Maximiliano ),
+      'Editing dominated by two users' );
+  })
+
+  it( 'PierrepontPlace is not trending', function () {
+    assert.ok( !evaluator.isTrending( PierrepontPlace ),
+      'Editing dominated by two users' );
+  })
+
+  it( 'DavidHamilton is trending', function () {
+    assert.ok( evaluator.isTrending( DavidHamilton ) );
+  })
+
+  it( 'Henderson is trending', function () {
+    assert.ok( evaluator.isTrending( Henderson ) );
   })
 });

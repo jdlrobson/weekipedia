@@ -1,10 +1,19 @@
+import WikiSocketCollection from 'wikitrender'
+
+var WikiPage = WikiSocketCollection.prototype.WikiPage;
+
 function Page( opts ) {
   Object.assign( this, opts );
+  this.wp = new WikiPage( opts.title || 'noname', opts );
 }
 
 Page.prototype = {
   getBias: function () {
-    return this.bias;
+    if ( !this.distribution ) {
+      return this.bias;
+    } else {
+      return this.wp.getBias();
+    }
   },
   age: function () {
     return this._age ? this._age :
@@ -197,6 +206,14 @@ const AmistadMemorial = Page.fromJSON({"title":"Amistad Memorial (New Haven)","e
 
 const Rupee = Page.fromJSON({"title":"Indian rupee","edits":61,"anonEdits":23,"isNew":false,"notabilityFlags":0,"volatileFlags":0,"reverts":4,"start":"2016-11-08T19:11:48.701Z","updated":"2016-11-10T10:20:07.890Z","contributors":["IshaanSingh","AdityaChanana","Jellyman","VishalB","Hydloc009","NewHikaru07","AkshayAnand","Tekclan","Mukund Shah Shah","MOHAMMED ABDALLAH ALI","Nizil Shah","IM3847","Capankajsmilyo","Aman290669","LoveWikiPedia123","Dharmadhyaksha"],"anons":["122.164.240.54","43.246.246.6","49.180.158.176","2405:204:3106:5A7D:62F4:CBBA:269B:6F66","2602:30A:C0FF:A6E0:A446:1606:4D5:98B4","2405:204:5485:8A8E:532F:8E6B:8773:6019","106.51.29.0","2405:204:B185:ABB2:A5F4:ECDB:4484:7D9C","106.215.157.126","203.89.4.202","122.168.51.29","119.230.28.38","163.47.153.237","43.248.75.60","1.39.51.69","115.111.36.45","202.168.158.90"],"distribution":{"IshaanSingh":2,"AdityaChanana":12,"122.164.240.54":4,"Jellyman":1,"43.246.246.6":1,"VishalB":1,"Hydloc009":5,"49.180.158.176":1,"2405:204:3106:5A7D:62F4:CBBA:269B:6F66":2,"NewHikaru07":1,"2602:30A:C0FF:A6E0:A446:1606:4D5:98B4":1,"AkshayAnand":4,"Tekclan":3,"2405:204:5485:8A8E:532F:8E6B:8773:6019":1,"Mukund Shah Shah":1,"106.51.29.0":1,"MOHAMMED ABDALLAH ALI":2,"Nizil Shah":1,"IM3847":1,"2405:204:B185:ABB2:A5F4:ECDB:4484:7D9C":1,"106.215.157.126":1,"203.89.4.202":1,"Capankajsmilyo":1,"122.168.51.29":1,"119.230.28.38":1,"Aman290669":5,"163.47.153.237":1,"43.248.75.60":1,"LoveWikiPedia123":1,"1.39.51.69":1,"Dharmadhyaksha":1,"115.111.36.45":2,"202.168.158.90":2},"bytesChanged":6366,"id":"Indian rupee","wiki":"enwiki","views":0,"score":3.5923512742091657e-22,"lang":"en","bias":0.19672131147540983,"safe":true,"trendedAt":"2016-11-08T21:31:43.370Z","lastIndex":1,"index":9});
 
+const Maximiliano = Page.fromJSON({"title":"Maximiliano Korstanje","edits":26,"anonEdits":10,"isNew":true,"notabilityFlags":0,"volatileFlags":0,"reverts":2,"start":"2016-11-25T21:04:24.300Z","updated":"2016-11-25T22:52:56.226Z","contributors":["Vanrobert99","Valenciano","Ajitwebinfinity","Fabrictramp"],"anons":["190.230.75.4"],"distribution":{"Vanrobert99":12,"Valenciano":2,"190.230.75.4":10,"Ajitwebinfinity":2,"Fabrictramp":2},"bytesChanged":9390,"id":"Maximiliano Korstanje","wiki":"enwiki","views":0,"score":69381.0377007029,"lang":"en","bias":0.5,"safe":true,"trendedAt":"2016-11-25T22:52:56.218Z","lastIndex":2,"index":1});
+
+const DavidHamilton = Page.fromJSON({"title":"David Hamilton (photographer)","edits":30,"anonEdits":12,"isNew":false,"notabilityFlags":0,"volatileFlags":0,"reverts":2,"start":"2016-11-25T21:50:08.292Z","updated":"2016-11-25T22:52:04.805Z","contributors":["Matthewm192","TheKaphox","DatGuy","Crh23","Klow","Rodericksilly"],"anons":["92.19.14.21","79.70.84.226","86.24.76.128","47.138.255.125","107.77.217.128"],"distribution":{"Matthewm192":2,"92.19.14.21":2,"79.70.84.226":2,"86.24.76.128":2,"TheKaphox":6,"DatGuy":2,"47.138.255.125":4,"Crh23":2,"Klow":2,"Rodericksilly":6,"107.77.217.128":2},"bytesChanged":4652,"id":"David Hamilton (photographer)","wiki":"enwiki","views":0,"score":289169.6716476176,"lang":"en","bias":0.2,"safe":true,"trendedAt":"2016-11-25T22:48:10.228Z","lastIndex":1,"index":2,"thumbnail":{"source":"https://upload.wikimedia.org/wikipedia/commons/thumb/5/55/David_Hamilton_2011.JPG/80px-David_Hamilton_2011.JPG","width":80,"height":120},"description":"British photographer and film director"});
+
+const Henderson = Page.fromJSON({"title":"Florence Henderson","edits":88,"anonEdits":29,"isNew":false,"notabilityFlags":0,"volatileFlags":0,"reverts":4,"start":"2016-11-25T15:16:43.727Z","updated":"2016-11-25T22:44:48.614Z","contributors":["Calibrador","Mrceleb2007","Bigteddy1","PeterMan844","Maineartists","General Ization","Kiraroshi1976","Serols","Rosspz","Siberian Husky","CAWylie","Nwbeeson","Mlpearc","The Rambling Man","Markhh","Krochetnkat","Rms125a@hotmail.com","Medeis"],"anons":["2602:30A:2C29:5290:55F9:7E20:DECB:91CC","2600:8805:3304:4000:D14E:34D6:9F7F:8E87","24.181.32.198","162.194.149.41","2602:30A:2C29:5290:C998:8953:852:9E61","216.66.122.35","97.83.102.252","2601:242:C000:A287:916A:84CE:C14F:812A","2602:301:77AC:A050:40D:3C66:4CA5:E0B8","2602:306:37C9:1FD0:3D11:3C19:117:3919","72.74.136.193","73.45.39.34"],"distribution":{"Calibrador":1,"Mrceleb2007":2,"2602:30A:2C29:5290:55F9:7E20:DECB:91CC":4,"2600:8805:3304:4000:D14E:34D6:9F7F:8E87":1,"24.181.32.198":6,"162.194.149.41":1,"2602:30A:2C29:5290:C998:8953:852:9E61":2,"216.66.122.35":1,"Bigteddy1":1,"PeterMan844":1,"Maineartists":1,"General Ization":2,"Kiraroshi1976":16,"97.83.102.252":1,"Serols":1,"Rosspz":3,"Siberian Husky":1,"CAWylie":2,"Nwbeeson":2,"2601:242:C000:A287:916A:84CE:C14F:812A":1,"Mlpearc":3,"The Rambling Man":4,"Markhh":1,"Krochetnkat":2,"Rms125a@hotmail.com":16,"2602:301:77AC:A050:40D:3C66:4CA5:E0B8":2,"Medeis":4,"2602:306:37C9:1FD0:3D11:3C19:117:3919":4,"72.74.136.193":4,"73.45.39.34":2},"bytesChanged":-2526,"id":"Florence Henderson","wiki":"enwiki","views":0,"score":2193843.0688446914,"lang":"en","safe":true,"bias":0.2,"trendedAt":"2016-11-25T17:31:51.185Z","lastIndex":1,"index":3,"thumbnail":{"source":"https://upload.wikimedia.org/wikipedia/commons/thumb/1/1d/Florence_Henderson_cropped.jpg/99px-Florence_Henderson_cropped.jpg","width":99,"height":120},"description":"American actress"});
+
+const PierrepontPlace = Page.fromJSON({"title":"Pierrepont Place, Bath","edits":32,"anonEdits":4,"isNew":true,"notabilityFlags":0,"volatileFlags":0,"reverts":7,"start":"2016-11-24T14:28:40.110Z","updated":"2016-11-25T08:23:18.386Z","contributors":["Foundershousebath","McGeddon","Theroadislong","Rodw","Hebrides","Fences and windows"],"anons":["2601:188:1:AEA0:65F5:930C:B0B2:CD63"],"distribution":{"Foundershousebath":12,"2601:188:1:AEA0:65F5:930C:B0B2:CD63":4,"McGeddon":11,"Theroadislong":7,"Rodw":2,"Hebrides":1,"Fences and windows":2},"bytesChanged":4378,"id":"Pierrepont Place, Bath","wiki":"enwiki","views":0,"score":101444.5361856286,"lang":"en","safe":true,"trendedAt":"2016-11-24T18:06:23.752Z","bias":0.375,"lastIndex":1,"index":4,"thumbnail":{"source":"https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/Pierrepont_Place%2C_Bath_-_geograph.org.uk_-_940240.jpg/120px-Pierrepont_Place%2C_Bath_-_geograph.org.uk_-_940240.jpg","width":120,"height":90}});
+
 export { agaricAcid, battleMosul, deaths2016,
   CascadeMall,PacificTyphoon, Liliuokalani, ShimonPeres, Hoboken,
   WideAreaNetwork, AmericanFootball, JoanneAlbum, NintendoSwitch,
@@ -204,4 +221,5 @@ export { agaricAcid, battleMosul, deaths2016,
   Keijo, IcelandElection, NotreDame, Rainbow,
   TrumpPresident, Rupee,
   AmistadMemorial, JeffSessions, PukhrayanTrain,
+  Maximiliano, DavidHamilton, Henderson, PierrepontPlace,
   attaUr, cyberAttacks, page, page2, page3, page4 }
