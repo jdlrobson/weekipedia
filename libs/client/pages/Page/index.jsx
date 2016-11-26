@@ -131,8 +131,12 @@ export default React.createClass({
     var lead = this.state.lead || this.props.lead || {};
     if ( this.state && this.state.error ) {
       return <Content><ErrorBox key="article-error" msg={this.state.errorMsg} /></Content>;
-    } else if ( !lead || !lead.id ) {
-      return <Content><IntermediateState key="article-loading" /></Content>;
+    } else if ( !lead || !lead.sections ) {
+      return (
+        <Content>
+          <IntermediateState key="article-loading" msg="Loading page"/>
+        </Content>
+      );
     } else {
       return this.renderPage();
     }
