@@ -5,7 +5,7 @@ import PushButton from './../components/PushButton';
 
 import CardListPage from './CardListPage'
 
-const HALF_LIFE_HOURS = '0.5';
+const HALF_LIFE_HOURS = '1.5';
 const HALF_LIFE_DAYS = '12';
 const HALF_LIFE_WEEKS = '84';
 
