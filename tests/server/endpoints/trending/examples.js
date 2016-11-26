@@ -214,6 +214,8 @@ const Henderson = Page.fromJSON({"title":"Florence Henderson","edits":88,"anonEd
 
 const PierrepontPlace = Page.fromJSON({"title":"Pierrepont Place, Bath","edits":32,"anonEdits":4,"isNew":true,"notabilityFlags":0,"volatileFlags":0,"reverts":7,"start":"2016-11-24T14:28:40.110Z","updated":"2016-11-25T08:23:18.386Z","contributors":["Foundershousebath","McGeddon","Theroadislong","Rodw","Hebrides","Fences and windows"],"anons":["2601:188:1:AEA0:65F5:930C:B0B2:CD63"],"distribution":{"Foundershousebath":12,"2601:188:1:AEA0:65F5:930C:B0B2:CD63":4,"McGeddon":11,"Theroadislong":7,"Rodw":2,"Hebrides":1,"Fences and windows":2},"bytesChanged":4378,"id":"Pierrepont Place, Bath","wiki":"enwiki","views":0,"score":101444.5361856286,"lang":"en","safe":true,"trendedAt":"2016-11-24T18:06:23.752Z","bias":0.375,"lastIndex":1,"index":4,"thumbnail":{"source":"https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/Pierrepont_Place%2C_Bath_-_geograph.org.uk_-_940240.jpg/120px-Pierrepont_Place%2C_Bath_-_geograph.org.uk_-_940240.jpg","width":120,"height":90}});
 
+const DearZindagi = Page.fromJSON({"title":"Dear Zindagi","edits":17,"anonEdits":9,"isNew":false,"notabilityFlags":0,"volatileFlags":0,"reverts":0,"start":"2016-11-25T21:59:28.649Z","updated":"2016-11-26T01:15:25.122Z","contributors":["M.Billoo2000"],"anons":["79.79.162.167","65.95.201.108","2605:6000:E88B:3D00:B5EC:B03B:74B5:BB22"],"distribution":{"79.79.162.167":2,"M.Billoo2000":8,"65.95.201.108":6,"2605:6000:E88B:3D00:B5EC:B03B:74B5:BB22":1},"bytesChanged":308,"id":"Dear Zindagi","wiki":"enwiki","views":0,"score":null,"lang":"en","safe":true,"bias":0,"lastIndex":1,"index":1,"description":"2016 film by Gauri Shinde"});
+
 export { agaricAcid, battleMosul, deaths2016,
   CascadeMall,PacificTyphoon, Liliuokalani, ShimonPeres, Hoboken,
   WideAreaNetwork, AmericanFootball, JoanneAlbum, NintendoSwitch,
@@ -222,4 +224,5 @@ export { agaricAcid, battleMosul, deaths2016,
   TrumpPresident, Rupee,
   AmistadMemorial, JeffSessions, PukhrayanTrain,
   Maximiliano, DavidHamilton, Henderson, PierrepontPlace,
+  DearZindagi,
   attaUr, cyberAttacks, page, page2, page3, page4 }

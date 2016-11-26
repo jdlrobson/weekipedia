@@ -14,9 +14,13 @@ function calcScore( q, hrs ) {
   if ( q.views > 0 && hrs < 84 ) {
     visitScore = -visitScore;
   }
+  var bias = q.getBias();
+  if ( bias === 0 ) {
+    bias = 1;
+  }
 
   var base = ( visitScore + editScore ) /
-    q.getBias() *
+    bias *
     contributionScore *
     exponential;
 

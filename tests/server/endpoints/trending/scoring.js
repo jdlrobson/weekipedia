@@ -1,8 +1,9 @@
 var assert = require( 'assert' );
 
 import { page, page2, page3, page4,
-    PeteBurns2,
-   CascadeMall,PacificTyphoon, Liliuokalani, ShimonPeres, Hoboken } from './examples'
+  PeteBurns2, DearZindagi, DavidHamilton,
+  CascadeMall,PacificTyphoon, Liliuokalani, ShimonPeres, Hoboken
+} from './examples'
 
 import calcScore from './../../../../libs/server/endpoints/trending/scoring.js'
 
@@ -32,7 +33,12 @@ describe('calcScore', function() {
   });
 
   it('number of contributors weighs more heavily than number of edits - even if only half the number of edits', function() {
+    console.log( 'go' );
     assert.ok( calcScore( CascadeMall, 84 ) > calcScore( PacificTyphoon, 84 ) );
+  });
+
+  it('bias of 0 doesnt give infinite score', function() {
+    assert.ok( calcScore( DearZindagi, 12 ) < calcScore( DavidHamilton, 84 ) );
   });
 
   it('Negative bytes is not a bad thing and results in a positive score.', function() {
