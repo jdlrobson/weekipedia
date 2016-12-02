@@ -1,8 +1,7 @@
 import React from 'react'
 
-import { Icon } from 'wikipedia-react-components'
+import CtaIcon from '../CtaIcon'
 
-import CtaDrawer from './../../overlays/CtaDrawer'
 import CollectionOverlay from './../../overlays/CollectionOverlay'
 
 import './icons.less'
@@ -56,23 +55,22 @@ export default React.createClass({
   },
   dispatch( ev ) {
     var props = this.props;
-    if ( props.session ) {
-      if ( this.state.collections.length > 1 || props.siteoptions.collectionsEnabled ) {
-        props.showOverlay( <CollectionOverlay {...props} /> );
-      } else {
-        this.watch( ev );
-      }
+    if ( this.state.collections.length > 1 || props.siteoptions.collectionsEnabled ) {
+      props.showOverlay( <CollectionOverlay {...props} /> );
     } else {
-      props.showOverlay( <CtaDrawer {...props}/> );
+      this.watch( ev );
     }
   },
   render(){
     var state = this.state;
     var iconProps = {
       key: 'watch',
+      showOverlay: this.props.showOverlay,
       glyph: state.isWatched ? 'watched' : 'watch',
       label: 'Watch this page',
-      onClick: this.dispatch
+      session: this.props.session,
+      ctaMsg: this.props.msg( 'watch-cta' ),
+      onLoginClick: this.dispatch
     };
 
     if ( this.state.isError ) {
@@ -80,7 +78,7 @@ export default React.createClass({
     }
 
     return (
-      <Icon {...iconProps} />
+      <CtaIcon {...iconProps} />
     )
   }
 });

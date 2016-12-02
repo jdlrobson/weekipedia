@@ -6,7 +6,7 @@ import { Button } from 'wikipedia-react-components'
 export default React.createClass({
   getDefaultProps() {
     return {
-      message: 'Keep track of this page and all changes to it.'
+      message: 'You need to sign in to use this feature'
     };
   },
   render(){

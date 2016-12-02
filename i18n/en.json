@@ -1,5 +1,7 @@
 {
   "offline-ready": "{{SITENAME}} is now available offline.",
+  "watch-cta": "Keep track of this page and all changes to it.",
+  "edit-cta": "You will need to sign in to edit",
   "home-tagline": "The wiki in real time",
   "home-by-hour": "by hour",
   "home-by-day": "by day",

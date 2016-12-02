@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
 
-import LanguageIcon from './../../components/LanguageIcon'
+import LanguageIcon from './LanguageIcon'
 import EditIcon from './../../components/EditIcon'
 import WatchIcon from './../../components/WatchIcon'
 
 import { HorizontalList } from 'wikipedia-react-components'
+import './icons.less'
 
 class PageActions extends Component {
   render(){

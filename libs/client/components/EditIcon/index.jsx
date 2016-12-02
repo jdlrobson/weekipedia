@@ -1,38 +1,26 @@
 import React from 'react'
 
-import { Icon } from 'wikipedia-react-components'
-
-import CtaDrawer from './../../overlays/CtaDrawer'
+import CtaIcon from './../CtaIcon'
 
 import './icons.less'
 
 export default React.createClass({
-  launchEditor() {
-    var section = this.props.section;
-    var endpoint = section !== undefined ? '#/editor/' + section : '#/editor/';
-    this.props.router.navigateTo( null, endpoint );
-  },
-  dispatch( ev ) {
-    ev.stopPropagation();
-    ev.preventDefault();
-    if ( this.props.session ) {
-      this.launchEditor();
-    } else {
-      this.props.showOverlay( <CtaDrawer {...this.props} message='You will need to sign in to edit' /> );
-    }
-  },
   render(){
+    var section = this.props.section;
     var iconProps = {
       key: 'edit',
       glyph: 'edit',
       label: 'Edit',
       href: '#',
+      session: this.props.session,
       className: 'component-edit-icon',
-      onClick: this.dispatch
+      onLoginUrl: section !== undefined ? '#/editor/' + section : '#/editor/',
+      onLoginClick: this.launchEditor(),
+      ctaMsg: this.props.msg( 'edit-cta' )
     };
 
     return (
-      <Icon {...iconProps} />
+      <CtaIcon {...iconProps} />
     )
   }
 });
