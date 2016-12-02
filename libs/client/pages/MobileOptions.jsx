@@ -41,7 +41,8 @@ export default React.createClass({
       [ 'includeSiteBranding', 'Include site branding' ],
       [ 'searchIcon', 'Replace the search input with an icon' ],
       [ 'allowForeignProjects', 'Load other wikimedia projects inside app (experimental)' ],
-      [ 'includeTableOfContents', 'Show the table of contents to tablet users' ]
+      [ 'includeTableOfContents', 'Show the table of contents to tablet users' ],
+      [ 'collectionsEnabled', 'Enable collections feature' ]
     ];
     var form = state && state.mobileOptions ? (
       <form>

@@ -71,9 +71,19 @@ class MainMenu extends Component {
   }
   render(){
     var onMenuItemClick = this.onMenuItemClick.bind(this);
-    var langPrefix = '/' + this.props.lang,
-      msg = this.props.msg;
+    var collectionMenuItem,
+      props = this.props,
+      langPrefix = '/' + props.lang,
+      msg = props.msg;
 
+    if ( props.siteoptions.collectionsEnabled ) {
+      collectionMenuItem = (
+        <li>
+          <Icon glyph="mf-collections-invert" href={'/' + this.props.lang + '/wiki/Special:Collections/' }
+            label={msg('menu-collections')} type="before" onClick={onMenuItemClick} />
+        </li>
+      );
+    }
     return (
       <div className="component-main-menu menu">
         <ul>
@@ -91,10 +101,7 @@ class MainMenu extends Component {
               onClick={onMenuItemClick}
               label={msg('menu-nearby')} type="before"/>
           </li>
-          <li>
-            <Icon glyph="mf-collections-invert" href={'/' + this.props.lang + '/wiki/Special:Collections/' }
-              label={msg('menu-collections')} type="before" onClick={onMenuItemClick} />
-          </li>
+          {collectionMenuItem}
         </ul>
         {this.getUserMenu()}
         <ul>

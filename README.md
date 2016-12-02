@@ -116,6 +116,11 @@ Setup push notifications
 	export TREND_MIN_TOTAL_EDITS=2
 	export TREND_MIN_CONTRIBUTORS=1
 
+### Collections
+Enable user public collections (as alternative to watchstar)
+
+	export ENABLE_COLLECTIONS=1
+
 ### Older browsers
 
 Weekipedia by default uses Promises, Map, Object.assign and Function.prototype.bind

@@ -24,6 +24,7 @@ import { API_PATH, DEFAULT_PROJECT, MEDIAWIKI_COMPATIBILITY_MODE,
   SITE_EXPAND_SECTIONS, SITE_EXPAND_ARTICLE, SITE_EXPAND_SECTIONS_TABLET,
   CONSUMER_SECRET, CONSUMER_KEY, DUMMY_SESSION,
   SERVER_SIDE_RENDERING, USE_HTTPS, APP_PORT,
+  ENABLE_COLLECTIONS,
   OFFLINE_VERSION, SITE_TERMS_OF_USE, SITE_PRIVACY_URL,
 } from './config'
 
@@ -183,7 +184,8 @@ app.get( '/:lang?/*', ( req, res ) => {
       allowForeignProjects: SITE_ALLOW_FOREIGN_PROJECTS,
       expandSectionsByDefault: SITE_EXPAND_SECTIONS,
       expandSectionsByDefaultTablet: SITE_EXPAND_SECTIONS_TABLET,
-      expandArticlesByDefault: SITE_EXPAND_ARTICLE
+      expandArticlesByDefault: SITE_EXPAND_ARTICLE,
+      collectionsEnabled: ENABLE_COLLECTIONS
     },
     siteinfo: {
       defaultProject: DEFAULT_PROJECT,

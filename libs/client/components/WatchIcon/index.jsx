@@ -55,14 +55,15 @@ export default React.createClass({
       'Page removed from watchlist.' : 'Page added to watchlist.' );
   },
   dispatch( ev ) {
-    if ( this.props.session ) {
-      if ( this.state.collections.length > 1 ) {
-        this.props.showOverlay( <CollectionOverlay {...this.props} /> );
+    var props = this.props;
+    if ( props.session ) {
+      if ( this.state.collections.length > 1 || props.siteoptions.collectionsEnabled ) {
+        props.showOverlay( <CollectionOverlay {...props} /> );
       } else {
         this.watch( ev );
       }
     } else {
-      this.props.showOverlay( <CtaDrawer {...this.props}/> );
+      props.showOverlay( <CtaDrawer {...props}/> );
     }
   },
   render(){
