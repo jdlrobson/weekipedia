@@ -71,7 +71,7 @@ class MainMenu extends Component {
   }
   render(){
     var onMenuItemClick = this.onMenuItemClick.bind(this);
-    var collectionMenuItem,
+    var collectionMenuItem, nearbyMenuItem,
       props = this.props,
       langPrefix = '/' + props.lang,
       msg = props.msg;
@@ -81,6 +81,15 @@ class MainMenu extends Component {
         <li>
           <Icon glyph="mf-collections-invert" href={'/' + this.props.lang + '/wiki/Special:Collections/' }
             label={msg('menu-collections')} type="before" onClick={onMenuItemClick} />
+        </li>
+      );
+    }
+    if ( props.siteoptions.nearby ) {
+      nearbyMenuItem = (
+        <li>
+          <Icon glyph="mf-nearby-invert" href={langPrefix + '/wiki/Special:Nearby'}
+            onClick={onMenuItemClick}
+            label={msg('menu-nearby')} type="before"/>
         </li>
       );
     }
@@ -96,11 +105,7 @@ class MainMenu extends Component {
               onClick={onMenuItemClick}
               label={msg('menu-random')} type="before"/>
           </li>
-          <li>
-            <Icon glyph="mf-nearby-invert" href={langPrefix + '/wiki/Special:Nearby'}
-              onClick={onMenuItemClick}
-              label={msg('menu-nearby')} type="before"/>
-          </li>
+          {nearbyMenuItem}
           {collectionMenuItem}
         </ul>
         {this.getUserMenu()}

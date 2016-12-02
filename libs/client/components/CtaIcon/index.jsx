@@ -13,7 +13,7 @@ export default React.createClass({
       if ( props.onLoginUrl ) {
         props.router.navigateTo( null, props.onLoginUrl );
       } else if ( props.onLoginClick ) {
-        props.onLoginClick();
+        props.onLoginClick( ev );
       }
     } else {
       props.showOverlay( <CtaDrawer {...this.props} message={props.ctaMsg} /> );

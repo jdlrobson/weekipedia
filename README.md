@@ -124,6 +124,11 @@ Enable user public collections (as alternative to watchstar)
 
 	export ENABLE_COLLECTIONS=1
 
+### Nearby
+Disable the nearby feature.
+
+	export ENABLE_NEARBY=0
+
 ### Older browsers
 
 Weekipedia by default uses Promises, Map, Object.assign and Function.prototype.bind
