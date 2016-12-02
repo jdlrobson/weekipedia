@@ -51,6 +51,7 @@ Before commiting code please remember to run:
 	export USE_HTTPS=true
 	export DEFAULT_LANGUAGE=en
 
+### OAuth login support
 For access to user restricted features:
 Register an OAUTH consumer @ https://meta.wikimedia.org/wiki/Special:OAuthConsumerRegistration/propose
 Put callback url as https://yourdomain.com/auth/mediawiki/callback
@@ -63,10 +64,12 @@ install memcached (https://memcached.org/downloads) and get it up and running
 	memcached &
 	npm run
 
+### Server side rendering
 Do you want server side rendering?
 
 	export SERVER_SIDE_RENDERING=1
 
+### Other project support
 Do you want to handle all Wikimedia projects or just the value you defined in PROJECT ?
 
 	export SITE_ALLOW_FOREIGN_PROJECTS=1
