@@ -85,11 +85,10 @@ export default React.createClass({
       if ( json && json.edit && json.edit.result === 'Success' ) {
         // Annoyingly this timeout doesn't always seem to be enough.
         setTimeout( function () {
-          props.router.back();
+          props.api.clearCache();
+          props.router.navigateTo( { pathname: window.location.pathname,
+            search: 'c=' + Math.random(), hash: '' }, null, true );
           props.showNotification( msg );
-          props.api.invalidatePath( '/api/' + props.lang + '/collection/by/' + props.username + '/' );
-          props.api.invalidatePath( '/api/' + props.lang + '/collection/by/' + props.username + '/' + props.id )
-          props.router.navigateTo( window.location.pathname + '?c' + Math.random(), null, true );
         }, 5000 );
       } else {
         props.showNotification( 'An error occurred while saving the collection' );

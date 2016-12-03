@@ -39,11 +39,13 @@ export default React.createClass({
 
         // do it
         col.member = !col.member;
-        props.api.post( endpoint );
-        props.api.invalidatePath( '/api/' + props.lang + '/collection/by/' + props.username + '/' + id );
+        props.api.post( endpoint ).then( function () {
+          props.api.clearCache();
+        } );
+        props.api.clearCache();
       }
     } );
-    props.api.invalidatePath( '/api/private/en/collection/all/with/' + props.title );
+    props.api.clearCache();
     this.setState( collections );
   },
   watch( ev ) {

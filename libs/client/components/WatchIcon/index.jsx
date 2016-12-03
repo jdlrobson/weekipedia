@@ -51,7 +51,7 @@ export default React.createClass({
 
     // do it
     props.api.post( endpoint );
-    props.api.invalidatePath( '/api/' + props.lang + '/collection/by/' + props.username + '/' + props.collection );
+    props.api.clearCache();
     props.showNotification( state.isWatched ?
       'Page removed from watchlist.' : 'Page added to watchlist.' );
   },

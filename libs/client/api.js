@@ -7,6 +7,9 @@ function Api( basePath ) {
 }
 
 Api.prototype = {
+  clearCache: function () {
+    this.cache = {};
+  },
   cacheable: function ( url ) {
     // offline pages
     if ( url.match( /api\/private\// ) ) {
@@ -47,30 +50,11 @@ Api.prototype = {
       return new Promise( function ( resolve ) {
         // wait 2s before doing this to give cache time to warm.
         setTimeout( function () {
-          self.invalidatePage( title, source );
+          self.clearCache();
           resolve( res );
         }, 2000 );
       } );
     } );
-  },
-  invalidatePath: function ( path ) {
-    delete this.cache[path];
-    if ( path[path.length - 1] === '/' ) {
-      delete this.cache[path.substr( 0, path.length - 1 )];
-    } else {
-      delete this.cache[path + '/'];
-    }
-  },
-  invalidatePage: function ( title, langOrProject ) {
-    var s = langOrProject.split( '.' );
-    var lang = s[0];
-    var keyPrefix = this.path + 'page/' + lang + '/';
-    var keyPrefix2 = this.path + 'page/' + langOrProject + '/';
-
-    this.invalidatePath( keyPrefix + title );
-    this.invalidatePath( keyPrefix + encodeURIComponent( title ) );
-    this.invalidatePath( keyPrefix2 + title );
-    this.invalidatePath( keyPrefix2 + encodeURIComponent( title ) );
   },
   post: function ( url, data ) {
     return fetch( url, {
