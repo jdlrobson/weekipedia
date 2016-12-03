@@ -13,7 +13,8 @@ const ENABLE_NEARBY = Boolean( process.env.ENABLE_NEARBY );
 
 const SHOW_TALK_ANONS = Boolean( process.env.SHOW_TALK_ANONS );
 
-const DUMMY_SESSION = process.env.DEV_DUMMY_USER ? { username: process.env.DEV_DUMMY_USER } : null
+const DUMMY_SESSION = process.env.DEV_DUMMY_USER ? { dummy: true,
+  displayName: process.env.DEV_DUMMY_USER } : null
 
 const ALL_PROJECTS = [ 'wikipedia', 'wikivoyage', 'wiktionary',
   'wikisource', 'wikiquote', 'wikinews', 'wikibooks', 'wikiversity' ].concat( SPECIAL_PROJECTS );

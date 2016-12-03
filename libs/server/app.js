@@ -112,6 +112,11 @@ if ( SIGN_IN_SUPPORTED && !DUMMY_SESSION ) {
       return done( null, profile );
     } )
   );
+} else if ( DUMMY_SESSION ) {
+  app.use( function ( req, res, next ) {
+    req.user = DUMMY_SESSION;
+    next();
+  } );
 }
 
 /*
