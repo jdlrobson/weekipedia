@@ -29,9 +29,11 @@ export default React.createClass({
     var self = this;
     var endpoint = '/api/private/' + this.props.lang + '/collection/all/with/' + this.props.title;
     this.props.api.fetch( endpoint ).then( function ( data ) {
+      var isWatched = false;
       var collections = data.collections;
+      collections.forEach( ( collection ) => { isWatched = isWatched || collection.member } );
       title = decodeURIComponent( title );
-      self.setState( { collections: collections, isWatched: collections[0].member } );
+      self.setState( { collections: collections, isWatched: isWatched } );
     } ).catch( function () {
       self.setState( { isError: true } );
     } );
