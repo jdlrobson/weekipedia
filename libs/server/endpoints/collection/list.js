@@ -1,10 +1,12 @@
 import mwApi from './../mwApi'
+
 import extractInfo from './extract-info'
 import extractMembers from './extract-members'
 import thumbFromTitle from './thumbnail-from-title.js'
+import lag from './lag'
 import vars from './vars'
 
-function list( lang, project, username, title, query ) {
+function list( lang, project, username, title, query, profile ) {
   var params = {
     prop: 'revisions|images',
     rvprop: 'content|timestamp',
@@ -67,6 +69,9 @@ function list( lang, project, username, title, query ) {
         }
       }
     } );
+    if ( profile ) {
+      result = lag( result, username, profile );
+    }
     result.collections = result.collections.sort( function ( a, b ) {
       return a.updated > b.updated ? -1 : 1;
     } );

@@ -17,7 +17,7 @@ export default React.createClass({
       collections: null
     }
   },
-  componentWillMount() {
+  componentDidMount() {
     var self = this;
     var endpoint = '/api/private/' + this.props.lang + '/collection/all/with/' + this.props.title;
     this.props.api.fetch( endpoint ).then( function ( data ) {

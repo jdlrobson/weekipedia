@@ -8,7 +8,12 @@ function Api( basePath ) {
 
 Api.prototype = {
   cacheable: function ( url ) {
-    if ( url.indexOf( '/api/wikitext' ) === 0 ) {
+    // offline pages
+    if ( url.match( /api\/private\// ) ) {
+      return false;
+    } else if ( url.match( /collection\/by\/[^\/]*\/-1/ ) ) {
+      return false;
+    } else if ( url.indexOf( '/api/wikitext' ) === 0 ) {
       return false;
     } else {
       return true;
@@ -52,6 +57,8 @@ Api.prototype = {
     delete this.cache[path];
     if ( path[path.length - 1] === '/' ) {
       delete this.cache[path.substr( 0, path.length - 1 )];
+    } else {
+      delete this.cache[path + '/'];
     }
   },
   invalidatePage: function ( title, langOrProject ) {

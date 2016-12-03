@@ -19,8 +19,10 @@ export default function ( lang, title, body, summary, section, project, profile,
 
   if ( profile && profile.dummy ) {
     return new Promise( function ( resolve ) {
-      resolve( { edit: { result: "Success" } } );
-    });
+      resolve( { edit: { result: 'Success',
+        title: title,
+        newtimestamp: new Date().toISOString() } } );
+    } );
   } else {
     return mwApiToken( 'csrf', lang, params, project, { method: 'POST' }, profile ).then( function ( data ) {
       return new Promise( function ( resolve ) {

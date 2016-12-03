@@ -340,7 +340,7 @@ function initGetMethods( app ) {
 
     respond( res, function () {
       return id !== undefined ? collection.members( lang, DEFAULT_PROJECT, id, user, req.query ) :
-        collection.list( lang, DEFAULT_PROJECT, user );
+        collection.list( lang, DEFAULT_PROJECT, user, null, null, req.user );
     } );
   } );
 

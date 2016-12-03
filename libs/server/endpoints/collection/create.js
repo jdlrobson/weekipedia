@@ -3,9 +3,10 @@ import edit from './../edit'
 import lookup from './lookup'
 import list from './list'
 import vars from './vars'
+import extractInfo from './extract-info'
 
 export default function ( lang, project, title, description, profile ) {
-  return list( lang, project, profile.displayName ).then( function ( result ) {
+  return list( lang, project, profile.displayName, null, null, profile ).then( function ( result ) {
     var id = 1;
     result.collections.forEach( function ( collection ) {
       if ( collection.id >= id ) {
@@ -18,7 +19,16 @@ export default function ( lang, project, title, description, profile ) {
     var body = ['\'\'\'' + title + '\'\'\'', '', description, '', '[[' + vars.category + ']]',
       '== Items ==', '' ].join( '\n' );
 
-    return edit( lang, collectionTitle, body, 'Create collection', '0', project, profile );
+    return edit( lang, collectionTitle, body, 'Create collection', '0', project, profile ).then( function ( resp ) {
+      var collection;
+      if ( resp.edit.result === 'Success' ) {
+        // workaround lag
+        collection = extractInfo( collectionTitle, body, resp.edit.newtimestamp );
+        profile.collections = profile.collections || [];
+        profile.collections.unshift( collection );
+      }
+      return resp;
+    } );
   } );
 }
 
