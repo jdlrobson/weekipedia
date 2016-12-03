@@ -65,7 +65,7 @@ export default React.createClass({
   },
   getBody(){
     var session = this.props.session;
-    var msg = session ? <p><a href={'#/edit-collection/' + session.username}>Create your own collection</a></p>
+    var msg = session ? <p><a href={'#/edit-collection/' + session.username + '/'}>Create your own collection</a></p>
       : <p><a href="/wiki/Special:UserLogin">Sign in</a> to use collections.</p>
 
     if ( this.state.title ) {
