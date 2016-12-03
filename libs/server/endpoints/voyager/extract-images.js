@@ -1,7 +1,7 @@
 import { extractElements } from './domino-utils'
 
 function extractImages( section ) {
-  var ext = extractElements( section.text, 'figure' );
+  var ext = extractElements( section.text, 'figure, .gallerybox' );
   var maps = [];
   var images = [];
   Array.prototype.forEach.call( ext.extracted, function ( node ) {
