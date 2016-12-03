@@ -22,15 +22,12 @@ function membersWithProps( lang, project, collection, username, query ) {
       titles = titles.slice( offset, offset + 50 );
 
       return addProps( titles, [ 'pageterms', 'pageimages', 'coordinates' ], lang, project ).then( function ( pages ) {
-        return {
-          id: info.id,
-          title: info.title,
-          description: info.description,
+        return Object.assign( info, {
           pages: pages,
           continue: nextOffset ? {
             offset: nextOffset
           } : undefined
-        }
+        } );
       } );
     } );
   } );

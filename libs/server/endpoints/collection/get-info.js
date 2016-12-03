@@ -13,7 +13,7 @@ function getInfo( lang, project, collection, username ) {
 
     if ( page && !page.missing ) {
       rev = page.revisions[0];
-      return extractInfo( page.title, rev.content );
+      return extractInfo( page.title, rev.content, rev.timestamp, page.images ? page.images[0].title : null );
     } else {
       throw 'Collection does not exist.';
     }

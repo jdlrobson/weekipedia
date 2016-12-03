@@ -49,6 +49,9 @@ function propEnricher( arr, props, lang, project, params ) {
     pages.forEach( function ( page ) {
       index[page.title] = {};
       index[page.title].description = page.description;
+      if ( page.thumbnail && page.pageimage ) {
+        page.thumbnail.title = 'File:' + page.pageimage;
+      }
       index[page.title].thumbnail = page.thumbnail;
       index[page.title].coordinates = page.coordinates;
       if ( page.missing ) {

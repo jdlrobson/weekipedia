@@ -59,6 +59,7 @@ function list( lang, project, username, title, query, profile ) {
 
         if ( page.images ) {
           collection.thumbnail = {
+            title: page.images[0].title,
             source: thumbFromTitle( page.images[0].title.split( ':' )[1], 200 )
           };
         }

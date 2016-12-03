@@ -15,6 +15,7 @@ class CollectionCard extends Component {
       extracts.push( <Icon glyph="user" type="before" label={owner} className="mw-mf-user"
         href={base + 'User:' + encodeURIComponent( owner )} /> );
     }
+
     return <Card {...props} url={url} extracts={extracts} />;
   }
 }

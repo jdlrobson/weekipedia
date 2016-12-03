@@ -133,9 +133,10 @@ function initLoginRoutes( app ) {
 
     respond( res, function () {
       if ( action === 'create' ) {
-        return collection.create( lang, DEFAULT_PROJECT, req.body.title, req.body.description, profile );
+        return collection.create( lang, DEFAULT_PROJECT, req.body.title, req.body.description, req.body.image, profile );
       } if ( action === 'edit' ) {
-        return collection.edit( lang, DEFAULT_PROJECT, id, req.body.title, req.body.description, profile );
+        return collection.edit( lang, DEFAULT_PROJECT, id, req.body.title,
+          req.body.description, req.body.image, profile );
       } else if ( action === 'with' ) {
         return collection.includes( lang, DEFAULT_PROJECT, title, COLLECTIONS_INCLUDE_WATCHLIST, profile );
       } else if ( action === 'has' ) {

@@ -1,4 +1,6 @@
-function info( pageTitle, body, timestamp ) {
+import thumbFromTitle from './thumbnail-from-title.js'
+
+function info( pageTitle, body, timestamp, image ) {
   var title,
     lines = body.split( '\n' ),
     m = lines[0].match( /'''(.*)'''/ ),
@@ -14,6 +16,10 @@ function info( pageTitle, body, timestamp ) {
     updated: timestamp,
     id: parseInt( args[2], 10 ),
     title: title,
+    thumbnail: image ? {
+      title: image,
+      source: thumbFromTitle( image.split( ':' )[1], 200 )
+    } : image,
     owner: args[0].split( ':' )[1],
     description: lines[2]
   }
