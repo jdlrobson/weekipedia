@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom'
 
 import CardList from './../components/CardList'
 import CollectionCard from './../components/CollectionCard'
-import { ErrorBox, Button, IntermediateState } from 'wikipedia-react-components'
+import { ErrorBox, Button, IntermediateState, TruncatedText } from 'wikipedia-react-components'
 
 import Article from './Article'
 
@@ -134,6 +134,13 @@ export default React.createClass({
           onClick={this.props.onClickInternalLink}
           className={this.state.username === username && !this.state.title ? 'active' : ''}>{username}</a>
       );
+
+      if ( this.state.id ) {
+        tabs.push(
+          <span key="collection-tab-3"
+            className={this.state.title ? 'active' : ''}><TruncatedText>{this.state.title}</TruncatedText></span>
+        )
+      }
     } else {
       tagline = (
         <div>
