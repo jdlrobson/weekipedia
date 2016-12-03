@@ -31,6 +31,7 @@ const sectionBlacklist = [ 'Learn', 'Work', 'Stay safe', 'Stay healthy',
   'Cope', 'Respect', 'Connect' ];
 
 export default function ( title, lang, project ) {
+  var project = 'wikivoyage';
   // FIXME: This can be done in mobile content service
   function addBannerAndCoords( data ) {
     var width;
@@ -40,7 +41,7 @@ export default function ( title, lang, project ) {
       pageprops: 'wpb_banner',
       titles: title
     };
-    return mwApi( lang, params, project ).then( function ( propData ) {
+    return mwApi( lang, params, data.lead.project_source || project ).then( function ( propData ) {
       var page = propData.pages[0];
       var title;
 
@@ -299,11 +300,18 @@ export default function ( title, lang, project ) {
     } );
   }
 
-  return page( title, lang, project ).then( function ( json ) {
+  function transform( json ) {
     if ( json.lead.ns > 0 ) {
       return json;
     } else {
       return voyager( json );
     }
+  }
+  return page( title, lang, project ).then( transform ).catch( function () {
+    return page( title, lang, 'wikipedia' ).then( function ( json ) {
+      json.remaining =  { sections: [] };
+      json.lead.project_source = 'wikipedia';
+      return transform( json );
+    } );
   } );
 }
