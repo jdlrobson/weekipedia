@@ -28,7 +28,7 @@ import phpApi from './endpoints/phpApi'
 import messages from './messages'
 import respond from './respond'
 import cachedResponses from './cached-response.js'
-import { DEFAULT_PROJECT, API_PATH, ALLOWED_PROJECTS, DUMMY_SESSION } from './config'
+import { DEFAULT_PROJECT, API_PATH, ALLOWED_PROJECTS, DUMMY_SESSION, COLLECTIONS_INCLUDE_WATCHLIST } from './config'
 
 const RESPONSE_OKAY = JSON.stringify( { msg: 'OK' } );
 const cachedResponse = cachedResponses.cachedResponse
@@ -137,7 +137,7 @@ function initLoginRoutes( app ) {
       } if ( action === 'edit' ) {
         return collection.edit( lang, DEFAULT_PROJECT, id, req.body.title, req.body.description, profile );
       } else if ( action === 'with' ) {
-        return collection.includes( lang, DEFAULT_PROJECT, title, profile );
+        return collection.includes( lang, DEFAULT_PROJECT, title, COLLECTIONS_INCLUDE_WATCHLIST, profile );
       } else if ( action === 'has' ) {
         return collection.member( lang, DEFAULT_PROJECT, id, [ title ], profile );
       } else {

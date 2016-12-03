@@ -54,16 +54,22 @@ export default React.createClass({
   },
   render(){
     var watch = this.watch;
+    var props = this.props;
+    var collections = this.state.collections;
+    var emptyMsg;
 
-    if ( this.state.collections ) {
+    if ( collections ) {
+      if ( collections.length === 0 ) {
+        emptyMsg = <p>{props.msg('collections-empty')}</p>;
+      }
       return (
-        <Overlay {...this.props} className="collection-overlay" isDrawer={true}>
-        <h2>{this.props.msg( 'collection-title' )}</h2>
+        <Overlay {...props} className="collection-overlay" isDrawer={true}>
+        <h2>{props.msg( 'collection-title' )}</h2>
         <a key='edit-collection-cancel' className="cancel"
-          onClick={this.props.closeOverlay}>Cancel</a>
+          onClick={props.closeOverlay}>Cancel</a>
         <ul>
           {
-            this.state.collections.map( function ( collection ) {
+            collections.map( function ( collection ) {
               var glyph = collection.member ? 'tick' : 'blank-tick';
               return (
                 <li onClick={watch} data-id={collection.id}>{collection.title}<Icon glyph={glyph} className="status-indicator"/></li>
@@ -71,9 +77,10 @@ export default React.createClass({
             } )
           }
         </ul>
+        {emptyMsg}
         <div className="collection-actions">
           <a key='edit-collection-create'
-            href={"#/edit-collection/" + this.props.session.username + '/'}>{this.props.msg('collection-create')}</a>
+            href={"#/edit-collection/" + props.session.username + '/'}>{props.msg('collection-create')}</a>
         </div>
         </Overlay>
       );

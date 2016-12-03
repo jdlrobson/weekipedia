@@ -124,6 +124,10 @@ Enable user public collections (as alternative to watchstar)
 
 	export ENABLE_COLLECTIONS=1
 
+If you want to include the watchlist in a users list of collections
+
+	export COLLECTIONS_INCLUDE_WATCHLIST=1
+
 ### Nearby
 Disable the nearby feature.
 

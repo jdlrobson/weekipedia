@@ -18,6 +18,7 @@
   "menu-about": "About {{SITENAME}}",
   "menu-disclaimers": "Disclaimers",
   "search": "Search {{SITENAME}}",
+  "collections-empty": "You currently have no collections.",
   "collections-all": "Collections of pages from our community.",
   "collection-title": "Add to existing collection",
   "collection-create": "Create new collection",

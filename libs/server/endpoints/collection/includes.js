@@ -1,10 +1,10 @@
 import list from './list'
 import watched from './../watched'
 
-function includes( lang, project, title, profile ) {
+function includes( lang, project, title, includeWatchlist, profile ) {
   var username = profile.displayName;
   return list( lang, project, username, title ).then( function ( result ) {
-    if ( profile ) {
+    if ( profile && includeWatchlist ) {
       return watched( lang, project, [ title ], profile ).then( function ( watchInfo ) {
         result.collections.unshift( {
           id: 0,
