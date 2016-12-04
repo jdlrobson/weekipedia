@@ -7,7 +7,7 @@ class SectionContent extends Component {
   componentDidMount(){
     var props = this.props;
     if ( props.text && props.hijackLinks ) {
-      props.hijackLinks( ReactDOM.findDOMNode( this ) );
+      props.hijackLinks( ReactDOM.findDOMNode( this ).querySelector( '.text' ) );
     }
   }
   componentDidUpdate(){
@@ -37,7 +37,7 @@ class SectionContent extends Component {
       <div data-section={this.props.id}
         id={divId}
         className={"component-section-content content" + classSuffix}>
-        <div dangerouslySetInnerHTML={{ __html: this.props.text}}></div>
+        <div className="text" dangerouslySetInnerHTML={{ __html: this.props.text}}></div>
         <div className="edit-link">{this.props.editLink}</div>
       </div>
     )
