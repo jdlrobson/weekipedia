@@ -3,7 +3,7 @@ import { Button, ErrorBox, Icon, Input,
   IntermediateState, LinkList, Panel, TruncatedText } from 'wikipedia-react-components'
 
 import Overlay from './../../containers/Overlay'
-import Content from './../../containers/Content'
+import Content from './../../components/Content'
 
 import SectionContent from './../../components/SectionContent'
 

@@ -3,7 +3,7 @@ import timeago from 'timeago'
 import { HorizontalList, Icon, IntermediateState } from 'wikipedia-react-components'
 
 import Article from './../../containers/Article'
-import Content from './../../containers/Content'
+import Content from './../../components/Content'
 
 import './styles.less'
 

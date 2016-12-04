@@ -5,7 +5,7 @@ import LastModifiedBar from './LastModifiedBar'
 import ReadMore from './ReadMore'
 import TableOfContents from './TableOfContents'
 
-import Content from './../../containers/Content'
+import Content from './../../components/Content'
 import WikiPage from './../../containers/WikiPage'
 
 import UserPage from './../UserPage'

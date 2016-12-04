@@ -2,7 +2,7 @@ import React from 'react'
 import { ErrorBox, HorizontalList, IntermediateState } from 'wikipedia-react-components'
 
 import Article from './../containers/Article'
-import Content from './../containers/Content'
+import Content from './../components/Content'
 
 import CardListPage from './CardListPage'
 

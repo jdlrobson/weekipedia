@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-import Content from './../../containers/Content'
+import Content from './../Content'
 
 import './styles.less'
 import './icons.less'

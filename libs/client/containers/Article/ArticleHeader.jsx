@@ -5,7 +5,7 @@ import SectionContent from './../../components/SectionContent'
 import Infobox from './../../components/Infobox'
 import PageActions from './../../components/PageActions'
 
-import Content from './../../containers/Content'
+import Content from './../../components/Content'
 
 // Main component
 class ArticleHeader extends Component {

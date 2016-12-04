@@ -21,7 +21,7 @@ import Watchlist from './../client/pages/Watchlist'
 import UserLogin from './../client/pages/UserLogin'
 import Uploads from './../client/pages/Uploads'
 
-import Content from './../client/containers/Content'
+import Content from './../client/components/Content'
 
 import utils from './utils'
 

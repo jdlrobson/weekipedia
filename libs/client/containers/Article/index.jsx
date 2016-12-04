@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 
 import ArticleFooter from './ArticleFooter'
 import ArticleHeader from './ArticleHeader'
-import Content from './../Content'
+import Content from './../../components/Content'
 
 import './styles.less'
 

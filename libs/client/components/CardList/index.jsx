@@ -3,7 +3,7 @@ import React from 'react'
 import { ErrorBox, IntermediateState, ListHeader,
   CardWithLocation } from 'wikipedia-react-components';
 
-import Content from './../../containers/Content'
+import Content from './../Content'
 
 import './styles.less'
 
