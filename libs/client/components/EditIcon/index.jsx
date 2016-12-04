@@ -15,7 +15,6 @@ export default React.createClass({
       session: this.props.session,
       className: 'component-edit-icon',
       onLoginUrl: section !== undefined ? '#/editor/' + section : '#/editor/',
-      onLoginClick: this.launchEditor(),
       ctaMsg: this.props.msg( 'edit-cta' )
     };
 
