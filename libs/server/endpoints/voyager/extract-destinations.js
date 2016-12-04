@@ -86,6 +86,11 @@ function extractFromList( html ) {
       link = node,
       doNotScrub = false;
 
+    // This node was already removed from the dom. I'm not sure how you got it..
+    if ( node.parentNode ) {
+      return;
+    }
+
     listItem = getParentWithTag( link, 'LI' );
     listNode = listItem.parentNode;
 
