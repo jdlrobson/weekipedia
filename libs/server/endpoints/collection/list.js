@@ -73,6 +73,9 @@ function list( lang, project, username, title, query, profile ) {
     if ( profile ) {
       result = lag( result, username, profile );
     }
+    if ( username ) {
+      result.owner = username;
+    }
     result.collections = result.collections.sort( function ( a, b ) {
       return a.updated > b.updated ? -1 : 1;
     } );

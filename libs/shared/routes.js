@@ -122,6 +122,7 @@ function addSpecialPage( title, Class, handler ) {
 
       Object.assign( props, {
         project: project || props.project,
+        params: params,
         language_project: lang + '.' + props.project,
         lang: lang,
         mobileUrl: utils.getAbsoluteUrl( 'Special:' + title + suffix,
@@ -175,7 +176,13 @@ function initSpecialPages() {
   } );
   addSpecialPage( 'Nearby', Nearby );
   addSpecialPage( 'UserLogin', UserLogin );
-  addSpecialPage( 'Collections', Collections );
+  addSpecialPage( 'Collections', Collections, function ( info, props ) {
+    props.fallback = '/api/' + props.lang + '/collection/';
+    if ( props.params ) {
+      props.fallback += props.params;
+    }
+    return props;
+  } );
   addSpecialPage( 'Uploads', Uploads );
 }
 

@@ -29,7 +29,11 @@ export default React.createClass({
     var endpoint, username, id,
       endpointPrefix = '/api/' + props.lang + '/collection';
 
-    this.setState( { description: null, title: null, error: false } );
+    // reset
+    this.setState( { description: null, title: null, error: false, id: null,
+      owner: null,
+      defaultView: null, collections: null,
+      endpoint: null, username: null } );
     if ( args.length === 3 ) {
       username = args[1];
       id = args[2];
@@ -64,16 +68,19 @@ export default React.createClass({
     this.load( props );
   },
   getBody(){
-    var session = this.props.session;
+    var props = this.props;
+    var session = props.session;
+    var collections = props.collections || this.state.collections;
+    var id = props.id || this.state.id;
     var msg = session ? <p><a href={'#/edit-collection/' + session.username + '/'}>Create your own collection</a></p>
       : <p><a href="/wiki/Special:UserLogin">Sign in</a> to use collections.</p>
 
-    if ( this.state.title ) {
-      return <CardList key="collection-list" {...this.props} unordered={COLLECTIONS_ARE_NOT_ORDERED} apiEndpoint={this.state.endpoint} />
-    } else if ( this.state.collections ) {
+    if ( id ) {
+      return <CardList key="collection-list" {...this.props} unordered={COLLECTIONS_ARE_NOT_ORDERED} apiEndpoint={this.state.endpoint} pages={props.pages} />
+    } else if ( collections ) {
       return <CardList key="collections-list"
         emptyMessage="There are no collections by this user."  unordered={COLLECTIONS_ARE_NOT_ORDERED}
-        {...this.props} pages={this.state.collections} CardClass={CollectionCard} />;
+        {...this.props} pages={collections} CardClass={CollectionCard} />;
     } else if ( this.state.error ) {
       return <ErrorBox msg="Unable to show page." key="article-error" />;
     } else if ( this.state.defaultView ) {
@@ -98,27 +105,30 @@ export default React.createClass({
     }
   },
   render() {
-    var username, tagline, userUrl, actions, label, suffix, tabs,
+    var tagline, userUrl, actions, label, suffix, tabs,
       props = this.props,
       lang = this.props.lang,
+      desc = this.state.description || props.description,
+      username = this.state.username || props.owner,
+      id = this.state.id || props.id,
+      title = this.state.title || props.title,
       session = this.props.session;
 
-    if ( this.state.username ) {
-      if ( session && this.state.username === session.username ) {
-        label = this.state.id ? 'Edit' : 'Create';
-        suffix = this.state.id ? '/' + this.state.id : '/';
-        actions = <Button label={label} href={"#/edit-collection/" + this.state.username + suffix } isPrimary={true}/>;
+    if ( username ) {
+      if ( session && username === session.username ) {
+        label = id ? 'Edit' : 'Create';
+        suffix = id ? '/' + id : '/';
+        actions = <Button label={label} href={"#/edit-collection/" + username + suffix } isPrimary={true}/>;
       }
-      userUrl = '/' + this.props.lang + '/wiki/Special:Collections/by/' + this.state.username;
+      userUrl = '/' + this.props.lang + '/wiki/Special:Collections/by/' + username;
       // The api request is cached at this point
       tagline = (
         <div>
-          <div>by <a href={userUrl} onClick={this.navigateTo}>{this.state.username}</a></div>
-          {this.state.description}&nbsp;
+          <div>by <a href={userUrl} onClick={this.navigateTo}>{username}</a></div>
+          {desc}&nbsp;
           <div>{actions}</div>
         </div>
       );
-      username = this.state.username;
     } else if ( session ) {
       username = session.username;
     }
@@ -126,22 +136,28 @@ export default React.createClass({
     tabs = [
       <a key="collection-tab-1" href={'/' + lang + '/wiki/Special:Collections/'}
         onClick={this.props.onClickInternalLink}
-        className={!this.state.username ? 'active' : ''}>All</a>
+        className={!username ? 'active' : ''}>All</a>
     ];
     if ( username ) {
       tabs.push(
         <a key="collection-tab-2" href={'/' + lang + '/wiki/Special:Collections/by/' + username}
           onClick={this.props.onClickInternalLink}
-          className={this.state.username === username && !this.state.title ? 'active' : ''}>{username}</a>
+          className={!id ? 'active' : ''}>{username}</a>
       );
 
-      if ( this.state.id ) {
+      if ( id ) {
         tabs.push(
           <span key="collection-tab-3"
-            className={this.state.title ? 'active' : ''}><TruncatedText>{this.state.title}</TruncatedText></span>
+            className={title ? 'active' : ''}><TruncatedText>{title}</TruncatedText></span>
         )
       }
     } else {
+      tabs.push(
+        <a key="collection-tab-2" href={'/' + lang + '/wiki/Special:Collections/by/~anonymous'}
+          onClick={this.props.onClickInternalLink}
+          className={username === '~anonymous' && !title ? 'active' : ''}>By you</a>
+      );
+
       tagline = (
         <div>
           <div>by everyone</div>
