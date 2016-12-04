@@ -195,7 +195,10 @@ function initSpecialPages() {
     return props;
   } );
   addSpecialPage( 'Uploads', Uploads );
-  addSpecialPage( 'NomadHome', NomadHome );
+  addSpecialPage( 'NomadHome', NomadHome, function ( info, props ) {
+    props.fallback = '/api/random/' + props.lang;
+    return props;
+  } );
 }
 
 initSpecialPages();

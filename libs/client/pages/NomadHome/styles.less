@@ -18,6 +18,19 @@
   overflow: hidden;
   position: relative;
 
+  a,
+  h3,
+  .card-detail {
+    position: absolute;
+    max-height: none;
+    height: 80px;
+    display: block;
+    z-index: 6;
+    top: 0;
+    width: 80px;
+    transform: none;
+  }
+
   .card {
     width: 80px;
     cursor: pointer;
@@ -28,6 +41,8 @@
     margin-right: 0;
   }
   .card-detail {
-    visibility: hidden;
+    text-indent: -999px;
+    overflow: hidden;
+    z-index: 2;
   }
 }
