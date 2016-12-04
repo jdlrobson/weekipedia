@@ -157,7 +157,10 @@ function initSpecialPages() {
   addSpecialPage( 'MobileDiff', MobileDiff );
   addSpecialPage( 'MobileOptions', MobileOptions );
   addSpecialPage( 'MostRead', MostRead );
-  addSpecialPage( 'Random', Random );
+  addSpecialPage( 'Random', Random, function ( info, props ) {
+    props.fallback = '/api/random/' + props.lang;
+    return props;
+  } );
   addSpecialPage( 'Search', Search, function ( info, props ) {
     var query = props.query.search;
     if ( query ) {
