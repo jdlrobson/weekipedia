@@ -2,7 +2,7 @@ import React from 'react'
 
 import { Icon, Button } from 'wikipedia-react-components';
 
-import WikiPage from './../../containers/WikiPage'
+import WikiPage from './../WikiPage'
 
 import './icons.less'
 import './styles.less'

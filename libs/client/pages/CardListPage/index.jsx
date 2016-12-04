@@ -6,7 +6,7 @@ import EmptyList from './EmptyList'
 
 import CardList from './../../components/CardList'
 
-import Article from './../../containers/Article'
+import Article from './../Article'
 
 import './styles.less'
 

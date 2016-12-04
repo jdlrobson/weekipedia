@@ -5,7 +5,7 @@ import CardList from './../components/CardList'
 import CollectionCard from './../components/CollectionCard'
 import { ErrorBox, Button, IntermediateState } from 'wikipedia-react-components'
 
-import Article from './../containers/Article'
+import Article from './Article'
 
 const COLLECTIONS_ARE_NOT_ORDERED = true;
 

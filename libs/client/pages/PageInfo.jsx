@@ -1,6 +1,6 @@
 import React from 'react'
 
-import Article from './../containers/Article'
+import Article from './Article'
 
 // Pages
 export default React.createClass({

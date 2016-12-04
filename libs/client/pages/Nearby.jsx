@@ -1,9 +1,9 @@
 import React from 'react'
 import { ErrorBox, HorizontalList, IntermediateState } from 'wikipedia-react-components'
 
-import Article from './../containers/Article'
 import Content from './../components/Content'
 
+import Article from './Article'
 import CardListPage from './CardListPage'
 
 // Pages

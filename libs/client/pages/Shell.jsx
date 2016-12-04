@@ -1,6 +1,6 @@
 import React from 'react'
 
-import WikiPage from './../containers/WikiPage'
+import WikiPage from './WikiPage'
 
 import { IntermediateState } from 'wikipedia-react-components'
 

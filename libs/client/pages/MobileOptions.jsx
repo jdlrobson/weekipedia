@@ -2,7 +2,7 @@ import React from 'react'
 
 import mwStorage from './../mediawiki-storage'
 
-import Article from './../containers/Article'
+import Article from './Article'
 
 import { IntermediateState, Checkbox } from 'wikipedia-react-components'
 

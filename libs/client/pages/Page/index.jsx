@@ -6,8 +6,8 @@ import ReadMore from './ReadMore'
 import TableOfContents from './TableOfContents'
 
 import Content from './../../components/Content'
-import WikiPage from './../../containers/WikiPage'
 
+import WikiPage from './../WikiPage'
 import UserPage from './../UserPage'
 
 import { getSections } from './../../react-helpers'

@@ -3,7 +3,7 @@ import React from 'react'
 import CardList from './../components/CardList'
 import { IntermediateState } from 'wikipedia-react-components'
 
-import Article from './../containers/Article'
+import Article from './Article'
 
 // Pages
 export default React.createClass({
