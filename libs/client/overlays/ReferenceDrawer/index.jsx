@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom'
 
 import { ErrorBox, Icon, IntermediateState } from 'wikipedia-react-components'
 
-import Overlay from './../../containers/Overlay'
+import Overlay from './../Overlay'
 
 import './styles.less'
 import './icons.less'

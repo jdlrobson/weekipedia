@@ -3,7 +3,7 @@ import { Button, Input, IntermediateState } from 'wikipedia-react-components'
 
 import CollectionCard from './../../components/CollectionCard'
 
-import Overlay from './../../containers/Overlay'
+import Overlay from './../Overlay'
 
 import './styles.less'
 

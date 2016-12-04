@@ -1,8 +1,9 @@
 import React from 'react'
 import { IntermediateState, LinkList, Panel, SearchInput } from 'wikipedia-react-components'
 
-import Overlay from './../../containers/Overlay'
 import Content from './../../components/Content'
+
+import Overlay from './../Overlay'
 
 import './styles.less'
 

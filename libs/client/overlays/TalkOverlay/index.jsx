@@ -2,10 +2,10 @@ import React from 'react'
 import { Button, ErrorBox, Icon, Input,
   IntermediateState, LinkList, Panel, TruncatedText } from 'wikipedia-react-components'
 
-import Overlay from './../../containers/Overlay'
 import Content from './../../components/Content'
-
 import SectionContent from './../../components/SectionContent'
+
+import Overlay from './../Overlay'
 
 import './styles.less'
 

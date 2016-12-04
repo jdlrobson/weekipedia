@@ -3,7 +3,7 @@ import { Button, HorizontalList, IntermediateState, TruncatedText, Icon } from '
 
 import './styles.less'
 
-import Overlay from './../../containers/Overlay'
+import Overlay from './../Overlay'
 
 export default React.createClass({
   getInitialState() {
