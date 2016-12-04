@@ -60,8 +60,7 @@ var routes = [
         titleParts = titleSansPrefix.split( '/' ),
         project = info[5],
         action = props.query && props.query.action || 'view',
-        lang = info[1] || info[4] || 'en',
-        articleSource = project ? lang + '.' + project : lang;
+        lang = info[1] || info[4] || 'en';
 
       props.lang = lang;
       titleSansPrefix = titleParts[0];
@@ -90,7 +89,7 @@ var routes = [
           View = Page;
         }
         props.title = titleDecoded;
-        props.fallback = '/api/voyager/page/' + articleSource + '/' + title;
+        props.fallback = '/api/voyager/page/' + props.language_project + '/' + title;
         props.children = [
           React.createElement( View,
             Object.assign( {}, props, {
