@@ -171,13 +171,27 @@ export default React.createClass({
   clearSession() {
     this.props.storage.remove( APP_SESSION_KEY );
   },
+  renderCurrentRoute() {
+    var path = window.location.pathname;
+    var query = window.location.search;
+    var hash = window.location.hash;
+    var route = this.props.router.matchRoute( path, hash,
+      Object.assign( {}, this.props ), query );
+    this.mount( route );
+  },
   componentDidMount() {
     var showNotification = this.showNotification;
+    var props = this.props;
     var msg = this.props.msg;
     if ( this.props.offlineVersion ) {
       initOffline( function () {
         showNotification( msg( 'offline-ready' ) );
       } );
+    }
+    if ( 'onpopstate' in window ) {
+      window.onpopstate = this.renderCurrentRoute;
+      props.router.on( 'onpushstate', this.renderCurrentRoute );
+      props.router.on( 'onreplacestate', this.renderCurrentRoute );
     }
   },
   showOverlay( overlay ) {

@@ -23,20 +23,8 @@ if ( config.fallbackPath ) {
 }
 shared.init( config, overlayRoutes );
 
-function renderCurrentRoute( ev ) {
-  var props = ev ? ev.state : {};
-
-  render(
-    shared.render( window.location.pathname, window.location.hash, props ),
-    document.getElementById( 'app' )
-  )
-}
-
-if ( 'onpopstate' in window ) {
-  window.onpopstate = renderCurrentRoute;
-  shared.router.on( 'onpushstate', renderCurrentRoute );
-  shared.router.on( 'onreplacestate', renderCurrentRoute );
-}
-
 document.body.className += ' client-js';
-renderCurrentRoute();
+render(
+  shared.render( window.location.pathname, window.location.hash, {} ),
+  document.getElementById( 'app' )
+)
