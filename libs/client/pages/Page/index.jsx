@@ -204,6 +204,9 @@ export default React.createClass({
     if ( !lead ) {
       return footer;
     } else {
+      if ( lead.project_source ) {
+        return null;
+      }
       footer = [
         <LastModifiedBar editor={lead.lastmodifier} lang={props.lang}
           language_project={props.language_project}
@@ -246,6 +249,7 @@ export default React.createClass({
       title = this.props.title,
       lead = Object.assign( {}, this.state.lead || this.props.lead || {} ),
       ns = lead && lead.ns || 0,
+      foreign = lead.project_source,
       footer = this.getFooter( lead ),
       lang = this.props.lang,
       coords = lead ? lead.coordinates : null,
@@ -326,6 +330,10 @@ export default React.createClass({
             router={props.router} />
         );
       }
+    }
+    if ( foreign ) {
+      sections.push( <div className="editor-link">Content from <a
+        href={'/' + props.lang + '/' + foreign + '/Special:History/' + props.title}>Wikipedia</a></div> );
     }
 
     lead.text = leadHtml;
