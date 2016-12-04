@@ -5,7 +5,6 @@ import mwApi from './../mwApi';
 import addProps from './../prop-enricher'
 
 import { extractElements, isNodeEmpty, cleanupScrubbedLists } from './domino-utils'
-import { vcardify } from './vcardify-list'
 import extractDestinations from './extract-destinations'
 import extractImages from './extract-images'
 import climateExtraction from './extract-climate'
@@ -137,20 +136,6 @@ export default function ( title, lang, project ) {
     return section;
   }
 
-  function shouldHaveVCards( data ) {
-    var desc = data.lead.description || '';
-    if ( data.lead.infobox ) {
-      return false;
-    } else if ( !desc || desc.indexOf( 'country' ) > -1 ||
-      desc.indexOf( 'monarchy' )  > -1 ||
-      desc.indexOf( 'republic' )  > -1
-    ) {
-      return false;
-    } else {
-      return true;
-    }
-  }
-
   function voyager( data ) {
     return addBannerAndCoords( data ).then( function ( data ) {
       var newSection, climate;
@@ -161,12 +146,10 @@ export default function ( title, lang, project ) {
       var allImages = [];
       var logistics = [];
       var allDestinations = [];
-      var allVCards = [];
       var allMaps = [];
       var curSectionLine;
       var orientation = [];
       var itineraries = [];
-      var vcardsEnabled = shouldHaveVCards( data );
       const REGION_SECTION_HEADINGS = [ 'Cities', 'Other destinations', 'Cities and towns',
         'Towns & Villages', 'Towns &amp; Villages',
         'Destinations', 'Towns', 'Countries and territories' ];
@@ -197,12 +180,6 @@ export default function ( title, lang, project ) {
         }
         if ( section.toclevel === 1 ) {
           curSectionLine = section.line;
-          vcardsEnabled = [ 'Get in', 'See' ]
-            .indexOf( section.line ) === -1;
-        }
-
-        if ( isRegion ) {
-          vcardsEnabled = false;
         }
 
         if ( [ 'Itineraries' ].indexOf( section.line ) > -1 ) {
@@ -214,7 +191,6 @@ export default function ( title, lang, project ) {
         ) {
           data.lead.destinations_id = section.id;
           cardSectionTocLevel = section.toclevel;
-          vcardsEnabled = false;
           if ( REGION_SECTION_HEADINGS.indexOf( section.line ) > -1 ) {
             isRegion = true;
           }
@@ -244,14 +220,6 @@ export default function ( title, lang, project ) {
             if ( section.destinations ) {
               allDestinations = allDestinations.concat( section.destinations );
             }
-          }
-
-          if ( vcardsEnabled ) {
-            section = vcardify( section, curSectionLine );
-            if ( section.vcards.length > 0 ) {
-              allVCards = allVCards.concat( section.vcards );
-            }
-            delete section.vcards;
           }
 
           section.isEmpty = isSectionEmpty( section );
@@ -289,8 +257,6 @@ export default function ( title, lang, project ) {
       if ( !isEmptySectionArray( orientation ) ) {
         data.orientation = orientation;
       }
-      // purposely do not show vcards at current time
-      // data.vcards = allVCards;
 
       if ( allDestinations.length ) {
         return addNextCards( data, allDestinations, isRegion );

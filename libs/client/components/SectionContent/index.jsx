@@ -1,8 +1,6 @@
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 
-import VCard from './../VCard'
-import CardList from './../CardList'
 import './styles.less'
 
 class SectionContent extends Component {
@@ -23,7 +21,7 @@ class SectionContent extends Component {
   }
   render(){
     var props = this.props;
-    var divId, vcardList;
+    var divId;
     var id = this.props.id;
     if ( id && typeof id === 'number' ) {
       // For consistency with MobileFrontend the id uses the section number - the lead section
@@ -34,9 +32,6 @@ class SectionContent extends Component {
     if ( props.id ) {
       classSuffix += ' section-' + props.id;
     }
-    if ( props.vcards && props.vcards.length ) {
-      vcardList = <CardList pages={this.props.vcards} CardClass={VCard} />;
-    }
 
     return (
       <div data-section={this.props.id}
@@ -44,7 +39,6 @@ class SectionContent extends Component {
         className={"component-section-content content" + classSuffix}>
         <div dangerouslySetInnerHTML={{ __html: this.props.text}}></div>
         <div className="edit-link">{this.props.editLink}</div>
-        {vcardList}
       </div>
     )
   }
