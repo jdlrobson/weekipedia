@@ -1,0 +1,33 @@
+@import './../../globals.less';
+
+.quote-box {
+  background: #333;
+  color: white;
+  padding: 8px;
+  font-size: 0.8em;
+  margin-bottom: 8px;
+}
+
+.card-list-images {
+  border-top: 0;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: flex-start;
+  font-size: 1em;
+  list-style: none;
+  overflow: hidden;
+  position: relative;
+
+  .card {
+    width: 80px;
+    cursor: pointer;
+    border: 0;
+  }
+  .card,
+  .card-thumb {
+    margin-right: 0;
+  }
+  .card-detail {
+    visibility: hidden;
+  }
+}
