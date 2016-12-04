@@ -5,7 +5,7 @@ import { Icon, TruncatedText } from 'wikipedia-react-components'
 import './styles.less'
 import './icons.less'
 
-import Content from './../../containers/Content'
+import Content from './../../../containers/Content'
 
 export default ({ editor, language_project, lang, title, timestamp, onClickInternalLink }) => {
   const isAnon = editor && editor.name ? false : true;

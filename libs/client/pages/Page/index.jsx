@@ -1,9 +1,9 @@
 import React from 'react'
 
 import { Button, ErrorBox, IntermediateState } from 'wikipedia-react-components';
-import LastModifiedBar from './../../components/LastModifiedBar'
-import ReadMore from './../../components/ReadMore'
-import TableOfContents from './../../components/TableOfContents'
+import LastModifiedBar from './LastModifiedBar'
+import ReadMore from './ReadMore'
+import TableOfContents from './TableOfContents'
 
 import Content from './../../containers/Content'
 import WikiPage from './../../containers/WikiPage'
