@@ -157,7 +157,7 @@ export default React.createClass({
         </Content>
       );
     } else if ( !cards ) {
-      return <Content key="card-list-loading"><IntermediateState msg={this.props.loadingMessage} /></Content>;
+      return <Content key="card-list-loading" className="card-list"><IntermediateState msg={this.props.loadingMessage} /></Content>;
     }
 
     if ( props.className ) {
