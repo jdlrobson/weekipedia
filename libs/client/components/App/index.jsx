@@ -173,10 +173,9 @@ export default React.createClass({
   },
   renderCurrentRoute() {
     var path = window.location.pathname;
-    var query = window.location.search;
     var hash = window.location.hash;
     var route = this.props.router.matchRoute( path, hash,
-      Object.assign( {}, this.props ), query );
+      Object.assign( {}, this.props ) );
     this.mount( route );
   },
   componentDidMount() {
