@@ -1,11 +1,29 @@
 @import './../../globals.less';
 
+.home {
+  .card-list {
+    clear: right;
+  }
+}
+
 .quote-box {
   background: #333;
   color: white;
   padding: 8px;
-  font-size: 0.8em;
   margin-bottom: 8px;
+
+  blockquote {
+    font-family: Georgia;
+    font-size: .8em;
+    font-style: italic;
+  }
+
+  .author {
+    float: right;
+    color: #ccc;
+    font-size: 0.8em;
+    font-weight: bold;
+  }
 }
 
 .card-list-images {
@@ -44,5 +62,12 @@
     text-indent: -999px;
     overflow: hidden;
     z-index: 2;
+  }
+}
+
+@media (min-width: @deviceWidthTablet) {
+  .quote-box {
+    width: 50%;
+    float: right;
   }
 }

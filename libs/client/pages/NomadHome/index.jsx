@@ -34,22 +34,22 @@ export default React.createClass({
     }
     var body = [
       <div className="quote-box" key="home-quote">
-        <blockquote>{quote} <span className="author">Mark Twain</span></blockquote>
+        <blockquote>{quote}</blockquote>
+        <span className="author">Mark Twain</span>
       </div>,
       <CardList key="nomad-list" {...this.props} unordered="1" apiEndpoint={'/api/random/' + this.props.lang}
-        className="card-list-images"
-        title='Random' tagline="Random pages from across the wiki" />,
+        className="card-list-images" />,
     ];
-    var tagline = (<span>Where do you want to go today?</span>)
+    var tagline = (<span>Click the map or scroll to adventure.</span>)
 
     var lead = {
       maplink: exploreUrl,
       coordinates: { zoom: 1, lat: 0, lon: 0 }
     };
     return (
-      <Article {...this.props} body={body} isBannerEnabled={true}
-        lead={lead}
-        title='Nomad' tagline={tagline} />
+      <Article {...this.props} body={body} className="home"
+        isBannerEnabled={true} lead={lead}
+        title='Where do you want to go today?' tagline={tagline} />
     )
   }
 })
