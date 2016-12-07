@@ -1,7 +1,6 @@
 import React from 'react'
 
 import CardList from './../../components/CardList'
-import { Card } from 'wikipedia-react-components'
 
 import Article from './../Article'
 
@@ -26,7 +25,6 @@ export default React.createClass({
   },
   render(){
     var quote = "Twenty years from now you will be more disappointed by the things that you didn't do than by the ones you did do. So throw off the bowlines. Sail away from the safe harbor. Catch the trade winds in your sails. Explore. Dream. Discover.";
-    var lang = this.props.lang;
     var searchUrl, exploreUrl;
     if ( this.state.jsEnabled ) {
       searchUrl = "#/search";

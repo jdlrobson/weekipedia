@@ -30,7 +30,7 @@ const sectionBlacklist = [ 'Learn', 'Work', 'Stay safe', 'Stay healthy',
   'Cope', 'Respect', 'Connect' ];
 
 export default function ( title, lang, project ) {
-  var project = 'wikivoyage';
+  project = 'wikivoyage';
   // FIXME: This can be done in mobile content service
   function addBannerAndCoords( data ) {
     var width;
