@@ -48,7 +48,7 @@ function extractDestinations( section ) {
     }
   } );
   section.destinations = destinations;
-  section.text = cleanupScrubbedLists( ext.document.body.innerHTML );
+  section.text = cleanupScrubbedLists( res.text );
   section.seeAlso = seeAlso;
   return section;
 }
@@ -87,7 +87,7 @@ function extractFromList( html ) {
       doNotScrub = false;
 
     // This node was already removed from the dom. I'm not sure how you got it..
-    if ( node.parentNode ) {
+    if ( !node.parentNode ) {
       return;
     }
 
@@ -178,8 +178,6 @@ function extractFromList( html ) {
       }
     } );
   } else {
-    html = ext.document.body.innerHTML;
-
     // after all our shenanigans let's also check if we emptied the content of any lists.
     html = cleanupScrubbedLists( ext.document.body.innerHTML );
   }
