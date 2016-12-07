@@ -150,9 +150,9 @@ export default function ( title, lang, project ) {
       var curSectionLine;
       var orientation = [];
       var itineraries = [];
-      const REGION_SECTION_HEADINGS = [ 'Cities', 'Other destinations', 'Cities and towns',
-        'Towns & Villages', 'Towns &amp; Villages',
-        'Destinations', 'Towns', 'Countries and territories' ];
+      const REGION_SECTION_HEADINGS = [ 'cities', 'other destinations', 'cities and towns',
+        'towns & villages', 'towns &amp; villages',
+        'destinations', 'towns', 'countries and territories' ];
 
       var p = { text: data.lead.paragraph };
       cleanup( p );
@@ -186,7 +186,7 @@ export default function ( title, lang, project ) {
           itineraries = section;
           return;
         }
-        if ( [ 'Go next' ].concat( REGION_SECTION_HEADINGS ).indexOf( section.line ) > -1 &&
+        if ( [ 'go next' ].concat( REGION_SECTION_HEADINGS ).indexOf( section.line.toLowerCase() ) > -1 &&
           ( section.toclevel === 1 || section.toclevel === 2 )
         ) {
           data.lead.destinations_id = section.id;
