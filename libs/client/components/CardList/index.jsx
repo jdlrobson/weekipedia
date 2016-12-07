@@ -144,7 +144,10 @@ export default React.createClass({
     var props = this.props;
     var isDiffCardList = this.props.isDiffCardList;
     var isUnordered = props.unordered && !isDiffCardList;
-    var cards = props.pages ? getCards( { pages: props.pages }, props ) : this.state.cards;
+    var cards = this.state.cards;
+    if ( props.pages && !cards ) {
+      cards = getCards( { pages: props.pages }, props );
+    }
     var cardsAndHeaders = [];
     var continuer = props.continue && props.endpoint ?
       <div className='gutter' /> : null;
