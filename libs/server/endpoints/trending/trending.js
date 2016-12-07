@@ -1,10 +1,30 @@
+import scorer from 'wikipedia-edits-scorer'
+
 import addProps from './../prop-enricher'
 import visits from './../visits'
 
 import collection from './collection'
-import calcScore from './scoring'
 
 const MIN_BYTES_CHANGED = 100;
+
+function calcScore( edits, halflife ) {
+  return scorer.calculateScore(
+    new Date(),
+    {
+      title: edits.title,
+      edits: edits.edits,
+      anonEdits: edits.anonEdits,
+      reverts: edits.reverts,
+      start: edits.start,
+      numberContributors: edits.anons.length + edits.contributors.length,
+      distribution: edits.distribution,
+      views: edits.views,
+      bytesChanged: edits.bytesChanged,
+      flaggedEdits: edits.volatileFlags
+    },
+    halflife
+  );
+}
 
 function scorePages( halflife, visitData ) {
   var p = collection.getPages();

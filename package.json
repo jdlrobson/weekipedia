@@ -66,9 +66,10 @@
     "web-push-subscriber": "^0.2.0",
     "webpack": "^1.13.1",
     "webpack-dev-server": "^1.14.1",
-    "wmui-base": "wikimedia/WikimediaUI-Base",
+    "wikipedia-edits-scorer": "^1.1.0",
     "wikipedia-react-components": "^1.1.7",
-    "wikitrender": "jdlrobson/wikitrender"
+    "wikitrender": "jdlrobson/wikitrender",
+    "wmui-base": "wikimedia/WikimediaUI-Base"
   },
   "dependencies": {
     "reset-css": "^2.0.2011012603"
