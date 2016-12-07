@@ -126,9 +126,9 @@ if ( SIGN_IN_SUPPORTED && !DUMMY_SESSION ) {
 */
 
 function getUserSession( req ) {
-  return req.user ? {
+  return req.user && req.user.displayName !== '0' ? {
       username: req.user.displayName
-    } : ( DUMMY_SESSION && DUMMY_SESSION.username === '0' ? null : DUMMY_SESSION || null );
+    } : null;
 }
 
 app.get( '/auth/whoamithistime', function ( req, res ) {
