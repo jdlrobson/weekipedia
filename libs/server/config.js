@@ -14,9 +14,8 @@ const ENABLE_NEARBY = Boolean( process.env.ENABLE_NEARBY );
 
 const SHOW_TALK_ANONS = Boolean( process.env.SHOW_TALK_ANONS );
 
-const DEV_DUMMY_USER = process.env.DEV_DUMMY_USER;
-const DUMMY_SESSION = DEV_DUMMY_USER && DEV_DUMMY_USER !== '0' ? { dummy: true,
-  displayName: DEV_DUMMY_USER } : null
+const DUMMY_SESSION = process.env.DEV_DUMMY_USER ? { dummy: true,
+  displayName: process.env.DEV_DUMMY_USER } : null
 
 const ALL_PROJECTS = [ 'wikipedia', 'wikivoyage', 'wiktionary',
   'wikisource', 'wikiquote', 'wikinews', 'wikibooks', 'wikiversity' ].concat( SPECIAL_PROJECTS );
@@ -31,7 +30,7 @@ const CONSUMER_SECRET = process.env.MEDIAWIKI_CONSUMER_SECRET;
 const CONSUMER_KEY = process.env.MEDIAWIKI_CONSUMER_KEY
 
 const LANGUAGE_CODE = process.env.DEFAULT_LANGUAGE || 'en'
-const SIGN_IN_SUPPORTED = DEV_DUMMY_USER ? true : ( CONSUMER_SECRET && CONSUMER_KEY )
+const SIGN_IN_SUPPORTED = DUMMY_SESSION ? true : ( CONSUMER_SECRET && CONSUMER_KEY )
 
 const SITE_EXPAND_SECTIONS = process.env.SITE_EXPAND_SECTIONS ?
   Boolean( parseInt( process.env.SITE_EXPAND_SECTIONS, 10 ) ) : false;
