@@ -133,6 +133,12 @@ Disable the nearby feature.
 
 	export ENABLE_NEARBY=0
 
+### Settings
+
+Disable customisations to the experience.
+
+	export DISABLE_SETTINGS=1
+
 ### Older browsers
 
 Weekipedia by default uses Promises, Map, Object.assign and Function.prototype.bind
