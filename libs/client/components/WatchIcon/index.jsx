@@ -65,13 +65,16 @@ export default React.createClass({
   },
   render(){
     var state = this.state;
+    var props = this.props;
     var iconProps = {
       key: 'watch',
-      showOverlay: this.props.showOverlay,
+      showOverlay: props.showOverlay,
       glyph: state.isWatched ? 'watched' : 'watch',
       label: 'Watch this page',
-      session: this.props.session,
-      ctaMsg: this.props.msg( 'watch-cta' ),
+      title: props.title,
+      language_project: props.language_project,
+      session: props.session,
+      ctaMsg: props.msg( 'watch-cta' ),
       onLoginClick: this.dispatch
     };
 

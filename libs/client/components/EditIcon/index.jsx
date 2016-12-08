@@ -17,6 +17,8 @@ export default React.createClass({
       showOverlay: props.showOverlay,
       className: 'component-edit-icon',
       router: props.router,
+      title: props.title,
+      language_project: props.language_project,
       onLoginUrl: section !== undefined ? '#/editor/' + section : '#/editor/',
       ctaMsg: props.msg( 'edit-cta' )
     };
