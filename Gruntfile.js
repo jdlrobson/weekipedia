@@ -57,7 +57,8 @@ module.exports = function ( grunt ) {
         syntax: 'less'
       },
       all: [
-        'libs/**/*.less'
+        'libs/**/*.less',
+        '!libs/client/components/TransparentShield/styles.less',
       ]
     }
   } );
