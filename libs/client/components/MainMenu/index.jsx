@@ -71,12 +71,13 @@ class MainMenu extends Component {
   }
   render(){
     var onMenuItemClick = this.onMenuItemClick.bind(this);
-    var collectionMenuItem, nearbyMenuItem,
+    var collectionMenuItem, nearbyMenuItem, settingsMenuItem,
       props = this.props,
       langPrefix = '/' + props.lang,
+      options = props.siteoptions,
       msg = props.msg;
 
-    if ( props.siteoptions.collectionsEnabled ) {
+    if ( options.collectionsEnabled ) {
       collectionMenuItem = (
         <li>
           <Icon glyph="mf-collections-invert" href={'/' + this.props.lang + '/wiki/Special:Collections/' }
@@ -84,7 +85,7 @@ class MainMenu extends Component {
         </li>
       );
     }
-    if ( props.siteoptions.nearby ) {
+    if ( options.nearby ) {
       nearbyMenuItem = (
         <li>
           <Icon glyph="mf-nearby-invert" href={langPrefix + '/wiki/Special:Nearby'}
@@ -92,6 +93,14 @@ class MainMenu extends Component {
             label={msg('menu-nearby')} type="before"/>
         </li>
       );
+    }
+    if ( options.settingsEnabled ) {
+        settingsMenuItem = (
+          <li>
+            <Icon glyph="mf-settings-invert" href={'/' + this.props.lang + '/wiki/Special:MobileOptions' }
+              label={msg('menu-settings')} type="before" onClick={onMenuItemClick} />
+          </li>
+        );
     }
     return (
       <div className="component-main-menu menu">
@@ -110,10 +119,7 @@ class MainMenu extends Component {
         </ul>
         {this.getUserMenu()}
         <ul>
-          <li>
-            <Icon glyph="mf-settings-invert" href={'/' + this.props.lang + '/wiki/Special:MobileOptions' }
-              label={msg('menu-settings')} type="before" onClick={onMenuItemClick} />
-          </li>
+          {settingsMenuItem}
         </ul>
         <HorizontalList>
           <a href="//github.com/jdlrobson/weekipedia">{msg('menu-about')}</a>
