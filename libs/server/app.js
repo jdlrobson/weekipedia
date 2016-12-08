@@ -86,7 +86,7 @@ if ( SIGN_IN_SUPPORTED && !DUMMY_SESSION ) {
   } );
 
   app.use( session( {
-    resave: false,
+    resave: true,
     saveUninitialized: true,
     store: new MemcachedStore( {
       hosts: ['127.0.0.1:11211'],
