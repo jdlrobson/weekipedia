@@ -7,7 +7,14 @@
 @app-bg-color: #eaecf0;
 @article-bg-color: #fff;
 
-@header-bg-color: #eaecf0;
+@nav-menu-item-border-color: @app-bg-color;
+@nav-menu-item-bg-color: @article-bg-color;
+@nav-menu-item-text-color: #54595d;
+@nav-menu-item-hover-text-color: #347bff;
+@nav-menu-footer-link-color: #3366cc;
+@nav-menu-item-vertical-divider-color: #a2a9b1;
+
+@header-bg-color: @app-bg-color;
 @header-border-color: #c8ccd1;
 @header-height: 3.35em;
 
@@ -37,3 +44,10 @@
 @language-overlay-bg-color: #eee;
 
 @language-overlay-list-header-color: #777;
+
+.transition( ... ) {
+	// avoid Webkit bugs
+	-webkit-backface-visibility: hidden;
+	-webkit-transition: @arguments;
+	transition: @arguments;
+}

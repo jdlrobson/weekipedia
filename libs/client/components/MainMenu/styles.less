@@ -1,3 +1,5 @@
+@import './../../globals.less';
+
 .menu {
   box-sizing: border-box;
 }
@@ -8,22 +10,26 @@
 
 .menu ul li {
   position: relative;
-  font-size: 1.2em;
-  border-top: 1px solid #666666;
+  font-size: 0.875em;
+  border-top: 1px solid @nav-menu-item-border-color;
   margin-top: -1px;
-  background-color: #444444;
+  background-color: @nav-menu-item-bg-color;
 }
 
-nav ul li a.mw-ui-icon,
-nav ul li a {
-  color: #fff;
+nav ul li a.mw-ui-icon {
   display: block;
+  font-weight: bold;
+  line-height: 1.857;
   padding: 12px 10px 12px 15px;
+
+  // hack
+  &:before {
+    font-size: 16px;
+  }
 }
 
 nav ul li a:hover {
-	background-color: #555;
-	box-shadow: inset 4px 0 0 0 #347bff;
+	box-shadow: inset 4px 0 0 0 @nav-menu-item-hover-text-color;
 	text-decoration: none;
 }
 
@@ -38,19 +44,16 @@ nav ul li a:hover {
   top: 0;
   bottom: 0;
   padding-right: 0;
-  border-left: 1px solid #666666;
+  border-left: 1px solid @nav-menu-item-vertical-divider-color;
   box-sizing: border-box;
 }
 
+.menu ul a,
 .menu ul a:hover,
 .menu ul a:visited,
 .menu ul a:active {
+  color: @nav-menu-item-text-color;
   text-decoration: none;
-}
-
-.menu ul a:visited,
-.menu ul a:active {
-  color: #fff;
 }
 
 .menu .hlist li {
@@ -60,11 +63,17 @@ nav ul li a:hover {
   background-color: transparent;
 }
 
-nav ul.hlist li a {
-  color: #cccccc;
+nav ul.hlist li {
   border: 0;
   padding: .7em 12px;
   margin-left: 0;
+
+  a:hover,
+  a:active,
+  a:visited,
+  a {
+    color: @nav-menu-footer-link-color;
+  }
 }
 
 nav .hlist a:hover {

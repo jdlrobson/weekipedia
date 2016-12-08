@@ -1,6 +1,9 @@
+@import './../../globals.less';
+
 .transparent-shield {
-  background: rgba(255, 255, 255, 0.8);
-  opacity: 1;
+  background: rgba(0,0,0,0.8);
+  .transition( opacity 0.25s ease-in-out );
+  opacity: 0.5;
   position: absolute;
   top: 0;
   left: 0;
