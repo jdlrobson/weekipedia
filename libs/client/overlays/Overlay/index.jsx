@@ -57,7 +57,7 @@ class Overlay extends Component {
       };
       if ( props.chromeHeader ) {
         header = <ChromeHeader {...headerProps} />
-        if ( props.siteoptions.includeSiteBranding ) {
+        if ( props.siteoptions.includeSiteBranding && !props.siteoptions.searchIcon ) {
           overlayClass += ' overlay-with-search';
         }
       } else {
