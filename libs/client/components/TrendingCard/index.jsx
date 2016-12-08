@@ -3,6 +3,7 @@ import React, { Component } from 'react'
 import { Icon, Card } from 'wikipedia-react-components'
 
 import './styles.less'
+import timeago from 'timeago'
 
 class TrendingCard extends Component {
   render(){
@@ -44,7 +45,6 @@ class TrendingCard extends Component {
       tags.push( 'bias' )
     }
     var mins = parseInt( ( new Date() - new Date( this.props.start ) ) / 1000 / 60, 10 );
-    var updated = parseInt( ( new Date() - new Date( this.props.updated || this.props.start ) ) / 1000 / 60, 10 );
     var speed = mins < 1 ? totalEdits : ( totalEdits / mins ).toFixed( 2 );
 
     var indicator = (<Icon glyph={glyph} className='indicator' small={true} type="before" />);
@@ -53,8 +53,8 @@ class TrendingCard extends Component {
       this.props.terms.description[0] + '; ' : '';
 
     var extracts = [
-      <span>{description}{totalEdits} edits ({this.props.anonEdits} anon) (updated {updated} mins ago).
-        by {totalEditors} editors ({this.props.anons.length} anon) with {this.props.reverts} reverts (created {mins} mins ago)
+      <span>{description}{totalEdits} edits ({this.props.anonEdits} anon) (updated {timeago( new Date( this.props.updated ) )}).
+        by {totalEditors} editors ({this.props.anons.length} anon) with {this.props.reverts} reverts (created {timeago( new Date( this.props.start ) )})
       </span>,
       <span
         data-speed={speed} data-score={this.props.score}
