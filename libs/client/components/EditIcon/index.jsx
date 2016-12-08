@@ -6,16 +6,19 @@ import './icons.less'
 
 export default React.createClass({
   render(){
-    var section = this.props.section;
+    var props = this.props;
+    var section = props.section;
     var iconProps = {
       key: 'edit',
       glyph: 'edit',
       label: 'Edit',
       href: '#',
-      session: this.props.session,
+      session: props.session,
+      showOverlay: props.showOverlay,
       className: 'component-edit-icon',
+      router: props.router,
       onLoginUrl: section !== undefined ? '#/editor/' + section : '#/editor/',
-      ctaMsg: this.props.msg( 'edit-cta' )
+      ctaMsg: props.msg( 'edit-cta' )
     };
 
     return (
