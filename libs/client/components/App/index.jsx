@@ -337,7 +337,10 @@ export default React.createClass({
     }
 
     if ( props.siteoptions.searchIcon ) {
-      secondaryIcon = <div>{secondaryIcon}<Icon glyph="search" onClick={this.onClickSearch}/></div>
+      secondaryIcon = [
+        <Icon glyph="search" onClick={this.onClickSearch}/>,
+        secondaryIcon
+      ];
       search = null;
     }
 

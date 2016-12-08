@@ -9,6 +9,8 @@ class Header extends Component {
   render(){
     var suffix = this.props.fixed ? ' position-fixed' : '';
     var search;
+    var secondaryIcon = this.props.secondaryIcon;
+    var secondaryIcons = [];
 
     if ( this.props.search ) {
       search = (
@@ -20,6 +22,11 @@ class Header extends Component {
       );
     }
 
+    if ( secondaryIcon && secondaryIcon.length ) {
+      secondaryIcons = secondaryIcon;
+    } else {
+      secondaryIcons = [ secondaryIcon ];
+    }
     // FIXME: overlay-title is used for consistency with MobileFrontend but not needed
     return (
       <div className={"header-container" + suffix}>
@@ -30,9 +37,13 @@ class Header extends Component {
           <div className='main overlay-title'>
             {this.props.main}
           </div>
-          <div>
-            {this.props.secondaryIcon}
-          </div>
+            {
+              secondaryIcons.map( function ( icon, i ) {
+                return (
+                  <div key={'secondary-icon-' + i}>{icon}</div>
+                )
+              } )
+            }
         </Content>
         {search}
       </div>
