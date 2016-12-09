@@ -129,9 +129,6 @@ function markReferenceSections( sections, removeText ) {
   mark( lastTopLevelSection, sections.length );
 }
 
-const MONTHS = ['January','February','March','April','May','June',
-  'July','August','September','October','November','December'];
-
 function getBaseHost( lang, project ) {
   if ( SPECIAL_PROJECTS.indexOf( project ) > -1 ) {
     return project + '.wikimedia';
@@ -183,13 +180,7 @@ export default function ( title, lang, project, includeReferences ) {
         // it's a user page so get more info
         return mwApi( lang, { meta: 'globaluserinfo',
           guiuser: username }, project ).then( function ( userInfo ) {
-          var registered;
           json.user =  userInfo;
-          if ( userInfo.registration ) {
-            registered = new Date( userInfo.registration );
-            // FIXME: Translate
-            json.lead.description = 'Member since ' + MONTHS[ registered.getMonth() ] + ', ' + registered.getFullYear();
-          }
           return json;
         } ).catch( function () {
           return json;

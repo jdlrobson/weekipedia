@@ -4,6 +4,9 @@ import { Icon, Button } from 'wikipedia-react-components';
 
 import WikiPage from './../WikiPage'
 
+const MONTHS = ['January','February','March','April','May','June',
+  'July','August','September','October','November','December'];
+
 import './icons.less'
 import './styles.less'
 
@@ -60,6 +63,12 @@ export default React.createClass({
       );
     } else {
       body = props.body;
+    }
+
+    if ( lead.user ) {
+      registered = new Date( lead.user.registration );
+      // FIXME: Translate
+      lead.description = 'Member since ' + MONTHS[ registered.getMonth() ] + ', ' + registered.getFullYear();
     }
 
     return (
