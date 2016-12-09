@@ -3,6 +3,10 @@ import domino from 'domino'
 
 import { SPECIAL_PROJECTS, HOST_SUFFIX, SITE_HOME } from './../config'
 import mwApi from './mwApi';
+import file from './file'
+
+const DEFAULT_FILE_WIDTH = 400;
+const DEFAULT_FILE_HEIGHT = 300;
 
 function getMedia( sections ) {
   var html = '';
@@ -190,6 +194,12 @@ export default function ( title, lang, project, includeReferences ) {
         } ).catch( function () {
           return json;
         } )
+      } else if ( json.lead.ns === 6 ) {
+        // File pages need image to be added
+        return file( lang, title, DEFAULT_FILE_WIDTH, DEFAULT_FILE_HEIGHT, project ).then( function ( imageinfo ) {
+          json.lead.imageinfo = imageinfo;
+          return json;
+        } );
       } else {
         // Workaround for https://phabricator.wikimedia.org/T145034
         var doc = domino.createDocument( json.lead.sections.length && json.lead.sections[0] && json.lead.sections[0].text );
