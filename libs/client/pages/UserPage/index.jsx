@@ -38,7 +38,8 @@ export default React.createClass({
     ];
   },
   render(){
-    var body = [],
+    var registered,
+      body = [],
       props = this.props,
       lead = props.lead || {},
       leadHtml = lead.sections && lead.sections.length ? lead.sections[0].text : undefined;
