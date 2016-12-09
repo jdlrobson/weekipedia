@@ -105,11 +105,13 @@ export default React.createClass({
   },
   render(){
     var content, footer, meta, isLandscape,
-      leftGutter, rightGutter,
+      leftGutter, rightGutter, url,
+      props = this.props,
       licenseUrl = '', licenseName = '',
       description = '', artist = '',
       img = this.state.img;
     if ( img ) {
+      url = '/' + props.language_project + '/File:' + props.image;
       isLandscape = img.thumbwidth > img.thumbheight;
       var imgStyle = {
         maxHeight: this.state.height,
@@ -128,7 +130,7 @@ export default React.createClass({
 
       footer = (
         <div className="details">
-          <Button isPrimary="1" label="Details" href={img.descriptionurl}/>
+          <Button isPrimary="1" label="Details" href={url}/>
           <TruncatedText><p dangerouslySetInnerHTML={{ __html: description }}></p></TruncatedText>
           <HorizontalList isSeparated="1" className="license">
             <span dangerouslySetInnerHTML= {{ __html: artist }}></span>

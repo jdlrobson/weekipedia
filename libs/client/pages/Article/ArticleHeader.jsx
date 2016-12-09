@@ -10,7 +10,8 @@ import Content from './../../components/Content'
 // Main component
 class ArticleHeader extends Component {
   render(){
-    var content = [],
+    var ii,
+      content = [],
       header = [],
       additionalClasses = [],
       lead = this.props.lead || {}
@@ -54,6 +55,19 @@ class ArticleHeader extends Component {
     if ( this.props.tabs.length ) {
       header.push( <HorizontalList isSeparated="1" className="tabs"
         key="article-header-tabs">{this.props.tabs}</HorizontalList> );
+    }
+
+    if ( lead.imageinfo ) {
+      ii = lead.imageinfo;
+      header.push(
+        <div>
+          <img src={ii.thumburl} width={ii.thumbwidth} height={ii.thumbheight}/>
+          <div>
+            <a href={ii.url}>Original file</a>
+          </div>
+        </div>
+      );
+      console.log(lead.imageinfo);
     }
 
     if ( lead.infobox ) {
