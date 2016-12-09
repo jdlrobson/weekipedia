@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { ErrorBox, IntermediateState, ListHeader,
-  CardWithLocation } from 'wikipedia-react-components';
+  CardWithLocation, CardList } from 'wikipedia-react-components';
 
 import Content from './../Content'
 
@@ -148,25 +148,16 @@ export default React.createClass({
     var cardsAndHeaders = [];
     var continuer = props.continue && props.endpoint ?
       <div className='gutter' /> : null;
-    var className = 'card-list component-card-list' + ( isUnordered ? ' card-list-unordered' : '' );
 
     if ( this.state.error ) {
-      return (
+      cards = [
         <Content key="card-list-error">
           <ErrorBox msg={this.state.errorMsg}/>
         </Content>
-      );
+      ];
     } else if ( !cards ) {
-      return <Content key="card-list-loading" className="card-list"><IntermediateState msg={this.props.loadingMessage} /></Content>;
-    }
-
-    if ( props.className ) {
-      className += ' ' + props.className;
-    }
-
-    if ( isDiffCardList ) {
-      // FIXME: Consolidate side-list class (in MobileFrontend) with diff-list class
-      className += ' diff-list side-list';
+      cards = [<IntermediateState msg={this.props.loadingMessage} />];
+    } else if ( isDiffCardList ) {
       cards.forEach( function ( card, i ) {
         var ts, header;
         if ( card.props.timestamp ) {
@@ -185,8 +176,11 @@ export default React.createClass({
       } );
       cards = cardsAndHeaders;
     }
-    return cards.length ? (
-        <div className={className}>{cards}{continuer}</div>
-      ) : <div className="card-list-empty">{props.emptyMessage}</div>;
+    if ( continuer ) {
+        cards.push( continuer );
+    }
+    return <CardList emptyMessage={props.emptyMessage}
+        ordered={!isUnordered}
+        className={ isDiffCardList ? ' diff-list side-list' : ''}>{cards}</CardList>;
   }
 } );
