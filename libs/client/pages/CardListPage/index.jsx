@@ -33,6 +33,9 @@ export default React.createClass({
       list: null
     };
   },
+  componentWillReceiveProps() {
+    this.setState( { isEmpty: false } );
+  },
   render(){
     var props = this.props;
     // api endpoint may change...
