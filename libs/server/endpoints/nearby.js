@@ -27,6 +27,9 @@ export default function ( latitude, longitude, lang, ns, project, params ) {
   return mwApi( lang, params, project ).then( function ( data ) {
     data.pages = data.pages ? data.pages.sort( function ( a, b ) {
       return a.coordinates && b.coordinates && a.coordinates.dist < b.coordinates.dist ? -1 : 1;
+    } ).filter( function ( page ) {
+      var notRegion = page.pageassessments ? page.pageassessments.region === undefined : true;
+      return page.title.indexOf( '/' ) === -1 && notRegion;
     } ) : [];
     return data;
   } )
