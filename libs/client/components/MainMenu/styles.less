@@ -22,15 +22,16 @@ nav ul li a.mw-ui-icon {
   line-height: 1.857;
   padding: 12px 10px 12px 15px;
 
+  &:hover {
+    &:before {
+      -webkit-filter: invert(1) url(#filter-progressive-icon);
+    }
+  }
   // hack
   &:before {
+    -webkit-filter: invert(1) url(#filter-normal-icon);
     font-size: 16px;
   }
-}
-
-nav ul li a:hover {
-	box-shadow: inset 4px 0 0 0 @nav-menu-item-hover-text-color;
-	text-decoration: none;
 }
 
 .menu ul li:first-child {
@@ -49,11 +50,16 @@ nav ul li a:hover {
 }
 
 .menu ul a,
-.menu ul a:hover,
 .menu ul a:visited,
 .menu ul a:active {
   color: @nav-menu-item-text-color;
   text-decoration: none;
+}
+
+.menu ul a:hover {
+  color: @nav-menu-item-hover-text-color;
+	box-shadow: inset 4px 0 0 0 @nav-menu-item-hover-text-color;
+	text-decoration: none;
 }
 
 .menu .hlist li {

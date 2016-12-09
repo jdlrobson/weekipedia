@@ -361,6 +361,24 @@ export default React.createClass({
         </div>
         { overlay }
         { toast }
+        <svg>
+          <filter id="filter-normal-icon" color-interpolation-filters="sRGB"
+            x="0" y="0" height="100%" width="100%">
+            <feColorMatrix type="matrix"
+              values="0.33 0    0    0 0
+                      0    0.35 0    0 0
+                      0    0    0.36 0 0
+                      0    0    0    1   0" />
+          </filter>
+          <filter id="filter-progressive-icon" color-interpolation-filters="sRGB"
+            x="0" y="0" height="100%" width="100%">
+            <feColorMatrix type="matrix"
+              values="0.2 0   0   0 0
+                      0   0.4 0   0 0
+                      0   0   0.8 0 0
+                              0   0   0   1   0" />
+          </filter>
+        </svg>
       </div>
     )
   }
