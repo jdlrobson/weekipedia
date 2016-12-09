@@ -91,7 +91,7 @@ function undoLinkRewrite( doc ) {
     var node = ps[idx];
     value = node.getAttribute( 'href' );
     if ( value ) {
-      value = value.replace( /^\/wiki\//, '' );
+      value = value.replace( /^\/wiki\//, './' );
       node.setAttribute( 'href', value );
     }
   }
