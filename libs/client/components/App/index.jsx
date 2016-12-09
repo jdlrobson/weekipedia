@@ -353,6 +353,14 @@ export default React.createClass({
       secondaryIcon
     ];
 
+    if ( state.offlineEnabled ) {
+      secondaryIcon.push(
+        <Icon glyph='offline' key="offline-icon"
+          onClick={this.onClickInternalLink}
+          href={'/' + props.language_project + '/Special:Collections/by/' + username + '/-1'}/>
+      );
+    }
+
     return (
       <div id="mw-mf-viewport" className={navigationClasses}
         lang={this.props.lang} dir={isRTL ? 'rtl' : 'ltr'}>
