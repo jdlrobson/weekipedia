@@ -21,6 +21,10 @@ function cardFilter( oldPages, mustHaveImage, mustHaveCoordinates ) {
     return skip;
   }
 
+  function isDestination( assessment ) {
+    return assessment.city || assessment.region || assessment.park;
+  }
+
   oldPages.forEach( function ( page ) {
     var skipThisOne;
     var desc = page.description || '';
@@ -31,6 +35,9 @@ function cardFilter( oldPages, mustHaveImage, mustHaveCoordinates ) {
       if ( page.coordinates && page.coordinates.dist ) {
         sortNeeded = true;
       } else if ( mustHaveCoordinates && !page.coordinates ) {
+        skipThisOne = true;
+      }
+      if ( page.pageassessments && !isDestination( page.pageassessments ) ) {
         skipThisOne = true;
       }
       if ( mustHaveImage && !page.thumbnail ) {

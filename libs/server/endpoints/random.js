@@ -9,6 +9,7 @@ export default function ( lang, ns, project, continueParams ) {
     prop: 'pageterms|pageimages|pageassessments|coordinates',
     generator: 'random',
     wbptterms: 'description',
+    palimit: 'max',
     colimit: 'max',
     grnnamespace: ns || 0,
     grnlimit: number_articles
