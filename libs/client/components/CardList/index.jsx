@@ -113,6 +113,9 @@ export default React.createClass({
     };
     this.setState({ list : null });
     this.fetchCardListProps( apiEndpoint, cardListProps ).then( function ( state ) {
+      if ( props.limit ) {
+        state.cards = state.cards.slice( 0, props.limit );
+      }
       self.setState( state );
       if ( state.cards.length === 0 && props.onEmpty ) {
         onEmpty();
@@ -159,9 +162,11 @@ export default React.createClass({
     document.removeEventListener( 'scroll', this.onScroll );
   },
   componentDidMount() {
-    this.loadCards( this.props );
+    var props = this.props;
+
+    this.loadCards( props );
     // setup infinite scroll
-    if ( this.props.infiniteScroll ) {
+    if ( props.infiniteScroll && !props.limit ) {
       document.addEventListener( 'scroll', this.onScroll );
     }
   },
@@ -209,11 +214,11 @@ export default React.createClass({
       } );
       cards = cardsAndHeaders;
     }
-    if ( continuer ) {
+    if ( continuer && !props.limit ) {
         cards.push( continuer );
     }
     return <CardList emptyMessage={props.emptyMessage}
         ordered={!isUnordered}
-        className={ isDiffCardList ? ' diff-list side-list' : ''}>{cards}</CardList>;
+        className={ isDiffCardList ? ' diff-list side-list' : props.className}>{cards}</CardList>;
   }
 } );

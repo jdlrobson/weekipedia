@@ -2,7 +2,10 @@
 
 .home {
   .card-list {
-    clear: right;
+    clear: both;
+  }
+  .featured-card {
+    box-shadow: 0 3px 3px 0 rgba(117, 117, 117, 0.3);
   }
 }
 
@@ -66,8 +69,20 @@
 }
 
 @media (min-width: @deviceWidthTablet) {
+  .featured-card,
+  .quote-box {
+    height: 130px;
+  }
+  .featured-card {
+    float: left;
+    width: 49%;
+    .card {
+      border: none;
+    }
+  }
   .quote-box {
     width: 50%;
     float: right;
+    box-sizing: border-box;
   }
 }
