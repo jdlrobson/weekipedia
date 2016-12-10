@@ -229,7 +229,7 @@ export default function ( title, lang, project ) {
           }
 
           if ( [ 'Regions', 'Districts', 'Countries', 'Get around', 'Listen',
-            'Eat and drink', 'Counties',
+            'Eat and drink', 'Counties', 'Prefectures',
             'Buy', 'Eat', 'Drink', 'Do' ].indexOf( curSectionLine ) > -1 ) {
             orientation.push( section );
           } else if ( [
