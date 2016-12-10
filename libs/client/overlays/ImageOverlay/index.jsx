@@ -25,7 +25,7 @@ export default React.createClass({
     var self = this;
     var w = this.state.width;
     var props = this.props;
-    var route = '/api/' + this.props.language_project + '/phpApi';
+    var route = '/api/' + this.props.language_project + '.org/api.php';
     if ( w > 600 ) {
       w = 600;
     }

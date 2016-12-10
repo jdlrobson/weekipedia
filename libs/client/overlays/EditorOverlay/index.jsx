@@ -56,15 +56,14 @@ export default React.createClass({
     var self = this,
       props = this.props,
       source = props.language_project || props.lang + '.' + props.project,
-      endpoint = '/api/' + source + '/parse/',
+      title = props.title,
+      endpoint = '/api/' + source + '.org/rest_v1/transform/wikitext/to/html/' + encodeURIComponent( title ),
       data = {
-        title: this.props.title,
+        body_only: true,
+        title: title,
         wikitext: this.state.text || props.wikitext
       };
 
-    if ( this.props.section ) {
-      endpoint += this.props.section;
-    }
     this.props.api.post( endpoint, data ).then( function ( data ) {
       self.setState( { preview: data.text } );
     } );

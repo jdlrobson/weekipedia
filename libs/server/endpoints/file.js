@@ -1,3 +1,4 @@
+// FIXME: Remove when file handling from endpoints/page.js has been upstreamed to MCS
 import mwApi from './mwApi'
 
 export default function ( lang, title, width, height, project ) {
