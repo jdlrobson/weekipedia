@@ -59,6 +59,7 @@ export default function ( title, lang, project ) {
             height: width / 7,
             src: thumbnailFromTitle( title, width )
           }];
+          data.lead.media.unshift( title );
         }
       }
       return data;
