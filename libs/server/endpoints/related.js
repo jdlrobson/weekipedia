@@ -1,3 +1,5 @@
+// Let's use https://en.wikipedia.org/api/rest_v1/page/related/San_Francisco for this
+// but... https://phabricator.wikimedia.org/T152825
 import mwApi from './mwApi'
 import { PAGEIMAGES_API_PROPS } from './consts'
 

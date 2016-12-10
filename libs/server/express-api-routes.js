@@ -12,7 +12,6 @@ import search from './endpoints/search'
 import related from './endpoints/related'
 import references from './endpoints/references'
 import random from './endpoints/random'
-import parse from './endpoints/parse'
 import pagehistory from './endpoints/page-history'
 import page from './endpoints/page'
 import nearby from './endpoints/nearby'
@@ -24,11 +23,12 @@ import contributions from './endpoints/contributions'
 import collection from './endpoints/collection'
 import categories from './endpoints/categories'
 
-import phpApi from './endpoints/phpApi'
 import messages from './messages'
 import respond from './respond'
 import cachedResponses from './cached-response.js'
 import { DEFAULT_PROJECT, API_PATH, ALLOWED_PROJECTS, DUMMY_SESSION, COLLECTIONS_INCLUDE_WATCHLIST } from './config'
+
+import initApiProxy from 'express-wikimedia-api-proxy'
 
 const RESPONSE_OKAY = JSON.stringify( { msg: 'OK' } );
 const cachedResponse = cachedResponses.cachedResponse
@@ -183,15 +183,6 @@ function initPostMethods( app ) {
    * Begin POST routes
    *******************************************************
   */
-  app.post( '/api/:lang_project/parse/:section?', function ( req, res ) {
-    if ( checkReqParams( req, res, [ 'title', 'wikitext' ] ) ) {
-      res.status( 200 );
-      respond( res, function () {
-        return parse( req.params.lang_project, req.body.title, req.body.wikitext );
-      } );
-    }
-  } );
-
   app.post( '/api/web-push/test', function ( req, res ) {
     if ( checkReqParams( req, res, [ 'feature', 'token', 'browser' ] ) ) {
       res.status( 200 );
@@ -395,14 +386,6 @@ function initGetMethods( app ) {
       } );
     } );
   } );
-
-  app.get( '/api/:language_project/phpApi', ( req, res ) => {
-    respond( res, function () {
-      return new Promise( function ( resolve ) {
-        resolve( phpApi( req.params.language_project, req.query ) )
-      } );
-    } );
-  } );
 }
 
 function initRoutes( app, canLogin ) {
@@ -411,6 +394,7 @@ function initRoutes( app, canLogin ) {
   }
   initPostMethods( app );
   initGetMethods( app );
+  initApiProxy( app, '/api/' );
 }
 
 export default initRoutes

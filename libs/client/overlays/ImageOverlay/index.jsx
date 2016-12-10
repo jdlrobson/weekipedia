@@ -25,7 +25,7 @@ export default React.createClass({
     var w = this.state.width;
     var h = this.state.height;
     var props = this.props;
-    var route = '/api/' + this.props.language_project + '/phpApi';
+    var route = '/api/' + this.props.language_project + '.org/api.php';
 
     this.loadGallery().then( (media) => {
       self.setState( { media: media } );
