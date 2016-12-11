@@ -54,11 +54,12 @@ export default React.createClass({
   },
   loadPreview() {
     var self = this,
-      source = this.props.language_project || this.props.lang + '.' + this.props.project,
+      props = this.props,
+      source = props.language_project || props.lang + '.' + props.project,
       endpoint = '/api/' + source + '/parse/',
       data = {
         title: this.props.title,
-        wikitext: this.state.text
+        wikitext: this.state.text || props.wikitext
       };
 
     if ( this.props.section ) {
@@ -78,7 +79,8 @@ export default React.createClass({
       title = props.normalizedtitle || props.title;
 
     this.setState( { step: SAVE_STEP } );
-    props.api.edit( source, title, props.section, state.text, state.summary ).then( function () {
+    props.api.edit( source, title, props.section, state.text || props.wikitext,
+      state.summary || props.editSummary ).then( function () {
       props.router.navigateTo( window.location.pathname + '?referer=editor&cachebuster=' + Math.random() );
       props.showNotification( 'Your edit was successful!' );
     } ).catch( function () {
@@ -108,6 +110,7 @@ export default React.createClass({
   },
   render(){
     var content, overlayProps, action, previewPane,
+      editSummary, warnings,
       props = this.props,
       license = props.siteinfo.license,
       state = this.state,
@@ -116,7 +119,8 @@ export default React.createClass({
       previewBtn = <Button label='Next' isPrimary="1" onClick={this.showPreview} />,
       saveBtn = <Button label="Save" isPrimary="1"
         className={state.step === SAVE_STEP ? 'disabled' : ''} onClick={this.save} />,
-      summary = <Input placeholder="Example: Fixed typo, added content"
+      summaryField = <Input placeholder="Example: Fixed typo, added content"
+        key="edit-summary"
         textarea={true} onInput={this.updateSummary} />,
       editField = <Input defaultValue={state.text || props.wikitext}
         textarea={true} className="editor"
@@ -130,7 +134,6 @@ export default React.createClass({
       className: 'component-editor-overlay'
     };
 
-    this.summary = summary;
     this.editField = editField;
     if ( state.isLoading ) {
       action = 'Loading';
@@ -146,10 +149,22 @@ export default React.createClass({
           <SectionContent text={state.preview} /> :
           <IntermediateState msg="Loading preview" />;
 
+        if ( !props.editSummary ) {
+          editSummary = [
+            <p className="summary-request" key="edit-summary-prompt">How did you improve the page?</p>
+          ];
+          editSummary.push(summaryField);
+        }
+        if ( props.editWarning ) {
+          warnings = (
+            <div key="editor-warning"
+              className="warning-box" dangerouslySetInnerHTML={{ __html: props.editWarning }} />
+          );
+        }
         content = [
           <Panel key="editor-summary">
-            <p className="summary-request">How did you improve the page?</p>
-            {summary}
+            {warnings}
+            {editSummary}
             <p className="license">Content will be saved under the following license: <br/>
               <a href={license.url}>{license.name}</a>
             </p>
