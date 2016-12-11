@@ -58,12 +58,16 @@ export default React.createClass({
       this.setState( { endpoint: endpoint, username: username, id: id } );
       props.api.fetch( endpoint ).then( function ( state ) {
         self.setState( state );
+        self.makeBannerImage();
       } ).catch( function () {
         self.setState( { error: true } );
       })
       this.setState( { description: 'All collections by ' + username})
     } else if ( args.length === 0 || !args[0] ) {
       this.setState( { defaultView: true, username: false, endpoint: endpointPrefix } );
+      props.api.fetch( endpointPrefix ).then( function ( state ) {
+        self.makeBannerImage( state.collections );
+      } );
     } else {
       props.router.navigateTo( '/' + props.lang + '/wiki/Special:Collections', null, true );
     }
@@ -73,6 +77,7 @@ export default React.createClass({
   },
   componentWillReceiveProps( props ) {
     this.load( props );
+    this.makeBannerImage();
   },
   getBody(){
     var props = this.props;
@@ -113,6 +118,38 @@ export default React.createClass({
       this.props.router.navigateTo( href );
     }
   },
+  makeBannerImage( collections ) {
+    var self = this;
+    var img;
+    var canvas = this.state.canvas || document.createElement( 'canvas' );
+
+    collections = collections || this.props.collections || this.state.collections;
+    canvas.setAttribute( 'height', '120' );
+    canvas.setAttribute( 'width', '800' );
+    this.setState( { banner: false, canvas: canvas, x: 0 } );
+
+    function loadIntoCanvas() {
+      var ctx = canvas.getContext( '2d' );
+      var x = self.state.x || 0;
+      ctx.drawImage( img, x, 0 );
+      self.setState( { banner: canvas.toDataURL(), x: x + img.width } );
+    }
+
+    if ( collections && collections.length ) {
+      collections.slice( 0, 5 ).forEach( function ( collection ) {
+        if ( collection.thumbnail ) {
+          img = new Image();
+          img.crossOrigin = 'Anonymous';
+          img.src = collection.thumbnail.source;
+          if ( img.complete ) {
+            loadIntoCanvas();
+          } else {
+            img.onload = loadIntoCanvas;
+          }
+        }
+      } );
+    }
+  },
   render() {
     var tagline, userUrl, actions, label, suffix, tabs,
       props = this.props,
@@ -149,6 +186,13 @@ export default React.createClass({
         onClick={this.props.onClickInternalLink}
         className={!username ? 'active' : ''}><TruncatedText>All</TruncatedText></a>
     ];
+
+    lead = {
+      banner: {
+        source: this.state.banner
+      }
+    };
+
     if ( username ) {
       tabs.push(
         <a key="collection-tab-2" href={'/' + lang + '/wiki/Special:Collections/by/' + username}

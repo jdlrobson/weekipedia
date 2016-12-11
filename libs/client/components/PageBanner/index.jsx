@@ -14,8 +14,9 @@ export default React.createClass({
   },
   render: function () {
     var props = this.props;
+    var url = props.banner ? props.banner.url || props.banner.source : null;
     var leadBannerStyles = {
-      backgroundImage: props.banner ? 'url("' + props.banner.url + '")' : 'none'
+      backgroundImage: props.banner ? 'url("' + url + '")' : 'none'
     };
 
     return (

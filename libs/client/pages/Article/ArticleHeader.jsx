@@ -27,9 +27,9 @@ class ArticleHeader extends Component {
       contentProps = Object.assign( {}, this.props, { id: undefined, className: undefined } ),
       header = [],
       props = this.props,
-      banner = lead ? lead.banner : null,
       additionalClasses = [],
-      lead = this.props.lead || {};
+      lead = this.props.lead || {},
+      banner = lead ? lead.banner : null;
 
     additionalClasses.push( this.props.isSpecialPage ? ' special-page-heading' : ' standard-page-heading' );
     if ( this.props.className  ){
