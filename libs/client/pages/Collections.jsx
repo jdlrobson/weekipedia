@@ -122,10 +122,11 @@ export default React.createClass({
       username = this.state.username || props.owner,
       id = this.state.id || props.id,
       title = this.state.title || props.title,
-      session = this.props.session;
+      session = this.props.session,
+      isCollectionOwner = session && username === session.username;
 
     if ( username ) {
-      if ( session && username === session.username ) {
+      if ( isCollectionOwner ) {
         label = id ? 'Edit' : 'Create';
         suffix = id ? '/' + id : '/';
         actions = <Button label={label} href={"#/edit-collection/" + username + suffix } isPrimary={true}/>;
@@ -161,9 +162,12 @@ export default React.createClass({
             className={title ? 'active' : ''}><TruncatedText>{title}</TruncatedText></span>
         )
         lead = {
-          maplink: '#/collection-map/' + username + '/' + this.state.id + '/',
+          maplink: '#/collection-map/' + username + '/' + id + '/',
           coordinates: this.state.bounds
         };
+        if ( isCollectionOwner ) {
+          lead.note = 'User:' + title + '/lists/' + id;
+        }
       }
     } else {
       tabs.push(

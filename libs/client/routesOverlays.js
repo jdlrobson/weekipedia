@@ -84,10 +84,33 @@ export default [
   [
     /^#\/note-editor\/(.*)$/,
     function ( info, props ) {
+      var wikitext;
+      var title = props.title;
+      if ( props.params ) {
+        title += '/' + props.params;
+      }
+      if ( title.indexOf( 'Special:Collections' ) > -1 ) {
+        wikitext = [
+          '# Trip Checklist',
+          '[] Booked flights',
+          '[] Booked hotels',
+          '[] Booked airport transfer',
+          '[] Cards/money',
+          '# Packed:',
+          '[] travel pillow',
+          '[] clothes',
+          '[] toiletries',
+          '[] electronics',
+          '[] passport'
+        ].join( '\n' );
+      }
       var overlayProps = Object.assign( {}, props, {
         displayTitle: 'public note',
+        wikitext: wikitext,
+        editWarning: '<strong>Warning:</strong> You are about to make this content <strong>public</strong>. Please do not include any information such as ticket numbers, passport numbers or any other personal details.',
+        editSummary: 'Made a note to self about upcoming trip',
         placeholder: 'Write down ideas, dates, todo\'s.\nAnything you write here is public.\nPlease don\'t share too much.',
-        title: decodeURIComponent( 'User:' + info[1] + '/notes/' + props.title ),
+        title: decodeURIComponent( 'User:' + info[1] + '/notes/' + title ),
         section: 0
       } );
       return {
