@@ -57,6 +57,11 @@ function getCards( data, props, keyPrefix ) {
           source: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/78/Sin_mapa.svg/320px-Sin_mapa.svg.png'
         };
       }
+      if ( props.session && !item.owner && props.collection ) {
+        item.indicator = <WatchIcon {...props}
+          key={item.key + '-watch'}
+          title={item.title} collection={props.collection} isWatched={true} />
+      }
       cards.push( React.createElement( CardClass, Object.assign( {}, props, item ) ) );
     } );
   }
