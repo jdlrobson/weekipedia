@@ -9,6 +9,7 @@ import vars from './vars'
 function list( lang, project, username, title, query, profile ) {
   var params = {
     prop: 'revisions|images',
+    imlimit: 'max',
     rvprop: 'content|timestamp',
     gpslimit: 500,
     gpsnamespace: 2
