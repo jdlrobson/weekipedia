@@ -44,6 +44,45 @@ if ( OFFLINE_STRATEGY === 'all' ) {
   } );
 }
 
+// for undo purposes
+var undoRemoval = {};
+
+const SUCCESS = new Response( JSON.stringify( { edit: { result: 'Success' } } ), {
+    headers: { 'Content-Type': 'application/json' }
+  } );
+
+router.post( '/api/private/en/collection/-1/(.*)/(.*)', ( r, p ) => {
+  var pcache;
+  var title = p[1];
+  var action = p[0];
+  if ( action === 'remove' ) {
+    return caches.open( PAGE_CACHE )
+      .then( ( cache ) => {
+        pcache = cache;
+        return cache.keys()
+      } )
+      .then( ( keys ) => {
+
+        keys.forEach( function ( req ) {
+          var url = req.url.split( '?' );
+          var folders = url[0].split( '/' );
+          if ( folders.indexOf( title ) > -1 ) {
+            // store it incase we want to add it again
+            undoRemoval[title] = req;
+            pcache.delete( req );
+          }
+        } );
+        return SUCCESS.clone();
+      } );
+  } else if ( action === 'add' && undoRemoval[title] ) {
+    return caches.open( PAGE_CACHE )
+      .then( ( cache ) => {
+        cache.add( undoRemoval[title] );
+        return SUCCESS.clone();
+      } );
+  }
+} );
+
 router.get( '/api/en/collection/by/(.*)/-1', () => {
   return caches.open( PAGE_CACHE )
     .then( function ( cache ) {

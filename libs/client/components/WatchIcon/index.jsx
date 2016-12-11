@@ -82,7 +82,8 @@ export default React.createClass({
       label: 'Watch this page',
       title: props.title,
       language_project: props.language_project,
-      session: props.session,
+      // Can operate collection with id -1 when anonymous
+      session: props.collection === '-1' ? { username: '~' } : props.session,
       ctaMsg: props.msg( 'watch-cta' ),
       onLoginClick: this.dispatch
     };
