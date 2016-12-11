@@ -48,7 +48,7 @@ function extractDestinations( section ) {
     }
   } );
   section.destinations = destinations;
-  section.text = cleanupScrubbedLists( res.text );
+  section.text = cleanupScrubbedLists( ext.document.body.innerHTML );
   section.seeAlso = seeAlso;
   return section;
 }
