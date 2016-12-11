@@ -89,7 +89,7 @@ export default React.createClass({
           props.router.navigateTo( { pathname: window.location.pathname,
             search: 'c=' + Math.random(), hash: '' }, null, true );
           props.showNotification( msg );
-        }, 5000 );
+        }, 100 );
       } else {
         props.showNotification( 'An error occurred while saving the collection' );
         self.setState( { waiting: false } );
