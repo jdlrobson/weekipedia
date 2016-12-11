@@ -338,12 +338,6 @@ export default React.createClass({
      toast = <Toast>{this.state.notification}</Toast>;
     }
 
-    if ( state.offlineEnabled ) {
-      secondaryIcon = <Icon glyph='offline' key="offline-icon"
-        onClick={this.onClickInternalLink}
-        href={'/' + props.language_project + '/Special:Collections/by/' + username + '/-1'}/>
-    }
-
     if ( props.showMenuNoJavaScript ) {
       navigationClasses += ' navigation-full-screen';
     }
