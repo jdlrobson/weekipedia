@@ -98,7 +98,7 @@ class ArticleHeader extends Component {
     if ( !lead.mainpage ) {
       header.push(<div className="tagline" key="article-tagline">{lead.description}</div>)
     }
-    var isWatchablePage = props.isWikiPage && lead && lead.text;
+    var isWatchablePage = props.isWikiPage && lead && lead.id;
     if ( isWatchablePage ) {
       header.push( <WatchIcon {...contentProps} key="article-watch" /> );
     }
