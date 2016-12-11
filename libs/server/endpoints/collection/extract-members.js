@@ -8,7 +8,7 @@ function extractMembers( body, expand ) {
 
   lines.forEach( function ( line ) {
     var title;
-    var m = line.match( /\[\[(.*)\]\]/ );
+    var m = line.match( /\[\[([^\:]*)\]\]/ );
     if ( m ) {
       title = m[1];
       if ( members.indexOf( title ) === -1 ) {

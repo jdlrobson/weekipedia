@@ -2,7 +2,6 @@ import edit from './../edit'
 
 import lookup from './lookup'
 import list from './list'
-import vars from './vars'
 import extractInfo from './extract-info'
 
 export default function ( lang, project, title, description, image, profile ) {
@@ -17,7 +16,7 @@ export default function ( lang, project, title, description, image, profile ) {
     var imageString = image ? '[[' + image + '|320px]]' : '';
     var collectionTitle = lookup( profile.displayName, id );
     title = title || 'Unnamed collection';
-    var body = ['\'\'\'' + title + '\'\'\'', '', description, '', imageString, '[[' + vars.category + ']]',
+    var body = ['\'\'\'' + title + '\'\'\'', '', description, '', imageString,
       '== Items ==', '' ].join( '\n' );
 
     return edit( lang, collectionTitle, body, 'Create collection', '0', project, profile ).then( function ( resp ) {

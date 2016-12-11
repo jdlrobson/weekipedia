@@ -3,6 +3,7 @@ import watch from './../watch'
 
 import members from './members'
 import lookup from './lookup'
+import vars from './vars'
 
 export default function ( lang, project, collection, titles, profile, unwatch ) {
   function addToWatchlist() {
@@ -34,6 +35,9 @@ export default function ( lang, project, collection, titles, profile, unwatch ) 
           return item.description ? link + ' - ' + item.description : link;
         } ).join( '\n* ' );
 
+      if ( items.length > 3 ) {
+        body += '[[' + vars.category + ']]';
+      }
       return edit( lang, collectionTitle, body, 'Update collection', section, project, profile );
     } );
   }
