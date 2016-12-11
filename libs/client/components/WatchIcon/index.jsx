@@ -9,8 +9,7 @@ import './icons.less'
 export default React.createClass({
   getInitialState(){
     return {
-      collections: null,
-      isWatched: false
+      collections: null
     };
   },
   getDefaultProps() {
@@ -19,8 +18,13 @@ export default React.createClass({
     }
   },
   componentWillMount() {
-    if ( this.props.session ) {
+    if ( this.props.session && this.props.isWatched === undefined ) {
       this.loadWatchInfo();
+    }
+  },
+  componentDidMount() {
+    if ( this.props.isWatched ) {
+      this.setState( { isWatched: this.props.isWatched } );
     }
   },
   loadWatchInfo() {
@@ -57,7 +61,10 @@ export default React.createClass({
   },
   dispatch( ev ) {
     var props = this.props;
-    if ( this.state.collections.length > 1 || props.siteoptions.collectionsEnabled ) {
+    var collectionsEnabled = props.siteoptions && props.siteoptions.collectionsEnabled;
+    var collections = this.state.collections;
+
+    if ( !props.collection && collections.length > 1 || collectionsEnabled ) {
       props.showOverlay( <CollectionOverlay {...props} /> );
     } else {
       this.watch( ev );
@@ -66,10 +73,12 @@ export default React.createClass({
   render(){
     var state = this.state;
     var props = this.props;
+    var isWatched = state.isWatched;
+
     var iconProps = {
       key: 'watch',
       showOverlay: props.showOverlay,
-      glyph: state.isWatched ? 'watched' : 'watch',
+      glyph: isWatched ? 'watched' : 'watch',
       label: 'Watch this page',
       title: props.title,
       language_project: props.language_project,

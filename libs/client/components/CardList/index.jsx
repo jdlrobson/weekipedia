@@ -4,6 +4,7 @@ import { ErrorBox, IntermediateState, ListHeader,
   CardWithLocation, CardList } from 'wikipedia-react-components';
 
 import Content from './../Content'
+import WatchIcon from './../WatchIcon'
 
 import './styles.less'
 
@@ -36,6 +37,12 @@ function getCards( data, props, keyPrefix ) {
       };
       if ( item.revid ) {
         item.url = '/' + source + '/Special:MobileDiff/' + item.revid;
+      }
+      var session = props.session;
+      if ( session && props.collection && data.owner === session.username  && !props.unordered ) {
+        item.indicator = <WatchIcon {...props}
+          key={item.key + '-watch'}
+          title={item.title} collection={props.collection} isWatched={true} />
       }
       cards.push( React.createElement( CardClass, Object.assign( {}, props, item ) ) );
     } );
@@ -79,8 +86,12 @@ export default React.createClass({
     var onEmpty = props.onEmpty;
     var cardListProps = {
       lang: props.lang,
+      session: props.session,
+      msg: props.msg,
+      collection: props.collection,
       language_project: props.language_project,
       unordered: props.unordered,
+      showNotification: props.showNotification,
       CardClass: props.CardClass,
       isDiffCardList: props.isDiffCardList,
       emptyMessage: props.emptyMessage,
@@ -103,6 +114,7 @@ export default React.createClass({
   fetchCardListProps: function ( url, props ) {
     return this.props.api.fetch( url ).then( function ( data ) {
       return {
+        owner: data.owner,
         continue: data.continue,
         cards: getCards( data, props, url + '-' )
       };
@@ -119,6 +131,7 @@ export default React.createClass({
       this.fetchCardListProps( url, this.props ).then( function ( props ) {
         // this wont work again without the continue
         self.setState( { continue: props.continue, isPending: false,
+          owner: props.owner,
           cards: self.state.cards.concat( props.cards ) } );
       } );
     }
@@ -145,8 +158,9 @@ export default React.createClass({
     var isDiffCardList = this.props.isDiffCardList;
     var isUnordered = props.unordered && !isDiffCardList;
     var cards = this.state.cards;
+    var owner = this.state.owner || props.owner;
     if ( props.pages && !cards ) {
-      cards = getCards( { pages: props.pages }, props );
+      cards = getCards( { pages: props.pages, owner: owner }, props );
     }
     var cardsAndHeaders = [];
     var continuer = props.continue && props.endpoint ?

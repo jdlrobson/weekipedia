@@ -76,7 +76,9 @@ export default React.createClass({
       : <p><a href="/wiki/Special:UserLogin">Sign in</a> to use collections.</p>
 
     if ( id ) {
-      return <CardList key="collection-list" {...this.props} unordered={COLLECTIONS_ARE_NOT_ORDERED} apiEndpoint={this.state.endpoint} pages={props.pages} />
+      return <CardList key="collection-list" {...this.props} unordered={COLLECTIONS_ARE_NOT_ORDERED}
+         collection={id}
+         apiEndpoint={this.state.endpoint} pages={props.pages} />
     } else if ( collections ) {
       return <CardList key="collections-list"
         emptyMessage="There are no collections by this user."  unordered={COLLECTIONS_ARE_NOT_ORDERED}
@@ -87,7 +89,7 @@ export default React.createClass({
       return (
         <div>
           <CardList key="collection-list" {...this.props} unordered={COLLECTIONS_ARE_NOT_ORDERED}
-             CardClass={CollectionCard}
+            CardClass={CollectionCard}
              emptyMessage="There are no collections."
              apiEndpoint={this.state.endpoint} />
           {msg}
