@@ -1,7 +1,7 @@
 import domino from 'domino'
 
 function isNodeEmpty( node ) {
-  return node.textContent.replace( /[↵ \n]/gi, '' ).length === 0
+  return node.textContent.replace( /[↵ \n\t]/gi, '' ).length === 0
 }
 
 function mergeAdjacentLists( list ) {
