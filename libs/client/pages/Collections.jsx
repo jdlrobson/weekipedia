@@ -155,6 +155,7 @@ export default React.createClass({
       props = this.props,
       lead,
       lang = this.props.lang,
+      isDefaultView = this.state.defaultView,
       desc = this.state.description || props.description,
       username = this.state.username || props.owner,
       id = this.state.id || props.id,
@@ -184,7 +185,7 @@ export default React.createClass({
     tabs = [
       <a key="collection-tab-1" href={'/' + lang + '/wiki/Special:Collections/'}
         onClick={this.props.onClickInternalLink}
-        className={!username ? 'active' : ''}><TruncatedText>All</TruncatedText></a>
+        className={isDefaultView ? 'active' : ''}><TruncatedText>All</TruncatedText></a>
     ];
 
     lead = {
@@ -197,7 +198,7 @@ export default React.createClass({
       tabs.push(
         <a key="collection-tab-2" href={'/' + lang + '/wiki/Special:Collections/by/' + username}
           onClick={this.props.onClickInternalLink}
-          className={!id ? 'active' : ''}><TruncatedText>{username}</TruncatedText></a>
+          className={!id && !isDefaultView ? 'active' : ''}><TruncatedText>{username}</TruncatedText></a>
       );
 
       if ( id ) {
