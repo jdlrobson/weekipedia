@@ -147,13 +147,13 @@ export default React.createClass({
     tabs = [
       <a key="collection-tab-1" href={'/' + lang + '/wiki/Special:Collections/'}
         onClick={this.props.onClickInternalLink}
-        className={!username ? 'active' : ''}>All</a>
+        className={!username ? 'active' : ''}><TruncatedText>All</TruncatedText></a>
     ];
     if ( username ) {
       tabs.push(
         <a key="collection-tab-2" href={'/' + lang + '/wiki/Special:Collections/by/' + username}
           onClick={this.props.onClickInternalLink}
-          className={!id ? 'active' : ''}>{username}</a>
+          className={!id ? 'active' : ''}><TruncatedText>{username}</TruncatedText></a>
       );
 
       if ( id ) {
