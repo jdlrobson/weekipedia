@@ -20,6 +20,8 @@ function extractImages( section ) {
     var captionLc = imgData.caption.toLowerCase();
     if ( imgData.href.toLowerCase().indexOf( 'map' ) > -1 ||
       captionLc.indexOf( 'visa policy' ) > -1 ||
+      captionLc.indexOf( 'metro lines' ) > -1 ||
+      captionLc.indexOf( 'tube lines' ) > -1 ||
       captionLc.indexOf( 'map' ) > -1 ||
       captionLc.indexOf( 'worldwide' ) > -1 ||
       captionLc.indexOf( 'region' ) > -1
