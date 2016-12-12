@@ -66,7 +66,9 @@ router.post( '/api/private/en/collection/-1/(.*)/(.*)', ( r, p ) => {
         keys.forEach( function ( req ) {
           var url = req.url.split( '?' );
           var folders = url[0].split( '/' );
-          if ( folders.indexOf( title ) > -1 ) {
+          if ( folders.indexOf( title ) > -1 ||
+            folders.indexOf( title.replace(/%20/gi, '_' ) ) > -1
+          ) {
             // store it incase we want to add it again
             undoRemoval[title] = req;
             pcache.delete( req );
@@ -93,8 +95,8 @@ router.get( '/api/en/collection/by/(.*)/-1', () => {
       var pending = 0;
       var collection = {
         id: -1,
-        title: 'Offline pages',
-        description: 'Pages that are available to you offline'
+        title: 'Reading history (private)',
+        description: 'Pages you have recently read'
       };
 
       return new Promise( function ( resolve ) {
