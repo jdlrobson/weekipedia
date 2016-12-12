@@ -6,7 +6,9 @@ export default React.createClass({
   onClick( ev ) {
     ev.preventDefault();
     this.props.router.navigateTo( '#/media/' +
-      ev.currentTarget.getAttribute( 'href' ).replace( '/wiki/File:', '' ) );
+      ev.currentTarget.getAttribute( 'href' ).replace( '/wiki/File:', '' )
+       .replace( './File:', '' )
+    );
   },
   render() {
     var props = this.props;
