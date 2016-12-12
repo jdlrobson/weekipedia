@@ -16,6 +16,7 @@ function calcScore( edits, halflife ) {
       anonEdits: edits.anonEdits,
       reverts: edits.reverts,
       start: edits.start,
+      isNew: edits.isNew,
       numberContributors: edits.anons.length + edits.contributors.length,
       distribution: edits.distribution,
       views: edits.views,
