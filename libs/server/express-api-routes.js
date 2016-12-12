@@ -302,8 +302,18 @@ function initGetMethods( app ) {
 
   app.get( '/api/page/:lang.:project/:title', ( req, res ) => {
     var proj = getProject( req );
+    var params = req.params;
     cachedResponse( res, req.url, function () {
-      return page( req.params.title, proj.lang, proj.project, false );
+      return page( req.params.title, proj.lang, proj.project, false ).then( ( data ) => {
+        const protocol = req.secure ? 'https' : 'http';
+        const newPath = '/api/page/' + params.lang + '.' + params.project + '/' + data.title;
+        if ( data.code && [301, 302].indexOf( data.code ) > -1 ) {
+          res.redirect( protocol + '://' + req.headers.host + newPath );
+          return false;
+        } else {
+          return data;
+        }
+      } );
     } );
   } );
 

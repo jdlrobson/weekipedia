@@ -138,13 +138,21 @@ function getBaseHost( lang, project ) {
 }
 
 export default function ( title, lang, project, includeReferences ) {
+  const host = getBaseHost( lang, project ) + HOST_SUFFIX;
+  const path = '/api/rest_v1/page/mobile-sections/';
   // FIXME: Handle this better please. Use better API.
-  var url = 'https://' + getBaseHost( lang, project ) + HOST_SUFFIX + '/api/rest_v1/page/mobile-sections/' +
+  var url = 'https://' + host + path +
     encodeURIComponent( title );
 
-  return fetch( url )
+  return fetch( url, { redirect: 'manual' } )
     .then( function ( resp ) {
-      if ( resp.status === 200 ) {
+      if ( [301, 302].indexOf( resp.status ) > -1 ) {
+        return {
+          code: 301,
+          title: resp.headers.get( 'Location' ).replace( host, '' )
+            .replace( path, '' ).replace( /https?\:\/\//, '' )
+        };
+      } else if ( resp.status === 200 ) {
         return resp.json();
       } else {
         if ( title.indexOf( 'User:' ) > -1 ) {
@@ -162,6 +170,9 @@ export default function ( title, lang, project, includeReferences ) {
         }
       }
     } ).then( function ( json ) {
+      if ( json.code ) {
+        return json;
+      }
       var username = title.indexOf( ':' ) > -1 ? title.split( ':' )[1] : title;
       // mark references sections with a flag
       if ( json.remaining.sections ) {
