@@ -72,7 +72,9 @@ export default function ( title, lang, project ) {
       props.push( 'coordinates' );
     }
     return addProps( pages.slice( 0, 50 ), props,
-      lang, project, { codistancefrompage: data.lead.normalizedtitle || title } ).then( function () {
+      lang, project,
+      { codistancefrompage: data.lead.normalizedtitle || data.lead.displaytitle || title }
+    ).then( function () {
         var destinations = [];
         data.remaining.sections.forEach( function ( section ) {
           if ( section.destinations && section.destinations.length ) {
