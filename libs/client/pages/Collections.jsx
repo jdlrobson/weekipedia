@@ -216,9 +216,9 @@ export default React.createClass({
       }
     } else {
       tabs.push(
-        <a key="collection-tab-2" href={'/' + lang + '/wiki/Special:Collections/by/~anonymous'}
+        <a key="collection-tab-2" href={'/' + lang + '/wiki/Special:Collections/by/~your%20device'}
           onClick={this.props.onClickInternalLink}
-          className={username === '~anonymous' && !title ? 'active' : ''}>By you</a>
+          className={username === '~anonymous' && !title ? 'active' : ''}>Your device</a>
       );
 
       tagline = (
