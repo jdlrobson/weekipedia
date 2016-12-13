@@ -57,7 +57,8 @@ function getCards( data, props, keyPrefix ) {
           source: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/78/Sin_mapa.svg/320px-Sin_mapa.svg.png'
         };
       }
-      if ( props.session && !item.owner && props.collection ) {
+      var session = props.session;
+      if ( session && props.collection && data.owner === session.username ) {
         item.indicator = <WatchIcon {...props}
           key={item.key + '-watch'}
           title={item.title} collection={props.collection} isWatched={true} />
@@ -118,9 +119,6 @@ export default React.createClass({
     };
     this.setState({ list : null });
     this.fetchCardListProps( apiEndpoint, cardListProps ).then( function ( state ) {
-      if ( props.limit ) {
-        state.cards = state.cards.slice( 0, props.limit );
-      }
       self.setState( state );
       if ( state.cards.length === 0 && props.onEmpty ) {
         onEmpty();
