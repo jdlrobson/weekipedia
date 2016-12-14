@@ -58,7 +58,8 @@ function getCards( data, props, keyPrefix ) {
         };
       }
       var session = props.session;
-      if ( session && props.collection && data.owner === session.username ) {
+      var isOwner = ( session && data.owner === session.username ) || data.private;
+      if ( isOwner && props.collection ) {
         item.indicator = <WatchIcon {...props}
           key={item.key + '-watch'}
           title={item.title} collection={props.collection} isWatched={true} />

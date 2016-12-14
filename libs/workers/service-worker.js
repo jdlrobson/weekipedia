@@ -51,6 +51,14 @@ const SUCCESS = new Response( JSON.stringify( { edit: { result: 'Success' } } ),
     headers: { 'Content-Type': 'application/json' }
   } );
 
+const READING_LIST_COLLECTION = {
+  id: -1,
+  owner: '~your device',
+  title: 'Reading history (private)',
+  private: true,
+  description: 'Available offline: Pages you have recently read'
+};
+
 router.post( '/api/private/en/collection/-1/(.*)/(.*)', ( r, p ) => {
   var pcache;
   var title = p[1];
@@ -85,6 +93,18 @@ router.post( '/api/private/en/collection/-1/(.*)/(.*)', ( r, p ) => {
   }
 } );
 
+router.get( '/api/en/collection/by/~your%20device/', () => {
+  return new Response(
+    JSON.stringify(
+      {
+        collections: [ READING_LIST_COLLECTION ],
+        owner: '~your device'
+      }
+    ), {
+      headers: { 'Content-Type': 'application/json' }
+    } );
+});
+
 router.get( '/api/en/collection/by/(.*)/-1', () => {
   return caches.open( PAGE_CACHE )
     .then( function ( cache ) {
@@ -93,11 +113,7 @@ router.get( '/api/en/collection/by/(.*)/-1', () => {
     .then( function ( keys ) {
       var pages = [];
       var pending = 0;
-      var collection = {
-        id: -1,
-        title: 'Reading history (private)',
-        description: 'Pages you have recently read'
-      };
+      var collection = Object.assign( {}, READING_LIST_COLLECTION );
 
       return new Promise( function ( resolve ) {
         function whenDone( resolve ) {
