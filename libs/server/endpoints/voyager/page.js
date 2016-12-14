@@ -270,7 +270,9 @@ export default function ( title, lang, project ) {
   }
 
   function transform( json ) {
-    if ( json.lead.ns > 0 ) {
+    if ( json.code ) {
+      return json;
+    } else if ( json.lead && json.lead.ns > 0 ) {
       return json;
     } else {
       return voyager( json );
@@ -278,8 +280,10 @@ export default function ( title, lang, project ) {
   }
   return page( title, lang, project ).then( transform ).catch( function () {
     return page( title, lang, 'wikipedia' ).then( function ( json ) {
-      json.remaining =  { sections: [] };
-      json.lead.project_source = 'wikipedia';
+      json.remaining = { sections: [] };
+      if ( json.lead ) {
+        json.lead.project_source = 'wikipedia';
+      }
       return transform( json );
     } );
   } );

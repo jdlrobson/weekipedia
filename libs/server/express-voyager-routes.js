@@ -14,7 +14,16 @@ function initRoutes( app ) {
   app.get( '/api/voyager/page/:lang.:project/:title', ( req, res ) => {
     cachedResponse( res, req.url, function () {
       var p = req.params;
-      return voyager.page( p.title, p.lang, p.project );
+      return voyager.page( p.title, p.lang, p.project ).then( ( data ) => {
+        const protocol = req.secure ? 'https' : 'http';
+        const newPath = '/api/voyager/page/' + p.lang + '.' + p.project + '/' + data.title;
+        if ( data.code && [301, 302].indexOf( data.code ) > -1 ) {
+          res.redirect( protocol + '://' + req.headers.host + newPath );
+          return false;
+        } else {
+          return data;
+        }
+      } );
     } );
   } );
 
