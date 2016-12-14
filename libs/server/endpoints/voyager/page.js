@@ -154,7 +154,7 @@ export default function ( title, lang, project ) {
       var orientation = [];
       var itineraries = [];
       const REGION_SECTION_HEADINGS = [ 'cities', 'other destinations', 'cities and towns',
-        'towns & villages', 'towns &amp; villages',
+        'towns & villages', 'towns &amp; villages', 'the islands',
         'destinations', 'towns', 'countries and territories' ];
 
       var p = { text: data.lead.paragraph };

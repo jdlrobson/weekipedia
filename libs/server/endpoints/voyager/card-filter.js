@@ -5,6 +5,7 @@ function cardFilter( oldPages, mustHaveImage, mustHaveCoordinates ) {
   var filters = [ 'country', 'county', 'state', 'region', 'city', 'lake',
     'district', 'National Park', 'town', 'village', 'hamlet', 'metropolis',
     'continental', 'continent', 'subregion', 'republic', 'commune', 'area',
+    'archipelago',
     'settlement', 'monarchy', 'island', 'capital' ]
   var exceptions = [ 'South Pole', 'North Pole' ];
 
