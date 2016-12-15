@@ -143,6 +143,7 @@ export default function ( title, lang, project ) {
     return addBannerAndCoords( data ).then( function ( data ) {
       var newSection, climate;
       var isRegion = false;
+      var isCountry = false;
       var sections = [];
       var cardSectionTocLevel;
       var blacklist = [ 'Talk' ];
@@ -153,6 +154,7 @@ export default function ( title, lang, project ) {
       var curSectionLine;
       var orientation = [];
       var itineraries = [];
+      const COUNTRY_SECTION_HEADINGS = [ 'regions' ];
       const REGION_SECTION_HEADINGS = [ 'cities', 'other destinations', 'cities and towns',
         'towns & villages', 'towns &amp; villages', 'the islands',
         'destinations', 'towns', 'countries and territories' ];
@@ -189,14 +191,20 @@ export default function ( title, lang, project ) {
           itineraries = section;
           return;
         }
-        if ( [ 'go next' ].concat( REGION_SECTION_HEADINGS ).indexOf( section.line.toLowerCase() ) > -1 &&
+
+        var lcLine = section.line.toLowerCase();
+        if ( REGION_SECTION_HEADINGS.indexOf( lcLine ) > -1 ) {
+          isRegion = true;
+        }
+        if ( COUNTRY_SECTION_HEADINGS.indexOf( lcLine ) > -1 ) {
+          isCountry = true;
+        }
+        if (
+          ( isRegion || lcLine === 'go next' ) &&
           ( section.toclevel === 1 || section.toclevel === 2 )
         ) {
           data.lead.destinations_id = section.id;
           cardSectionTocLevel = section.toclevel;
-          if ( REGION_SECTION_HEADINGS.indexOf( section.line ) > -1 ) {
-            isRegion = true;
-          }
         }
 
         if ( blacklist.indexOf( section.line ) === -1 ) {
@@ -248,6 +256,7 @@ export default function ( title, lang, project ) {
       data.lead.maps = allMaps;
       data.lead.climate = climate;
       data.lead.isRegion = isRegion;
+      data.lead.isCountry = isCountry;
       data.itineraries = itineraries;
 
       if ( !isEmptySectionArray( logistics ) ) {

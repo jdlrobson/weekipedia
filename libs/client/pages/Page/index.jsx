@@ -318,7 +318,7 @@ export default React.createClass({
         }
       } );
     } else {
-      if ( coords ) {
+      if ( coords && !lead.isRegion && !lead.isCountry ) {
         endpoint = '/api/voyager/nearby/' + props.language_project + '/' + coords.lat + ',' + coords.lon + '/exclude/' + title;
         col3.push(
           <h2 key="nearby-widget-heading">Nearby</h2>
