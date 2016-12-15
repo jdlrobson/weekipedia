@@ -88,6 +88,9 @@ if ( SIGN_IN_SUPPORTED && !DUMMY_SESSION ) {
   app.use( session( {
     resave: true,
     saveUninitialized: true,
+    cookie: {
+      maxAge: 1000 * 60 * 60 * 24 * 30
+    },
     store: new MemcachedStore( {
       hosts: ['127.0.0.1:11211'],
       secret: CONSUMER_SECRET
@@ -98,6 +101,7 @@ if ( SIGN_IN_SUPPORTED && !DUMMY_SESSION ) {
   app.use( passport.session() );
   passport.use(
     new OAuthStrategy( {
+      baseURL: 'https://en.wikipedia.org/',
       consumerKey: CONSUMER_KEY,
       consumerSecret: CONSUMER_SECRET
     },
