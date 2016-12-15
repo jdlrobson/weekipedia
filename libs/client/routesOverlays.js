@@ -44,6 +44,7 @@ export default [
       var lang = props.lang || 'en';
       var overlayProps = Object.assign( {}, props, {
         explorable: false,
+        continue: true,
         apiEndpoint: '/api/' + lang + '/collection/by/' + info[1] + '/' + info[2]
       } );
       return {
