@@ -59,6 +59,10 @@ const READING_LIST_COLLECTION = {
   description: 'Available offline: Pages you have recently read'
 };
 
+const JSON_HEADERS = {
+  headers: { 'Content-Type': 'application/json' }
+};
+
 router.post( '/api/private/en/collection/-1/(.*)/(.*)', ( r, p ) => {
   var pcache;
   var title = p[1];
@@ -75,7 +79,7 @@ router.post( '/api/private/en/collection/-1/(.*)/(.*)', ( r, p ) => {
           var url = req.url.split( '?' );
           var folders = url[0].split( '/' );
           if ( folders.indexOf( title ) > -1 ||
-            folders.indexOf( title.replace(/%20/gi, '_' ) ) > -1
+            folders.indexOf( title.replace( /%20/gi, '_' ) ) > -1
           ) {
             // store it incase we want to add it again
             undoRemoval[title] = req;
@@ -100,10 +104,17 @@ router.get( '/api/en/collection/by/~your%20device/', () => {
         collections: [ READING_LIST_COLLECTION ],
         owner: '~your device'
       }
-    ), {
-      headers: { 'Content-Type': 'application/json' }
-    } );
-});
+    ), JSON_HEADERS );
+} );
+
+router.get( '/api/en/collection/by/~me/', ( request, values, options ) => {
+  return networkFirst( request, values, options ).then( ( resp ) => {
+    return resp.json();
+  } ).then( ( json ) => {
+    json.collections.unshift( READING_LIST_COLLECTION );
+    return new Response( JSON.stringify( json ), JSON_HEADERS );
+  } );
+} );
 
 router.get( '/api/en/collection/by/(.*)/-1', () => {
   return caches.open( PAGE_CACHE )

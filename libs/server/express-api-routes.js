@@ -323,8 +323,18 @@ function initGetMethods( app ) {
     var id;
     var lang = req.params.lang;
     var user = req.params.user;
+    var profile = req.user;
+
     if ( req.params.id ) {
       id = parseInt( req.params.id, 10 );
+    }
+    if ( user === '~me' ) {
+      if ( profile && profile.displayName ) {
+        user = profile.displayName;
+      } else {
+        res.status( 401 );
+        res.send( 'Login required for this endpoint' );
+      }
     }
     if ( id === 0 || user === '~anonymous' ) {
       res.status( 400 );

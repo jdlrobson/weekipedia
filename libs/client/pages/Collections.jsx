@@ -54,7 +54,12 @@ export default React.createClass({
       })
     } else if ( args.length === 2 && args[1] ) {
       username = args[1];
-      endpoint = '/api/' + props.lang + '/collection/by/' + username;
+      endpoint = '/api/' + props.lang + '/collection/by/';
+      if ( props.session && props.session.username === username ) {
+        endpoint += '~me';
+      } else {
+        endpoint += username;
+      }
       this.setState( { endpoint: endpoint, username: username, id: id } );
       props.api.fetch( endpoint ).then( function ( state ) {
         self.setState( state );
