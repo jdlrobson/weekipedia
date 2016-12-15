@@ -21,7 +21,6 @@ var staticAssets = [
   '/wiki/Special:Shell'
 ]
 const API_PATH = process.env.API_PATH || '/api/'
-const OFFLINE_STRATEGY = process.env.OFFLINE_STRATEGY
 
 if ( version.wordmark ) {
   staticAssets.push( version.wordmark );
@@ -33,16 +32,13 @@ precache( staticAssets )
 // Serve static assets from cache first
 staticAssets.forEach( ( asset ) => router.get( asset, cacheFirst ) )
 
-// The all offline strategy will cache every page you visit
-if ( OFFLINE_STRATEGY === 'all' ) {
-  router.get( API_PATH + 'page/([^\:]*)', networkFirst, {
-    cache: {
-      maxEntries: 50,
-      name: PAGE_CACHE,
-      networkTimeoutSeconds: 5
-    }
-  } );
-}
+router.get( API_PATH + 'page/([^\:]*)', networkFirst, {
+  cache: {
+    maxEntries: 50,
+    name: PAGE_CACHE,
+    networkTimeoutSeconds: 5
+  }
+} );
 
 // for undo purposes
 var undoRemoval = {};
@@ -54,9 +50,9 @@ const SUCCESS = new Response( JSON.stringify( { edit: { result: 'Success' } } ),
 const READING_LIST_COLLECTION = {
   id: -1,
   owner: '~your device',
-  title: 'Reading history (private)',
+  title: 'Offline pages (private)',
   private: true,
-  description: 'Available offline: Pages you have recently read'
+  description: 'These pages are available offline'
 };
 
 const JSON_HEADERS = {
