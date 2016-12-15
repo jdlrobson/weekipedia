@@ -13,6 +13,30 @@ describe('extractMembers', function() {
 
   it('extractMembers', function() {
     var members = extractMembers( [
+      '== Items ==',
+      '* [[Koh Rong]]',
+      '* [[Kep]]',
+      '* [[Kampot]]',
+      '* [[Sihanoukville]]',
+      '* [[Ho_Chi_Minh_City]]',
+      '* [[Cat Tien National Park]]',
+      '* [[Can Tho]]',
+      '* [[Ha Tien]]',
+      '* [[Rach Gia]]',
+      '* [[Chau Doc]]',
+      '* [[Kuala Lumpur]]',
+      '* [[Melaka]]',
+      '* [[Kota Tinggi]]',
+      '* [[Singapore]]',
+      '* [[Ben Tre]]',
+      '* [[Can_Tho]][[Category:Community maintained collections]]'
+    ].join( '\n' ), true );
+    assert.ok( members.length === 15, 'duplicate removed' );
+    assert.ok( members[4].title === 'Ho Chi Minh City', 'Underscores removed' );
+  });
+
+  it('extractMembers', function() {
+    var members = extractMembers( [
         '* [[Member]]',
         '* [[Member 2]] - text',
         '* [[Category:Foo]]'

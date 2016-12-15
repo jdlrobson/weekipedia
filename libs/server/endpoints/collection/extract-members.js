@@ -10,7 +10,7 @@ function extractMembers( body, expand ) {
     var title;
     var m = line.match( /\[\[([^\:]*)\]\]/ );
     if ( m ) {
-      title = m[1];
+      title = m[1].replace( /_/g, ' ' );
       if ( members.indexOf( title ) === -1 ) {
         members.push( title );
 
