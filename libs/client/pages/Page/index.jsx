@@ -342,15 +342,19 @@ export default React.createClass({
         col3.push( <h2 key="map-images-section-heading">Maps</h2> );
         col3.push( <ImageBubbles images={lead.maps} router={props.router} key="map-images-bubbles" /> );
       }
+    } else if ( this.isLogisticsView() ) {
+      lead = this.getBlankLeadSection( lead );
+      col3 = [];
+    }
+
+    // Show sights on both orientation and plan view
+    if ( !this.isLogisticsView() ) {
       if ( sights.length ) {
         col3.push( <h2 key="sights-section-heading">Sights</h2> );
         col3.push( <CardList key={"page-sights"}
           {...props} pages={sights} />
         );
       }
-    } else if ( this.isLogisticsView() ) {
-      lead = this.getBlankLeadSection( lead );
-      col3 = [];
     }
 
     if ( sections.length === 0 && !lead.text ) {
