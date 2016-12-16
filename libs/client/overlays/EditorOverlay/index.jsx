@@ -79,43 +79,89 @@ export default React.createClass({
       self = this,
       props = this.props,
       state = this.state,
+      wikitext = state.text || props.wikitext,
       source = props.language_project || props.lang,
       title = props.normalizedtitle || props.title;
 
+    function escape( newrevid ) {
+      var path = window.location.pathname;
+      if ( newrevid ) {
+        path += '?oldid=' + newrevid;
+      }
+      props.router.navigateTo( path );
+    }
     this.setState( { step: SAVE_STEP } );
-    props.api.edit( source, title, props.section, state.text || props.wikitext,
-      state.summary || props.editSummary ).then( function ( resp ) {
-      props.router.navigateTo( window.location.pathname + '?oldid=' + resp.edit.newrevid );
-      props.showNotification( 'Your edit was successful!' );
-    } ).catch( function () {
-      self.showPreview();
-    } );
+    if ( navigator.onLine  !== undefined && !navigator.onLine ) {
+      props.storage.set( this.getStorageKey(),
+        JSON.stringify( { text: wikitext, timestamp: state.timestamp } )
+      );
+      escape();
+      props.showNotification( [
+        'Your edit was cached to your device as you are currently offline.',
+        'Be sure to attempt to save it again next time you are online.'
+      ].join('') );
+    } else {
+      props.api.edit( source, title, props.section, wikitext,
+        state.summary || props.editSummary ).then( function ( resp ) {
+        escape( resp.edit.newrevid );
+        props.showNotification( 'Your edit was successful!' );
+      } ).catch( function () {
+        self.showPreview();
+      } );
+    }
+  },
+  getStorageKey() {
+    return 'edit/' + this.props.title;
   },
   loadWikiText(){
     var self = this,
+      props = this.props,
+      cached = props.storage.get( this.getStorageKey() ),
       source = this.props.language_project || this.props.lang,
       endpoint = '/api/wikitext/' + source + '/' + encodeURIComponent( this.props.title );
 
     if ( this.props.section ) {
       endpoint += '/' + this.props.section;
     }
+    if ( cached ) {
+      cached = JSON.parse( cached );
+    }
     this.props.api.fetch( endpoint ).then( function ( data ) {
-      var text,
+      var text, warning, rev,
         page = data.pages[0];
 
       if ( page.missing ) {
-        text = '';
+        text = cached ? cached.text : '';
       } else if ( page.revisions.length ) {
-        text = page.revisions[0].content;
+        rev = page.revisions[0];
+        text = rev.content;
+        if ( cached ) {
+          text = cached.text;
+          if ( !cached.timestamp || rev.timestamp !== cached.timestamp ) {
+            warning = 'The content you are about to save has changed. You might want to look into that.';
+          }
+        }
       }
 
-      self.setState( { isLoading: false, text: text } );
-    } );
+      self.setState( { isLoading: false,
+        timestamp: rev && rev.timestamp,
+        text: text, editWarning: warning } );
+    } ).catch( (err) => {
+      if ( navigator.onLine  !== undefined && !navigator.onLine ) {
+        self.setState( {
+          isLoading: false,
+          text: cached ? cached.text : '<<< offline (saving may override default content)'
+        } );
+      }
+    });
   },
   getDefaultText() {
     var w = this.props.wikitext;
+    var cached = this.props.storage.get( this.getStorageKey() );
     var text = this.state.text;
-    if ( text && w ) {
+    if ( cached ) {
+      text = JSON.parse( cached ).text;
+    } else if ( text && w ) {
       text = text.slice( 0, text.indexOf('==\n') + 3 ) + w + text.slice( text.indexOf('==\n') + 3 );
     } else if ( w ){
       text = w;
@@ -128,6 +174,7 @@ export default React.createClass({
       props = this.props,
       license = props.siteinfo.license,
       state = this.state,
+      editWarning = state.editWarning || props.editWarning,
       backBtn = <Icon glyph='back' onClick={this.showEditor}
         className={state.step === SAVE_STEP ? 'disabled' : ''}/>,
       previewBtn = <Button label='Next' isPrimary="1" onClick={this.showPreview} />,
@@ -169,10 +216,10 @@ export default React.createClass({
           ];
           editSummary.push(summaryField);
         }
-        if ( props.editWarning ) {
+        if ( editWarning ) {
           warnings = (
             <div key="editor-warning"
-              className="warning-box" dangerouslySetInnerHTML={{ __html: props.editWarning }} />
+              className="warning-box" dangerouslySetInnerHTML={{ __html: editWarning }} />
           );
         }
         content = [
