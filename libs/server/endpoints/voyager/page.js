@@ -180,6 +180,7 @@ export default function ( title, lang, project ) {
       const COUNTRY_SECTION_HEADINGS = [ 'regions' ];
       const REGION_SECTION_HEADINGS = [ 'cities', 'other destinations', 'cities and towns',
         'towns & villages', 'towns &amp; villages', 'the islands',
+        'cities / villages', 'nearby islands',
         'destinations', 'towns', 'countries and territories' ];
 
       var p = { text: data.lead.paragraph };
