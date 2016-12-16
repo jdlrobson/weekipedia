@@ -177,6 +177,7 @@ export default function ( title, lang, project ) {
       var curSectionLine;
       var orientation = [];
       var itineraries = [];
+      const SIGHT_HEADINGS = [ 'See', 'See & Do' ];
       const COUNTRY_SECTION_HEADINGS = [ 'regions' ];
       const REGION_SECTION_HEADINGS = [ 'cities', 'other destinations', 'cities and towns',
         'towns & villages', 'towns &amp; villages', 'the islands',
@@ -217,7 +218,7 @@ export default function ( title, lang, project ) {
         }
 
         var lcLine = section.line.toLowerCase();
-        if ( curSectionLine === 'See' ) {
+        if ( SIGHT_HEADINGS.indexOf( curSectionLine ) > -1 && !isRegion && !isCountry ) {
           sights = sights.concat( extractBoldItems( section.text ) );
         }
 
@@ -286,7 +287,9 @@ export default function ( title, lang, project ) {
       data.lead.isRegion = isRegion;
       data.lead.isCountry = isCountry;
       data.itineraries = itineraries;
-      data.lead.sights = sights;
+      if ( !isRegion && !isCountry ) {
+        data.lead.sights = sights;
+      }
       data.lead.isSubPage = isSubPage;
 
       if ( !isEmptySectionArray( logistics ) ) {
