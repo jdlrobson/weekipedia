@@ -327,6 +327,7 @@ export default React.createClass({
         col3.push(
           <GoNext apiEndpoint={endpoint} api={props.api} lang={lang}
             session={session}
+            foreign={lead.project_source}
             key="nearby-widget-card-list" section={lead.destinations_id}
             router={props.router} />
         );

@@ -26,17 +26,23 @@ export default React.createClass({
   },
   render(){
     var props = this.props;
+    var editLink;
+    if (!props.foreign) {
+      editLink = (
+        <EditorLink key="editor-link-new-nearby"
+          session={props.session}
+          section={props.section || 'new'}
+          wikitext={this.state.wikitext}
+          label="Curate list" />
+      );
+    }
     return (
       <div>
         <CardList {...this.props}
             emptyMessage="Nothing near but tumbleweed."
             infiniteScroll={false}
             router={props.router} />
-            <EditorLink key="editor-link-new-nearby"
-              session={props.session}
-              section={props.section || 'new'}
-              wikitext={this.state.wikitext}
-              label="Curate list" />
+        {editLink}
       </div>
     )
   }
