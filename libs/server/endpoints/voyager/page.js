@@ -166,6 +166,7 @@ export default function ( title, lang, project ) {
       var isRegion = false;
       var isCountry = false;
       var sections = [];
+      var isSubPage = data.lead.displaytitle.indexOf('/') > -1;
       var cardSectionTocLevel;
       var blacklist = [ 'Talk' ];
       var allImages = [];
@@ -252,7 +253,7 @@ export default function ( title, lang, project ) {
             delete section.climate;
           }
 
-          if ( cardSectionTocLevel !== undefined ) {
+          if ( cardSectionTocLevel !== undefined && !isSubPage ) {
             section = extractDestinations( section );
             if ( section.destinations ) {
               allDestinations = allDestinations.concat( section.destinations );
@@ -285,6 +286,7 @@ export default function ( title, lang, project ) {
       data.lead.isCountry = isCountry;
       data.itineraries = itineraries;
       data.lead.sights = sights;
+      data.lead.isSubPage = isSubPage;
 
       if ( !isEmptySectionArray( logistics ) ) {
         data.logistics = logistics;
