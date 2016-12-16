@@ -178,6 +178,9 @@ export default function ( title, lang, project ) {
       var orientation = [];
       var itineraries = [];
       const SIGHT_HEADINGS = [ 'See', 'See & Do' ];
+      const EXPLORE_HEADINGS = [ 'Regions', 'Districts', 'Countries', 'Get around', 'Listen',
+        'Eat and drink', 'Counties', 'Prefectures', 'Fees/Permits', 'See',
+        'Buy', 'Eat', 'Drink', 'Do' ];
       const COUNTRY_SECTION_HEADINGS = [ 'regions' ];
       const REGION_SECTION_HEADINGS = [ 'cities', 'other destinations', 'cities and towns',
         'towns & villages', 'towns &amp; villages', 'the islands',
@@ -267,9 +270,7 @@ export default function ( title, lang, project ) {
             section.text = '';
           }
 
-          if ( [ 'Regions', 'Districts', 'Countries', 'Get around', 'Listen',
-            'Eat and drink', 'Counties', 'Prefectures',
-            'Buy', 'Eat', 'Drink', 'Do' ].indexOf( curSectionLine ) > -1 ) {
+          if ( EXPLORE_HEADINGS.indexOf( curSectionLine ) > -1 ) {
             orientation.push( section );
           } else if ( [
             'Get in', 'Sleep' ].indexOf( curSectionLine ) > -1
