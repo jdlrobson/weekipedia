@@ -162,6 +162,9 @@ export default React.createClass({
     if ( props.pages && !cards ) {
       cards = getCards( { pages: props.pages, owner: owner }, props );
     }
+    if ( props.limit && cards ) {
+      cards = cards.slice( 0, props.limit );
+    }
     var cardsAndHeaders = [];
     var continuer = props.continue && props.endpoint ?
       <div className='gutter' /> : null;
