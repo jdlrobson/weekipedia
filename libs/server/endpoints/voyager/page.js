@@ -178,6 +178,7 @@ export default function ( title, lang, project ) {
       var orientation = [];
       var itineraries = [];
       const SIGHT_HEADINGS = [ 'See', 'See & Do' ];
+      const DESTINATION_BLACKLIST = [ 'Understand' ];
       const EXPLORE_HEADINGS = [ 'Regions', 'Districts', 'Countries', 'Get around', 'Listen',
         'Eat and drink', 'Counties', 'Prefectures', 'Fees/Permits', 'See',
         'Buy', 'Eat', 'Drink', 'Do' ];
@@ -259,9 +260,11 @@ export default function ( title, lang, project ) {
           }
 
           if ( cardSectionTocLevel !== undefined && !isSubPage ) {
-            section = extractDestinations( section );
-            if ( section.destinations ) {
-              allDestinations = allDestinations.concat( section.destinations );
+            if ( DESTINATION_BLACKLIST.indexOf( curSectionLine ) === -1 ) {
+              section = extractDestinations( section );
+              if ( section.destinations ) {
+                allDestinations = allDestinations.concat( section.destinations );
+              }
             }
           }
 
