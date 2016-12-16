@@ -156,6 +156,7 @@ export default React.createClass({
     ev.preventDefault();
   },
   getTabs( lead ){
+    var tabs;
     var props = this.props,
       isOrientationView = this.isOrientationView(),
       isLogisticsView = this.isLogisticsView(),
@@ -166,34 +167,27 @@ export default React.createClass({
       return [];
     }
 
-    var tabs = [
-      <a href={baseUrl + props.title }
-        key="tab-default"
-        className={isDefaultView ? 'active' : '' }
-        data-action="view"
-        onClick={this.switchView}>Dream</a>
-    ];
-    if ( this.state.logistics && this.state.logistics.length > 0 ) {
-      tabs.push(
+    // Tabs are not shown on content from wikipedia
+    if ( lead.project_source ) {
+      tabs = [];
+    } else {
+      tabs = [
+        <a href={baseUrl + props.title }
+          key="tab-default"
+          className={isDefaultView ? 'active' : '' }
+          data-action="view"
+          onClick={this.switchView}>Dream</a>,
         <a href={baseUrl + props.title + '?action=logistics'}
           key="tab-logistics"
           className={isLogisticsView ? 'active' : '' }
           data-action="logistics"
-          onClick={this.switchView}>Arrive</a>
-      );
-    } else {
-      tabs.push( <span key="tab-logistics">Arrive</span> );
-    }
-    if ( this.state.orientation && this.state.orientation.length > 0 ) {
-      tabs.push(
+          onClick={this.switchView}>Arrive</a>,
         <a href={baseUrl + props.title + '?action=orientation'}
           key="tab-orientation"
           className={isOrientationView ? 'active' : '' }
           data-action="orientation"
           onClick={this.switchView}>Explore</a>
-      );
-    } else {
-      tabs.push( <span key="tab-orientation">Explore</span> );
+      ];
     }
 
     return tabs;
@@ -357,6 +351,12 @@ export default React.createClass({
     } else if ( this.isLogisticsView() ) {
       lead = this.getBlankLeadSection( lead );
       col3 = [];
+    }
+
+    if ( sections.length === 0 && !lead.text ) {
+      sections = [
+        <div>We don't have any information for this place.</div>
+      ];
     }
 
     wikiPageProps = Object.assign( {}, this.props, {
