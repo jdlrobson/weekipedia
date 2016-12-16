@@ -11,6 +11,13 @@ function initRoutes( app ) {
     } );
   } );
 
+  app.get( '/api/voyager/featured/', ( req, res ) => {
+    cachedResponse( res, req.url, function () {
+      var p = req.params;
+      return voyager.featured();
+    } );
+  } );
+
   app.get( '/api/voyager/page/:lang.:project/:title', ( req, res ) => {
     cachedResponse( res, req.url, function () {
       var p = req.params;
