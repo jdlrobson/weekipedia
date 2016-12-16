@@ -8,6 +8,7 @@ import { extractElements, isNodeEmpty, cleanupScrubbedLists } from './domino-uti
 import extractDestinations from './extract-destinations'
 import extractImages from './extract-images'
 import climateExtraction from './extract-climate'
+import extractBoldItems from './extract-bold-items'
 
 import thumbnailFromTitle from './../collection/thumbnail-from-title'
 
@@ -64,6 +65,26 @@ export default function ( title, lang, project ) {
       }
       return data;
     } );
+  }
+
+  function addSights( data ) {
+    var props = [ 'pageimages', 'pageterms', 'pageprops' ];
+    if ( data.lead.sights ) {
+      return addProps( data.lead.sights.slice( 0, 50 ), props, 'en', 'wikipedia', {
+        ppprop: 'disambiguation'
+      } )
+        .then((sightPages) => {
+          data.lead.sights = sightPages.filter(
+            (page)=> {
+              var isDisambiguation = page.pageprops && page.pageprops.disambiguation !== undefined;
+              return !page.missing && !isDisambiguation;
+            }
+          );
+          return data;
+        } );
+    } else {
+      return data;
+    }
   }
 
   function addNextCards( data, pages, isRegion ) {
@@ -149,6 +170,7 @@ export default function ( title, lang, project ) {
       var blacklist = [ 'Talk' ];
       var allImages = [];
       var logistics = [];
+      var sights = [];
       var allDestinations = [];
       var allMaps = [];
       var curSectionLine;
@@ -193,6 +215,10 @@ export default function ( title, lang, project ) {
         }
 
         var lcLine = section.line.toLowerCase();
+        if ( curSectionLine === 'See' ) {
+          sights = sights.concat( extractBoldItems( section.text ) );
+        }
+
         if ( REGION_SECTION_HEADINGS.indexOf( lcLine ) > -1 ) {
           isRegion = true;
         }
@@ -258,6 +284,7 @@ export default function ( title, lang, project ) {
       data.lead.isRegion = isRegion;
       data.lead.isCountry = isCountry;
       data.itineraries = itineraries;
+      data.lead.sights = sights;
 
       if ( !isEmptySectionArray( logistics ) ) {
         data.logistics = logistics;
@@ -270,8 +297,11 @@ export default function ( title, lang, project ) {
         data.orientation = orientation;
       }
 
-      if ( allDestinations.length ) {
-        return addNextCards( data, allDestinations, isRegion );
+      if ( allDestinations.length || sights.length ) {
+        return addNextCards( data, allDestinations, isRegion )
+          .then( ( data ) => {
+            return addSights( data )
+          } );
       } else {
         return data;
       }

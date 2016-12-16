@@ -249,6 +249,7 @@ export default React.createClass({
       title = this.props.title,
       lead = Object.assign( {}, this.state.lead || this.props.lead || {} ),
       ns = lead && lead.ns || 0,
+      sights = lead.sights ? lead.sights : [],
       foreign = lead.project_source,
       footer = this.getFooter( lead ),
       lang = this.props.lang,
@@ -345,6 +346,12 @@ export default React.createClass({
       if ( lead.maps && lead.maps.length ) {
         col3.push( <h2 key="map-images-section-heading">Maps</h2> );
         col3.push( <ImageBubbles images={lead.maps} router={props.router} key="map-images-bubbles" /> );
+      }
+      if ( sights.length ) {
+        col3.push( <h2 key="sights-section-heading">Sights</h2> );
+        col3.push( <CardList key={"page-sights"}
+          {...props} pages={sights} />
+        );
       }
     } else if ( this.isLogisticsView() ) {
       lead = this.getBlankLeadSection( lead );

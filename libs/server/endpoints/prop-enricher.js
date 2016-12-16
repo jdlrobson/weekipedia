@@ -54,6 +54,7 @@ function propEnricher( arr, props, lang, project, params ) {
       }
       index[page.title].thumbnail = page.thumbnail;
       index[page.title].coordinates = page.coordinates;
+      index[page.title].pageprops = page.pageprops;
       if ( page.missing ) {
         index[page.title].missing = true;
       }
@@ -69,6 +70,7 @@ function propEnricher( arr, props, lang, project, params ) {
       if ( obj.description && !page.description ) {
         page.description = obj.description;
       }
+      page.pageprops = obj.pageprops;
     } );
     return arr;
   } ).catch( function () {
