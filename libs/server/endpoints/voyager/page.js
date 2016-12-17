@@ -68,7 +68,7 @@ export default function ( title, lang, project ) {
   }
 
   function addSights( data ) {
-    var props = [ 'pageimages', 'pageterms', 'pageprops' ];
+    var props = [ 'pageimages', 'pageterms', 'pageprops', 'coordinates' ];
     if ( data.lead.sights ) {
       return addProps( data.lead.sights.slice( 0, 50 ), props, 'en', 'wikipedia', {
         ppprop: 'disambiguation'
@@ -77,7 +77,7 @@ export default function ( title, lang, project ) {
           data.lead.sights = sightPages.filter(
             ( page )=> {
               var isDisambiguation = page.pageprops && page.pageprops.disambiguation !== undefined;
-              return !page.missing && !isDisambiguation;
+              return !page.missing && !isDisambiguation && page.coordinates;
             }
           );
           return data;
