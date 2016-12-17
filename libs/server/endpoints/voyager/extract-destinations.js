@@ -131,7 +131,7 @@ function extractFromList( html ) {
       }
 
       // Only allow capitalised
-      if ( attr && !dict[attr] && textContent.match(/^[A-Z]/ ) ) {
+      if ( attr && !dict[attr] && textContent.match( /^[A-Z]/ ) ) {
         dict[attr] = true;
         titles.push( { title: attr,
           description: text } );
@@ -174,7 +174,7 @@ function extractFromList( html ) {
 
       if ( attr && !dict[attr] ) {
         dict[attr] = true;
-        if ( attr.indexOf( 'w:' ) !== 0 && link.textContent.match(/^[A-Z]/ ) ) {
+        if ( attr.indexOf( 'w:' ) !== 0 && link.textContent.match( /^[A-Z]/ ) ) {
           titles.push( { title: attr } );
         }
       }
