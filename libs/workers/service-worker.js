@@ -40,6 +40,14 @@ router.get( API_PATH + 'page/([^\:]*)', networkFirst, {
   }
 } );
 
+router.get( '/api/wikitext/(.*)/User%3A(.*)', networkFirst, {
+  cache: {
+    maxEntries: 50,
+    name: 'notes-cache',
+    networkTimeoutSeconds: 5
+  }
+} );
+
 // for undo purposes
 var undoRemoval = {};
 
