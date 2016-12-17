@@ -146,7 +146,7 @@ export default React.createClass({
       self.setState( { isLoading: false,
         timestamp: rev && rev.timestamp,
         text: text, editWarning: warning } );
-    } ).catch( (err) => {
+    } ).catch( () => {
       if ( navigator.onLine  !== undefined && !navigator.onLine ) {
         self.setState( {
           isLoading: false,

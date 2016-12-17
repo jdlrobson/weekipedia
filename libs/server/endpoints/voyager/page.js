@@ -73,9 +73,9 @@ export default function ( title, lang, project ) {
       return addProps( data.lead.sights.slice( 0, 50 ), props, 'en', 'wikipedia', {
         ppprop: 'disambiguation'
       } )
-        .then((sightPages) => {
+        .then( ( sightPages ) => {
           data.lead.sights = sightPages.filter(
-            (page)=> {
+            ( page )=> {
               var isDisambiguation = page.pageprops && page.pageprops.disambiguation !== undefined;
               return !page.missing && !isDisambiguation;
             }
@@ -166,7 +166,7 @@ export default function ( title, lang, project ) {
       var isRegion = false;
       var isCountry = false;
       var sections = [];
-      var isSubPage = data.lead.displaytitle.indexOf('/') > -1;
+      var isSubPage = data.lead.displaytitle.indexOf( '/' ) > -1;
       var cardSectionTocLevel;
       var blacklist = [ 'Talk' ];
       var allImages = [];
