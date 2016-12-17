@@ -132,6 +132,15 @@ describe('extract-destinations', function() {
     assert.ok( section.text.indexOf( 'backpackers travelling south' ) === -1 );
   });
 
+  it('Santiago de Chile', function() {
+    var section = {
+      text: '<div><ul><li id="mwAbI">The villages and towns in the surrounding Maipo valley is also a great place for seeing the Chilean way of life, buying handicrafts, tasting <a href="./Wine" title="Wine">wine</a> and savoring local cuisine.</li></ul></div>'
+    };
+
+    section = extract( section );
+    assert.strictEqual( section.destinations.length, 0 );
+  });
+
   it('East Midlands', function() {
     var section = {
       text: '<div><ul><li id="mwDA"><a href="Derby" title="Derby">Derby</a> (Derbyshire)</li><li id="mwDg"><a href="Leicester" title="Leicester">Leicester</a> (Leicestershire)</li><li id="mwEA"><a href="Lincoln" title="Lincoln">Lincoln</a> (Lincolnshire)</li><li id="mwEg"><a href="Nottingham" title="Nottingham">Nottingham</a> (Nottinghamshire)</li></ul></div>'
