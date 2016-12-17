@@ -5,6 +5,8 @@ import {
   precache, router, cacheFirst, networkOnly, options, networkFirst
 } from 'sw-toolbox'
 
+import offlinePages from './libs/offline-pages'
+
 const DEFAULT_CACHE = 'weekipedia-' + version.number;
 const PAGE_CACHE = 'weekipedia-pages';
 
@@ -121,58 +123,19 @@ router.get( '/api/en/collection/by/~me/', ( request, values, options ) => {
 } );
 
 router.get( '/api/en/collection/by/(.*)/-1', () => {
-  return caches.open( PAGE_CACHE )
-    .then( function ( cache ) {
-      return cache.matchAll();
-    } )
-    .then( function ( keys ) {
-      var pages = [];
-      var pending = 0;
+  return caches.open( PAGE_CACHE ).then(
+      (cache)=>offlinePages( cache )
+    ).then( ( pages ) => {
       var collection = Object.assign( {}, READING_LIST_COLLECTION );
-
-      return new Promise( function ( resolve ) {
-        function whenDone( resolve ) {
-          pending--;
-          if ( pending <= 0 ) {
-            collection.pages = pages.sort( function ( a, b ) {
-              return a.modified < b.modified ? 1 : -1;
-            } );
-            resolve(
-              new Response( JSON.stringify( collection ), {
-                headers: { 'Content-Type': 'application/json' }
-              } )
-            );
-          }
-        }
-
-        // run through all the pages in the page cache to construct a collection
-        keys.forEach( function ( res ) {
-          var modified = new Date( res.headers.get( 'date' ) );
-          pending++;
-          res.json().then( function ( json ) {
-            var lead = json.lead;
-            var page = {
-              title: lead.displaytitle,
-              description: lead.description,
-              modified: modified,
-              coordinates: lead.coordinates
-            };
-            if ( lead.image ) {
-              page.thumbnail = {
-                source: lead.image.urls[320],
-                width: 320
-              };
-            }
-            pages.push( page );
-            whenDone( resolve );
-          } ).catch( () => {
-            whenDone( resolve );
-          } );
-        } );
-
-        // might be empty..
-        whenDone( resolve );
-      } )
+      collection.pages = pages.map( (p) => {
+        // remove the private variable
+        return Object.assign( p, { _key: undefined } );
+      }).sort( function ( a, b ) {
+        return a.modified < b.modified ? 1 : -1;
+      } );
+      return new Response( JSON.stringify( collection ), {
+        headers: { 'Content-Type': 'application/json' }
+      } );
     } );
 } );
 
