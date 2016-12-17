@@ -12,6 +12,7 @@ import CardList from './../../components/CardList'
 import Infobox from './../../components/Infobox'
 
 import GoNext from './../../components/GoNext'
+import Note from './../../components/Note'
 
 import Content from './../../components/Content'
 
@@ -354,6 +355,11 @@ export default React.createClass({
         col3.push( <CardList key={"page-sights"}
           {...props} pages={sights} />
         );
+      }
+    } else {
+      if ( session && session.username ) {
+        col3.push( <h2 key="sights-section-heading">Notes</h2> );
+        col3.push( <Note key={"page-note"} {...props} /> );
       }
     }
 

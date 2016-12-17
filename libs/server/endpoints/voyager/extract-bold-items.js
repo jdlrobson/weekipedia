@@ -4,7 +4,13 @@ function extractBoldItems( html ) {
   var items = [];
   var ext = extractElements( html, 'li b:first-child' );
   Array.prototype.forEach.call( ext.extracted, function ( item ) {
-    items.push( item.textContent );
+    var text = item.textContent;
+    // drop any lower case items
+    // e.g. http://localhost:8142/wiki/Santiago%20de%20Chile?action=orientation
+    // central university building..
+    if ( text.match( /^[A-Z]/ ) ) {
+      items.push( text );
+    }
   } );
   if ( items.length === 0 ) {
     ext = extractElements( html, 'p b' );
@@ -13,7 +19,7 @@ function extractBoldItems( html ) {
       // drop any lower case items
       // e.g. http://localhost:8142/wiki/Santiago%20de%20Chile?action=orientation
       // central university building..
-      if ( text.match( /[A-Z]/ ) ) {
+      if ( text.match( /^[A-Z]/ ) ) {
         items.push( text );
       }
     } );
