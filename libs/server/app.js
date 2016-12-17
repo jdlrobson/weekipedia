@@ -1,7 +1,7 @@
 require( 'babel-core/register' )
 
 import express from 'express'
-import hogan from 'hogan-express'
+import hogan from 'hogan-cached'
 import bodyParser from 'body-parser'
 import { OAuthStrategy } from 'passport-mediawiki-oauth'
 import passport from 'passport'
