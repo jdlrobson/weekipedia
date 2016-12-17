@@ -13,6 +13,7 @@ import Infobox from './../../components/Infobox'
 
 import GoNext from './../../components/GoNext'
 import Note from './../../components/Note'
+import MakeNote from './../../components/MakeNote'
 
 import Content from './../../components/Content'
 
@@ -357,9 +358,16 @@ export default React.createClass({
         );
       }
     } else {
+      col3.push( <h2 key="sights-section-heading">Notes</h2> );
       if ( session && session.username ) {
-        col3.push( <h2 key="sights-section-heading">Notes</h2> );
         col3.push( <Note key={"page-note"} {...props} /> );
+      } else {
+        col3.push(
+          <div>
+            <MakeNote {...props} />
+            <p>Write and share notes about <strong>{props.title}</strong>.</p>
+          </div>
+        );
       }
     }
 
