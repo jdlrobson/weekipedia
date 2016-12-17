@@ -5,7 +5,7 @@ function offlinePages( cache ) {
       return new Promise( function ( resolve ) {
         function whenDone( resolve ) {
           if ( pending <= 0 ) {
-            resolve(pages);
+            resolve( pages );
           }
         }
 
@@ -13,10 +13,10 @@ function offlinePages( cache ) {
         keys.forEach( function ( key ) {
           var modified;
           pending++;
-          cache.match(key).then((res)=>{
+          cache.match( key ).then( ( res )=> {
             modified = new Date( res.headers.get( 'date' ) );
             return res.json()
-          }).then( function ( json ) {
+          } ).then( function ( json ) {
             var lead = json.lead;
             var page = {
               title: lead.displaytitle,

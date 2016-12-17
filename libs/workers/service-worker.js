@@ -71,29 +71,26 @@ const JSON_HEADERS = {
 
 router.post( '/api/private/en/collection/-1/(.*)/(.*)', ( r, p ) => {
   var pcache;
-  var title = p[1];
+  var title = decodeURIComponent( p[1] ).replace( /_/g, ' ' );
   var action = p[0];
   if ( action === 'remove' ) {
-    return caches.open( PAGE_CACHE )
-      .then( ( cache ) => {
-        pcache = cache;
-        return cache.keys()
-      } )
-      .then( ( keys ) => {
+    return caches.open( PAGE_CACHE ).then( ( cache ) => {
+      pcache = cache;
+      return offlinePages( cache )
+        .then( ( pages ) => {
 
-        keys.forEach( function ( req ) {
-          var url = req.url.split( '?' );
-          var folders = url[0].split( '/' );
-          if ( folders.indexOf( title ) > -1 ||
-            folders.indexOf( title.replace( /%20/gi, '_' ) ) > -1
-          ) {
-            // store it incase we want to add it again
-            undoRemoval[title] = req;
-            pcache.delete( req );
-          }
+          pages.forEach( function ( page ) {
+            if (
+              page.title === title
+            ) {
+              // store it incase we want to add it again
+              undoRemoval[title] = page._key;
+              pcache.delete( page._key );
+            }
+          } );
+          return SUCCESS.clone();
         } );
-        return SUCCESS.clone();
-      } );
+    } );
   } else if ( action === 'add' && undoRemoval[title] ) {
     return caches.open( PAGE_CACHE )
       .then( ( cache ) => {
@@ -124,13 +121,13 @@ router.get( '/api/en/collection/by/~me/', ( request, values, options ) => {
 
 router.get( '/api/en/collection/by/(.*)/-1', () => {
   return caches.open( PAGE_CACHE ).then(
-      (cache)=>offlinePages( cache )
+      ( cache )=>offlinePages( cache )
     ).then( ( pages ) => {
       var collection = Object.assign( {}, READING_LIST_COLLECTION );
-      collection.pages = pages.map( (p) => {
+      collection.pages = pages.map( ( p ) => {
         // remove the private variable
         return Object.assign( p, { _key: undefined } );
-      }).sort( function ( a, b ) {
+      } ).sort( function ( a, b ) {
         return a.modified < b.modified ? 1 : -1;
       } );
       return new Response( JSON.stringify( collection ), {
