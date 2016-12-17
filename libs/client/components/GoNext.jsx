@@ -39,6 +39,7 @@ export default React.createClass({
     return (
       <div>
         <CardList {...this.props}
+            key="go-next-card-list"
             emptyMessage="Nothing near but tumbleweed."
             infiniteScroll={false}
             router={props.router} />
