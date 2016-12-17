@@ -223,7 +223,7 @@ app.get( '/:lang?/*', ( req, res ) => {
   var route = shared.router.matchRoute( req.path, '#', config, req.query );
 
   function render( data ) {
-    var lead,
+    var lead, place,
       desc = '',
       noIndex = true,
       title = SITE_TITLE,
@@ -236,7 +236,8 @@ app.get( '/:lang?/*', ( req, res ) => {
       desc = lead.description;
       noIndex = data.fallbackProps.noIndex;
       title = lead.normalizedtitle || lead.displaytitle || '';
-      title += ' - ' + SITE_TITLE;
+      place = title;
+      title += ' ' + SITE_TITLE;
       if ( lead.image && lead.image.urls ) {
         image = lead.image.urls['1024'] || lead.image.urls['320'];
       }
@@ -251,6 +252,7 @@ app.get( '/:lang?/*', ( req, res ) => {
       image: image,
       description: desc,
       page_title: title,
+      place: place,
       isRTL: isRTL( req.params.lang ),
       config: JSON.stringify( config ),
       body: !req.user && SERVER_SIDE_RENDERING ?
