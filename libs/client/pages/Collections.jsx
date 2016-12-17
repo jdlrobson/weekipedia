@@ -125,7 +125,6 @@ export default React.createClass({
   },
   makeBannerImage( collections ) {
     var self = this;
-    var img;
     var canvas = this.state.canvas || document.createElement( 'canvas' );
 
     collections = collections || this.props.collections || this.state.collections;
@@ -133,7 +132,7 @@ export default React.createClass({
     canvas.setAttribute( 'width', '800' );
     this.setState( { banner: false, canvas: canvas, x: 0 } );
 
-    function loadIntoCanvas() {
+    function loadIntoCanvas(img) {
       var ctx = canvas.getContext( '2d' );
       var x = self.state.x || 0;
       ctx.drawImage( img, x, 0 );
@@ -142,14 +141,15 @@ export default React.createClass({
 
     if ( collections && collections.length ) {
       collections.slice( 0, 5 ).forEach( function ( collection ) {
+        var img;
         if ( collection.thumbnail ) {
           img = new Image();
           img.crossOrigin = 'Anonymous';
           img.src = collection.thumbnail.source;
           if ( img.complete ) {
-            loadIntoCanvas();
+            loadIntoCanvas(img);
           } else {
-            img.onload = loadIntoCanvas;
+            img.onload = ()=>loadIntoCanvas(img);
           }
         }
       } );
