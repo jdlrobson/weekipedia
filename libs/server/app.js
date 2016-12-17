@@ -242,8 +242,6 @@ app.get( '/:lang?/*', ( req, res ) => {
       }
     }
 
-    // not ideal. Duplicates HTML content of article in config. Relying on gzip
-    Object.assign( config, data );
     res.setHeader( 'Vary', 'Cookie' );
     res.status( 200 ).render( 'index.html', {
       isMediaWikiCompatibilityMode: MEDIAWIKI_COMPATIBILITY_MODE,
