@@ -1,5 +1,6 @@
 import React from 'react'
-import { Button, HorizontalList, IntermediateState, TruncatedText, Icon } from 'wikipedia-react-components'
+import { Button, HorizontalList, IntermediateState, TruncatedText, Icon,
+  ErrorBox } from 'wikipedia-react-components'
 
 import './styles.less'
 
@@ -69,7 +70,7 @@ export default React.createClass({
       img.src = imgData.thumburl;
     } else {
       // If bad image is given jump to first image.
-      this.nextImage();
+      this.setState( { error: true } );
     }
   },
   loadGallery() {
@@ -153,6 +154,9 @@ export default React.createClass({
           <Icon glyph="arrow-invert" onClick={this.nextImage}/>
         </div>
       );
+    }
+    if ( this.state.error ) {
+      content = <ErrorBox msg="There was a problem displaying the image." />;
     }
     return (
       <Overlay router={this.props.router} isLightBox="1">
