@@ -49,6 +49,8 @@ router.get( '/images/(.*)', cacheFirst );
 
 // Serve any other url with the shell
 router.get( '/(.*)\/(.*)', () => caches.match( '/wiki/Special:Shell' ) )
+// serve homepage with shell
+router.get( '/', () => caches.match( '/wiki/Special:Shell' ) )
 
 // Rest of calls go to network
 router.default = networkOnly
