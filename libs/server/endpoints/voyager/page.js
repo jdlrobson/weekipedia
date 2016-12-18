@@ -55,12 +55,12 @@ export default function ( title, lang, project ) {
         if ( title ) {
           data.lead.images = [{
             caption: '',
-            href: '/wiki/File:' + title,
+            href: './File:' + title,
             width: width,
             height: width / 7,
             src: thumbnailFromTitle( title, width )
           }];
-          data.lead.media.unshift( title );
+          data.lead.media.unshift( 'File:' + title );
         }
       }
       return data;
