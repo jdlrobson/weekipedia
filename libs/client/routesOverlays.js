@@ -111,7 +111,8 @@ export default [
         editWarning: '<strong>Warning:</strong> You are about to make this content <strong>public</strong>. Please do not include any information such as ticket numbers, passport numbers or any other personal details.',
         editSummary: 'Made a note to self about upcoming trip',
         placeholder: 'Write down ideas, dates, todo\'s.\nAnything you write here is public.\nPlease don\'t share too much.',
-        title: decodeURIComponent( 'User:' + info[1] + '/notes/' + title ),
+        // Notes on subpages point to the main note
+        title: decodeURIComponent( 'User:' + info[1] + '/notes/' + title.split('%2F')[0] ),
         section: 0
       } );
       return {
