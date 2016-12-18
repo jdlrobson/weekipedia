@@ -29,20 +29,20 @@ const NOTES_CACHE = {
 options.cache.name = DEFAULT_CACHE;
 
 function cleanup() {
-  caches.keys().then((cacheNames)=>{
+  caches.keys().then( ( cacheNames )=> {
     cacheNames.forEach(
-      (cacheName) => {
+      ( cacheName ) => {
         if (
           cacheName !== PAGE_CACHE.name &&
           cacheName !== COLLECTION_CACHE.name &&
           cacheName !== DEFAULT_CACHE &&
           cacheName !== NOTES_CACHE.name
         ) {
-          caches.delete(cacheName)
+          caches.delete( cacheName )
         }
       }
     )
-  })
+  } )
 }
 cleanup();
 

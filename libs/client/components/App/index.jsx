@@ -77,6 +77,7 @@ export default React.createClass({
       closeOverlay: this.closeOverlay,
       hijackLinks: this.hijackLinks,
       isRTL: isRTL( props.lang ),
+      offlineEnabled: this.state.offlineEnabled,
       session: session || this.state.session,
       onClickInternalLink: this.onClickInternalLink
     } : {};

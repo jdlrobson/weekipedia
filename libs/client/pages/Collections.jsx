@@ -156,9 +156,10 @@ export default React.createClass({
     }
   },
   render() {
-    var tagline, userUrl, actions, label, suffix, tabs,
+    var tagline, userUrl, label, suffix, tabs,
       props = this.props,
       lead,
+       actions = [],
       lang = this.props.lang,
       isDefaultView = this.state.defaultView,
       desc = this.state.description || props.description,
@@ -169,10 +170,22 @@ export default React.createClass({
       isCollectionOwner = session && username === session.username;
 
     if ( username ) {
+      suffix = id ? '/' + id : '/';
+      if (
+        props.offlineVersion && id !== '-1' &&
+        navigator && navigator.onLine
+      ) {
+        actions.push(
+          <Button label={'Download'} key="collection-download"
+            href={"#/collection-download/" + username + suffix } isPrimary={true}/>
+        );
+      }
       if ( isCollectionOwner ) {
         label = id ? 'Edit' : 'Create';
-        suffix = id ? '/' + id : '/';
-        actions = <Button label={label} href={"#/edit-collection/" + username + suffix } isPrimary={true}/>;
+        actions.push(
+          <Button label={label} key="collection-edit"
+            href={"#/edit-collection/" + username + suffix } isPrimary={true}/>
+        );
       }
       userUrl = '/' + this.props.lang + '/wiki/Special:Collections/by/' + username;
       // The api request is cached at this point

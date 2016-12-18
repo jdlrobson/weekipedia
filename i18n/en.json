@@ -18,6 +18,7 @@
   "menu-about": "About {{SITENAME}}",
   "menu-disclaimers": "Disclaimers",
   "search": "Search {{SITENAME}}",
+  "collection-download": "Download the pages in this trip",
   "collections-empty": "You currently have no trips planned.",
   "collections-all": "Trips from our community.",
   "collection-title": "Add to existing trip",

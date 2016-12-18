@@ -8,6 +8,7 @@ import SearchOverlay from './overlays/SearchOverlay'
 import TalkOverlay from './overlays/TalkOverlay'
 import IssuesOverlay from './overlays/IssuesOverlay'
 import MapOverlay from './overlays/MapOverlay'
+import CollectionDownloadOverlay from './overlays/CollectionDownloadOverlay'
 
 export default [
   // Talk Overlay
@@ -112,7 +113,7 @@ export default [
         editSummary: 'Made a note to self about upcoming trip',
         placeholder: 'Write down ideas, dates, todo\'s.\nAnything you write here is public.\nPlease don\'t share too much.',
         // Notes on subpages point to the main note
-        title: decodeURIComponent( 'User:' + info[1] + '/notes/' + title.split('%2F')[0] ),
+        title: decodeURIComponent( 'User:' + info[1] + '/notes/' + title.split( '%2F' )[0] ),
         section: 0
       } );
       return {
@@ -129,6 +130,19 @@ export default [
       } );
       return {
         overlay: React.createElement( ImageOverlay, overlayProps )
+      }
+    }
+  ],
+  // Collection Download overlay
+  [
+    /^#\/collection-download\/(.*)\/(.*)$/,
+    function ( info, props ) {
+      var overlayProps = Object.assign( {}, props, {
+        username: info[1],
+        id: info[2]
+      } );
+      return {
+        overlay: React.createElement( CollectionDownloadOverlay, overlayProps )
       }
     }
   ],
