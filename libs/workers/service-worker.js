@@ -20,7 +20,31 @@ const PAGE_CACHE = {
   networkTimeoutSeconds: 5
 };
 
+const NOTES_CACHE = {
+  maxEntries: 50,
+  name: 'notes-cache',
+  networkTimeoutSeconds: 5
+};
+
 options.cache.name = DEFAULT_CACHE;
+
+function cleanup() {
+  caches.keys().then((cacheNames)=>{
+    cacheNames.forEach(
+      (cacheName) => {
+        if (
+          cacheName !== PAGE_CACHE.name &&
+          cacheName !== COLLECTION_CACHE.name &&
+          cacheName !== DEFAULT_CACHE &&
+          cacheName !== NOTES_CACHE.name
+        ) {
+          caches.delete(cacheName)
+        }
+      }
+    )
+  })
+}
+cleanup();
 
 // Keep in sync with asset names needed for offline in
 // webpack/base.webpack.config.js
@@ -49,11 +73,7 @@ router.get( API_PATH + 'page/([^\:]*)', networkFirst, {
 } );
 
 router.get( '/api/wikitext/(.*)/User%3A(.*)', networkFirst, {
-  cache: {
-    maxEntries: 50,
-    name: 'notes-cache',
-    networkTimeoutSeconds: 5
-  }
+  cache: NOTES_CACHE
 } );
 
 // for undo purposes
