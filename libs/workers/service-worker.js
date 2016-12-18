@@ -6,6 +6,7 @@ import {
 } from 'sw-toolbox'
 
 import offlinePages from './libs/offline-pages'
+import offlineCollections from './libs/offline-collections'
 
 const DEFAULT_CACHE = 'weekipedia-' + version.number;
 const PAGE_CACHE = 'weekipedia-pages';
@@ -131,7 +132,7 @@ router.get( '/api/en/collection/by/(.*)/-1', () => {
       var collection = Object.assign( {}, READING_LIST_COLLECTION );
       collection.pages = pages.map( ( p ) => {
         // remove the private variable
-        return Object.assign( p, { _key: undefined } );
+        return Object.assign( p, { _key: undefined, offline: true } );
       } ).sort( function ( a, b ) {
         return a.modified < b.modified ? 1 : -1;
       } );
@@ -141,11 +142,30 @@ router.get( '/api/en/collection/by/(.*)/-1', () => {
     } );
 } );
 
-router.get( '/api/en/collection/', networkFirst, {
+function networkFirstCollectionListRequest( request, values, options ) {
+  return caches.open( COLLECTION_CACHE.name ).then(
+      ( cache )=>offlineCollections( cache )
+    ).then( ( collections ) => {
+      var offlineReady = collections.map(
+        ( collection )=>collection.owner + '/' + collection.id
+      );
+      return networkFirst( request, values, options ).then( ( resp ) => {
+        return resp.json();
+      } ).then( ( json ) => {
+        json.collections.forEach( ( collection )=> {
+          collection.offline = offlineReady
+            .indexOf( collection.owner + '/' + collection.id ) > -1;
+        } );
+        return new Response( JSON.stringify( json ), JSON_HEADERS );
+      } );
+    } );
+}
+
+router.get( '/api/en/collection/', networkFirstCollectionListRequest, {
   cache: COLLECTION_CACHE
 } );
 
-router.get( '/api/en/collection/by/(.*)/', networkFirst, {
+router.get( '/api/en/collection/by/(.*)/', networkFirstCollectionListRequest, {
   cache: COLLECTION_CACHE
 } );
 
