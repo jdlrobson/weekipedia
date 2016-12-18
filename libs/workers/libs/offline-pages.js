@@ -1,4 +1,5 @@
 function offlinePages( cache ) {
+  var members = {};
   return cache.keys().then( function ( keys ) {
       var pages = [];
       var pending = 0;
@@ -25,6 +26,7 @@ function offlinePages( cache ) {
               coordinates: lead.coordinates,
               _key: key
             };
+
             if ( lead.image ) {
               page.thumbnail = {
                 source: lead.image.urls[320],
@@ -32,7 +34,9 @@ function offlinePages( cache ) {
               };
             }
             // Only surface pages with coordinates and in main namespace
-            if ( lead.ns === 0 && lead.coordinates ) {
+            if ( lead.ns === 0 && lead.coordinates && !members[page.title] ) {
+              // Don't repeat pages
+              members[page.title] = true;
               pages.push( page );
             }
             pending--;
