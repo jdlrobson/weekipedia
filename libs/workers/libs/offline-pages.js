@@ -1,56 +1,35 @@
+import offlineRequests from './offline-requests'
+
 function offlinePages( cache ) {
   var members = {};
-  return cache.keys().then( function ( keys ) {
-      var pages = [];
-      var pending = 0;
-      return new Promise( function ( resolve ) {
-        function whenDone( resolve ) {
-          if ( pending <= 0 ) {
-            resolve( pages );
-          }
-        }
+  var pages = [];
 
-        // run through all the pages in the page cache to construct a collection
-        keys.forEach( function ( key ) {
-          var modified;
-          pending++;
-          cache.match( key ).then( ( res )=> {
-            modified = new Date( res.headers.get( 'date' ) );
-            return res.json()
-          } ).then( function ( json ) {
-            var lead = json.lead;
-            var page = {
-              title: lead.displaytitle,
-              description: lead.description,
-              modified: modified,
-              coordinates: lead.coordinates,
-              _key: key
-            };
+  return offlineRequests( cache ).then( ( reqs ) => {
+    reqs.forEach( ( item ) => {
+      var lead = item.content.lead;
+      var page = {
+        title: lead.displaytitle,
+        description: lead.description,
+        modified: item.response.headers.get( 'date' ),
+        coordinates: lead.coordinates,
+        _key: item.request
+      };
 
-            if ( lead.image ) {
-              page.thumbnail = {
-                source: lead.image.urls[320],
-                width: 320
-              };
-            }
-            // Only surface pages with coordinates and in main namespace
-            if ( lead.ns === 0 && lead.coordinates && !members[page.title] ) {
-              // Don't repeat pages
-              members[page.title] = true;
-              pages.push( page );
-            }
-            pending--;
-            whenDone( resolve );
-          } ).catch( () => {
-            pending--;
-            whenDone( resolve );
-          } );
-        } );
-
-        // might be empty..
-        whenDone( resolve );
-      } )
+      if ( lead.image ) {
+        page.thumbnail = {
+          source: lead.image.urls[320],
+          width: 320
+        };
+      }
+      // Only surface pages with coordinates and in main namespace
+      if ( lead.ns === 0 && lead.coordinates && !members[page.title] ) {
+        // Don't repeat pages
+        members[page.title] = true;
+        pages.push( page );
+      }
     } );
+    return pages;
+  } );
 }
 
 export default offlinePages;
