@@ -7,7 +7,7 @@ const EditorLink = (props) => {
   }
   var label = props.label || 'Edit original source';
 
-  return props.session ? <a className="editor-link" href={url}>{label}</a> : <span />;
+  return props.session && navigator && navigator.onLine ? <a className="editor-link" href={url}>{label}</a> : <span />;
 }
 
 export default EditorLink;
