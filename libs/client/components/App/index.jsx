@@ -350,9 +350,9 @@ export default React.createClass({
 
     if ( state.offlineEnabled ) {
       secondaryIcon.push(
-        <Icon glyph='offline' key="offline-icon"
+        <Icon glyph='mf-collections' key="offline-icon"
           onClick={this.onClickInternalLink}
-          href={'/' + props.language_project + '/Special:Collections/by/' + username + '/-1'}/>
+          href={'/' + props.language_project + '/Special:Collections/by/' + username}/>
       );
     }
 
