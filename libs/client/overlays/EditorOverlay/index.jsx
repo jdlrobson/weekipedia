@@ -150,7 +150,7 @@ export default React.createClass({
       if ( navigator.onLine  !== undefined && !navigator.onLine ) {
         self.setState( {
           isLoading: false,
-          text: cached ? cached.text : '<<< offline (saving may override default content)'
+          text: cached ? cached.text : ''
         } );
       }
     });
