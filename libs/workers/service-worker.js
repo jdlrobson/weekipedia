@@ -9,10 +9,14 @@ import offlinePages from './libs/offline-pages'
 import offlineCollections from './libs/offline-collections'
 
 const DEFAULT_CACHE = 'weekipedia-' + version.number;
-const PAGE_CACHE = 'weekipedia-pages';
 const COLLECTION_CACHE = {
   maxEntries: 50,
   name: 'weekipedia-collections',
+  networkTimeoutSeconds: 5
+};
+const PAGE_CACHE = {
+  maxEntries: 50,
+  name: 'weekipedia-pages',
   networkTimeoutSeconds: 5
 };
 
@@ -41,11 +45,7 @@ precache( staticAssets )
 staticAssets.forEach( ( asset ) => router.get( asset, cacheFirst ) )
 
 router.get( API_PATH + 'page/([^\:]*)', networkFirst, {
-  cache: {
-    maxEntries: 50,
-    name: PAGE_CACHE,
-    networkTimeoutSeconds: 5
-  }
+  cache: PAGE_CACHE
 } );
 
 router.get( '/api/wikitext/(.*)/User%3A(.*)', networkFirst, {
@@ -80,7 +80,7 @@ router.post( '/api/private/en/collection/-1/(.*)/(.*)', ( r, p ) => {
   var title = decodeURIComponent( p[1] ).replace( /_/g, ' ' );
   var action = p[0];
   if ( action === 'remove' ) {
-    return caches.open( PAGE_CACHE ).then( ( cache ) => {
+    return caches.open( PAGE_CACHE.name ).then( ( cache ) => {
       pcache = cache;
       return offlinePages( cache )
         .then( ( pages ) => {
@@ -98,7 +98,7 @@ router.post( '/api/private/en/collection/-1/(.*)/(.*)', ( r, p ) => {
         } );
     } );
   } else if ( action === 'add' && undoRemoval[title] ) {
-    return caches.open( PAGE_CACHE )
+    return caches.open( PAGE_CACHE.name )
       .then( ( cache ) => {
         cache.add( undoRemoval[title] );
         return SUCCESS.clone();
@@ -125,17 +125,34 @@ router.get( '/api/en/collection/by/~me/', ( request, values, options ) => {
   } );
 } );
 
-router.get( '/api/en/collection/by/(.*)/-1', () => {
-  return caches.open( PAGE_CACHE ).then(
+router.get( '/api/en/collection/by/(.*)/(.*)', ( request, values ) => {
+  var id = values[1];
+  return caches.open( PAGE_CACHE.name ).then(
       ( cache )=>offlinePages( cache )
     ).then( ( pages ) => {
-      var collection = Object.assign( {}, READING_LIST_COLLECTION );
-      collection.pages = pages.map( ( p ) => {
-        // remove the private variable
-        return Object.assign( p, { _key: undefined, offline: true } );
-      } ).sort( function ( a, b ) {
-        return a.modified < b.modified ? 1 : -1;
-      } );
+      var members = pages.map( ( page )=>page.title );
+      if ( id === '-1' ) {
+        var collection = Object.assign( {}, READING_LIST_COLLECTION );
+        collection.pages = pages.map( ( p ) => {
+          // remove the private variable
+          return Object.assign( p, { _key: undefined,
+            offline: true } );
+        } ).sort( function ( a, b ) {
+          return a.modified < b.modified ? 1 : -1;
+        } );
+        return collection;
+      } else {
+        return networkFirst( request, values, { cache: COLLECTION_CACHE } )
+          .then( ( resp ) => resp.json() )
+          .then( ( collection ) => {
+            console.log( 'got', collection );
+            collection.pages.forEach( ( page ) => {
+              page.offline = members.indexOf( page.title ) > -1;
+            } );
+            return collection;
+          } );
+      }
+    } ).then( ( collection ) => {
       return new Response( JSON.stringify( collection ), {
         headers: { 'Content-Type': 'application/json' }
       } );
