@@ -24,9 +24,11 @@ export default React.createClass({
   componentDidMount() {
     var self = this;
     var w = this.state.width;
-    var h = this.state.height;
     var props = this.props;
     var route = '/api/' + this.props.language_project + '/phpApi';
+    if ( w > 600 ) {
+      w = 600;
+    }
 
     this.loadGallery().then( (media) => {
       self.setState( { media: media } );
@@ -35,8 +37,7 @@ export default React.createClass({
           titles: media.join( '|' ),
           prop: 'imageinfo',
           iiprop: 'url|extmetadata',
-          iiurlwidth: w,
-          iirurlheight: h
+          iiurlwidth: w
         }
       } ).then( function ( data ) {
         var images = {};
