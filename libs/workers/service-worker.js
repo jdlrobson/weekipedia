@@ -9,6 +9,11 @@ import offlinePages from './libs/offline-pages'
 
 const DEFAULT_CACHE = 'weekipedia-' + version.number;
 const PAGE_CACHE = 'weekipedia-pages';
+const COLLECTION_CACHE = {
+  maxEntries: 50,
+  name: 'weekipedia-collections',
+  networkTimeoutSeconds: 5
+};
 
 options.cache.name = DEFAULT_CACHE;
 
@@ -134,6 +139,14 @@ router.get( '/api/en/collection/by/(.*)/-1', () => {
         headers: { 'Content-Type': 'application/json' }
       } );
     } );
+} );
+
+router.get( '/api/en/collection/', networkFirst, {
+  cache: COLLECTION_CACHE
+} );
+
+router.get( '/api/en/collection/by/(.*)/', networkFirst, {
+  cache: COLLECTION_CACHE
 } );
 
 // Serve API requests from the network
