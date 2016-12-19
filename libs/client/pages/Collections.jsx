@@ -172,7 +172,7 @@ export default React.createClass({
     if ( username ) {
       suffix = id ? '/' + id : '/';
       if (
-        props.offlineVersion && id !== '-1' &&
+        id && props.offlineVersion && id !== '-1' &&
         navigator && navigator.onLine
       ) {
         actions.push(
