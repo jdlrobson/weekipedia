@@ -40,6 +40,7 @@ class ArticleFooter extends Component {
         <Content className="footer-info">
           {wordmark}
           <div className="license">Content is available under <a className="external" rel="nofollow" href={license.url}>{license.name}</a> unless otherwise noted.</div>
+          <span>v. {this.props.offlineVersion}</span>
           <HorizontalList isSeparated="1">{places}</HorizontalList>
         </Content>
       </footer>
