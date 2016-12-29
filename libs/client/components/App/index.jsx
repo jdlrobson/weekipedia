@@ -354,6 +354,8 @@ export default React.createClass({
           onClick={this.onClickInternalLink}
           href={'/' + props.language_project + '/Special:Collections/by/' + username}/>
       );
+    } else if ( secondaryIcon.length === 0 ) {
+      secondaryIcon = null;
     }
 
     return (
