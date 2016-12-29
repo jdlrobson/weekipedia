@@ -97,7 +97,7 @@ export default React.createClass({
       );
       escape();
       props.showNotification( [
-        'Your edit was cached to your device as you are currently offline.',
+        'Your edit was cached to your device as you are currently offline. ',
         'Be sure to attempt to save it again next time you are online.'
       ].join('') );
     } else {
