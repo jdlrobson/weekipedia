@@ -8,10 +8,11 @@ import timeago from 'timeago'
 class TrendingCard extends Component {
   render(){
     var props = this.props;
-    var totalEdits = this.props.edits;
-    var totalEditors = this.props.contributors.length + this.props.anons.length;
+    var totalEdits = this.props.totalEdits || this.props.edits;
+    var totalEditors = this.props.editors || (this.props.contributors.length + this.props.anons.length);
     var prevIndex = this.props.lastIndex;
     var curIndex = this.props.index;
+    var startDate = this.props.timestamp || this.props.start;
     var label, glyph;
     var bias = this.props.bias || 1;
 
@@ -52,9 +53,13 @@ class TrendingCard extends Component {
     var description = this.props.terms && this.props.terms.description ?
       this.props.terms.description[0] + '; ' : '';
 
+    var anonTotalEditMsg = this.props.anonEdits ? '(' + this.props.anonEdits + ' anon)' : '';
+    var anonTotalEditorsMsg = this.props.anons ? this.props.anons.length + ' anon)' : '';
+    var revertMsg = this.props.reverts === undefined ? '' : 'with ' + this.props.reverts + ' reverts';
+
     var extracts = [
-      <span>{description}{totalEdits} edits ({this.props.anonEdits} anon) (updated {timeago( new Date( this.props.updated ) )}).
-        by {totalEditors} editors ({this.props.anons.length} anon) with {this.props.reverts} reverts (created {timeago( new Date( this.props.start ) )})
+      <span>{description}{totalEdits} edits {anonTotalEditMsg} (updated {timeago( new Date( this.props.updated ) )})
+        by {totalEditors} editors {anonTotalEditorsMsg} {revertMsg}(since {timeago( new Date( startDate ) )})
       </span>,
       <span
         data-speed={speed} data-score={this.props.score}
