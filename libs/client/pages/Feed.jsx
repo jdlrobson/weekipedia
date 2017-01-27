@@ -52,7 +52,11 @@ export default React.createClass({
     } else if ( halflife === 'n' ) {
       tClass = 'active';
       endpoint = '/api/web-push/service/trending';
+    } else if ( halflife === 'beta' ) {
+      tClass = 'active';
+      endpoint = '/api/en.wikipedia.org/rest_v1/feed/trending/edits';
     }
+
     links = [
       <a href={prefix + wiki + '/' + HALF_LIFE_HOURS} className={hrClass} key='hot-filter-1'
         onClick={this.props.onClickInternalLink}>by hour</a>,

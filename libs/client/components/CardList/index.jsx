@@ -41,6 +41,8 @@ function getCards( data, props, keyPrefix ) {
       } else if ( !item.url ) {
         item.url = '/' + source + '/' + encodeURIComponent( item.title );
       }
+      // some endpoints e.g. related endpoint return titles with `_`
+      item.title = item.title.replace( /_/g, ' ' );
       var session = props.session;
       if ( session && props.collection && data.owner === session.username  && !props.unordered ) {
         item.indicator = <WatchIcon {...props}

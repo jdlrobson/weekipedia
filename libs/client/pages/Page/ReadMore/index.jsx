@@ -16,7 +16,8 @@ export default React.createClass({
     var langProject = props.language_project;
     var lang = props.lang;
     var source = langProject || lang;
-    var endpoint = '/api/related/' + source + '/' + encodeURIComponent( props.title );
+    var endpoint = '/api/' + source + '.org/rest_v1/page/related/'
+      + encodeURIComponent( props.title.replace( / /g, '_' ) );
 
     if ( this.state.isEmpty ) {
       return (

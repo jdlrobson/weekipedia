@@ -1,3 +1,4 @@
+// FIXME: Will soon be available in formatted/ endpoint and can be removed
 import page from './page'
 
 export default function ( lang, title, project ) {
