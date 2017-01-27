@@ -9,7 +9,6 @@ import webPushTrend from './endpoints/trending/web-push-trend.js'
 import trending from './endpoints/trending/trending'
 import subscribe from './endpoints/subscribe'
 import search from './endpoints/search'
-import related from './endpoints/related'
 import references from './endpoints/references'
 import random from './endpoints/random'
 import pagehistory from './endpoints/page-history'
@@ -249,13 +248,6 @@ function initGetMethods( app ) {
     return cachedResponse( res, null, function () {
       var p = req.params;
       return file( p.lang, p.title, p.width, p.height, DEFAULT_PROJECT );
-    } );
-  } );
-
-  app.get( '/api/related/:lang/:title', ( req, res ) => {
-    return cachedResponse( res, null, function () {
-      var p = getProject( req );
-      return related( p.lang, req.params.title, p.project );
     } );
   } );
 
