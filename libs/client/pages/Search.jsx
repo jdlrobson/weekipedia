@@ -39,7 +39,8 @@ export default React.createClass({
     var siteoptions = props.siteoptions;
     var term = this.getTerm();
     var endpoint = '/api/search-full/' + props.language_project + '/' + encodeURIComponent( term );
-    var suffix = siteoptions.allowForeignProjects ? [ ' on ', <strong>{props.project}</strong> ] : '';
+    var suffix = siteoptions.allowForeignProjects ?
+      [ ' on ', <strong key="search-strong-project">{props.project}</strong> ] : '';
     var termUrl = '/' + props.language_project + '/' + term;
     var tagline = <p>Showing you all search results for <strong><a href={termUrl}>{decodeURIComponent(term)}</a></strong>{suffix}</p>;
 

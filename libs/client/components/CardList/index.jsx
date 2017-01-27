@@ -13,7 +13,8 @@ const MONTHS = ['January','February','March','April','May','June',
   'July','August','September','October','November','December'];
 
 function getCards( data, props, keyPrefix ) {
-  var source = props.language_project || '/wiki';
+  var source = props.language_project ||
+    ( props.language && props.project ? props.language + '.' + props.project : '/wiki' );
   var cards = [],
     CardClass = props.CardClass;
 
@@ -37,6 +38,8 @@ function getCards( data, props, keyPrefix ) {
       };
       if ( item.revid ) {
         item.url = '/' + source + '/Special:MobileDiff/' + item.revid;
+      } else if ( !item.url ) {
+        item.url = '/' + source + '/' + encodeURIComponent( item.title );
       }
       var session = props.session;
       if ( session && props.collection && data.owner === session.username  && !props.unordered ) {
@@ -176,7 +179,7 @@ export default React.createClass({
         </Content>
       ];
     } else if ( !cards ) {
-      cards = [<IntermediateState msg={this.props.loadingMessage} />];
+      cards = [<IntermediateState msg={this.props.loadingMessage} key="card-list-loading" />];
     } else if ( isDiffCardList ) {
       cards.forEach( function ( card, i ) {
         var ts, header;

@@ -116,14 +116,16 @@ function addSpecialPage( title, Class, handler ) {
     new RegExp( regex.join( '|' ) ),
     function ( info, props ) {
       var lang = info[1] || info[4] || 'en';
-      var project = info[5];
+      var project = info[5] || props.project;
       var params = info[3] || info[2] || info[6];
       var suffix = params ? '/' + params : '';
+      var langProject = lang + '.' + project;
+      var key = 'page-special-' + lang + '-' + project + '-' + title;
 
       Object.assign( props, {
-        project: project || props.project,
+        project: project,
         params: params,
-        language_project: lang + '.' + props.project,
+        language_project: langProject,
         lang: lang,
         mobileUrl: utils.getAbsoluteUrl( 'Special:' + title + suffix,
           lang, props.project, true ),
@@ -135,7 +137,7 @@ function addSpecialPage( title, Class, handler ) {
         React.createElement( Class,
           Object.assign( {}, props, {
             title: title,
-            key: 'page-special-' + title,
+            key: key,
             params: params ? decodeURIComponent( params ).replace( /%2F/gi, '/' ) : params,
             children: []
           } )
