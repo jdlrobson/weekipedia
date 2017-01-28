@@ -216,7 +216,7 @@ export default React.createClass({
 
     } else if ( childNode && childNode.nodeName === 'IMG' ) {
       href = link.getAttribute( 'href' ) || '';
-      match = href.match( /\/wiki\/File\:(.*)|^File\:(.*)$/ );
+      match = href.match( /\.\/File\:(.*)|^File\:(.*)$/ );
       if ( match ) {
         ev.preventDefault();
         ev.stopPropagation();
