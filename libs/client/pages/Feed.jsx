@@ -53,7 +53,6 @@ export default React.createClass({
       tClass = 'active';
       endpoint = '/api/web-push/service/trending';
     } else if ( halflife === 'beta' ) {
-      tClass = 'active';
       endpoint = '/api/en.wikipedia.org/rest_v1/feed/trending/edits';
     }
 

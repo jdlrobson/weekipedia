@@ -55,7 +55,7 @@ class TrendingCard extends Component {
 
     var anonTotalEditMsg = this.props.anonEdits ? '(' + this.props.anonEdits + ' anon)' : '';
     var anonTotalEditorsMsg = this.props.anons ? this.props.anons.length + ' anon)' : '';
-    var revertMsg = this.props.reverts === undefined ? '' : 'with ' + this.props.reverts + ' reverts';
+    var revertMsg = this.props.reverts === undefined ? '' : 'with ' + this.props.reverts + ' reverts ';
 
     var extracts = [
       <span>{description}{totalEdits} edits {anonTotalEditMsg} (updated {timeago( new Date( this.props.updated ) )})
