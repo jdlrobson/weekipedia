@@ -153,11 +153,24 @@ export default function ( title, lang, project, includeReferences ) {
   return fetch( url, { redirect: 'manual' } )
     .then( function ( resp ) {
       if ( [301, 302].indexOf( resp.status ) > -1 ) {
-        return {
-          code: 301,
-          title: resp.headers.get( 'Location' ).replace( host, '' )
-            .replace( path, '' ).replace( /https?\:\/\//, '' )
-        };
+        var redirectUrl = resp.headers.get( 'Location' );
+        if ( redirectUrl.indexOf( host ) > -1 ) {
+          return {
+            code: 301,
+            title: redirectUrl.replace( host, '' )
+              .replace( 'commons.wikimedia.org', '' )
+              .replace( path, '' ).replace( /https?\:\/\//, '' )
+          };
+        } else if ( redirectUrl.indexOf( 'commons.wikimedia.org' ) > -1 ) {
+          // Workaround for https://github.com/jdlrobson/weekipedia/issues/139
+          return {
+            code: 301,
+            project: 'en.commons',
+            title: redirectUrl
+              .replace( 'commons.wikimedia.org', '' )
+              .replace( path, '' ).replace( /https?\:\/\//, '' )
+          };
+        }
       } else if ( resp.status === 200 ) {
         return resp.json();
       } else {

@@ -289,7 +289,8 @@ function initGetMethods( app ) {
     cachedResponse( res, req.url, function () {
       return page( req.params.title, proj.lang, proj.project, false ).then( ( data ) => {
         const protocol = req.secure ? 'https' : 'http';
-        const newPath = '/api/page/' + params.lang + '.' + params.project + '/' + data.title;
+        const project = data.project ? data.project : params.lang + '.' + params.project;
+        const newPath = '/api/page/' + project + '/' + data.title;
         if ( data.code && [301, 302].indexOf( data.code ) > -1 ) {
           res.redirect( protocol + '://' + req.headers.host + newPath );
           return false;
