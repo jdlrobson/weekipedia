@@ -66,8 +66,8 @@ export default React.createClass({
       body = props.body;
     }
 
-    if ( lead.user ) {
-      registered = new Date( lead.user.registration );
+    if ( lead.userinfo ) {
+      registered = new Date( lead.userinfo.registration );
       // FIXME: Translate
       lead.description = 'Member since ' + MONTHS[ registered.getMonth() ] + ', ' + registered.getFullYear();
     }

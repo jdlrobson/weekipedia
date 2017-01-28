@@ -15,7 +15,6 @@ import pagehistory from './endpoints/page-history'
 import page from './endpoints/page'
 import nearby from './endpoints/nearby'
 import languages from './endpoints/languages'
-import file from './endpoints/file'
 import edit from './endpoints/edit'
 import diff from './endpoints/diff'
 import contributions from './endpoints/contributions'
@@ -241,13 +240,6 @@ function initGetMethods( app ) {
     return cachedResponse( res, null, function () {
       var p = req.params;
       return categories( p.lang, p.title, DEFAULT_PROJECT, req.query );
-    } );
-  } );
-
-  app.get( '/api/file/:lang/:width,:height/:title/', ( req, res ) => {
-    return cachedResponse( res, null, function () {
-      var p = req.params;
-      return file( p.lang, p.title, p.width, p.height, DEFAULT_PROJECT );
     } );
   } );
 

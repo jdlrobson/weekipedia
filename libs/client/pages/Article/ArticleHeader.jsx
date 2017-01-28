@@ -60,14 +60,13 @@ class ArticleHeader extends Component {
     if ( lead.imageinfo ) {
       ii = lead.imageinfo;
       header.push(
-        <div>
+        <div className="main-image">
           <img src={ii.thumburl} width={ii.thumbwidth} height={ii.thumbheight}/>
           <div>
             <a href={ii.url}>Original file</a>
           </div>
         </div>
       );
-      console.log(lead.imageinfo);
     }
 
     if ( lead.infobox ) {

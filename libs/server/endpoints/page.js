@@ -2,11 +2,6 @@ import fetch from 'isomorphic-fetch'
 import domino from 'domino'
 
 import { SPECIAL_PROJECTS, HOST_SUFFIX, SITE_HOME } from './../config'
-import mwApi from './mwApi';
-import file from './file'
-
-const DEFAULT_FILE_WIDTH = 400;
-const DEFAULT_FILE_HEIGHT = 300;
 
 function getMedia( sections ) {
   var html = '';
@@ -84,7 +79,8 @@ function extractPageIssues( doc ) {
 
 // Undo the work in mobile-content-service (https://phabricator.wikimedia.org/T147043)
 function undoLinkRewrite( doc ) {
-  var idx = 0, sp;
+  var idx = 0;
+  var sp;
   var ps = doc.querySelectorAll( 'a' ) || [],
       value;
   for ( idx = 0; idx < ps.length; idx++ ) {
@@ -93,8 +89,8 @@ function undoLinkRewrite( doc ) {
     if ( value ) {
       // replace all subpages with encoded '/'
       value = value.replace( /^\/wiki\//, './' );
-      if ( value.substr(0, 2) === './' ) {
-        sp = value.substr(2);
+      if ( value.substr( 0, 2 ) === './' ) {
+        sp = value.substr( 2 );
         sp = sp.replace( /\//g, '%2F' );
         value = './' + sp;
       }
@@ -173,26 +169,11 @@ export default function ( title, lang, project, includeReferences ) {
         }
       } else if ( resp.status === 200 ) {
         return resp.json();
-      } else {
-        if ( title.indexOf( 'User:' ) > -1 ) {
-          return {
-            lead: {
-              ns: 2,
-              sections: [ { text: '' } ]
-            },
-            remaining: {
-              sections: []
-            }
-          }
-        } else {
-          throw Error( resp.status );
-        }
       }
     } ).then( function ( json ) {
       if ( json.code ) {
         return json;
       }
-      var username = title.indexOf( ':' ) > -1 ? title.split( ':' )[1] : title;
       // mark references sections with a flag
       if ( json.remaining.sections ) {
         markReferenceSections( json.remaining.sections, !includeReferences );
@@ -206,42 +187,25 @@ export default function ( title, lang, project, includeReferences ) {
         }
       } );
 
-      if ( json.lead && json.lead.ns === 2 ) {
-        // it's a user page so get more info
-        return mwApi( lang, { meta: 'globaluserinfo',
-          guiuser: username }, project ).then( function ( userInfo ) {
-          json.user =  userInfo;
-          return json;
-        } ).catch( function () {
-          return json;
-        } )
-      } else if ( json.lead.ns === 6 ) {
-        // File pages need image to be added
-        return file( lang, title, DEFAULT_FILE_WIDTH, DEFAULT_FILE_HEIGHT, project ).then( function ( imageinfo ) {
-          json.lead.imageinfo = imageinfo;
-          return json;
-        } );
-      } else {
-        // Workaround for https://phabricator.wikimedia.org/T145034
-        var doc = domino.createDocument( json.lead.sections.length && json.lead.sections[0] && json.lead.sections[0].text );
-        json.lead.media = getMedia( json.lead.sections.concat( json.remaining.sections ) )
-        if ( doc ) {
-          // See https://github.com/jdlrobson/weekipedia/issues/99 - preserve links in main page
-          if ( SITE_HOME.replace( /_/g, ' ' ) !== title.replace( /_/g, ' ' ) ) {
-            undoLinkRewrite( doc );
-          }
-          var infobox = extractInfobox( doc );
-          if ( !json.lead.mainpage ) {
-            var leadParagraph = extractLeadParagraph( doc );
-            json.lead.paragraph = leadParagraph;
-          }
-          var issues = extractPageIssues( doc );
-          json.lead.issues = issues;
-          json.lead.infobox = infobox;
-          json.lead.hatnote = extractHatnote( doc );
-          json.lead.sections[0].text = doc.body.innerHTML;
+      // Workaround for https://phabricator.wikimedia.org/T145034
+      var doc = domino.createDocument( json.lead.sections.length && json.lead.sections[0] && json.lead.sections[0].text );
+      json.lead.media = getMedia( json.lead.sections.concat( json.remaining.sections ) )
+      if ( doc ) {
+        // See https://github.com/jdlrobson/weekipedia/issues/99 - preserve links in main page
+        if ( SITE_HOME.replace( /_/g, ' ' ) !== title.replace( /_/g, ' ' ) ) {
+          undoLinkRewrite( doc );
         }
-        return json;
+        var infobox = extractInfobox( doc );
+        if ( !json.lead.mainpage ) {
+          var leadParagraph = extractLeadParagraph( doc );
+          json.lead.paragraph = leadParagraph;
+        }
+        var issues = extractPageIssues( doc );
+        json.lead.issues = issues;
+        json.lead.infobox = infobox;
+        json.lead.hatnote = extractHatnote( doc );
+        json.lead.sections[0].text = doc.body.innerHTML;
       }
+      return json;
     } );
 }
