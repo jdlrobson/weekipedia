@@ -99,14 +99,18 @@ Api.prototype = {
       return cache[url];
     }
   },
-  getPage: function ( title, langOrLanguageProject, sections ) {
+  getPage: function ( title, langOrLanguageProject, sections, revision ) {
     langOrLanguageProject = langOrLanguageProject || 'en';
+    var suffix = '';
     var route = sections ? sections + '/' : '';
     route += langOrLanguageProject + '/';
     // encode any '/' symbols in title (fixes #89)
     title = encodeURIComponent( title ).replace( /\//gi, '%2F' );
+    if ( revision ) {
+      suffix = '/' + revision;
+    }
 
-    return this.fetch( this.path + 'page/' + route + title );
+    return this.fetch( this.path + 'page/' + route + title + suffix );
   },
   getReference: function ( title, langOrLanguageProject, refId ) {
     return this.getReferences( title, langOrLanguageProject ).then( function ( refs ) {

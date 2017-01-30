@@ -139,15 +139,16 @@ function getBaseHost( lang, project ) {
   }
 }
 
-export default function ( title, lang, project, includeReferences ) {
+export default function ( title, lang, project, includeReferences, revision ) {
   const host = getBaseHost( lang, project ) + HOST_SUFFIX;
   const path = '/api/rest_v1/page/mobile-sections/';
+  const suffix = revision ? '/' + revision : '';
   if ( title.substr( 0, 6 ) === 'Media:' ) {
     title = title.replace( 'Media:', 'File:' );
   }
   // FIXME: Handle this better please. Use better API.
   var url = 'https://' + host + path +
-    encodeURIComponent( title );
+    encodeURIComponent( title ) + suffix;
 
   return fetch( url, { redirect: 'manual' } )
     .then( function ( resp ) {

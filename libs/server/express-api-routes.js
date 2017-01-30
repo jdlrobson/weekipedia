@@ -275,11 +275,11 @@ function initGetMethods( app ) {
     } );
   } );
 
-  app.get( '/api/page/:lang.:project/:title', ( req, res ) => {
+  app.get( '/api/page/:lang.:project/:title/:revision?', ( req, res ) => {
     var proj = getProject( req );
     var params = req.params;
     cachedResponse( res, req.url, function () {
-      return page( req.params.title, proj.lang, proj.project, false ).then( ( data ) => {
+      return page( params.title, proj.lang, proj.project, false, params.revision ).then( ( data ) => {
         const protocol = req.secure ? 'https' : 'http';
         const project = data.project ? data.project : params.lang + '.' + params.project;
         const newPath = '/api/page/' + project + '/' + data.title;
