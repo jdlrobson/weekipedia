@@ -65,6 +65,7 @@ export default React.createClass({
   },
   load( title, lang ) {
     var source, project,
+      rev = this.props.revision,
       self = this;
 
     title = title || this.props.title;
@@ -73,7 +74,7 @@ export default React.createClass({
     source = project ? lang + '.' + project : lang;
 
     this.checkExpandedState();
-    this.props.api.getPage( title, source ).then( function ( data ) {
+    this.props.api.getPage( title, source, null, rev ).then( function ( data ) {
       var ns = data.lead.ns;
 
       // If talk page or user page auto expand

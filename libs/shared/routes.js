@@ -51,7 +51,7 @@ var routes = [
     // regex 2: /wiki/:title [3]
     // regex3: /:lang.:project/:title [4,5,6]
     /^\/([a-z\-]*)\/wiki\/([^\/]*)$|^\/wiki\/([^\/]*$)|^\/(.*)\.([^\/]*)\/(.*)$/,
-    function ( info, props ) {
+    function ( info, props, query ) {
       var View,
         title = info[2] || info[3] || info[6],
         titleDecoded = decodeURIComponent( title ),
@@ -68,6 +68,7 @@ var routes = [
       props.language_project = lang + '.' + props.project;
       props.mobileUrl = utils.getAbsoluteUrl( title, lang, props.project, true );
       props.desktopUrl = utils.getAbsoluteUrl( title, lang, props.project );
+      props.revision = query.oldid;
 
       // FIXME: i18n
       if ( title.indexOf( 'Special:' ) === 0 ) {
