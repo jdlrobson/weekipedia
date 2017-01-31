@@ -8,7 +8,7 @@ const shortLifeCache = new NodeCache( { stdTTL: 60 * 10,
 let blacklist = [];
 
 function cachedResponse( res, cacheKey, method ) {
-  if ( cacheKey.substr(-1) === '?' ) {
+  if ( cacheKey && cacheKey.substr(-1) === '?' ) {
     cacheKey = cacheKey.substr(0, cacheKey.length -1);
   }
   res.setHeader( 'Content-Type', 'application/json' );
