@@ -66,7 +66,8 @@ export default React.createClass({
       body = props.body;
     }
 
-    if ( lead.userinfo ) {
+    // workaround for T156830
+    if ( lead.userinfo && lead.userinfo.missing === undefined ) {
       registered = new Date( lead.userinfo.registration );
       // FIXME: Translate
       lead.description = 'Member since ' + MONTHS[ registered.getMonth() ] + ', ' + registered.getFullYear();

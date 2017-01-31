@@ -175,6 +175,9 @@ export default function ( title, lang, project, includeReferences, revision ) {
         return resp.json();
       }
     } ).then( function ( json ) {
+      if ( !json ) {
+        throw '404: Bad title given';
+      }
       if ( json.code ) {
         return json;
       }
