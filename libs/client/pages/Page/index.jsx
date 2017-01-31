@@ -55,7 +55,7 @@ export default React.createClass({
     this.checkExpandedState();
   },
   componentWillReceiveProps(nextProps){
-    this.load( nextProps.title, nextProps.lang );
+    this.load( nextProps.title, nextProps.lang, nextProps.revision );
   },
   checkExpandedState() {
     var expandQuery = this.props.query && this.props.query.expanded;
@@ -63,9 +63,9 @@ export default React.createClass({
       this.setState( { isExpanded: true } );
     }
   },
-  load( title, lang ) {
+  load( title, lang, revision ) {
     var source, project,
-      rev = this.props.revision,
+      rev = revision || this.props.revision,
       self = this;
 
     title = title || this.props.title;

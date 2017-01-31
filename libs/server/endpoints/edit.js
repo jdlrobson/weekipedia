@@ -21,6 +21,7 @@ export default function ( lang, title, body, summary, section, project, profile,
     return new Promise( function ( resolve ) {
       resolve( { edit: { result: 'Success',
         title: title,
+        newrevid: 762310093,
         newtimestamp: new Date().toISOString() } } );
     } );
   } else {
