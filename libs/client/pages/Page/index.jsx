@@ -93,7 +93,12 @@ export default React.createClass({
     } );
   },
   expand() {
-    this.props.router.navigateTo( window.location.pathname + '?expanded=1', '', true );
+    var qs = window.location.search;
+    qs = !qs ? qs + '?expanded=1' : qs + '&expanded=1';
+    this.props.router.navigateTo( {
+      pathname: window.location.pathname,
+      search: qs
+    }, '', true );
     this.setState({
       isExpanded: true
     } );

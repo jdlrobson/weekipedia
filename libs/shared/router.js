@@ -34,8 +34,12 @@ var router = {
         scrollY: window.scrollY
       };
 
+    if ( search.indexOf( '?' ) !== 0 ) {
+      search = '?' + search;
+    }
+
     if ( search ) {
-      currentPath += '?' + search;
+      currentPath += search;
     }
     if ( hash === undefined ) {
       hash = path.split( '#' );
@@ -43,7 +47,7 @@ var router = {
       hash = hash[1] ? '#' + hash[1] : '';
     }
     if ( path ) {
-      url = search ? path + '?' + search : path;
+      url = search ? path + search : path;
 
       if ( useReplaceState ) {
         // TODO: older browser support
