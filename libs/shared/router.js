@@ -34,7 +34,7 @@ var router = {
         scrollY: window.scrollY
       };
 
-    if ( search.indexOf( '?' ) !== 0 ) {
+    if ( search && search.indexOf( '?' ) !== 0 ) {
       search = '?' + search;
     }
 
