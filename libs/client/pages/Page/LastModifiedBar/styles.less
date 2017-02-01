@@ -54,6 +54,10 @@
   font-weight: bold;
 }
 
+[dir='rtl'] .last-modified-bar .indicator:before {
+  transform: rotateZ(90deg);
+}
+
 @media (min-width: @deviceWidthTablet) {
   .last-modified-bar {
     padding-left: 0;

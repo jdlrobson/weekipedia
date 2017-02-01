@@ -86,8 +86,8 @@ export default React.createClass({
   mountLanguage( props ) {
     var newStylesheet,
       self = this,
-      newLang = props.lang,
-      rtl = isRTL( props.lang ),
+      newLang = props.uselang || props.lang,
+      rtl = isRTL( newLang ),
       stylesheet = document.querySelector( 'link[href="/style.rtl.css"]' );
 
     function addStylesheet( newPath ) {

@@ -4,6 +4,7 @@ const events = new EventEmitter();
 var routes = [];
 
 var router = {
+  queryStringToObject: queryStringToObject,
   on: function ( eventName, handler ) {
     events.on( eventName, handler );
   },
@@ -89,16 +90,20 @@ function matchFragment( fragment, props ) {
   return matchRouteInternal( routes, fragment, props, false );
 }
 
+function queryStringToObject( search ) {
+  var args = search.substr( 1 ).split( '&' );
+  var i, vals
+  var query = {};
+  for ( i = 0; i < args.length; i++ ) {
+    vals = args[i].split( '=' );
+    query[vals[0]] = vals[1];
+  }
+  return query;
+}
+
 function matchRoute( path, fragment, props, query ) {
   if ( query === undefined ) {
-    var i, vals,
-      args = window.location.search.substr( 1 ).split( '&' );
-
-    query = {};
-    for ( i = 0; i < args.length; i++ ) {
-      vals = args[i].split( '=' );
-      query[vals[0]] = vals[1];
-    }
+    query = queryStringToObject( window.location.search );
   }
   props.query = query;
 

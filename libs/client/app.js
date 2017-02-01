@@ -23,9 +23,12 @@ config.api = api;
 if ( config.fallbackPath ) {
   api.prefetch( config.fallbackPath, config.fallbackProps );
 }
+var query = shared.router.queryStringToObject( window.location.search );
+config.uselang = query.uselang || 'en';
 shared.init( config, overlayRoutes );
 
 document.body.className += ' client-js';
+
 render(
   shared.render( window.location.pathname, window.location.hash, {} ),
   document.getElementById( 'app' )
