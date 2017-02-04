@@ -5,7 +5,7 @@ function cardFilter( oldPages, mustHaveImage, mustHaveCoordinates ) {
   var filters = [ 'country', 'county', 'state', 'region', 'city', 'lake',
     'district', 'National Park', 'town', 'village', 'hamlet', 'metropolis',
     'continental', 'continent', 'subregion', 'republic', 'commune', 'area',
-    'archipelago',
+    'archipelago', 'territory',
     'settlement', 'monarchy', 'island', 'capital' ]
   var exceptions = [ 'South Pole', 'North Pole' ];
 
@@ -23,7 +23,7 @@ function cardFilter( oldPages, mustHaveImage, mustHaveCoordinates ) {
   }
 
   function isDestination( assessment ) {
-    return assessment.city || assessment.region || assessment.park;
+    return assessment.city || assessment.region || assessment.park || assessment.country;
   }
 
   oldPages.forEach( function ( page ) {

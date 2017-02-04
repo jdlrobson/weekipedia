@@ -7,6 +7,7 @@ export default function ( lang, term, ns, project, isFullTextSearch ) {
   var params = Object.assign( {
     prop: 'pageterms|pageimages|pageprops|pageassessments',
     ppprop: 'displaytitle',
+    redirects: '',
     piprop: 'thumbnail',
     wbpterms: 'description',
     generator: isFullTextSearch ? 'search' : 'prefixsearch'
