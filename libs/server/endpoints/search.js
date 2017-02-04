@@ -5,7 +5,7 @@ import cardFilter from './voyager/card-filter'
 
 export default function ( lang, term, ns, project, isFullTextSearch ) {
   var params = Object.assign( {
-    prop: 'pageterms|pageimages|pageprops',
+    prop: 'pageterms|pageimages|pageprops|pageassessments',
     ppprop: 'displaytitle',
     piprop: 'thumbnail',
     wbpterms: 'description',
