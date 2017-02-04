@@ -356,7 +356,8 @@ export default function ( title, lang, project ) {
       return voyager( json );
     }
   }
-  return page( title, lang, project ).then( transform ).catch( function () {
+  return page( title, lang, project ).then( transform ).catch( function ( err ) {
+    console.log(`ERROR in page.js, in display of ${lang}.${project}/${title}: ${err}`)
     return page( title, lang, 'wikipedia' ).then( function ( json ) {
       json.remaining = { sections: [] };
       if ( json.lead ) {
