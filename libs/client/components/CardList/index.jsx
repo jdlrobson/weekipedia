@@ -64,7 +64,8 @@ function getCards( data, props, keyPrefix ) {
           key={item.key + '-watch'}
           title={item.title} collection={props.collection} isWatched={true} />
       }
-      if ( !navigator.onLine && item.offline !== undefined && !item.offline ) {
+      // If server side rendering navigator will be undefined.
+      if ( typeof( navigator ) !== 'undefined' && !navigator.onLine && item.offline !== undefined && !item.offline ) {
         item.className = 'offline';
       }
       cards.push( React.createElement( CardClass, Object.assign( {}, props, item ) ) );

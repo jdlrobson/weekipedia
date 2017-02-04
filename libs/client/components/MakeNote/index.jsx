@@ -7,7 +7,7 @@ export default React.createClass({
   render(){
     var props = this.props;
     var username = props.session ? props.session.username : null;
-    var isOnline = navigator && navigator.onLine !== undefined && navigator.onLine;
+    var isOnline = typeof( navigator ) !== 'undefined' && navigator && navigator.onLine !== undefined && navigator.onLine;
     var iconProps = Object.assign({}, props, {
       key: 'page-action-note',
       glyph: 'note',
