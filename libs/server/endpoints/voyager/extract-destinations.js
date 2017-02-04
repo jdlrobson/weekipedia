@@ -85,6 +85,7 @@ function extractFromList( html ) {
   ext = extractElements( html, '.vcard .listing-name > *, li > a:first-child, li > b:first-child, li > i:first-child', true );
   Array.prototype.forEach.call( ext.extracted, function ( node ) {
     var attr, text, listItem,
+      isExternalLink = false,
       link = node,
       doNotScrub = false;
 
@@ -125,6 +126,7 @@ function extractFromList( html ) {
     if ( listItem && link && ( !isLastChild( link ) || link.parentNode.childNodes.length < 3 ) ) {
       var textContent = link ? link.textContent : node.textContent;
       attr = link ? link.getAttribute( 'title' ) : textContent;
+      isExternalLink = link.getAttribute( 'href' ).indexOf( '://' ) > -1;
 
       var textWithoutParenthesises = listItem.textContent.replace( link.textContent, '' )
         .replace( /^ *\([^\)]*\)\./, '.' );
@@ -153,7 +155,9 @@ function extractFromList( html ) {
       }
 
       // remove it if it just just had a link.
-      if ( scrubbedCompletely || textWithoutParenthesises.trim() === node.textContent.trim() ) {
+      if ( isExternalLink ||
+        scrubbedCompletely || textWithoutParenthesises.trim() === node.textContent.trim()
+      ) {
         if ( listItem.parentNode ) {
           listItem.parentNode.removeChild( listItem );
         }
@@ -169,7 +173,7 @@ function extractFromList( html ) {
     // it returns the country Vietnam as a place to go next. Use cityFilter.
 
     // now parse any remaining links but don't remove from DOM
-    ext = extractElements( ext.html, 'a', true );
+    ext = extractElements( ext.document.body.innerHTML, 'a', true );
     html = ext.html;
     Array.prototype.forEach.call( ext.extracted, function ( link ) {
       var attr = link.getAttribute( 'title' );

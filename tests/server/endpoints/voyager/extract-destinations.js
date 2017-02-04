@@ -141,6 +141,16 @@ describe('extract-destinations', function() {
     assert.strictEqual( section.destinations.length, 0 );
   });
 
+  it('Morgantown', function() {
+    var section = {
+      text: '<div><ul><li id="mwAUo"> <a href="http://www.prickettsfortstatepark.com/">Prickett\'s Fort State Park</a> - State park located in Fairmont, WV. 15 miles south of Morgantown on I-79.</li></ul></div>'
+    };
+
+    section = extract( section );
+    assert.strictEqual( section.destinations.length, 0, 'External links ignored' );
+    assert.ok( section.text.indexOf( 'Prickett' ) === -1, 'External link listings are stripped' );
+  });
+
   it('East Midlands', function() {
     var section = {
       text: '<div><ul><li id="mwDA"><a href="Derby" title="Derby">Derby</a> (Derbyshire)</li><li id="mwDg"><a href="Leicester" title="Leicester">Leicester</a> (Leicestershire)</li><li id="mwEA"><a href="Lincoln" title="Lincoln">Lincoln</a> (Lincolnshire)</li><li id="mwEg"><a href="Nottingham" title="Nottingham">Nottingham</a> (Nottinghamshire)</li></ul></div>'
