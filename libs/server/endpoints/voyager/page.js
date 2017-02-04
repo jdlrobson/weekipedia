@@ -47,6 +47,8 @@ export default function ( title, lang, project ) {
 
       if ( page && page.coordinates ) {
         data.lead.coordinates = page.coordinates.length ? page.coordinates[0] : page.coordinates;
+      } else if ( page && page.pageassessments && page.pageassessments.topic ) {
+        throw "404EXCLUDE: This is a topic and not supported by the app.";
       }
       data.lead.images = [];
       if ( page && page.pageprops ) {
@@ -357,7 +359,9 @@ export default function ( title, lang, project ) {
     }
   }
   return page( title, lang, project ).then( transform ).catch( function ( err ) {
-    console.log(`ERROR in page.js, in display of ${lang}.${project}/${title}: ${err}`)
+    if ( err.indexOf( '404EXCLUDE' ) > -1 ) {
+      throw '404';
+    }
     return page( title, lang, 'wikipedia' ).then( function ( json ) {
       json.remaining = { sections: [] };
       if ( json.lead ) {
