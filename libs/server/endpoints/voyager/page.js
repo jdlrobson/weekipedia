@@ -30,7 +30,7 @@ const ITEMS_TO_DELETE = [
 const sectionBlacklist = [ 'Learn', 'Work', 'Stay safe', 'Stay healthy',
   'Cope', 'Respect', 'Connect' ];
 
-export default function ( title, lang, project ) {
+export default function ( title, lang, project, revision ) {
   project = 'wikivoyage';
   // FIXME: This can be done in mobile content service
   function addBannerAndCoords( data ) {
@@ -358,7 +358,7 @@ export default function ( title, lang, project ) {
       return voyager( json );
     }
   }
-  return page( title, lang, project ).then( transform ).catch( function ( err ) {
+  return page( title, lang, project, false, revision ).then( transform ).catch( function ( err ) {
     if ( err.indexOf( '404EXCLUDE' ) > -1 ) {
       throw '404';
     }
