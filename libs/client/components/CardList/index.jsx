@@ -14,7 +14,7 @@ const MONTHS = ['January','February','March','April','May','June',
 
 function getCards( data, props, keyPrefix ) {
   var source = props.language_project ||
-    ( props.language && props.project ? props.language + '.' + props.project : '/wiki' );
+    ( props.language && props.project ? props.language + '.' + props.project : 'wiki' );
   var cards = [],
     CardClass = props.CardClass;
 
