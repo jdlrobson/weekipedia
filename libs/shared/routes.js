@@ -93,7 +93,7 @@ var routes = [
         props.children = [
           React.createElement( View,
             Object.assign( {}, props, {
-              key: 'page-' + title,
+              key: 'page-' + title + '-' + props.revision,
               titleSansPrefix: titleSansPrefix,
               title: titleDecoded
             } )
