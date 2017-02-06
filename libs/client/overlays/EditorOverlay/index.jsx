@@ -85,10 +85,12 @@ export default React.createClass({
 
     function escape( newrevid ) {
       var path = window.location.pathname;
-      if ( newrevid ) {
-        path += '?oldid=' + newrevid;
-      }
-      props.router.navigateTo( path );
+      var search = newrevid ? '?oldid=' + newrevid : '';
+      props.router.navigateTo( {
+        pathname: path,
+        hash: '#',
+        search: search
+      } );
     }
     this.setState( { step: SAVE_STEP } );
     if ( navigator.onLine  !== undefined && !navigator.onLine ) {
@@ -105,7 +107,7 @@ export default React.createClass({
         state.summary || props.editSummary ).then( function ( resp ) {
         escape( resp.edit.newrevid );
         props.showNotification( 'Your edit was successful!' );
-      } ).catch( function () {
+      } ).catch( function (e) {
         self.showPreview();
       } );
     }
