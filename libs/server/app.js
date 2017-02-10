@@ -224,6 +224,7 @@ app.get( '/:lang?/*', ( req, res ) => {
   function render( data ) {
     var lead,
       desc = '',
+      noIndex = true,
       title = SITE_TITLE,
       image = '/home-icon.png';
 
@@ -232,6 +233,7 @@ app.get( '/:lang?/*', ( req, res ) => {
     if ( data.fallbackProps && data.fallbackProps.lead ) {
       lead = data.fallbackProps.lead;
       desc = lead.description;
+      noIndex = data.fallbackProps.noIndex;
       title = lead.normalizedtitle || lead.displaytitle || '';
       title += ' - ' + SITE_TITLE;
       if ( lead.image && lead.image.urls ) {
@@ -244,6 +246,7 @@ app.get( '/:lang?/*', ( req, res ) => {
     res.setHeader( 'Vary', 'Cookie' );
     res.status( 200 ).render( 'index.html', {
       isMediaWikiCompatibilityMode: MEDIAWIKI_COMPATIBILITY_MODE,
+      noIndex: noIndex,
       touch_icon: '/home-icon.png',
       url: req.url,
       image: image,

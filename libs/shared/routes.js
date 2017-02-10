@@ -126,6 +126,7 @@ function addSpecialPage( title, Class, handler ) {
       Object.assign( props, {
         project: project,
         params: params,
+        noIndex: true,
         language_project: langProject,
         lang: lang,
         mobileUrl: utils.getAbsoluteUrl( 'Special:' + title + suffix,
@@ -152,7 +153,10 @@ function addSpecialPage( title, Class, handler ) {
 
 function initSpecialPages() {
   addSpecialPage( 'Categories', Categories );
-  addSpecialPage( 'Feed', Feed );
+  addSpecialPage( 'Feed', Feed, ( info, props ) => {
+    props.noIndex = false;
+    return props;
+  } );
   addSpecialPage( 'History', History );
   addSpecialPage( 'RecentChanges', Contributions );
   addSpecialPage( 'Contributions', Contributions );
@@ -163,6 +167,7 @@ function initSpecialPages() {
   addSpecialPage( 'MostRead', MostRead );
   addSpecialPage( 'Random', Random, function ( info, props ) {
     props.fallback = '/api/random/' + props.lang;
+    props.noIndex = false;
     return props;
   } );
   addSpecialPage( 'Search', Search, function ( info, props ) {
@@ -181,6 +186,7 @@ function initSpecialPages() {
   addSpecialPage( 'UserLogin', UserLogin );
   addSpecialPage( 'Collections', Collections, function ( info, props ) {
     props.fallback = '/api/' + props.lang + '/collection/';
+    props.noIndex = false;
     if ( props.params ) {
       props.fallback += props.params;
     }

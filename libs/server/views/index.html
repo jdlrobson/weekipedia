@@ -1,6 +1,9 @@
 <!DOCTYPE HTML>
 <html prefix="og: http://ogp.me/ns#">
 	<head>
+		{{#noIndex}}
+		<meta name="robots" content="noindex">
+		{{/noIndex}}
 		<title>{{page_title}}</title>
 		<link href="/style.css" rel="stylesheet">
 		{{#isRTL}}<link href="/style.rtl.css" rel="stylesheet">{{/isRTL}}
