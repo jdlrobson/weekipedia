@@ -1,6 +1,22 @@
 // See https://phabricator.wikimedia.org/T146408
 @originalSize: 35px;
 
+.chrome-header {
+  .branding-box h1 {
+    margin-top: 0;
+    margin-left: 5px;
+    text-align: left;
+  }
+
+  .search-form {
+    display: none;
+  }
+}
+
+.toolbar > div > div.branding-box {
+  padding-top: 0;
+}
+
 .project-icon {
   background-image: url(project-sprites.png);
   position: absolute;
@@ -51,5 +67,27 @@
   }
   &.project-wikipedia {
     background-position: 0 (498px);
+  }
+}
+
+@media (min-width: 720px) {
+  .header {
+    .branding-box,
+    .search-form {
+      vertical-align: middle;
+      display: table-cell;
+    }
+
+    .branding-box {
+      width: 11.0625em;
+    }
+
+    .search-form {
+      width: auto;
+
+      .search {
+        width: 23.4375em;
+      }
+    }
   }
 }

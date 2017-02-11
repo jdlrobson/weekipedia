@@ -24,7 +24,7 @@ class Overlay extends Component {
     }, 0 );
   }
   render(){
-    var header, icon;
+    var header, icon, secondaryIcon;
     var headerProps = {};
     var props = this.props;
     var baseClass = this.props.isDrawer ? 'drawer' : 'overlay visible'
@@ -43,23 +43,23 @@ class Overlay extends Component {
       overlayClass += ' lightbox';
     } else {
       icon = (<Icon glyph='close' onClick={this.onClose.bind(this)} className="cancel" />);
+      secondaryIcon = props.secondaryIcon ? props.secondaryIcon : null;
+      if ( !secondaryIcon && !props.primaryIcon && props.primaryIcon !== undefined ) {
+        secondaryIcon = icon;
+      }
       headerProps = {
         fixed: true,
-        primaryIcon: this.props.primaryIcon || icon,
+        primaryIcon: props.primaryIcon !== undefined ? props.primaryIcon : icon,
         router: props.router,
         siteoptions: props.siteoptions,
         siteinfo: props.siteinfo,
         search: props.search,
-        includeSiteBranding: props.siteoptions &&
-          ( props.siteoptions.includeSiteBranding && !props.siteoptions.searchIcon ),
-        secondaryIcon: props.secondaryIcon,
+        includeSiteBranding: false,
+        secondaryIcon: secondaryIcon,
         main: props.header
       };
       if ( props.chromeHeader ) {
         header = <ChromeHeader {...headerProps} />
-        if ( props.siteoptions.includeSiteBranding && !props.siteoptions.searchIcon ) {
-          overlayClass += ' overlay-with-search';
-        }
       } else {
         header = <Header {...headerProps} />
       }

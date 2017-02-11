@@ -336,13 +336,10 @@ export default React.createClass({
       navigationClasses += ' navigation-full-screen';
     }
 
-    if ( props.siteoptions.searchIcon ) {
-      secondaryIcon = [
-        <Icon glyph="search" onClick={this.onClickSearch}/>,
-        secondaryIcon
-      ];
-      search = null;
-    }
+    secondaryIcon = [
+      <Icon glyph="search" onClick={this.onClickSearch}/>,
+      secondaryIcon
+    ];
 
     return (
       <div id="mw-mf-viewport" className={navigationClasses}
@@ -354,7 +351,7 @@ export default React.createClass({
         </nav>
         <div id="mw-mf-page-center" onClick={this.closePrimaryNav}>
           <ChromeHeader {...props} primaryIcon={icon}
-            includeSiteBranding={props.siteoptions.includeSiteBranding}
+            includeSiteBranding={true}
             search={search} secondaryIcon={secondaryIcon}/>
           {this.state.children}
           {shield}

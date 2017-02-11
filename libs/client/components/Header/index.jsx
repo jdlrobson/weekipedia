@@ -12,6 +12,10 @@ class Header extends Component {
     var secondaryIcon = this.props.secondaryIcon;
     var secondaryIcons = [];
 
+    if ( this.props.className ) {
+      suffix += ' ' + this.props.className;
+    }
+
     if ( this.props.search ) {
       search = (
         <Content className="search-header">
@@ -28,12 +32,16 @@ class Header extends Component {
       secondaryIcons = [ secondaryIcon ];
     }
     // FIXME: overlay-title is used for consistency with MobileFrontend but not needed
+    var primaryIcon = this.props.primaryIcon ? (
+      <div>
+        {this.props.primaryIcon}
+      </div>
+    ) : null;
+
     return (
       <div className={"header-container" + suffix}>
         <Content className="header toolbar">
-          <div>
-            {this.props.primaryIcon}
-          </div>
+          {primaryIcon}
           <div className='main overlay-title'>
             {this.props.main}
           </div>

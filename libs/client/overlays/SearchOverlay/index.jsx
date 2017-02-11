@@ -2,7 +2,6 @@ import React from 'react'
 import { Icon, SearchForm, Panel } from 'wikipedia-react-components'
 
 import CardList from './../../components/CardList'
-import Content from './../../components/Content'
 
 import Overlay from './../Overlay'
 
@@ -97,13 +96,14 @@ export default React.createClass({
     return (
       <Overlay router={props.router} header={heading} search={search}
         siteinfo={props.siteinfo}
+        primaryIcon={false}
         siteoptions={props.siteoptions}
           chromeHeader={true}
         className="component-search-overlay search-overlay">
-        <Content className="overlay-content">
-        {panel}
-        {this.state.list}
-        </Content>
+        <div className="overlay-content">
+          {panel}
+          {this.state.list}
+        </div>
       </Overlay>
     )
   }

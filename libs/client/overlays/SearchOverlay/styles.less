@@ -12,6 +12,19 @@
   .search {
     text-align: inherit;
   }
+
+  .chrome-header {
+    .overlay-title {
+      position: relative;
+      padding-left: 15px;
+    }
+    .overlay-title + div {
+      width: auto;
+    }
+    .search-form {
+      display: block;
+    }
+  }
 }
 
 @media (min-width: @deviceWidthTablet) {
@@ -19,5 +32,21 @@
     .search {
       text-align: inherit;
     }
+    .chrome-header .overlay-title {
+      padding-left: 14.5625em;
+      width: 23.4375em;
+    }
+    .card-list,
+    .panel {
+      width: 23.4375em;
+      margin-left: 14.5625em;
+    }
+  }
+}
+
+@media (min-width: 62.5em) {
+  .component-search-overlay .overlay-content {
+    max-width: 57.8em;
+    margin: auto;
   }
 }

@@ -21,24 +21,35 @@ class ChromeHeader extends Component {
     }
     if ( useSiteBranding ) {
       siteinfo = props.siteinfo;
-      content = siteinfo.wordmark ? <img src={siteinfo.wordmark} alt={siteinfo.title} height="18" /> :
+      content = siteinfo.wordmark ?
+        <img src={siteinfo.wordmark} alt={siteinfo.title} height="15" width="97" /> :
         siteinfo.title;
+
       project = props.project;
 
       if ( project !== siteinfo.defaultProject ) {
         icon = <div className={"project-icon project-" + project}>{project}</div>
       }
-      heading = <h1 key="chrome-header-heading">{content} {icon}</h1>;
+      heading = [
+        <div className="branding-box" key="chrome-header-heading">
+          <h1>
+            <span>
+              {content}
+            </span>
+            <sup>{icon}</sup>
+          </h1>
+        </div>,
+        search
+      ];
     } else {
       heading = search;
       search = null;
     }
 
-    return <Header key="header-bar" primaryIcon={props.primaryIcon}
+    return <Header key="header-bar" primaryIcon={props.primaryIcon} className="chrome-header"
       fixed={props.fixed}
       main={heading}
-      secondaryIcon={secondaryIcon}
-      search={search}></Header>
+      secondaryIcon={secondaryIcon}></Header>
   }
 }
 
