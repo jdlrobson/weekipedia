@@ -241,6 +241,9 @@ app.get( '/:lang?/*', ( req, res ) => {
       if ( lead.image && lead.image.urls ) {
         image = lead.image.urls['1024'] || lead.image.urls['320'];
       }
+      if ( lead.project_source !== 'wikivoyage' ) {
+        noIndex = true;
+      }
     }
 
     res.setHeader( 'Vary', 'Cookie' );
