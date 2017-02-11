@@ -28,7 +28,7 @@ class MainMenu extends Component {
     var login, username, usertools,
       props = this.props,
       msg = this.props.msg,
-      prefix = '/' + this.props.lang + '/wiki/',
+      prefix = this.getUrlPrefix(),
       onMenuItemClick = this.onMenuItemClick.bind(this);
 
     if ( this.props.canAuthenticate ) {
@@ -69,18 +69,21 @@ class MainMenu extends Component {
       return null;
     }
   }
+  getUrlPrefix() {
+    return '/' + this.props.language_project;
+  }
   render(){
     var onMenuItemClick = this.onMenuItemClick.bind(this);
     var collectionMenuItem, nearbyMenuItem, settingsMenuItem,
       props = this.props,
-      langPrefix = '/' + props.lang,
+      langPrefix = this.getUrlPrefix(),
       options = props.siteoptions,
       msg = props.msg;
 
     if ( options.collectionsEnabled ) {
       collectionMenuItem = (
         <li>
-          <Icon glyph="mf-collections" href={'/' + this.props.lang + '/wiki/Special:Collections/' }
+          <Icon glyph="mf-collections" href={langPrefix + '/Special:Collections/' }
             label={msg('menu-collections')} type="before" onClick={onMenuItemClick} />
         </li>
       );
@@ -88,7 +91,7 @@ class MainMenu extends Component {
     if ( options.nearby ) {
       nearbyMenuItem = (
         <li>
-          <Icon glyph="mf-nearby" href={langPrefix + '/wiki/Special:Nearby'}
+          <Icon glyph="mf-nearby" href={langPrefix + '/Special:Nearby'}
             onClick={onMenuItemClick}
             label={msg('menu-nearby')} type="before"/>
         </li>
@@ -97,7 +100,7 @@ class MainMenu extends Component {
     if ( options.settingsEnabled ) {
         settingsMenuItem = (
           <li>
-            <Icon glyph="mf-settings" href={'/' + this.props.lang + '/wiki/Special:MobileOptions' }
+            <Icon glyph="mf-settings" href={langPrefix + '/Special:MobileOptions' }
               label={msg('menu-settings')} type="before" onClick={onMenuItemClick} />
           </li>
         );
@@ -110,7 +113,7 @@ class MainMenu extends Component {
               onClick={onMenuItemClick} />
           </li>
           <li>
-            <Icon glyph="mf-random" href={langPrefix + '/wiki/Special:Random'}
+            <Icon glyph="mf-random" href={langPrefix + '/Special:Random'}
               onClick={onMenuItemClick}
               label={msg('menu-random')} type="before"/>
           </li>
