@@ -1,97 +1,5 @@
-import scorer from 'wikipedia-edits-scorer'
-
-import addProps from './../prop-enricher'
-import visits from './../visits'
-
-import collection from './collection'
-
-const MIN_BYTES_CHANGED = 100;
-
-function calcScore( edits, halflife ) {
-  return scorer.calculateScore(
-    new Date(),
-    {
-      title: edits.title,
-      edits: edits.edits,
-      anonEdits: edits.anonEdits,
-      reverts: edits.reverts,
-      start: edits.start,
-      isNew: edits.isNew,
-      numberContributors: edits.anons.length + edits.contributors.length,
-      distribution: edits.distribution,
-      views: edits.views,
-      bytesChanged: edits.bytesChanged,
-      flaggedEdits: edits.volatileFlags
-    },
-    halflife
-  );
-}
-
-function scorePages( halflife, visitData ) {
-  var p = collection.getPages();
-  p.forEach( function ( item ) {
-    item.views = visitData[item.title] || 0;
-    item.score = calcScore( item, halflife );
-  } );
-  return p;
-}
-
-function sortScoredPages( pages ) {
-  return pages.sort( function ( q, r ) {
-    return q.score > r.score ? -1 : 1;
-  } );
-}
-
-function annotate( p, filter, limit, key ) {
-  var res = [];
-  p.some( function ( item ) {
-    var trendIndex, curPosition, lastIndex;
-
-    if ( !item.wiki ) {
-      item.wiki = 'enwiki';
-      item.lang = 'en';
-    } else if ( !item.lang ) {
-      item.lang = item.wiki.replace( 'wiki', '' )
-    }
-
-    if ( res.length >= limit ) {
-      return true;
-    } else if ( filter && filter( item ) ) {
-      // access the last known position it was at
-      if ( item.trendIndex ) {
-        trendIndex = item.trendIndex;
-      } else {
-        trendIndex = {};
-      }
-
-      // half life being used for the first time on this page
-      if ( !trendIndex[key] ) {
-        trendIndex[key] = {};
-      }
-
-      // what was the last index and what is the current one?
-      curPosition = res.length + 1;
-      lastIndex = trendIndex[key].cur || limit + 1;
-
-      trendIndex[key].prev = lastIndex;
-      trendIndex[key].cur = curPosition;
-
-      // update the reference on the page entity
-      item.trendIndex = trendIndex;
-      item.bias = item.getBias();
-      // we clone the object to clean out the trendIndex information
-      res.push( Object.assign( {},
-        item,
-        {
-          trendIndex: undefined,
-          lastIndex: lastIndex,
-          index: curPosition
-        } )
-      );
-    }
-  } );
-  return res;
-}
+import fetch from 'isomorphic-fetch'
+import week from './week'
 
 /**
  * @param {String} wiki name of wiki to generate a list of trending articles for
@@ -102,44 +10,54 @@ function annotate( p, filter, limit, key ) {
 function trending( wiki, halflife, project, title ) {
   var lang = wiki.replace( 'wiki', '' );
   project = project || 'wikipedia';
+  halflife = parseInt( halflife, 10 );
   var key = wiki + '-' + halflife;
 
-  return new Promise( function ( resolve, reject ) {
-    var fn = function ( item ) {
-      return title ? item.title === title :
-        item.contributors.length + item.anons.length > 2 && ( wiki === '*' || item.wiki === wiki ) &&
-        item.bytesChanged > MIN_BYTES_CHANGED &&
-      ( item.age() / 60 ) < ( halflife * 2 ) &&
-        item.score > 0;
-    };
-    if ( !collection ) {
-      reject( 'Trending is disabled. A site admin should enable it via TREND_ENABLED.' );
+  function filterLowEdits(json) {
+    json.pages = json.pages.filter((page) => {
+      return page.totalEdits > ( halflife + 5 );
+    });
+    return json;
+  }
+
+  function score(json) {
+    // FIXME: This block of code reverses the decay in the score and applies a new one.
+
+    json.pages.forEach((page) => {
+      var start = new Date( page.since || page.updated );
+      var age = ( new Date() - start ) / 1000 / 60;
+      var defaultHl = Math.pow(0.5, age / ( 1.5 * 60 ));
+      var exponential = Math.pow(0.5, age / ( halflife * 60 ));
+      // FIXME: undo default halflife decay
+      page.trendiness /= defaultHl;
+      // apply the new half life decay based on parameter
+      page.trendiness *= exponential;
+    });
+
+    // Sort with the new scores.
+    json.pages = json.pages.sort((page1, page2) => {
+      return page1.trendiness > page2.trendiness ? -1 : 1;
+    });
+
+    if ( halflife < 12 ) {
+      json.pages = json.pages.filter((page) => {
+        // FIXME: soon since will be available giving more accurate results
+        var start = page.since || page.updated;
+        return (new Date() - new Date(start)) / ( 1000 * 60 * 60 ) < halflife;
+      });
     }
 
-    visits( lang, project ).then( function ( visitedPages ) {
-      var visitLookup = {};
-      if ( visitedPages && visitedPages.pages ) {
-        visitedPages.pages.forEach( function ( page ) {
-          visitLookup[page.title] = page.delta;
-        } );
-      }
-      var pages = scorePages( halflife, visitLookup );
-      var results = annotate( sortScoredPages( pages ), fn, 50, key );
-      if ( !results.length ) {
-        resolve( {
-          pages: [],
-          ts: new Date()
-        } );
-      } else {
-        addProps( results, [ 'pageimages','pageterms' ], lang, project ).then( function ( results ) {
-          resolve( {
-            pages: results,
-            ts: new Date()
-          } );
-        } )
-      }
-    } );
-  } )
+    return json;
+  }
+
+  if ( halflife < 25 ) {
+    // TODO: soon in next deploy no filtering needed
+    return fetch('https://' + lang + '.' + project + '.org/api/rest_v1/feed/trending/edits').then(( data ) => {
+      return data.json();
+    }).then(filterLowEdits).then(score);
+  } else {
+    return week.load().then(filterLowEdits).then(score);
+  }
 }
 
 export default trending
