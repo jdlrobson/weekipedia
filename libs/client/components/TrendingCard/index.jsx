@@ -12,7 +12,7 @@ class TrendingCard extends Component {
     var totalEditors = this.props.editors || (this.props.contributors.length + this.props.anons.length);
     var prevIndex = this.props.lastIndex;
     var curIndex = this.props.index;
-    var startDate = this.props.timestamp || this.props.start;
+    var startDate = this.props.since || this.props.timestamp || this.props.start;
     var label, glyph;
     var bias = this.props.bias || 1;
 
