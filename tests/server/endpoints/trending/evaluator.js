@@ -17,7 +17,7 @@ var evaluator = new TrendEvaluator( {
   minSpeed: 0.1,
   minAnonEdits: 1,
   maxAnonEditRatio: 0.51,
-  maxBias: 0.55,
+  maxBias: 0.52,
   minAge: 5,
   maxAge: 300
 } );
