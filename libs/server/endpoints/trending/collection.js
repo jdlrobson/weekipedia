@@ -9,7 +9,7 @@ var collection;
 if ( TREND_ENABLED ) {
   collection = new WikiSocketCollection( {
     id: 'mysocket',
-    project: '*.' + project + '.org',
+    project: 'en.' + project + '.org',
     minPurgeTime: 40,
     maxLifespan: ( 60 * 24 ) * 7,
     maxInactivity: ( 60 * 24 ) * 7,
