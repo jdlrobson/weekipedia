@@ -88,5 +88,10 @@ function extractElements( html, selector, doNotRemove ) {
   };
 }
 
-export { isNodeEmpty, extractElements, cleanupScrubbedLists };
+function extractText( html ) {
+  var window = domino.createWindow( '<div>' + html + '</div>' );
+  return window.document.body.textContent;
+}
+
+export { isNodeEmpty, extractElements, extractText, cleanupScrubbedLists };
 

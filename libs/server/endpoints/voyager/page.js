@@ -4,7 +4,7 @@ import page from './../page'
 import mwApi from './../mwApi';
 import addProps from './../prop-enricher'
 
-import { extractElements, isNodeEmpty, cleanupScrubbedLists } from './domino-utils'
+import { extractElements, isNodeEmpty, cleanupScrubbedLists, extractText } from './domino-utils'
 import extractDestinations from './extract-destinations'
 import extractImages from './extract-images'
 import climateExtraction from './extract-climate'
@@ -227,6 +227,7 @@ export default function ( title, lang, project, revision ) {
       var p = { text: data.lead.paragraph };
       cleanup( p );
       data.lead.paragraph = p.text;
+      data.lead.paragraph_text = extractText( p.text );
       newSection = cleanup( data.lead.sections[0] );
       newSection = extractImages( newSection );
       newSection = extractMaps( newSection );

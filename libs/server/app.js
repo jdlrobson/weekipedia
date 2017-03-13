@@ -234,6 +234,9 @@ app.get( '/:lang?/*', ( req, res ) => {
     if ( data.fallbackProps && data.fallbackProps.lead ) {
       lead = data.fallbackProps.lead;
       desc = lead.description;
+      if ( lead.paragraph_text ) {
+        desc = lead.paragraph_text;
+      }
       noIndex = data.fallbackProps.noIndex;
       title = lead.normalizedtitle || lead.displaytitle || '';
       place = title;
