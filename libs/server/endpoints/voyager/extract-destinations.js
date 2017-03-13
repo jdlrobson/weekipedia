@@ -11,7 +11,7 @@ function has( array, title ) {
   } );
   return needle;
 }
-function extractDestinations( section ) {
+function extractDestinations( section, originalTitle ) {
   var destinations = [];
   var seeAlso = [];
   // scrape oute routeBoxes. I haven't worked out what to do with them yet.
@@ -47,6 +47,10 @@ function extractDestinations( section ) {
       p.parentNode.removeChild( p );
     }
   } );
+  // exclude the original title
+  destinations = destinations.filter((a)=>{
+    return a.title !== originalTitle;
+  })
   section.destinations = destinations;
   section.text = cleanupScrubbedLists( ext.document.body.innerHTML );
   section.seeAlso = seeAlso;

@@ -297,7 +297,7 @@ export default function ( title, lang, project, revision ) {
 
           if ( cardSectionTocLevel !== undefined && !isSubPage ) {
             if ( DESTINATION_BLACKLIST.indexOf( curSectionLine ) === -1 ) {
-              section = extractDestinations( section );
+              section = extractDestinations( section, title );
               if ( section.destinations ) {
                 allDestinations = allDestinations.concat( section.destinations );
               }
