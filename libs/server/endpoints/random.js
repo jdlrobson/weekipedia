@@ -4,7 +4,7 @@ import cardFilter from './voyager/card-filter'
 
 const number_articles = 100;
 
-export default function ( lang, ns, project, continueParams ) {
+function random ( lang, ns, project, continueParams ) {
   var params = {
     prop: 'pageterms|pageimages|pageassessments|coordinates',
     generator: 'random',
@@ -25,4 +25,23 @@ export default function ( lang, ns, project, continueParams ) {
       } );
       return data;
     } );
+}
+
+export default function ( lang, ns, project, continueParams ) {
+  var pages = [];
+  var randomQuery = this;
+
+  function randomRecursive() {
+    return random( lang, ns, project, continueParams ).then( (data ) => {
+        pages = pages.concat( data.pages );
+        if ( pages.length < number_articles ) {
+          return randomRecursive( continueParams );
+        } else {
+          data.pages = pages.slice( 0, number_articles );
+          return data;
+        }
+      })
+  }
+
+  return randomRecursive( continueParams );
 }
