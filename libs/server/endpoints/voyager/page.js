@@ -372,6 +372,11 @@ export default function ( title, lang, project, revision ) {
       if ( json.lead ) {
         json.lead.project_source = 'wikipedia';
       }
+      // Limit to locations otherwise all sorts of subjects will show up from wikipedia.
+      // e.g. http://localhost:8142/en.wikivoyage/Love
+      if ( !json.code && !json.lead && !json.lead.coordinates ) {
+        throw '404';
+      }
       return transform( json );
     } );
   } );
