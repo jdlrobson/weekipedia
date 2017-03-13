@@ -30,6 +30,8 @@ const ITEMS_TO_DELETE = [
 const sectionBlacklist = [ 'Learn', 'Work', 'Stay safe', 'Stay healthy',
   'Cope', 'Respect', 'Connect' ];
 
+const TITLE_BLACKLIST = [ 'Travel topics' ];
+
 export default function ( title, lang, project, revision ) {
   project = 'wikivoyage';
   // FIXME: This can be done in mobile content service
@@ -47,9 +49,12 @@ export default function ( title, lang, project, revision ) {
 
       if ( page && page.coordinates ) {
         data.lead.coordinates = page.coordinates.length ? page.coordinates[0] : page.coordinates;
-      } else if ( page && page.pageassessments && page.pageassessments.topic ) {
-        throw "404EXCLUDE: This is a topic and not supported by the app.";
+      } else if ( page && page.pageassessments && ( page.pageassessments.topic || page.pageassessments.phrasebook ) ) {
+        throw '404EXCLUDE: This is a topic/phrasebook and not supported by the app.';
+      } else if ( TITLE_BLACKLIST.indexOf( page.title ) > -1 ) {
+        throw '404EXCLUDE: Blacklisted page';
       }
+
       data.lead.images = [];
       if ( page && page.pageprops ) {
         title = page.pageprops.wpb_banner;
