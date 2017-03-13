@@ -31,13 +31,7 @@ export default React.createClass({
       searchUrl = "#/search";
       exploreUrl = "#/explore/";
     }
-    var featuredProps = Object.assign( {}, this.props, { pages: undefined } );
-
     var body = [
-      <div className="featured-card col-1" key="nomad-featured" >
-        <h2>Featured destination</h2>
-        <CardList {...featuredProps} apiEndpoint={'/api/voyager/featured/'} limit={1} />
-      </div>,
       <div className="quote-box" key="home-quote">
         <blockquote>{quote}</blockquote>
         <span className="author">Mark Twain</span>
