@@ -38,10 +38,11 @@ export default React.createClass({
     var halflife = args[1] || props.halflife;
     var prefix = '/wiki/Special:Feed/'
 
-    var endpoint = '/api/trending/' + wiki + '/' + halflife;
+    var endpoint = '/api/en.wikipedia.org/rest_v1/feed/trending/edits/' + ( halflife * 2 );
     var hrClass = '', dayClass = '', wkClass = '', tClass = '';
-    if ( wiki === 'beta' ) {
-      endpoint = '/api/en.wikipedia.org/rest_v1/feed/trending/edits/' + ( halflife * 2 );
+    if ( wiki === 'old' || halflife === '84' ) {
+      wiki = 'enwiki';
+      endpoint = '/api/trending/' + wiki + '/' + halflife;
     }
     if ( halflife === HALF_LIFE_DAYS ) {
       emptyProps.msg = 'Nothing has happened today.';
