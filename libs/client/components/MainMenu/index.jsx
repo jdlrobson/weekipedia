@@ -35,7 +35,7 @@ class MainMenu extends Component {
       if ( this.props.session ) {
         username = this.props.session.username;
         login = [
-          <Icon glyph="mf-profile" href={prefix + 'User:' + username }
+          <Icon glyph="mf-profile" href={prefix + '/User:' + username }
             key="menu-item-profile"
            label={username} type="before" onClick={onMenuItemClick} />,
           <Icon glyph="mf-logout" href='/auth/logout'
@@ -44,17 +44,17 @@ class MainMenu extends Component {
         ];
         usertools = [
           <li key="menu-item-watchlist">
-            <Icon glyph="mf-watchlist" href={prefix + 'Special:Watchlist' }
+            <Icon glyph="mf-watchlist" href={prefix + '/Special:Watchlist' }
               label={msg('menu-watchlist')} type="before" onClick={onMenuItemClick} />
           </li>,
           <li key="menu-item-contribs">
-            <Icon glyph="mf-contributions" href={prefix + 'Special:Contributions/' + username }
+            <Icon glyph="mf-contributions" href={prefix + '/Special:Contributions/' + username }
               label={msg('menu-contributions')} type="before" onClick={onMenuItemClick} />
           </li>
         ];
       } else {
         login = <Icon glyph="mf-anonymous"
-          href={prefix + 'Special:UserLogin?returnto=' + props.title}
+          href={prefix + '/Special:UserLogin?returnto=' + props.title}
           label={msg('menu-login')} type="before" onClick={this.onLoginClick.bind(this)} />;
       }
       return (
