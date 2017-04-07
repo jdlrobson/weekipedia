@@ -119,6 +119,11 @@ Setup push notifications
 	export TREND_MIN_TOTAL_EDITS=2
 	export TREND_MIN_CONTRIBUTORS=1
 
+### Trending
+If you want to collate trending topics over the course of a week period you'll need to setup a cronjob to occur every 12hrs.
+
+	wget https://trending.wmflabs.org/api/edit-trends-week?
+
 ### Collections
 Enable user public collections (as alternative to watchstar)
 

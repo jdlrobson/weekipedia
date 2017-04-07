@@ -40,9 +40,11 @@ export default React.createClass({
 
     var endpoint = '/api/en.wikipedia.org/rest_v1/feed/trending/edits/' + ( halflife * 2 );
     var hrClass = '', dayClass = '', wkClass = '', tClass = '';
-    if ( wiki === 'old' || halflife === '84' ) {
+    if ( wiki === 'old' ) {
       wiki = 'enwiki';
       endpoint = '/api/trending/' + wiki + '/' + halflife;
+    } else if ( halflife === '84' ) {
+      endpoint = '/api/edit-trends-week'
     }
     if ( halflife === HALF_LIFE_DAYS ) {
       emptyProps.msg = 'Nothing has happened today.';

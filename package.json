@@ -70,6 +70,7 @@
     "wikipedia-edits-scorer": "^1.5.0",
     "wikipedia-react-components": "^1.2.3",
     "wikitrender": "jdlrobson/wikitrender",
+    "wikily-edit-trends": "jdlrobson/wikily-edit-trends",
     "wmui-base": "wikimedia/WikimediaUI-Base"
   },
   "dependencies": {
