@@ -313,7 +313,7 @@ export default React.createClass({
     var session = this.state.session;
     var username = session ? session.username : '~your device';
     var search = (<SearchForm msg={this.props.msg}
-      placeholder={props.msg( 'search' )}
+      placeholder={props.msg( 'search' )} key="chrome-search-form"
       language_project={props.language_project}
       onClickSearch={this.onClickSearch} />);
 
