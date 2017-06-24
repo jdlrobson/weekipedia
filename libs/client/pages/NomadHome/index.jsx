@@ -3,6 +3,7 @@ import React from 'react'
 import CardList from './../../components/CardList'
 
 import Article from './../Article'
+import PagePreviewOverlay from './../../overlays/PagePreviewOverlay'
 
 import './styles.less'
 
@@ -23,6 +24,13 @@ export default React.createClass({
   componentDidMount() {
     this.setState( { jsEnabled: true } );
   },
+  launchOverlay( ev, item ) {
+    var props = this.props;
+    ev.preventDefault();
+    this.props.showOverlay( <PagePreviewOverlay
+      onClickInternalLink={props.onClickInternalLink}
+      getLocalUrl={props.getLocalUrl} item={item} /> );
+  },
   render(){
     var quote = "Twenty years from now you will be more disappointed by the things that you didn't do than by the ones you did do. So throw off the bowlines. Sail away from the safe harbor. Catch the trade winds in your sails. Explore. Dream. Discover.";
     var searchUrl, exploreUrl;
@@ -37,6 +45,7 @@ export default React.createClass({
         <span className="author">Mark Twain</span>
       </div>,
       <CardList key="nomad-list" {...this.props} unordered="1" apiEndpoint={cardUrl}
+        onCardClick={this.launchOverlay}
         className="card-list-images" />,
     ];
     var tagline = (<span>Click the map or scroll to adventure.</span>)
