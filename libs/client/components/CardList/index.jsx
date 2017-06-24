@@ -26,12 +26,15 @@ function getCards( data, props, keyPrefix ) {
     data.pages.forEach( function ( item, i ) {
       var id = item.revid || item.pageid || item.id;
       item.key = keyPrefix + 'card-' + i + '-' + id + '-' + props.language_project;
+
       item.onClick = function ( ev ) {
         var node = ev.currentTarget;
         var link = node.tagName === 'A' ? node : node.querySelector( 'a' );
         var href = link.getAttribute( 'href' );
         var title = link.getAttribute( 'title' );
-        if ( href ) {
+        if ( props.onCardClick ) {
+          props.onCardClick( ev, item );
+        } else if ( href ) {
           ev.preventDefault();
           props.router.navigateTo( { pathname: href }, title );
         }
@@ -109,6 +112,7 @@ export default React.createClass({
     var props = this.props;
     var onEmpty = props.onEmpty;
     var cardListProps = {
+      onCardClick: props.onCardClick,
       lang: props.lang,
       session: props.session,
       msg: props.msg,
