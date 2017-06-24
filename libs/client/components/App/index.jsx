@@ -300,7 +300,7 @@ export default createReactClass({
   },
   render(){
     var props = this.props;
-    var search = (<SearchForm
+    var search = (<SearchForm key="chrome-search-form"
       placeholder={props.msg( 'search' )}
       language_project={props.language_project}
       onClickSearch={this.onClickSearch} />);
