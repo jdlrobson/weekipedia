@@ -1,11 +1,12 @@
 import React from 'react'
+import createReactClass from 'create-react-class'
 
 import { CardDiff } from 'wikipedia-react-components'
 
 import CardListPage from './CardListPage'
 
 // Pages
-export default React.createClass({
+export default createReactClass({
   getDefaultProps: function () {
     return {
       api: null

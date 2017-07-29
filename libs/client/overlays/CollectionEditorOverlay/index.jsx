@@ -1,4 +1,5 @@
 import React from 'react'
+import createReactClass from 'create-react-class'
 import { Button, Input, IntermediateState } from 'wikipedia-react-components'
 
 import CollectionCard from './../../components/CollectionCard'
@@ -7,7 +8,7 @@ import Overlay from './../Overlay'
 
 import './styles.less'
 
-export default React.createClass({
+export default createReactClass({
   getInitialState() {
     return {
       waiting: true,

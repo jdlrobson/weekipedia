@@ -1,10 +1,11 @@
 import React from 'react'
+import createReactClass from 'create-react-class'
 
 import WatchListEdit from './WatchlistEdit'
 import WatchListFeed from './WatchlistFeed'
 
 // Pages
-export default React.createClass({
+export default createReactClass({
   render(){
     var props = this.props;
     var isEditWatchlist = props.title === 'EditWatchlist';

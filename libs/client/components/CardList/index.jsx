@@ -1,5 +1,5 @@
 import React from 'react'
-
+import createReactClass from 'create-react-class'
 import { ErrorBox, IntermediateState, ListHeader,
   CardWithLocation, CardList } from 'wikipedia-react-components';
 
@@ -58,7 +58,7 @@ function getCards( data, props, keyPrefix ) {
   return cards;
 }
 
-export default React.createClass({
+export default createReactClass({
   getDefaultProps: function () {
     return {
       CardClass: CardWithLocation,

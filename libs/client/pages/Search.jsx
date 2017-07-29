@@ -1,9 +1,10 @@
 import React from 'react'
+import createReactClass from 'create-react-class'
 
 import CardListPage from './CardListPage'
 
 // Pages
-export default React.createClass({
+export default createReactClass({
   navigateTo( ev ) {
     var link = ev.currentTarget;
     var href = link.getAttribute( 'href' );

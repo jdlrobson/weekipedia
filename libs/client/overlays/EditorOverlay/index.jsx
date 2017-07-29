@@ -1,4 +1,5 @@
 import React from 'react'
+import createReactClass from 'create-react-class'
 import { Button, Icon, Input, IntermediateState, Panel, TruncatedText } from 'wikipedia-react-components'
 
 import Content from './../../components/Content'
@@ -13,7 +14,7 @@ const EDIT_STEP = 0;
 const PREVIEW_STEP = 1;
 const SAVE_STEP = 2;
 
-export default React.createClass({
+export default createReactClass({
   getInitialState() {
     return {
       step: EDIT_STEP,

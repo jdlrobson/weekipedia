@@ -1,4 +1,5 @@
 import React from 'react'
+import createReactClass from 'create-react-class'
 import { Icon, IntermediateState, Panel } from 'wikipedia-react-components'
 
 import Content from './../../components/Content'
@@ -8,7 +9,7 @@ import Overlay from './../Overlay'
 import './styles.less'
 import './icons.less'
 
-export default React.createClass({
+export default createReactClass({
   getInitialState() {
     return {
       error: false,

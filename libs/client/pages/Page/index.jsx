@@ -1,4 +1,5 @@
 import React from 'react'
+import createReactClass from 'create-react-class'
 
 import { Button, ErrorBox, IntermediateState } from 'wikipedia-react-components';
 import LastModifiedBar from './LastModifiedBar'
@@ -19,7 +20,7 @@ const OFFLINE_ERROR_MESSAGE = 'You need an internet connection to view this page
 const NOT_FOUND_MESSAGE = 'This page does not exist.';
 
 // Pages
-export default React.createClass({
+export default createReactClass({
   getDefaultProps: function () {
     return {
       api: null,

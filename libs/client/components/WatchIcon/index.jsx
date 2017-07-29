@@ -1,4 +1,5 @@
 import React from 'react'
+import createReactClass from 'create-react-class'
 
 import CtaIcon from '../CtaIcon'
 
@@ -6,7 +7,7 @@ import CollectionOverlay from './../../overlays/CollectionOverlay'
 
 import './icons.less'
 
-export default React.createClass({
+export default createReactClass({
   getInitialState(){
     return {
       collections: null

@@ -1,4 +1,5 @@
 import React from 'react'
+import createReactClass from 'create-react-class'
 import { Button, ErrorBox, Icon, Input,
   IntermediateState, LinkList, Panel, TruncatedText } from 'wikipedia-react-components'
 
@@ -9,7 +10,7 @@ import Overlay from './../Overlay'
 
 import './styles.less'
 
-export default React.createClass({
+export default createReactClass({
   getInitialState() {
     return {
       indent: 2,

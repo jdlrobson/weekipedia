@@ -1,10 +1,11 @@
 import React from 'react'
+import createReactClass from 'create-react-class'
 
 import CardList from './../../../components/CardList'
 
 import './styles.less'
 
-export default React.createClass({
+export default createReactClass({
   getInitialState() {
     return {};
   },

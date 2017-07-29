@@ -1,4 +1,5 @@
 import React from 'react'
+import createReactClass from 'create-react-class'
 
 import { Icon, Button } from 'wikipedia-react-components';
 
@@ -11,7 +12,7 @@ import './icons.less'
 import './styles.less'
 
 // Pages
-export default React.createClass({
+export default createReactClass({
   onTalkClick( ev ) {
     ev.preventDefault();
     this.props.router.navigateTo( '#/talk/' );

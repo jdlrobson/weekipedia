@@ -1,10 +1,11 @@
 import React from 'react'
+import createReactClass from 'create-react-class'
 
 import CtaIcon from './../CtaIcon'
 
 import './icons.less'
 
-export default React.createClass({
+export default createReactClass({
   render(){
     var props = this.props;
     var section = props.section;
