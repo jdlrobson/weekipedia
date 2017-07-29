@@ -211,7 +211,7 @@ function initGetMethods( app ) {
   app.get( '/api/edit-trends-week', ( req, res ) => {
     cachedResponse( res, req.url, function () {
       return trendingWeek();
-    });
+    } );
   } );
   app.get( '/api/trending/:wiki/:halflife', ( req, res ) => {
     var wiki = req.params.wiki;
