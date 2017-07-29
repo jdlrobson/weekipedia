@@ -1,4 +1,5 @@
 import React from 'react'
+import createReactClass from 'create-react-class'
 import { Button, HorizontalList, IntermediateState, TruncatedText, Icon,
   ErrorBox } from 'wikipedia-react-components'
 
@@ -6,7 +7,7 @@ import './styles.less'
 
 import Overlay from './../Overlay'
 
-export default React.createClass({
+export default createReactClass({
   getInitialState() {
     return {
       width: window.innerWidth,

@@ -1,4 +1,5 @@
 import React from 'react'
+import createReactClass from 'create-react-class'
 import { ErrorBox, HorizontalList, IntermediateState } from 'wikipedia-react-components'
 
 import Content from './../components/Content'
@@ -7,7 +8,7 @@ import Article from './Article'
 import CardListPage from './CardListPage'
 
 // Pages
-export default React.createClass({
+export default createReactClass({
   getDefaultProps: function () {
     return {
       api: null,

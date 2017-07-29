@@ -1,5 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
+import createReactClass from 'create-react-class'
 
 import CardList from './../components/CardList'
 import CollectionCard from './../components/CollectionCard'
@@ -10,7 +11,7 @@ import Article from './Article'
 const COLLECTIONS_ARE_NOT_ORDERED = true;
 
 // Pages
-export default React.createClass({
+export default createReactClass({
   getInitialState() {
     return {
       defaultView: false,

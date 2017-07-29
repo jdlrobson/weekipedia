@@ -1,11 +1,12 @@
 import React from 'react'
+import createReactClass from 'create-react-class'
 
 import CardListPage from './CardListPage'
 
 import { Icon, CardDiff } from 'wikipedia-react-components'
 
 // Pages
-export default React.createClass({
+export default createReactClass({
   render(){
     var title, lead, tagline,
       source = this.props.language_project || this.props.lang,

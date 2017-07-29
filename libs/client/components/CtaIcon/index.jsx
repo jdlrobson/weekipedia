@@ -1,10 +1,11 @@
 import React from 'react'
+import createReactClass from 'create-react-class'
 
 import { Icon } from 'wikipedia-react-components'
 
 import CtaDrawer from './../../overlays/CtaDrawer'
 
-export default React.createClass({
+export default createReactClass({
   dispatch( ev ) {
     var props = this.props;
     ev.stopPropagation();

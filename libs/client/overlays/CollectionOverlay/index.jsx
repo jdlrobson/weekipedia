@@ -1,4 +1,5 @@
 import React from 'react'
+import createReactClass from 'create-react-class'
 
 import Overlay from './../Overlay'
 import { Icon } from 'wikipedia-react-components'
@@ -6,7 +7,7 @@ import { Icon } from 'wikipedia-react-components'
 import './styles.less'
 import './icons.less'
 
-export default React.createClass({
+export default createReactClass({
   getDefaultProps() {
     return {
       

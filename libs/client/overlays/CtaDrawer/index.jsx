@@ -1,9 +1,10 @@
 import React from 'react'
+import createReactClass from 'create-react-class'
 
 import Overlay from './../Overlay'
 import { Button } from 'wikipedia-react-components'
 
-export default React.createClass({
+export default createReactClass({
   getDefaultProps() {
     return {
       message: 'You need to sign in to use this feature'

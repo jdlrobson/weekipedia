@@ -1,4 +1,5 @@
 import React from 'react'
+import createReactClass from 'create-react-class'
 import { Icon, SearchForm, Panel } from 'wikipedia-react-components'
 
 import CardList from './../../components/CardList'
@@ -7,7 +8,7 @@ import Overlay from './../Overlay'
 
 import './styles.less'
 
-export default React.createClass({
+export default createReactClass({
   getInitialState() {
     return {
       isSearching: false,

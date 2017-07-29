@@ -1,4 +1,5 @@
 import React from 'react'
+import createReactClass from 'create-react-class'
 
 import CardList from './../components/CardList'
 import { IntermediateState } from 'wikipedia-react-components'
@@ -6,7 +7,7 @@ import { IntermediateState } from 'wikipedia-react-components'
 import Article from './Article'
 
 // Pages
-export default React.createClass({
+export default createReactClass({
   getInitialState() {
     return {
       endpoint: null

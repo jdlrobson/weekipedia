@@ -1,4 +1,5 @@
 import React from 'react'
+import createReactClass from 'create-react-class'
 
 import TrendingCard from './../components/TrendingCard';
 import PushButton from './../components/PushButton';
@@ -10,7 +11,7 @@ const HALF_LIFE_DAYS = '12';
 const HALF_LIFE_WEEKS = '84';
 
 // Pages
-export default React.createClass({
+export default createReactClass({
   getDefaultProps: function () {
     return {
       router: null,

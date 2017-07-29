@@ -1,4 +1,5 @@
 import React from 'react'
+import createReactClass from 'create-react-class'
 
 import { Icon } from 'wikipedia-react-components'
 
@@ -25,7 +26,7 @@ function getListItems( sections, suffix ) {
   } )
 }
 
-export default React.createClass({
+export default createReactClass({
   render() {
     // FIXME: class `toc-mobile` is only added for consistency with MobileFrontend
     return (

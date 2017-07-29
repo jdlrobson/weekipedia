@@ -1,4 +1,5 @@
 import React from 'react'
+import createReactClass from 'create-react-class'
 import timeago from 'timeago'
 import { HorizontalList, Icon, IntermediateState } from 'wikipedia-react-components'
 
@@ -11,7 +12,7 @@ import './styles.less'
 const IGNORED_GROUPS = [ 'user', 'autoconfirmed', '*' ];
 
 // Pages
-export default React.createClass({
+export default createReactClass({
   getInitialState() {
     return {
       diff: null

@@ -1,4 +1,5 @@
 import React from 'react'
+import createReactClass from 'create-react-class'
 import { IntermediateState, LinkList, Panel, SearchInput } from 'wikipedia-react-components'
 
 import Content from './../../components/Content'
@@ -7,7 +8,7 @@ import Overlay from './../Overlay'
 
 import './styles.less'
 
-export default React.createClass({
+export default createReactClass({
   getInitialState() {
     return {
       term: null,

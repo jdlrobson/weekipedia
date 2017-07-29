@@ -1,4 +1,5 @@
 import React from 'react'
+import createReactClass from 'create-react-class'
 import { Button, ErrorBox, Panel } from 'wikipedia-react-components';
 
 function getSubscriptionId( subscription ) {
@@ -21,7 +22,7 @@ function getPushProvider( endpoint ) {
 }
 
 // Pages
-export default React.createClass({
+export default createReactClass({
   getInitialState() {
     return {
       serviceWorkerRegistration: null,

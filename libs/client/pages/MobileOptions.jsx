@@ -1,4 +1,5 @@
 import React from 'react'
+import createReactClass from 'create-react-class'
 
 import mwStorage from './../mediawiki-storage'
 
@@ -7,7 +8,7 @@ import Article from './Article'
 import { IntermediateState, Checkbox } from 'wikipedia-react-components'
 
 // Pages
-export default React.createClass({
+export default createReactClass({
   getConfig() {
     var config = mwStorage.get( 'mobile-options' );
     if ( !config ) {

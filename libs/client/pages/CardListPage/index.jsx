@@ -1,4 +1,5 @@
 import React from 'react'
+import createReactClass from 'create-react-class'
 
 import { CardWithLocation } from 'wikipedia-react-components'
 
@@ -11,7 +12,7 @@ import Article from './../Article'
 import './styles.less'
 
 // Pages
-export default React.createClass({
+export default createReactClass({
   getDefaultProps: function () {
     return {
       CardClass: CardWithLocation,
