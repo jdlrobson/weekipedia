@@ -97,6 +97,7 @@ export default createReactClass({
     return (
       <Overlay router={props.router} header={heading} search={search}
         siteinfo={props.siteinfo}
+        onExit={props.onExit}
         primaryIcon={false}
         siteoptions={props.siteoptions}
           chromeHeader={true}

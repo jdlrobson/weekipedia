@@ -10,9 +10,9 @@ import ChromeHeader from './../../components/ChromeHeader'
 // Main component
 
 class Overlay extends Component {
-  onClose(){
+  onClose(ev){
     if ( this.props.onExit ) {
-      this.props.onExit();
+      this.props.onExit(ev);
     } else {
       this.props.router.back();
     }
