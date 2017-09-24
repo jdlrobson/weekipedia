@@ -1,4 +1,6 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import DOM from 'react-dom-factories';
 
 import { Icon, ErrorBox, IntermediateState } from 'wikipedia-react-components'
 import EditIcon from './../EditIcon'
@@ -75,7 +77,7 @@ class Section extends Component {
     var state = this.state;
     var isCollapsible = this.props.isCollapsible;
     var hLevel = this.props.toclevel + 1;
-    var hMethod = React.DOM['h' + hLevel];
+    var hMethod = DOM['h' + hLevel];
     var isExpanded = this.state.isOpen !== undefined ? this.state.isOpen : !isCollapsible;
 
     var headingChildren = [
@@ -119,10 +121,12 @@ class Section extends Component {
     )
   }
 }
+
 Section.propTypes = {
-  isEditable: React.PropTypes.bool,
-  isCollapsible: React.PropTypes.bool
+  isEditable: PropTypes.bool,
+  isCollapsible: PropTypes.bool
 };
+
 Section.defaultProps = {
   isEditable: true,
   isCollapsible: true,
