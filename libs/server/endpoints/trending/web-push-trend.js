@@ -6,6 +6,8 @@ import Evaluator from './evaluator'
 import addProps from './../prop-enricher'
 import cachedResponse from './../../cached-response.js'
 
+import { DEFAULT_PROJECT, LANGUAGE_CODE } from './../../config'
+
 const EDITS_PER_MIN = process.env.TREND_EDITS_PER_MIN || 20 / 60;
 const BIAS = process.env.TREND_BIAS || 0.55;
 const MIN_AGE = process.env.TREND_MIN_AGE || 5;
@@ -13,8 +15,11 @@ const MAX_AGE = process.env.TREND_MAX_AGE || 300;
 const MIN_EDITS = process.env.TREND_MIN_TOTAL_EDITS || 20;
 const MIN_CONTRIBUTORS = process.env.TREND_MIN_CONTRIBUTORS || 2;
 const TREND_MIN_ANON_EDITS = process.env.TREND_MIN_ANON_EDITS || 1;
+const PROJECT = `${LANGUAGE_CODE}.${DEFAULT_PROJECT}.org`;
 
 var evaluator = new Evaluator( {
+  id: 'trending.wmflabs.org',
+  project: PROJECT,
   minEdits: MIN_EDITS,
   minContributors: MIN_CONTRIBUTORS,
   minSpeed: EDITS_PER_MIN,
@@ -25,26 +30,29 @@ var evaluator = new Evaluator( {
   maxAge: MAX_AGE
 } );
 
+let hadFirstEvent = false;
+
 if ( collection ) {
-  console.log( '# Trending setup:', EDITS_PER_MIN, BIAS, MIN_AGE,
-    MAX_AGE, MIN_EDITS, MIN_CONTRIBUTORS, TREND_MIN_ANON_EDITS );
+  console.log( `# Trending setup:', edits/m=${EDITS_PER_MIN}, bias=${BIAS}, minAge=${MIN_AGE}, maxage=${MAX_AGE}, minedits=${MIN_EDITS}, mincontributors=${MIN_CONTRIBUTORS} minAnonEdits=${TREND_MIN_ANON_EDITS}, project=${PROJECT}` );
 
   collection.on( 'edit', function ( item, collection ) {
-    if ( item.wiki === 'enwiki' ) {
 
-      if ( evaluator.isTrending( item ) ) {
-        collection.markSafe( item.id );
-        if ( !item.trendedAt ) {
-          // tell me
-          console.log( 'Trended', item.title, item.editsPerMinute(), item.getBias(), item.age(), item.contributors );
-          item.trendedAt = new Date();
-          cachedResponse.invalidate( '/api/web-push/service/trending/' );
-          // ping people
-          subscriber.broadcast( 'trending' );
-        }
-      } else if ( evaluator.mightTrend( item ) ) {
-        collection.markSafe( item.id );
+    if ( evaluator.isTrending( item ) ) {
+      collection.markSafe( item.id );
+      if ( !item.trendedAt ) {
+        // tell meTrended Fort Collins, Colorado 1 1 0.00005 [ 'Omygoshogolly' ]
+        console.log( 'Trended', item.title, item.editsPerMinute(),
+          item.getBias(), item.age(), item.contributors );
+        item.trendedAt = new Date();
+        cachedResponse.invalidate( '/api/web-push/service/trending/' );
+        // ping people
+        subscriber.broadcast( 'trending' );
       }
+    } else if ( evaluator.mightTrend( item ) ) {
+      collection.markSafe( item.id );
+    } else if ( !hadFirstEvent ) {
+      console.log( 'Received first event for an edit to ', item.title );
+      hadFirstEvent = true;
     }
   } );
 }
