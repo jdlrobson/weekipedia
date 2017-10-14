@@ -43,7 +43,9 @@ export default createReactClass({
   },
   loadServiceWorker( serviceWorkerPath ) {
     var self = this;
-    navigator.serviceWorker.register( serviceWorkerPath ).then( function ( serviceWorkerRegistration ) {
+    navigator.serviceWorker.register( serviceWorkerPath,
+      { scope: '/push' }
+    ).then( function ( serviceWorkerRegistration ) {
       self.setState( { serviceWorkerRegistration: serviceWorkerRegistration } );
       serviceWorkerRegistration.pushManager.getSubscription().then( function ( subscription ) {
         self.setState( { isEnabled: subscription ? true : false, isLoading: false, subscription: subscription } );
