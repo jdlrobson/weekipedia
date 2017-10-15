@@ -4,8 +4,13 @@ import { Button, ErrorBox, Panel } from 'wikipedia-react-components';
 
 function getSubscriptionId( subscription ) {
   var provider = getPushProvider( subscription.endpoint );
+  var endpoint = subscription.endpoint;
   if ( provider === 'firefox' ) {
-    return subscription.endpoint.split( 'https://updates.push.services.mozilla.com/push/' )[1];
+    if ( endpoint.indexOf( 'wpush/' ) > -1 ) {
+      return endpoint.split( /wpush\/v[0-9]*\// )[1];
+    } else {
+      return endpoint.split( 'push/' )[1];
+    }
   } else {
     return subscription.endpoint.split( 'https://android.googleapis.com/gcm/send/' )[1];
   }
@@ -80,8 +85,8 @@ export default createReactClass({
       feature: this.props.serviceName
     } ).then( function () {
       self.setState( { isLoading: false, isEnabled: action === 'subscribe' } );
-    } ).catch( function () {
-      self.setState( { isError: true } );
+    } ).catch( function ( e ) {
+      self.setState( { isError: true, isSubscriptionError: true, errorMsg: e } );
     } );
   },
   toggle() {
@@ -121,8 +126,12 @@ export default createReactClass({
       label = this.state.isEnabled ? 'Disable' : 'Enable';
       onClick = this.toggle;
     } else {
-      error = this.state.isBlocked ? 'Please enable push notifications in your web browser.'
-        : 'Your web browser does not support push notifications.';
+        if ( this.state.isSubscriptionError ) {
+          error = 'There was a problem with the server: ' + this.state.errorMsg;
+        } else {
+          error = this.state.isBlocked ? 'Please enable push notifications in your web browser.'
+            : 'Your web browser does not support push notifications.';
+        }
     }
 
     return error ? <ErrorBox msg={error} /> : (
