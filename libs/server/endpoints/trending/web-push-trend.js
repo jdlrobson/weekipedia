@@ -93,8 +93,6 @@ function trend() {
       addProps(  trended, [ 'pageimages','pageterms' ] ).then( function ( pages ) {
         pages = trendSort( pages );
         resolve( {
-          // for old workers:
-          page: pages[0],
           pages: pages,
           ts: new Date()
         } );
