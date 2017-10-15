@@ -16,6 +16,7 @@ const MIN_EDITS = process.env.TREND_MIN_TOTAL_EDITS || 20;
 const MIN_CONTRIBUTORS = process.env.TREND_MIN_CONTRIBUTORS || 2;
 const TREND_MIN_ANON_EDITS = process.env.TREND_MIN_ANON_EDITS || 1;
 const PROJECT = `${LANGUAGE_CODE}.${DEFAULT_PROJECT}.org`;
+const ANON_EDIT_RATIO = process.env.TREND_MAX_ANON_EDIT_RATIO || 0.51
 
 var evaluator = new Evaluator( {
   id: 'trending.wmflabs.org',
@@ -24,8 +25,8 @@ var evaluator = new Evaluator( {
   minContributors: MIN_CONTRIBUTORS,
   minSpeed: EDITS_PER_MIN,
   maxBias: BIAS,
-  minAnonEdits: 1,
-  maxAnonEditRatio: 0.51,
+  minAnonEdits: TREND_MIN_ANON_EDITS,
+  maxAnonEditRatio: ANON_EDIT_RATIO,
   minAge: MIN_AGE,
   maxAge: MAX_AGE
 } );
@@ -33,10 +34,11 @@ var evaluator = new Evaluator( {
 let hadFirstEvent = false;
 
 if ( collection ) {
-  console.log( `# Trending setup:', edits/m=${EDITS_PER_MIN}, bias=${BIAS}, minAge=${MIN_AGE}, maxage=${MAX_AGE}, minedits=${MIN_EDITS}, mincontributors=${MIN_CONTRIBUTORS} minAnonEdits=${TREND_MIN_ANON_EDITS}, project=${PROJECT}` );
+  console.log( `# Trending setup:', edits/m=${EDITS_PER_MIN}, bias=${BIAS}, minAge=${MIN_AGE}, maxage=${MAX_AGE}, minedits=${MIN_EDITS}, mincontributors=${MIN_CONTRIBUTORS}, maxAnonEditRatio=${ANON_EDIT_RATIO} minAnonEdits=${TREND_MIN_ANON_EDITS}, project=${PROJECT}` );
 
   collection.on( 'edit', function ( item, collection ) {
-
+    var numContributors = item.contributors.length;
+    console.log( 'b=', item.getBias(), 'e=', item.edits, 'c=', numContributors, 'age=', item.age(), 's=', item.editsPerMinute() );
     if ( evaluator.isTrending( item ) ) {
       collection.markSafe( item.id );
       if ( !item.trendedAt ) {
@@ -49,6 +51,9 @@ if ( collection ) {
         subscriber.broadcast( 'trending' );
       }
     } else if ( evaluator.mightTrend( item ) ) {
+      if ( numContributors > MIN_CONTRIBUTORS - 2 ) {
+        console.log( `${item.title} may trend with ${numContributors} contrs, age=${item.age()} and bias ${item.getBias()} and speed ${item.editsPerMinute()} and ${item.edits} edits.` );
+      }
       collection.markSafe( item.id );
     } else if ( !hadFirstEvent ) {
       console.log( 'Received first event for an edit to ', item.title );
