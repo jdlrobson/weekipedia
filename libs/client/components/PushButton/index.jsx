@@ -107,7 +107,7 @@ export default createReactClass({
     }
   },
   componentDidMount() {
-    if ( !this.props.serviceWorker ) {
+    if ( !this.props.serviceWorker || !navigator.serviceWorker ) {
       this.setState( { isError: true } );
     } else {
       this.loadServiceWorker( this.props.serviceWorker );
