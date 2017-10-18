@@ -38,7 +38,6 @@ if ( collection ) {
 
   collection.on( 'edit', function ( item, collection ) {
     var numContributors = item.contributors.length;
-    console.log( 'b=', item.getBias(), 'e=', item.edits, 'c=', numContributors, 'age=', item.age(), 's=', item.editsPerMinute() );
     if ( evaluator.isTrending( item ) ) {
       collection.markSafe( item.id );
       if ( !item.trendedAt ) {
