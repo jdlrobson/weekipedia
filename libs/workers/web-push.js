@@ -39,7 +39,7 @@ function pushTrendNotification() {
             body: page.description,
             data: 'https://trending.wmflabs.org/wiki/' + title + '?referrer=push'
           };
-          console.log('send', title, data );
+          console.log( 'send', title, data );
           // if it's recent send notification
           return self.registration.showNotification( title + ' is trending on Wikipedia', data )
         }
