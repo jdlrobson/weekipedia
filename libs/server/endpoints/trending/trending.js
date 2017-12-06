@@ -93,6 +93,10 @@ function annotate( p, filter, limit, key ) {
   return res;
 }
 
+function significantBytesChange( bytesChanged ) {
+  return bytesChanged > MIN_BYTES_CHANGED || bytesChanged < -MIN_BYTES_CHANGED;
+}
+
 /**
  * @param {String} wiki name of wiki to generate a list of trending articles for
  * @param {Float} halflife in hours at which pages become less trending
@@ -108,7 +112,7 @@ function trending( wiki, halflife, project, title ) {
     var fn = function ( item ) {
       return title ? item.title === title :
         item.contributors.length + item.anons.length > 2 && ( wiki === '*' || item.wiki === wiki ) &&
-        item.bytesChanged > MIN_BYTES_CHANGED &&
+        significantBytesChange( item.bytesChanged ) &&
       ( item.age() / 60 ) < ( halflife * 2 ) &&
         item.score > 0;
     };
