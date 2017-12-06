@@ -27,13 +27,12 @@ function calcScore( edits, halflife ) {
   );
 }
 
-function scorePages( halflife, visitData ) {
-  var p = collection.getPages();
-  p.forEach( function ( item ) {
+function scorePages( pages, halflife, visitData ) {
+  return pages.map( function ( item ) {
     item.views = visitData[item.title] || 0;
     item.score = calcScore( item, halflife );
+    return item;
   } );
-  return p;
 }
 
 function sortScoredPages( pages ) {
@@ -127,7 +126,7 @@ function trending( wiki, halflife, project, title ) {
           visitLookup[page.title] = page.delta;
         } );
       }
-      var pages = scorePages( halflife, visitLookup );
+      var pages = scorePages( collection.getPages(), halflife, visitLookup );
       var results = annotate( sortScoredPages( pages ), fn, 50, key );
       if ( !results.length ) {
         resolve( {

@@ -224,7 +224,7 @@ function initGetMethods( app ) {
 
   app.get( '/api/trending-debug/:wiki/:title', ( req, res ) => {
     cachedResponse( res, req.url, function () {
-      return trending( req.params.wiki, 0.1, DEFAULT_PROJECT, req.params.title );
+      return trending( req.params.wiki, 12, DEFAULT_PROJECT, req.params.title );
     } );
   } )
 
