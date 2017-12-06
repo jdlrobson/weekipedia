@@ -39,7 +39,7 @@ export default createReactClass({
     var halflife = args[1] || props.halflife;
     var prefix = '/wiki/Special:Feed/'
 
-    var endpoint = '/api/en.wikipedia.org/rest_v1/feed/trending/edits/' + ( halflife * 2 );
+    var endpoint = '/api/trending/enwiki/' + ( halflife * 2 );
     var hrClass = '', dayClass = '', wkClass = '', tClass = '';
     if ( wiki === 'old' ) {
       wiki = 'enwiki';
