@@ -5,7 +5,7 @@ function respond( res, method ) {
     res.send( responseText );
     return responseText;
   } ).catch( function ( error ) {
-    var msg = error.toString();
+    var msg = error ? error.toString() : 'Rejected without error message';
     var code = 500;
     if ( msg.indexOf( 'Not logged in' ) > -1 ) {
       code = 401;
