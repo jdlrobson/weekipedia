@@ -122,9 +122,9 @@ Setup push notifications. You'll need a Google Cloud Messaging API key from http
 	export TREND_MIN_CONTRIBUTORS=1
 
 ### Trending
-If you want to collate trending topics over the course of a week period you'll need to setup a cronjob to occur every 12hrs.
+For the Special:Feed page to work you will need to enable the trending flag.
 
-	wget https://trending.wmflabs.org/api/edit-trends-week?
+	export TREND_ENABLED=1
 
 ### Collections
 Enable user public collections (as alternative to watchstar)

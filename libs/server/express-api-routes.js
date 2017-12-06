@@ -7,7 +7,6 @@ import watch from './endpoints/watch'
 import visits from './endpoints/visits'
 import webPushTrend from './endpoints/trending/web-push-trend.js'
 import trending from './endpoints/trending/trending'
-import trendingWeek from './endpoints/trending/week'
 import subscribe from './endpoints/subscribe'
 import search from './endpoints/search'
 import references from './endpoints/references'
@@ -208,11 +207,6 @@ function initPostMethods( app ) {
 }
 
 function initGetMethods( app ) {
-  app.get( '/api/edit-trends-week', ( req, res ) => {
-    cachedResponse( res, req.url, function () {
-      return trendingWeek();
-    } );
-  } );
   app.get( '/api/trending/:wiki/:halflife', ( req, res ) => {
     var wiki = req.params.wiki;
     var halflife = parseFloat( req.params.halflife );
