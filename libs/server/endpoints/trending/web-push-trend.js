@@ -95,7 +95,7 @@ function trend() {
     } );
 
     if ( trended.length ) {
-      addProps(  trended, [ 'pageimages','pageterms' ] ).then( function ( pages ) {
+      addProps(  trended, [ 'pageimages','pageterms', 'categories' ] ).then( function ( pages ) {
         pages = trendSort( pages );
         resolve( {
           pages: pages,

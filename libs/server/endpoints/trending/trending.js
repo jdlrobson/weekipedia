@@ -27,51 +27,6 @@ function calcScore( edits, halflife ) {
   );
 }
 
-function categoriesToTags( pages ) {
-  const keywords = {
-    actors: 'film',
-    deaths: 'death',
-    wrestling: 'wrestling',
-    // e.g. Time person of the year
-    'annual magazine': 'publication',
-    'current wildfires': 'wildfire',
-    events: 'event',
-    sports: 'sports',
-    royalty: 'monarchy',
-    motorsport: 'sports',
-    scandals: 'scandal',
-    controversies: 'scandal',
-    'cabinet members': 'politics',
-    elections: 'politics',
-    politicians: 'politics',
-    films: 'movies',
-    winners: 'recognition',
-    'video games': 'entertainment',
-    'game franchises': 'entertainment',
-    'football players': 'sports',
-    'football coaches': 'sports',
-    'baseball players': 'sports',
-    'category:leaders': 'politics',
-    'television seasons': 'tv',
-    'tv series': 'tv',
-    'upcoming albums': 'music'
-  };
-
-  return pages.map( function ( page ) {
-    var tags = [];
-    page.categories.forEach( function ( category ) {
-      const title = category.toLowerCase();
-      Object.keys( keywords ).forEach( function ( keyword ) {
-        var tag = keywords[keyword]
-        if ( title.indexOf( keyword ) > -1 && tags.indexOf( tag ) === -1 ) {
-          tags.push( tag );
-        }
-      } );
-    } );
-    page.tags = tags;
-    return page;
-  } );
-}
 function scorePages( pages, halflife, visitData ) {
   return pages.map( function ( item ) {
     item.views = visitData[item.title] || 0;
@@ -184,7 +139,7 @@ function trending( wiki, halflife, project, title ) {
           [ 'pageimages','pageterms', 'categories' ], lang, project )
         .then( function ( results ) {
           resolve( {
-            pages: categoriesToTags( results ),
+            pages: results,
             ts: new Date()
           } );
         } )

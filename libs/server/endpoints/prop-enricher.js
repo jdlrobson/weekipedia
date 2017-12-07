@@ -1,5 +1,52 @@
 import mwApi from './mwApi'
 
+function categoriesToTags( pages ) {
+  const keywords = {
+    actors: 'film',
+    deaths: 'death',
+    wrestling: 'wrestling',
+    // e.g. Time person of the year
+    'annual magazine': 'publication',
+    'current wildfires': 'wildfire',
+    events: 'event',
+    sports: 'sports',
+    royalty: 'monarchy',
+    motorsport: 'sports',
+    scandals: 'scandal',
+    controversies: 'scandal',
+    'cabinet members': 'politics',
+    elections: 'politics',
+    politicians: 'politics',
+    films: 'movies',
+    winners: 'recognition',
+    'video games': 'entertainment',
+    'game franchises': 'entertainment',
+    'football players': 'sports',
+    'football coaches': 'sports',
+    'baseball players': 'sports',
+    'category:leaders': 'politics',
+    'television seasons': 'tv',
+    'tv series': 'tv',
+    'upcoming albums': 'music'
+  };
+
+  return pages.map( function ( page ) {
+    var tags = [];
+    var categories = page.categories || [];
+    categories.forEach( function ( category ) {
+      const title = category.toLowerCase();
+      Object.keys( keywords ).forEach( function ( keyword ) {
+        var tag = keywords[keyword]
+        if ( title.indexOf( keyword ) > -1 && tags.indexOf( tag ) === -1 ) {
+          tags.push( tag );
+        }
+      } );
+    } );
+    page.tags = tags;
+    return page;
+  } );
+}
+
 function propEnricher( arr, props, lang, project, params ) {
   lang = lang || 'en';
   project = project || 'wikipedia';
@@ -56,9 +103,11 @@ function propEnricher( arr, props, lang, project, params ) {
       if ( page.thumbnail && page.pageimage ) {
         page.thumbnail.title = 'File:' + page.pageimage;
       }
-      index[page.title].categories = page.categories.map( function ( category ) {
-        return category.title;
-      } );
+      if ( page.categories ) {
+        index[page.title].categories = page.categories.map( function ( category ) {
+          return category.title;
+        } );
+      }
       index[page.title].thumbnail = page.thumbnail;
       index[page.title].coordinates = page.coordinates;
       if ( page.missing ) {
@@ -78,8 +127,9 @@ function propEnricher( arr, props, lang, project, params ) {
         page.description = obj.description;
       }
     } );
-    return arr;
-  } ).catch( function () {
+    return categoriesToTags( arr );
+  } ).catch( function (e) {
+    console.log(e);
     // Looks like the endpoint is down or no internet connection - so return original array
     return arr;
   } );
