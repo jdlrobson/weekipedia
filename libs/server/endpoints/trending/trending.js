@@ -40,6 +40,7 @@ function categoriesToTags( pages ) {
     scandals: 'scandal',
     controversies: 'scandal',
     'cabinet members': 'politics',
+    elections: 'politics',
     'television seasons': 'tv',
     'tv series': 'tv',
     'upcoming albums': 'music'
