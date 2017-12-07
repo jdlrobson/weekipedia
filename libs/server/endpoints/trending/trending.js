@@ -30,7 +30,19 @@ function calcScore( edits, halflife ) {
 function categoriesToTags( pages ) {
   const keywords = {
     actors: 'film',
-    deaths: 'death'
+    deaths: 'death',
+    wrestling: 'wrestling',
+    // e.g. Time person of the year
+    'annual magazine': 'publication',
+    'current wildfires': 'wildfire',
+    events: 'event',
+    sports: 'sports',
+    scandals: 'scandal',
+    controversies: 'scandal',
+    'cabinet members': 'politics',
+    'television seasons': 'tv',
+    'tv series': 'tv',
+    'upcoming albums': 'music'
   };
 
   return pages.map( function ( page ) {
