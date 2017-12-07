@@ -3,7 +3,7 @@ import scorer from 'wikipedia-edits-scorer'
 import addProps from './../prop-enricher'
 import visits from './../visits'
 
-import collection from './collection'
+import collections from './collection'
 
 const MIN_BYTES_CHANGED = 100;
 
@@ -27,6 +27,27 @@ function calcScore( edits, halflife ) {
   );
 }
 
+function categoriesToTags( pages ) {
+  const keywords = {
+    actors: 'film',
+    deaths: 'death'
+  };
+
+  return pages.map( function ( page ) {
+    var tags = [];
+    page.categories.forEach( function ( category ) {
+      const title = category.replace( 'Category:', '' ).toLowerCase();
+      Object.keys( keywords ).forEach( function ( keyword ) {
+        var tag = keywords[keyword]
+        if ( title.indexOf( keyword ) > -1 && tags.indexOf( tag ) === -1 ) {
+          tags.push( tag );
+        }
+      } );
+    } );
+    page.tags = tags;
+    return page;
+  } );
+}
 function scorePages( pages, halflife, visitData ) {
   return pages.map( function ( item ) {
     item.views = visitData[item.title] || 0;
@@ -106,6 +127,7 @@ function trending( wiki, halflife, project, title ) {
   var lang = wiki.replace( 'wiki', '' );
   project = project || 'wikipedia';
   var key = wiki + '-' + halflife;
+  var collection = collections[lang];
 
   return new Promise( function ( resolve, reject ) {
     var fn = function ( item ) {
@@ -134,9 +156,11 @@ function trending( wiki, halflife, project, title ) {
           ts: new Date()
         } );
       } else {
-        addProps( results, [ 'pageimages','pageterms' ], lang, project ).then( function ( results ) {
+        addProps( results,
+          [ 'pageimages','pageterms', 'categories' ], lang, project )
+        .then( function ( results ) {
           resolve( {
-            pages: results,
+            pages: categoriesToTags( results ),
             ts: new Date()
           } );
         } )

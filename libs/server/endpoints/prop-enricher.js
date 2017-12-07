@@ -32,6 +32,10 @@ function propEnricher( arr, props, lang, project, params ) {
   if ( props.indexOf( 'coordinates' ) > -1 ) {
     params.colimit = 'max';
   }
+  if ( props.indexOf( 'categories' ) > -1 ) {
+    params.clshow = '!hidden';
+    params.cllimit = 'max';
+  }
   if ( props.indexOf( 'pageterms' ) > -1 ) {
     params.wbptterms = 'description';
   }
@@ -52,6 +56,9 @@ function propEnricher( arr, props, lang, project, params ) {
       if ( page.thumbnail && page.pageimage ) {
         page.thumbnail.title = 'File:' + page.pageimage;
       }
+      index[page.title].categories = page.categories.map( function ( category ) {
+        return category.title;
+      } );
       index[page.title].thumbnail = page.thumbnail;
       index[page.title].coordinates = page.coordinates;
       if ( page.missing ) {
@@ -65,6 +72,7 @@ function propEnricher( arr, props, lang, project, params ) {
       if ( obj.missing ) {
         page.missing = true;
       }
+      page.categories = obj.categories;
       page.coordinates = obj.coordinates;
       if ( obj.description && !page.description ) {
         page.description = obj.description;

@@ -1,6 +1,6 @@
 import subscriber from 'web-push-subscriber'
 
-import collection from './collection'
+import collections from './collection'
 import Evaluator from './evaluator'
 
 import addProps from './../prop-enricher'
@@ -32,6 +32,7 @@ var evaluator = new Evaluator( {
 } );
 
 let hadFirstEvent = false;
+let collection = collections.en;
 
 if ( collection ) {
   console.log( `# Trending setup:', edits/m=${EDITS_PER_MIN}, bias=${BIAS}, minAge=${MIN_AGE}, maxage=${MAX_AGE}, minedits=${MIN_EDITS}, mincontributors=${MIN_CONTRIBUTORS}, maxAnonEditRatio=${ANON_EDIT_RATIO} minAnonEdits=${TREND_MIN_ANON_EDITS}, project=${PROJECT}` );

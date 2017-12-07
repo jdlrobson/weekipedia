@@ -4,10 +4,10 @@ const project = process.env.PROJECT || 'wikipedia';
 const TREND_ENABLED = process.env.TREND_ENABLED ?
   Boolean( parseInt( process.env.TREND_ENABLED, 10 ) ) : false;
 
-var collection;
+var collections = {};
 
 if ( TREND_ENABLED ) {
-  collection = new WikiSocketCollection( {
+  collections.en = new WikiSocketCollection( {
     id: 'mysocket',
     project: 'en.' + project + '.org',
     minPurgeTime: 40,
@@ -15,6 +15,14 @@ if ( TREND_ENABLED ) {
     maxInactivity: ( 60 * 24 ) * 7,
     minSpeed: 0.1
   } );
+  collections.sv = new WikiSocketCollection( {
+    id: 'sv-socket',
+    project: 'sv.' + project + '.org',
+    minPurgeTime: 40,
+    maxLifespan: ( 60 * 24 ) * 7,
+    maxInactivity: ( 60 * 24 ) * 7,
+    minSpeed: 0.1
+  } );
 }
 
-export default collection
+export default collections;
