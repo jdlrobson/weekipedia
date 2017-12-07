@@ -49,9 +49,10 @@ class TrendingCard extends Component {
     var speed = mins < 1 ? totalEdits : ( totalEdits / mins ).toFixed( 2 );
 
     var indicator = [<Icon glyph={glyph} className='indicator' small={true} type="before" />];
+    var namedTags = this.props.tags || [];
     indicator.push(
       <span className="tags">{
-        this.props.tags.map((tag, i) => {
+        namedTags.map((tag, i) => {
           return <span key={'tag-' + i}>{tag}</span>;
         })
       }</span>
