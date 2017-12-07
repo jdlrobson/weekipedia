@@ -210,7 +210,8 @@ function initPostMethods( app ) {
 function initGetMethods( app ) {
   app.get( '/api/edit-trends-week', ( req, res ) => {
     cachedResponse( res, req.url, function () {
-      return trendingWeek();
+      const url = `${req.protocol}://${req.get( 'host' )}/api/trending/enwiki/24`;
+      return trendingWeek( url );
     } );
   } );
   app.get( '/api/trending/:wiki/:halflife', ( req, res ) => {

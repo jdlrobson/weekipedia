@@ -68,7 +68,7 @@ class TrendingCard extends Component {
         by {totalEditors} editors {anonTotalEditorsMsg} {revertMsg}(since {timeago( new Date( startDate ) )})
       </span>,
       <span
-        data-speed={speed} data-score={this.props.score}
+        data-speed={speed} data-score={this.props.trendiness}
         data-tags={tags.join( ' | ' )} data-bias={bias.toFixed(2)}></span>
     ];
 

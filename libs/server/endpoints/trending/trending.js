@@ -75,14 +75,14 @@ function categoriesToTags( pages ) {
 function scorePages( pages, halflife, visitData ) {
   return pages.map( function ( item ) {
     item.views = visitData[item.title] || 0;
-    item.score = calcScore( item, halflife );
+    item.trendiness = calcScore( item, halflife );
     return item;
   } );
 }
 
 function sortScoredPages( pages ) {
   return pages.sort( function ( q, r ) {
-    return q.score > r.score ? -1 : 1;
+    return q.trendiness > r.trendiness ? -1 : 1;
   } );
 }
 
@@ -159,7 +159,7 @@ function trending( wiki, halflife, project, title ) {
         item.contributors.length + item.anons.length > 2 && ( wiki === '*' || item.wiki === wiki ) &&
         significantBytesChange( item.bytesChanged ) &&
       ( item.age() / 60 ) < ( halflife * 2 ) &&
-        item.score > 0;
+        item.trendiness > 0;
     };
     if ( !collection ) {
       reject( 'Trending is disabled. A site admin should enable it via TREND_ENABLED.' );
