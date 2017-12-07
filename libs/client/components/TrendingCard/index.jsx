@@ -51,8 +51,8 @@ class TrendingCard extends Component {
     var indicator = [<Icon glyph={glyph} className='indicator' small={true} type="before" />];
     indicator.push(
       <span className="tags">{
-        this.props.tags.map((tag) => {
-          return <span>{tag}</span>;
+        this.props.tags.map((tag, i) => {
+          return <span key={'tag-' + i}>{tag}</span>;
         })
       }</span>
     );
