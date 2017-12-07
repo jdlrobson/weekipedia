@@ -82,7 +82,7 @@ export default createReactClass({
     return (
       <CardListPage {...this.props} apiEndpoint={endpoint} tabs={links}
         emptyProps={emptyProps} CardClass={TrendingCard}
-        title='Hot' tagline="The wiki in real time">{push}</CardListPage>
+        title='Hot' tagline="The wiki in real time" preamble={push}></CardListPage>
     )
   }
 })

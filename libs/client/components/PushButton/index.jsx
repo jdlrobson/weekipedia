@@ -1,6 +1,7 @@
 import React from 'react'
 import createReactClass from 'create-react-class'
 import { Button, ErrorBox, Panel } from 'wikipedia-react-components';
+import './styles.less';
 
 function getSubscriptionId( subscription ) {
   var provider = getPushProvider( subscription.endpoint );
