@@ -1,5 +1,10 @@
 import mwApi from './mwApi'
 
+const ENT = 'tv/movie';
+const EVENT = 'event';
+const POLITICS = 'politics';
+const AWARDS = 'awards';
+
 function categoriesToTags( pages ) {
   const keywords = {
     actors: 'film',
@@ -14,19 +19,24 @@ function categoriesToTags( pages ) {
     motorsport: 'sports',
     scandals: 'scandal',
     controversies: 'scandal',
-    'cabinet members': 'politics',
-    elections: 'politics',
-    politicians: 'politics',
-    films: 'movies',
-    winners: 'recognition',
-    'video games': 'entertainment',
-    'game franchises': 'entertainment',
+    'cabinet members': POLITICS,
+    elections: POLITICS,
+    politicians: POLITICS,
+    presidential: POLITICS,
+    'house of representatives': POLITICS,
+    films: ENT,
+    'awards and honors': AWARDS,
+    winners: AWARDS,
+    'video games': ENT,
+    'game franchises': ENT,
     'football players': 'sports',
     'football coaches': 'sports',
+    ' videos': 'entertainment',
     'baseball players': 'sports',
-    'category:leaders': 'politics',
-    'television seasons': 'tv',
-    'tv series': 'tv',
+    '–present': EVENT,
+    'category:leaders': POLITICS,
+    'television seasons': ENT,
+    'tv series': ENT,
     'upcoming albums': 'music'
   };
 
@@ -128,8 +138,7 @@ function propEnricher( arr, props, lang, project, params ) {
       }
     } );
     return categoriesToTags( arr );
-  } ).catch( function (e) {
-    console.log(e);
+  } ).catch( function () {
     // Looks like the endpoint is down or no internet connection - so return original array
     return arr;
   } );
