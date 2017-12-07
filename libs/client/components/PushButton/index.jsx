@@ -136,7 +136,7 @@ export default createReactClass({
     }
 
     return error ? <ErrorBox msg={error} /> : (
-      <Panel>
+      <Panel className=" push-button-panel">
         <p>{msg}</p>
         <Button className="push-button" onClick={onClick} label={label}></Button>
       </Panel>
