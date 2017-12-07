@@ -51,6 +51,7 @@ function categoriesToTags( pages ) {
     'football players': 'sports',
     'football coaches': 'sports',
     'baseball players': 'sports',
+    'category:leaders': 'politics',
     'television seasons': 'tv',
     'tv series': 'tv',
     'upcoming albums': 'music'
@@ -59,7 +60,7 @@ function categoriesToTags( pages ) {
   return pages.map( function ( page ) {
     var tags = [];
     page.categories.forEach( function ( category ) {
-      const title = category.replace( 'Category:', '' ).toLowerCase();
+      const title = category.toLowerCase();
       Object.keys( keywords ).forEach( function ( keyword ) {
         var tag = keywords[keyword]
         if ( title.indexOf( keyword ) > -1 && tags.indexOf( tag ) === -1 ) {
