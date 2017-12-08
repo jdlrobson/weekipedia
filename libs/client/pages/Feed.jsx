@@ -45,7 +45,7 @@ export default createReactClass({
       wiki = 'enwiki';
       endpoint = '/api/trending/' + wiki + '/' + halflife;
     } else if ( halflife === '84' ) {
-      endpoint = '/api/edit-trends-week'
+      endpoint = '/api/trending/edit-trends-week'
     }
     if ( halflife === HALF_LIFE_DAYS ) {
       emptyProps.msg = 'Nothing has happened today.';

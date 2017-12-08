@@ -107,7 +107,7 @@ Enable talk button for anonymous users
 	export SHOW_TALK_ANONS=1
 
 ### Push notifications
-Setup push notifications. You'll need a Google Cloud Messaging API key from https://console.developers.google.com/.
+To setup push notifications, you'll need a Google Cloud Messaging API key from https://console.developers.google.com/.
 
 	export GCM_SENDER_ID=
 	export GCM_API_KEY=
@@ -120,11 +120,6 @@ Setup push notifications. You'll need a Google Cloud Messaging API key from http
 	export TREND_MAX_AGE=100000
 	export TREND_MIN_TOTAL_EDITS=2
 	export TREND_MIN_CONTRIBUTORS=1
-
-### Trending
-If you want to collate trending topics over the course of a week period you'll need to setup a cronjob to occur every 12hrs.
-
-	wget https://trending.wmflabs.org/api/edit-trends-week?
 
 ### Collections
 Enable user public collections (as alternative to watchstar)

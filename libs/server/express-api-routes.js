@@ -5,10 +5,7 @@ import watchlist from './endpoints/watchlist'
 import watched from './endpoints/watched'
 import watch from './endpoints/watch'
 import visits from './endpoints/visits'
-import webPushTrend from './endpoints/trending/web-push-trend.js'
-import trending from './endpoints/trending/trending'
-import trendingDebug from './endpoints/trending/debug'
-import trendingWeek from './endpoints/trending/week'
+import webPushTrend from './endpoints/push-notifications/web-push-trend.js'
 import subscribe from './endpoints/subscribe'
 import search from './endpoints/search'
 import references from './endpoints/references'
@@ -29,7 +26,9 @@ import cachedResponses from './cached-response.js'
 import { DEFAULT_PROJECT, API_PATH, ALLOWED_PROJECTS, DUMMY_SESSION, COLLECTIONS_INCLUDE_WATCHLIST } from './config'
 
 import initApiProxy from 'express-wikimedia-api-proxy'
+import oauthFetchJson from 'oauth-fetch-json'
 
+const TRENDING_HOST = 'http://wikipedia-trending.wmflabs.org';
 const RESPONSE_OKAY = JSON.stringify( { msg: 'OK' } );
 const cachedResponse = cachedResponses.cachedResponse
 const invalidate = cachedResponses.invalidate
@@ -209,31 +208,12 @@ function initPostMethods( app ) {
 }
 
 function initGetMethods( app ) {
-  app.get( '/api/edit-trends-week', ( req, res ) => {
+  app.get( new RegExp( '(^\/api\/trending\/.*)$' ), ( req, res ) => {
     cachedResponse( res, req.url, function () {
-      const url = `${req.protocol}://${req.get( 'host' )}/api/trending/enwiki/24`;
-      return trendingWeek( url );
+      console.log( `${TRENDING_HOST}${req.params[0]}` );
+      return oauthFetchJson( `${TRENDING_HOST}${req.params[0]}` );
     } );
   } );
-  app.get( '/api/trending/:wiki/:halflife', ( req, res ) => {
-    var wiki = req.params.wiki;
-    var halflife = parseFloat( req.params.halflife );
-
-    cachedResponse( res, req.url, function () {
-      return trending( wiki, halflife, DEFAULT_PROJECT );
-    } );
-  } )
-
-  app.get( '/api/trending-debug/:wiki/:title?', ( req, res ) => {
-    cachedResponse( res, req.url, function () {
-      if ( req.params.title ) {
-        // TODO: use trendingDebug
-        return trending( req.params.wiki, 12, DEFAULT_PROJECT, req.params.title );
-      } else {
-        return trendingDebug( req.params.wiki );
-      }
-    } );
-  } )
 
   app.get( '/api/random/:lang/', ( req, res ) => {
     return cachedResponse( res, null, function () {
