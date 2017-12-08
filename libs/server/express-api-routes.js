@@ -7,6 +7,7 @@ import watch from './endpoints/watch'
 import visits from './endpoints/visits'
 import webPushTrend from './endpoints/trending/web-push-trend.js'
 import trending from './endpoints/trending/trending'
+import trendingDebug from './endpoints/trending/debug'
 import trendingWeek from './endpoints/trending/week'
 import subscribe from './endpoints/subscribe'
 import search from './endpoints/search'
@@ -223,9 +224,14 @@ function initGetMethods( app ) {
     } );
   } )
 
-  app.get( '/api/trending-debug/:wiki/:title', ( req, res ) => {
+  app.get( '/api/trending-debug/:wiki/:title?', ( req, res ) => {
     cachedResponse( res, req.url, function () {
-      return trending( req.params.wiki, 12, DEFAULT_PROJECT, req.params.title );
+      if ( req.params.title ) {
+        // TODO: use trendingDebug
+        return trending( req.params.wiki, 12, DEFAULT_PROJECT, req.params.title );
+      } else {
+        return trendingDebug( req.params.wiki );
+      }
     } );
   } )
 
