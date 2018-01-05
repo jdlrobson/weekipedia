@@ -129,6 +129,8 @@ export default createReactClass({
     if ( typeof document !== 'undefined' ) {
       this.mountLanguage( props );
       this.mountOverlay( props );
+      // set the title to the title as specified in the props
+      this.setState( { title: props.title } );
 
       var localSession = this.getLocalSession();
       if ( !this.state.session ) {
@@ -207,13 +209,15 @@ export default createReactClass({
     var childNode = link.firstChild;
     var parentNode = link.parentNode;
     var props = this.props;
+    var state = this.state;
     var allowForeignProjects = props.siteoptions.allowForeignProjects;
 
     if ( parentNode.className === 'mw-ref' ) {
       ev.preventDefault();
       ev.stopPropagation();
       refId = link.getAttribute( 'href' ).split( '#' )[1];
-      this.showOverlay( <ReferenceDrawer {...props} refId={refId} hijackLinks={this.hijackLinks} /> );
+      this.showOverlay( <ReferenceDrawer {...props} title={state.title}
+        refId={refId} hijackLinks={this.hijackLinks} /> );
 
     } else if ( childNode && childNode.nodeName === 'IMG' ) {
       href = link.getAttribute( 'href' ) || '';
