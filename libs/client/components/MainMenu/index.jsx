@@ -6,23 +6,23 @@ import './styles.less'
 import './icons.less'
 
 class MainMenu extends Component {
-  onMenuItemClick(){
+  onMenuItemClick( ev ){
     if ( this.props.onItemClick ) {
-      this.props.onItemClick();
-      this.props.onClickInternalLink.apply( this, arguments );
+      this.props.onItemClick( ev );
+      this.props.onClickInternalLink( ev );
     }
   }
-  onLoginClick() {
+  onLoginClick(ev) {
     if ( this.props.onLoginClick ) {
-      this.props.onLoginClick();
+      this.props.onLoginClick( ev );
     }
-    this.onMenuItemClick();
+    this.onMenuItemClick( ev );
   }
-  onLogoutClick() {
+  onLogoutClick(ev) {
     if ( this.props.onLogoutClick ) {
-      this.props.onLogoutClick();
+      this.props.onLogoutClick( ev );
     }
-    this.onMenuItemClick();
+    this.onMenuItemClick( ev );
   }
   getUserMenu() {
     var login, username, usertools,
