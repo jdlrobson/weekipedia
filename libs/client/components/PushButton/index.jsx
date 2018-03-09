@@ -1,5 +1,4 @@
 import React from 'react'
-import createReactClass from 'create-react-class'
 import { Button, ErrorBox, Panel } from 'wikipedia-react-components';
 import './styles.less';
 
@@ -28,9 +27,10 @@ function getPushProvider( endpoint ) {
 }
 
 // Pages
-export default createReactClass({
-  getInitialState() {
-    return {
+class PushButton extends React.Component {
+  constructor(props){
+   super(props);
+   this.state = {
       serviceWorkerRegistration: null,
       subscription: null,
       isLoading: true,
@@ -39,14 +39,7 @@ export default createReactClass({
       isBlocked: false,
       isEnabled: null
     };
-  },
-  getDefaultProps() {
-    return {
-      api: null,
-      serviceName: 'trending',
-      serviceWorker: '/push-bundle.js'
-    };
-  },
+  }
   loadServiceWorker( serviceWorkerPath ) {
     var self = this;
     navigator.serviceWorker.register( serviceWorkerPath,
@@ -57,7 +50,7 @@ export default createReactClass({
         self.setState( { isEnabled: subscription ? true : false, isLoading: false, subscription: subscription } );
       } );
     } );
-  },
+  }
   load( serviceWorkerPath ) {
     var serviceWorkerSupport = 'serviceWorker' in navigator,
       pushManagerSupport = 'PushManager' in window,
@@ -74,7 +67,7 @@ export default createReactClass({
     } else {
       this.setState( { isError: true } );
     }
-  },
+  }
   doAction( action ) {
     var self = this;
     var subscription = this.state.subscription;
@@ -89,7 +82,7 @@ export default createReactClass({
     } ).catch( function ( e ) {
       self.setState( { isError: true, isSubscriptionError: true, errorMsg: e } );
     } );
-  },
+  }
   toggle() {
     var self = this;
 
@@ -111,21 +104,21 @@ export default createReactClass({
         self.setState( { isError: true, isBlocked: Notification.permission === 'denied' } );
       } );
     }
-  },
+  }
   componentDidMount() {
     if ( !this.props.serviceWorker || !navigator.serviceWorker ) {
       this.setState( { isError: true } );
     } else {
       this.loadServiceWorker( this.props.serviceWorker );
     }
-  },
+  }
   render(){
     var label, error, onClick,
       msg = this.state.isEnabled ? 'Bored of push notifications?'
         : 'Enable push notifications and receive trends as they happen.';
     if ( !this.state.isError ) {
       label = this.state.isEnabled ? 'Disable' : 'Enable';
-      onClick = this.toggle;
+      onClick = this.toggle.bind( this );
     } else {
         if ( this.state.isSubscriptionError ) {
           error = 'There was a problem with the server: ' + this.state.errorMsg;
@@ -142,5 +135,12 @@ export default createReactClass({
       </Panel>
     )
   }
-})
+}
 
+PushButton.defaultProps = {
+  api: null,
+  serviceName: 'trending',
+  serviceWorker: '/push-bundle.js'
+};
+
+export default PushButton
