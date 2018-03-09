@@ -52,7 +52,7 @@ class TrendingCard extends Component {
       className='indicator' small={true} type="before" />];
     var namedTags = this.props.tags || [];
     indicator.push(
-      <span className="tags">{
+      <span className="tags" key="trend-tags">{
         namedTags.map((tag, i) => {
           return <span key={'tag-' + i}>{tag}</span>;
         })
