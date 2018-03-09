@@ -1,11 +1,10 @@
 import React from 'react'
-import createReactClass from 'create-react-class'
 
 import { Icon } from 'wikipedia-react-components'
 
 import CtaDrawer from './../../overlays/CtaDrawer'
 
-export default createReactClass({
+export default class CtaIcon extends React.Component {
   dispatch( ev ) {
     var props = this.props;
     ev.stopPropagation();
@@ -19,10 +18,10 @@ export default createReactClass({
     } else {
       props.showOverlay( <CtaDrawer {...this.props} message={props.ctaMsg} /> );
     }
-  },
+  }
   render(){
     return (
-      <Icon {...this.props} onClick={this.dispatch} />
+      <Icon {...this.props} onClick={this.dispatch.bind(this)} />
     )
   }
-});
+}

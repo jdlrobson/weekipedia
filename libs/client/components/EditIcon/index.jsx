@@ -1,11 +1,10 @@
 import React from 'react'
-import createReactClass from 'create-react-class'
 
 import CtaIcon from './../CtaIcon'
 
 import './icons.less'
 
-export default createReactClass({
+export default class EditIcon extends React.Component {
   render(){
     var props = this.props;
     var section = props.section;
@@ -28,4 +27,4 @@ export default createReactClass({
       <CtaIcon {...iconProps} />
     )
   }
-});
+}
