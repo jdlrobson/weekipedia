@@ -1,5 +1,4 @@
 import React from 'react'
-import createReactClass from 'create-react-class'
 import { ErrorBox, IntermediateState, ListHeader,
   CardWithLocation, CardList } from 'wikipedia-react-components';
 
@@ -58,19 +57,10 @@ function getCards( data, props, keyPrefix ) {
   return cards;
 }
 
-export default createReactClass({
-  getDefaultProps: function () {
-    return {
-      CardClass: CardWithLocation,
-      infiniteScroll: true,
-      isDiffCardList: false,
-      endpoint: null,
-      continue: null,
-      emptyMessage: 'The list is disappointedly empty.'
-    };
-  },
-  getInitialState() {
-    return {
+class WeekipediaCardList extends React.Component {
+  constructor(props){
+   super(props);
+   this.state = {
       loadingMessage: 'Loading list',
       errorMsg: 'Something went wrong when trying to render the list. Please refresh and try again.',
       error: null,
@@ -78,15 +68,15 @@ export default createReactClass({
       cards: null,
       continue: null
     };
-  },
+  }
   loadCards( props ) {
     if ( props.apiEndpoint ) {
       this.load( props.apiEndpoint );
     }
-  },
+  }
   componentWillReceiveProps( props ) {
     this.loadCards( props );
-  },
+  }
   load( apiEndpoint ) {
     var self = this;
     var api = this.props.api;
@@ -118,8 +108,8 @@ export default createReactClass({
       }
       self.setState({ error: true });
     } );
-  },
-  fetchCardListProps: function ( url, props ) {
+  }
+  fetchCardListProps( url, props ) {
     return this.props.api.fetch( url ).then( function ( data ) {
       return {
         owner: data.owner,
@@ -127,7 +117,7 @@ export default createReactClass({
         cards: getCards( data, props, url + '-' )
       };
     } );
-  },
+  }
   loadMore() {
     var url,
       continuer = this.state.continue,
@@ -143,24 +133,24 @@ export default createReactClass({
           cards: self.state.cards.concat( props.cards ) } );
       } );
     }
-  },
+  }
   onScroll() {
     var self = this;
     if ( document.body.scrollHeight >= ( document.body.scrollTop + window.innerHeight ) / 2 ) {
       self.loadMore();
     }
-  },
+  }
   componentWillUnmount() {
-    document.removeEventListener( 'scroll', this.onScroll );
-  },
+    document.removeEventListener( 'scroll', this.onScroll.bind( this ) );
+  }
   componentDidMount() {
     this.loadCards( this.props );
     // setup infinite scroll
     if ( this.props.infiniteScroll ) {
-      document.addEventListener( 'scroll', this.onScroll );
+      document.addEventListener( 'scroll', this.onScroll.bind( this ) );
     }
-  },
-  render: function () {
+  }
+  render() {
     var lastTs;
     var props = this.props;
     var isDiffCardList = this.props.isDiffCardList;
@@ -211,4 +201,15 @@ export default createReactClass({
         ordered={!isUnordered}
         className={ isDiffCardList ? ' diff-list side-list' : ''}>{cards}</CardList>;
   }
-} );
+};
+
+WeekipediaCardList.defaultProps = {
+  CardClass: CardWithLocation,
+  infiniteScroll: true,
+  isDiffCardList: false,
+  endpoint: null,
+  continue: null,
+  emptyMessage: 'The list is disappointedly empty.'
+};
+
+export default WeekipediaCardList;
