@@ -70,18 +70,20 @@ export default createReactClass({
         <h2>{props.msg( 'collection-title' )}</h2>
         <a key='edit-collection-cancel' className="cancel"
           onClick={props.closeOverlay}>Cancel</a>
-        <ul>
+        <ul key="collection-overlay-list">
           {
-            collections.map( function ( collection ) {
+            collections.map( function ( collection, i ) {
               var glyph = collection.member ? 'tick' : 'blank-tick';
               return (
-                <li onClick={watch} data-id={collection.id}>{collection.title}<Icon glyph={glyph} className="status-indicator"/></li>
+                <li onClick={watch}
+                  key={'collection-overlay-list-' + i }
+                  data-id={collection.id}>{collection.title}<Icon glyph={glyph} className="status-indicator"/></li>
               );
             } )
           }
         </ul>
         {emptyMsg}
-        <div className="collection-actions">
+        <div className="collection-actions" key="collection-overlay-actions">
           <a key='edit-collection-create'
             href={"#/edit-collection/" + props.session.username + '/'}>{props.msg('collection-create')}</a>
         </div>
