@@ -1,5 +1,4 @@
 import React from 'react'
-import createReactClass from 'create-react-class'
 
 import CtaIcon from '../CtaIcon'
 
@@ -7,27 +6,23 @@ import CollectionOverlay from './../../overlays/CollectionOverlay'
 
 import './icons.less'
 
-export default createReactClass({
-  getInitialState(){
-    return {
-      collections: null
+class WatchIcon extends React.Component {
+  constructor(props){
+   super(props);
+   this.state = {
+     collections: null
     };
-  },
-  getDefaultProps() {
-    return {
-      collection: 0
-    }
-  },
+  }
   componentWillMount() {
     if ( this.props.session && this.props.isWatched === undefined ) {
       this.loadWatchInfo();
     }
-  },
+  }
   componentDidMount() {
     if ( this.props.isWatched ) {
       this.setState( { isWatched: this.props.isWatched } );
     }
-  },
+  }
   loadWatchInfo() {
     var props = this.props;
     var title = props.title;
@@ -42,7 +37,7 @@ export default createReactClass({
     } ).catch( function () {
       self.setState( { isError: true } );
     } );
-  },
+  }
   watch( ev ) {
     var endpoint;
     var props = this.props;
@@ -59,7 +54,7 @@ export default createReactClass({
     props.api.clearCache();
     props.showNotification( state.isWatched ?
       'Page removed from watchlist.' : 'Page added to watchlist.' );
-  },
+  }
   dispatch( ev ) {
     var props = this.props;
     var collectionsEnabled = props.siteoptions && props.siteoptions.collectionsEnabled;
@@ -70,7 +65,7 @@ export default createReactClass({
     } else {
       this.watch( ev );
     }
-  },
+  }
   render(){
     var state = this.state;
     var props = this.props;
@@ -85,7 +80,7 @@ export default createReactClass({
       language_project: props.language_project,
       session: props.session,
       ctaMsg: props.msg( 'watch-cta' ),
-      onLoginClick: this.dispatch
+      onLoginClick: this.dispatch.bind( this )
     };
 
     if ( this.state.isError ) {
@@ -96,4 +91,10 @@ export default createReactClass({
       <CtaIcon {...iconProps} />
     )
   }
-});
+}
+
+WatchIcon.defaultProps = {
+  collection: 0
+};
+
+export default WatchIcon;
