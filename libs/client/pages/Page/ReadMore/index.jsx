@@ -1,17 +1,17 @@
 import React from 'react'
-import createReactClass from 'create-react-class'
 
 import CardList from './../../../components/CardList'
 
 import './styles.less'
 
-export default createReactClass({
-  getInitialState() {
-    return {};
-  },
+class ReadMore extends React.Component {
+  constructor(props){
+   super(props);
+   this.state = {};
+  }
   onEmpty() {
     this.setState( { isEmpty: true } );
-  },
+  }
   render(){
     var props = this.props;
     var langProject = props.language_project;
@@ -36,4 +36,6 @@ export default createReactClass({
       );
     }
   }
-} );
+};
+
+export default ReadMore;

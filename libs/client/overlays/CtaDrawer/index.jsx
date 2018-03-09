@@ -1,15 +1,9 @@
 import React from 'react'
-import createReactClass from 'create-react-class'
 
 import Overlay from './../Overlay'
 import { Button } from 'wikipedia-react-components'
 
-export default createReactClass({
-  getDefaultProps() {
-    return {
-      message: 'You need to sign in to use this feature'
-    };
-  },
+class CtaDrawer extends React.Component {
   render(){
     var props = this.props;
     var loginUrl = '/' + props.language_project + '/Special:UserLogin?returnto=' + encodeURIComponent( props.title );
@@ -25,5 +19,10 @@ export default createReactClass({
       </Overlay>
     )
   }
-} )
+}
 
+CtaDrawer.defaultProps = {
+  message: 'You need to sign in to use this feature'
+};
+
+export default CtaDrawer;
