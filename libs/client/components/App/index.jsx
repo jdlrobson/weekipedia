@@ -48,7 +48,7 @@ class App extends React.Component {
     } );
   }
   mountOverlay( props ) {
-    var state = state || {};
+    var state = this.state;
     var actionShowNotification = this.showNotification.bind( this );
     var actionCloseCurrentOverlay = this.closeOverlay.bind( this );
 
@@ -63,6 +63,7 @@ class App extends React.Component {
     } );
   }
   mountChildren( props, session ) {
+    var state = this.state;
     var actionShowNotification = this.showNotification.bind( this );
     var actionCloseCurrentOverlay = this.closeOverlay.bind( this );
     var actionShowOverlay = this.showOverlay.bind( this );
@@ -76,21 +77,22 @@ class App extends React.Component {
       closeOverlay: actionCloseCurrentOverlay,
       hijackLinks: this.hijackLinks.bind( this ),
       isRTL: isRTL( props.lang ),
-      session: session || this.state.session,
+      session: session || state.session,
       onClickInternalLink: actionClickLink
     } : {};
-    if ( this.state.pageviews === 0 ) {
+    if ( state.pageviews === 0 ) {
       Object.assign( childProps, props.fallbackProps || {} );
     }
 
     var children = React.Children.map( props.children, ( child ) => React.cloneElement( child, childProps ) );
-    this.setState( { children: children, pageviews: this.state.pageviews + 1 } );
+    this.setState( { children: children, pageviews: state.pageviews + 1 } );
   }
   mountLanguage( props ) {
     var newStylesheet,
       self = this,
-      pageIsRtl = this.state && this.state.isRTL,
-      curLang = this.state && this.state.lang,
+      state = this.state,
+      pageIsRtl = state.isRTL,
+      curLang = state.lang,
       newLang = props.uselang || props.lang,
       rtl = isRTL( newLang ),
       stylesheet = document.querySelector( 'link[href="/style.rtl.css"]' );
@@ -130,7 +132,7 @@ class App extends React.Component {
     return localSession;
   }
   mount( props ) {
-    var state = this.state || {};
+    var state = this.state;
 
     if ( typeof document !== 'undefined' ) {
       this.mountLanguage( props );
@@ -268,8 +270,9 @@ class App extends React.Component {
     }
   }
   closeOverlay() {
+    var state = this.state;
     // If an overlay is open
-    if ( this.state.isOverlayEnabled ) {
+    if ( state.isOverlayEnabled ) {
       this.setState( { isOverlayEnabled: false } );
       if ( window.location.hash && window.location.hash !== '#' ) {
         window.location.hash = '#';
@@ -310,6 +313,7 @@ class App extends React.Component {
     return '/' + source + '/' + title + params;
   }
   render(){
+    var state = this.state;
     var props = this.props;
     var actionClickSearch = this.onClickSearch.bind(this);
     var actionOpenPrimaryNav = this.openPrimaryNav.bind(this);
@@ -322,7 +326,7 @@ class App extends React.Component {
       language_project={props.language_project}
       onClickSearch={actionClickSearch} />);
 
-    var navigationClasses = this.state.isMenuOpen ?
+    var navigationClasses = state.isMenuOpen ?
       'primary-navigation-enabled navigation-enabled' : '';
 
     // FIXME: link should point to Special:MobileMenu
@@ -330,21 +334,21 @@ class App extends React.Component {
       id="mw-mf-main-menu-button"
       href={this.getLocalUrl( 'Special:MobileMenu' )}
       onClick={actionOpenPrimaryNav}/>;
-    var shield = this.state.isMenuOpen ? <TransparentShield /> : null;
+    var shield = state.isMenuOpen ? <TransparentShield /> : null;
 
     var toast, secondaryIcon,
-      isRTL = this.state.isRTL,
-      overlay = this.state.isOverlayEnabled ? this.state.overlay : null;
+      isRTL = state.isRTL,
+      overlay = state.isOverlayEnabled ? state.overlay : null;
 
     if ( overlay ) {
-      navigationClasses += this.state.isOverlayFullScreen ? 'overlay-enabled' : '';
+      navigationClasses += state.isOverlayFullScreen ? 'overlay-enabled' : '';
     }
 
-    if ( this.state.notification ) {
-     toast = <Toast>{this.state.notification}</Toast>;
+    if ( state.notification ) {
+     toast = <Toast>{state.notification}</Toast>;
     }
 
-    if ( this.state.session ) {
+    if ( state.session ) {
       secondaryIcon = <Icon glyph="notifications"
         onClick={actionClickLink}
         href={'/' + this.props.language_project + '/Special:Notifications'}/>
@@ -366,13 +370,13 @@ class App extends React.Component {
         <MainMenu {...this.props} onClickInternalLink={actionClickLink}
             onLogoutClick={actionOnUpdateLoginStatus}
             onLoginClick={actionOnUpdateLoginStatus}
-            onItemClick={actionClosePrimaryNav} session={this.state.session}/>
+            onItemClick={actionClosePrimaryNav} session={state.session}/>
         </nav>
         <div id="mw-mf-page-center" onClick={actionClosePrimaryNav}>
           <ChromeHeader {...props} primaryIcon={icon}
             includeSiteBranding={true}
             search={search} secondaryIcon={secondaryIcon}/>
-          {this.state.children}
+          {state.children}
           {shield}
         </div>
         { overlay }
