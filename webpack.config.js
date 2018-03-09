@@ -23,7 +23,7 @@ module.exports = {
       publicPath: "/"
     },
     plugins: [
-      new ExtractTextPlugin('style.css', { allChunks: true }),
+      new ExtractTextPlugin( { filename: 'styles.css', allChunks: true } ),
       new webpack.DefinePlugin({
         'process.env': {
           OFFLINE_STRATEGY: `"${OFFLINE_STRATEGY}"`,
@@ -37,24 +37,40 @@ module.exports = {
       }),
     ],
     resolve: {
-      extensions: ['', 'index.js', '.js', '.jsx' ]
+      extensions: ['index.js', '.js', '.jsx' ]
     },
     module: {
       loaders: [
         {
           test: /\.jsx$/,
-          loader: 'babel?presets[]=es2015&presets=react',
+          loader: 'babel-loader',
+          query: {
+            presets: [ 'es2015', 'react' ]
+          },
           exclude: /node_modules/
         },
         {
           test: /\.js$/,
-          loader: 'babel?presets[]=es2015',
+          loader: 'babel-loader',
+          query: {
+            presets: [ 'es2015' ]
+          },
           exclude: /node_modules/
         },
-        { test: /\.(svg)$/, loader: 'svg-url-loader' },
-        { test: /\.(gif|png|jpg)$/, loader: 'url?limit=25000' },
-        { test: /\.css$/, loader: ExtractTextPlugin.extract('style', 'css') },
-        { test: /\.less$/, loader: ExtractTextPlugin.extract('style', 'css!less') }
+        {
+          test: /\.(svg)$/,
+          loader: 'svg-url-loader'
+        },
+        {
+          test: /\.(gif|png|jpg)$/,
+          loader: 'url-loader',
+          query: {
+            limit: '25000'
+          }
+        },
+        { test: /\.css$/, loader: ExtractTextPlugin.extract( { fallback: 'style-loader', use: [ 'css-loader' ] } ) },
+        { test: /\.less$/, loader: ExtractTextPlugin.extract( { fallback: 'style-loader',
+          use: [ 'css-loader', 'less-loader' ] } ) }
       ]
     }
 };
