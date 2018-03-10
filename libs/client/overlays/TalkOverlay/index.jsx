@@ -1,9 +1,8 @@
 import React from 'react'
 import createReactClass from 'create-react-class'
-import { Button, ErrorBox, Icon, Input,
+import { Button, ErrorBox, Icon, Input, Content,
   IntermediateState, LinkList, Panel, TruncatedText } from 'wikipedia-react-components'
 
-import Content from './../../components/Content'
 import SectionContent from './../../components/SectionContent'
 
 import Overlay from './../Overlay'

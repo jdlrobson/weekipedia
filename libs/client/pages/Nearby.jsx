@@ -1,8 +1,6 @@
 import React from 'react'
 import createReactClass from 'create-react-class'
-import { ErrorBox, HorizontalList, IntermediateState } from 'wikipedia-react-components'
-
-import Content from './../components/Content'
+import { ErrorBox, HorizontalList, IntermediateState, Content } from 'wikipedia-react-components'
 
 import Article from './Article'
 import CardListPage from './CardListPage'

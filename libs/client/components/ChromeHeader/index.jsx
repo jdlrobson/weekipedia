@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 
-import Header from './../../components/Header'
-import { Icon } from 'wikipedia-react-components'
+import { Icon, Header } from 'wikipedia-react-components'
 
 import './styles.less'
 
@@ -15,9 +14,9 @@ class ChromeHeader extends Component {
     var props = this.props;
     var search = props.search;
     var useSiteBranding = props.includeSiteBranding;
-    var secondaryIcon = useSiteBranding ? <Icon /> : null;
-    if ( this.props.secondaryIcon ) {
-      secondaryIcon = this.props.secondaryIcon;
+    var secondaryIcons = useSiteBranding ? [ <Icon /> ] : null;
+    if ( props.secondaryIcons ) {
+      secondaryIcons = props.secondaryIcons;
     }
     if ( useSiteBranding ) {
       siteinfo = props.siteinfo;
@@ -43,13 +42,11 @@ class ChromeHeader extends Component {
       ];
     } else {
       heading = search;
-      search = null;
     }
 
     return <Header key="header-bar" primaryIcon={props.primaryIcon} className="chrome-header"
       fixed={props.fixed}
-      main={heading}
-      secondaryIcon={secondaryIcon}></Header>
+      secondaryIcons={secondaryIcons}>{heading}</Header>
   }
 }
 

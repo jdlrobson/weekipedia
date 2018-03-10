@@ -1,8 +1,7 @@
 import React from 'react'
 import { ErrorBox, IntermediateState, ListHeader,
-  CardWithLocation, CardList } from 'wikipedia-react-components';
+  CardWithLocation, CardList, Content } from 'wikipedia-react-components';
 
-import Content from './../Content'
 import WatchIcon from './../WatchIcon'
 
 import './styles.less'

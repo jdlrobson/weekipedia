@@ -1,11 +1,9 @@
 import React, { Component } from 'react'
 
-import { HorizontalList } from 'wikipedia-react-components'
+import { HorizontalList, Content } from 'wikipedia-react-components'
 import SectionContent from './../../components/SectionContent'
 import Infobox from './../../components/Infobox'
 import PageActions from './../../components/PageActions'
-
-import Content from './../../components/Content'
 
 import withInterAppLinks from './../withInterAppLinks'
 

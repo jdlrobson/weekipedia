@@ -1,8 +1,6 @@
 import React from 'react'
 import createReactClass from 'create-react-class'
-import { IntermediateState, LinkList, Panel, SearchInput } from 'wikipedia-react-components'
-
-import Content from './../../components/Content'
+import { IntermediateState, LinkList, Panel, SearchInput, Content } from 'wikipedia-react-components'
 
 import Overlay from './../Overlay'
 

@@ -3,8 +3,7 @@ import ReactDOM from 'react-dom'
 
 import './styles.less'
 
-import { Icon } from 'wikipedia-react-components'
-import Header from './../../components/Header'
+import { Icon, Header } from 'wikipedia-react-components'
 import ChromeHeader from './../../components/ChromeHeader'
 
 // Main component
@@ -24,7 +23,7 @@ class Overlay extends Component {
     }, 0 );
   }
   render(){
-    var header, icon, secondaryIcon;
+    var header, icon, secondaryIcons;
     var headerProps = {};
     var props = this.props;
     var baseClass = this.props.isDrawer ? 'drawer' : 'overlay visible'
@@ -43,9 +42,9 @@ class Overlay extends Component {
       overlayClass += ' lightbox';
     } else {
       icon = (<Icon glyph='close' onClick={this.onClose.bind(this)} className="cancel" />);
-      secondaryIcon = props.secondaryIcon ? props.secondaryIcon : null;
-      if ( !secondaryIcon && !props.primaryIcon && props.primaryIcon !== undefined ) {
-        secondaryIcon = icon;
+      secondaryIcons = props.secondaryIcon ? [ props.secondaryIcon ] : [];
+      if ( !secondaryIcons && !props.primaryIcon && props.primaryIcon !== undefined ) {
+        secondaryIcons = [ icon ];
       }
       headerProps = {
         fixed: true,
@@ -55,7 +54,7 @@ class Overlay extends Component {
         siteinfo: props.siteinfo,
         search: props.search,
         includeSiteBranding: false,
-        secondaryIcon: secondaryIcon,
+        secondaryIcons: secondaryIcons,
         main: props.header
       };
       if ( props.chromeHeader ) {

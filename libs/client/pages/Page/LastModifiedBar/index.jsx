@@ -1,11 +1,9 @@
 import React from 'react'
 import timeago from 'timeago'
-import { Icon, TruncatedText } from 'wikipedia-react-components'
+import { Icon, TruncatedText, Content } from 'wikipedia-react-components'
 
 import './styles.less'
 import './icons.less'
-
-import Content from './../../../components/Content'
 
 export default ({ editor, language_project, lang, title, timestamp, onClickInternalLink }) => {
   const isAnon = editor && editor.name ? false : true;

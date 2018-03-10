@@ -1,5 +1,5 @@
 import React from 'react'
-import { ErrorBox } from 'wikipedia-react-components'
+import { ErrorBox, Content } from 'wikipedia-react-components'
 
 import Categories from './../client/pages/Categories'
 import Collections from './../client/pages/Collections'
@@ -20,8 +20,6 @@ import Nearby from './../client/pages/Nearby'
 import Watchlist from './../client/pages/Watchlist'
 import UserLogin from './../client/pages/UserLogin'
 import Uploads from './../client/pages/Uploads'
-
-import Content from './../client/components/Content'
 
 import utils from './utils'
 

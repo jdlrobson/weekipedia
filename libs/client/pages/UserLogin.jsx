@@ -1,9 +1,7 @@
 import React from 'react'
 import createReactClass from 'create-react-class'
 
-import { Button } from 'wikipedia-react-components'
-
-import Content from './../components/Content'
+import { Button, Content } from 'wikipedia-react-components'
 
 import Article from './Article'
 

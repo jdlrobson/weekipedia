@@ -1,9 +1,7 @@
 import React from 'react'
 import createReactClass from 'create-react-class'
 import timeago from 'timeago'
-import { HorizontalList, Icon, IntermediateState } from 'wikipedia-react-components'
-
-import Content from './../../components/Content'
+import { HorizontalList, Icon, IntermediateState, Content } from 'wikipedia-react-components'
 
 import Article from './../Article'
 

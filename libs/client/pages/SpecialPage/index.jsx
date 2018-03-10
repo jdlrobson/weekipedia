@@ -1,8 +1,7 @@
 import React from 'react'
 import createReactClass from 'create-react-class'
 
-import Content from './../../components/Content'
-
+import { Content } from 'wikipedia-react-components'
 import Article from './../Article'
 
 // Pages

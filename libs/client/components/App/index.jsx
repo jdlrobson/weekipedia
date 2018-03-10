@@ -106,6 +106,7 @@ class App extends React.Component {
   render(){
     var props = this.props;
     var state = props.store;
+    var secondaryIcons = [];
     var isCurrentPageRTL = state.isRTL;
     var actionClickSearch = this.onClickSearch.bind(this);
     var actionOpenPrimaryNav = this.openPrimaryNav.bind(this);
@@ -145,7 +146,7 @@ class App extends React.Component {
       onClick={actionOpenPrimaryNav}/>;
     var shield = this.props.store.isMenuOpen ? <TransparentShield /> : null;
 
-    var toast, secondaryIcon,
+    var toast,
       overlay = state.isOverlayEnabled ? state.overlay : null;
 
     if ( overlay ) {
@@ -157,19 +158,20 @@ class App extends React.Component {
     }
 
     if ( state.session ) {
-      secondaryIcon = <Icon glyph="notifications"
-        onClick={actionClickLink}
-        href={'/' + this.props.language_project + '/Special:Notifications'}/>
+      secondaryIcons.push(
+        <Icon glyph="notifications"
+         onClick={actionClickLink}
+          href={'/' + this.props.language_project + '/Special:Notifications'}/>
+      );
     }
 
     if ( props.showMenuNoJavaScript ) {
       navigationClasses += ' navigation-full-screen';
     }
 
-    secondaryIcon = [
-      <Icon glyph="search" onClick={actionClickSearch}/>,
-      secondaryIcon
-    ];
+    secondaryIcons.unshift(
+      <Icon glyph="search" onClick={actionClickSearch}/>
+    );
     var page = state.page ? [
       state.page
     ] : props.children;
@@ -187,7 +189,7 @@ class App extends React.Component {
         <div id="mw-mf-page-center" onClick={actionClosePrimaryNav}>
           <ChromeHeader {...props} primaryIcon={icon}
             includeSiteBranding={true}
-            search={search} secondaryIcon={secondaryIcon}/>
+            search={search} secondaryIcons={secondaryIcons}/>
           {
             state.devTools && (<DevTools />)
           }

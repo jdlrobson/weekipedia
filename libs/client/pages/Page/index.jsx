@@ -1,12 +1,10 @@
 import React from 'react'
 import createReactClass from 'create-react-class'
 
-import { Button, ErrorBox, IntermediateState } from 'wikipedia-react-components';
+import { Button, ErrorBox, IntermediateState, Content } from 'wikipedia-react-components';
 import LastModifiedBar from './LastModifiedBar'
 import ReadMore from './ReadMore'
 import TableOfContents from './TableOfContents'
-
-import Content from './../../components/Content'
 
 import WikiPage from './../WikiPage'
 import UserPage from './../UserPage'

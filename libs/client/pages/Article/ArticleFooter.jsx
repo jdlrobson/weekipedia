@@ -1,8 +1,6 @@
 import React, { Component } from 'react'
 
-import { HorizontalList } from 'wikipedia-react-components'
-
-import Content from './../../components/Content'
+import { HorizontalList, Content } from 'wikipedia-react-components'
 
 // Main component
 class ArticleFooter extends Component {

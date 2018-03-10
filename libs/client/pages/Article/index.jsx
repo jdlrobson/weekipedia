@@ -2,8 +2,7 @@ import React, { Component } from 'react'
 
 import ArticleFooter from './ArticleFooter'
 import ArticleHeader from './ArticleHeader'
-import Content from './../../components/Content'
-
+import { Content } from 'wikipedia-react-components'
 import './styles.less'
 
 // Main component
