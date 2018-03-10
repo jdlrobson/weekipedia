@@ -1,6 +1,8 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { Icon, SearchForm } from 'wikipedia-react-components'
+import { Icon, SearchForm } from 'wikipedia-react-components';
+import { observer } from 'mobx-react';
+import DevTools from 'mobx-react-devtools';
 
 import './styles.less'
 import './icons.less'
@@ -12,25 +14,16 @@ import ChromeHeader from './../ChromeHeader'
 import ReferenceDrawer from './../../overlays/ReferenceDrawer'
 import Toast from './../../overlays/Toast'
 
-import isRTL from './../../is-rtl'
 import initOffline from './../../offline'
 
-const APP_SESSION_KEY = 'app-session'
+const passPropsToChildren = ( children, propsToSend ) => {
+  return React.Children.map( children, ( child ) => React.cloneElement( child, propsToSend ) );
+};
 
 // Main component
 class App extends React.Component {
   constructor(props){
-   super(props);
-   this.state = {
-      pageviews: 0,
-      isMenuOpen: false,
-      notification: '',
-      isRTL: false,
-      lang: 'en',
-      session: null,
-      isOverlayFullScreen: true,
-      isOverlayEnabled: false
-    };
+    super(props);
   }
   hijackLinks( container ){
     container = container || ReactDOM.findDOMNode( this );
@@ -47,170 +40,45 @@ class App extends React.Component {
       link.addEventListener( 'click', navigateTo.bind( self ) );
     } );
   }
-  mountOverlay( props ) {
-    var state = this.state;
-    var actionShowNotification = this.showNotification.bind( this );
-    var actionCloseCurrentOverlay = this.closeOverlay.bind( this );
-
-    this.setState( {
-      overlay: props.overlay ? React.cloneElement( props.overlay, {
-        showNotification: actionShowNotification,
-        closeOverlay: actionCloseCurrentOverlay
-      } ) : null,
-      isOverlayEnabled: props.overlay,
-      session: state.session,
-      isOverlayFullScreen: props.isOverlayFullScreen
-    } );
-  }
-  mountChildren( props, session ) {
-    var state = this.state;
-    var actionShowNotification = this.showNotification.bind( this );
-    var actionCloseCurrentOverlay = this.closeOverlay.bind( this );
-    var actionShowOverlay = this.showOverlay.bind( this );
-    var actionClickLink = this.onClickInternalLink.bind(this);
-
-    // clone each child and pass them the notifier
-    var childProps = typeof document !== 'undefined' ? {
-      showNotification: actionShowNotification,
-      showOverlay: actionShowOverlay,
-      getLocalUrl: this.getLocalUrl.bind( this ),
-      closeOverlay: actionCloseCurrentOverlay,
-      hijackLinks: this.hijackLinks.bind( this ),
-      isRTL: isRTL( props.lang ),
-      session: session || state.session,
-      onClickInternalLink: actionClickLink
-    } : {};
-    if ( state.pageviews === 0 ) {
-      Object.assign( childProps, props.fallbackProps || {} );
-    }
-
-    var children = React.Children.map( props.children, ( child ) => React.cloneElement( child, childProps ) );
-    this.setState( { children: children, pageviews: state.pageviews + 1 } );
-  }
-  mountLanguage( props ) {
-    var newStylesheet,
-      self = this,
-      state = this.state,
-      pageIsRtl = state.isRTL,
-      curLang = state.lang,
-      newLang = props.uselang || props.lang,
-      rtl = isRTL( newLang ),
-      stylesheet = document.querySelector( 'link[href="/style.rtl.css"]' );
-
-    function addStylesheet( newPath ) {
-      newStylesheet = document.createElement( 'link' )
-      newStylesheet.setAttribute( 'rel', 'stylesheet' );
-      newStylesheet.setAttribute( 'href', newPath );
-      document.body.appendChild( newStylesheet );
-    }
-
-    if ( rtl && !pageIsRtl && !stylesheet ) {
-      addStylesheet( '/style.rtl.css' );
-    } else if ( !rtl && pageIsRtl && stylesheet ) {
-      stylesheet.parentNode.removeChild( stylesheet );
-    }
-
-    this.setState( { isRTL: rtl } );
-    if ( newLang !== curLang ) {
-      props.api.fetch( '/api/messages/' + newLang ).then( function ( msgs ) {
-        props.messages.load( msgs );
-        self.setState( { lang: newLang } );
-      } );
-    }
-  }
-  getLocalSession() {
-    var localSession = this.props.storage.get( APP_SESSION_KEY );
-    localSession = localSession === 'false' ? null : JSON.parse( localSession );
-    if ( localSession && localSession.timestamp ) {
-      // is it greater than 1 hours old?
-      if ( ( new Date() - new Date( localSession.timestamp ) ) / 1000 > 60 * 60 ) {
-        localSession = null;
-      }
-    } else if ( localSession && !localSession.timestamp ) {
-      localSession = null;
-    }
-    return localSession;
-  }
-  mount( props ) {
-    var state = this.state;
-
-    if ( typeof document !== 'undefined' ) {
-      this.mountLanguage( props );
-      this.mountOverlay( props );
-      // set the title to the title as specified in the props
-      this.setState( { title: props.title } );
-
-      var localSession = this.getLocalSession();
-      if ( !state.session ) {
-        if ( localSession ) {
-          // load session from local storage
-          this.setState( { session: localSession } );
-          this.mountChildren( props, localSession );
-        } else {
-          this.login().then(()=>this.mountChildren( props ));
-        }
-      } else {
-        this.mountChildren( props );
-      }
-    } else {
-      this.mountChildren( props );
-    }
-  }
-  componentWillReceiveProps( nextProps ) {
-    this.mount( nextProps );
-  }
-  componentWillMount() {
-    this.mount( this.props );
-  }
-  login() {
-    var self = this;
-    if ( !this._loginRequest ) {
-      this._loginRequest = this.props.api.fetch( '/auth/whoamithistime', {
-        credentials: 'include'
-      } );
-    }
-    return this._loginRequest.then( function ( session ) {
-      // cache for next session
-      session.timestamp = new Date();
-      self.props.storage.set( APP_SESSION_KEY, JSON.stringify( session ) );
-      self.setState( { session: session } );
-    } ).catch( function () {
-      self.props.storage.set( APP_SESSION_KEY, 'false' );
-      self.setState( { session: null } );
-    } );
-  }
   clearSession() {
-    this.props.storage.remove( APP_SESSION_KEY );
+    this.props.store.clearSession( this.props.storage );
   }
   renderCurrentRoute() {
+    var store = this.props.store;
     var path = window.location.pathname;
     var hash = window.location.hash;
     var route = this.props.router.matchRoute( path, hash,
       Object.assign( {}, this.props ) );
-    this.mount( route );
+
+    if ( route.overlay ) {
+      store.showOverlay( route.overlay );
+    } else {
+      store.setPage( route.title, route.language, route.children[0] );
+    }
   }
   componentDidMount() {
     var showNotification = this.showNotification;
     var props = this.props;
     var msg = this.props.msg;
+    var state = props.store;
     var renderCurrentRoute = this.renderCurrentRoute.bind( this )
     if ( this.props.offlineVersion ) {
       initOffline( function () {
         showNotification( msg( 'offline-ready' ) );
       } );
     }
+
     if ( 'onpopstate' in window ) {
       window.onpopstate = renderCurrentRoute;
       props.router.on( 'onpushstate', renderCurrentRoute );
       props.router.on( 'onreplacestate', renderCurrentRoute );
     }
+
+    state.setLanguage( props.lang );
+    state.loadSession( props.api, props.storage );
   }
   showOverlay( overlay ) {
-    this.setState( {
-      overlay: overlay,
-      isOverlayEnabled: true,
-      isOverlayFullScreen: false
-    } );
+    this.props.store.showOverlay( overlay );
   }
   onClickInternalLink( ev ) {
     var href, parts, match, refId, title, path;
@@ -218,7 +86,7 @@ class App extends React.Component {
     var childNode = link.firstChild;
     var parentNode = link.parentNode;
     var props = this.props;
-    var state = this.state;
+    var state = this.props.store;
     var allowForeignProjects = props.siteoptions.allowForeignProjects;
 
     if ( parentNode.className === 'mw-ref' ) {
@@ -270,40 +138,22 @@ class App extends React.Component {
     }
   }
   closeOverlay() {
-    var state = this.state;
-    // If an overlay is open
-    if ( state.isOverlayEnabled ) {
-      this.setState( { isOverlayEnabled: false } );
-      if ( window.location.hash && window.location.hash !== '#' ) {
-        window.location.hash = '#';
-      }
-    }
-    this.setState( { notification: null } );
+    this.props.store.hideOverlays();
   }
-  closePrimaryNav(){
-    this.setState({ isMenuOpen: false });
-    this.closeOverlay();
+  closePrimaryNav() {
+    this.props.store.closeMainMenu();
   }
   openPrimaryNav( ev ){
-    this.setState({ isMenuOpen: true });
-    this.closeOverlay();
+    this.props.store.openMainMenu();
     ev.preventDefault();
     ev.stopPropagation();
   }
   showNotification( msg ) {
-    var self = this;
-    this.setState( {
-      notification: msg
-    } );
-    clearTimeout( this.pendingToast );
-    this.pendingToast = setTimeout( function () {
-      self.setState( {
-        notification: null
-      } );
-    }, 5000 );
+    this.props.store.setUserNotification( msg );
   }
-  onClickSearch(){
+  onClickSearch(ev){
     this.props.router.navigateTo( '#/search' );
+    ev.stopPropagation();
   }
   getLocalUrl( title, params ) {
     var source = this.props.language_project || this.props.lang + '/wiki';
@@ -313,20 +163,40 @@ class App extends React.Component {
     return '/' + source + '/' + title + params;
   }
   render(){
-    var state = this.state;
     var props = this.props;
+    var state = props.store;
+    var isCurrentPageRTL = state.isRTL;
     var actionClickSearch = this.onClickSearch.bind(this);
     var actionOpenPrimaryNav = this.openPrimaryNav.bind(this);
     var actionClosePrimaryNav = this.closePrimaryNav.bind(this);
     var actionClickLink = this.onClickInternalLink.bind(this);
     var actionOnUpdateLoginStatus = this.clearSession.bind(this);
+    var actionShowNotification = this.showNotification.bind( this );
+    var actionCloseCurrentOverlay = this.closeOverlay.bind( this );
+    var actionShowOverlay = this.showOverlay.bind( this );
+    var actionClickLink = this.onClickInternalLink.bind(this);
+
+    // clone each child and pass them the notifier
+    var childProps = typeof document !== 'undefined' ? {
+      showNotification: actionShowNotification,
+      showOverlay: actionShowOverlay,
+      getLocalUrl: this.getLocalUrl.bind( this ),
+      closeOverlay: actionCloseCurrentOverlay,
+      hijackLinks: this.hijackLinks.bind( this ),
+      isRTL: isCurrentPageRTL,
+      session: state.session,
+      onClickInternalLink: actionClickLink
+    } : {};
+    if ( state.pageviews === 0 ) {
+      Object.assign( childProps, props.fallbackProps || {} );
+    }
     
     var search = (<SearchForm key="chrome-search-form"
       placeholder={props.msg( 'search' )}
       language_project={props.language_project}
       onClickSearch={actionClickSearch} />);
 
-    var navigationClasses = state.isMenuOpen ?
+    var navigationClasses = this.props.store.isMenuOpen ?
       'primary-navigation-enabled navigation-enabled' : '';
 
     // FIXME: link should point to Special:MobileMenu
@@ -334,10 +204,9 @@ class App extends React.Component {
       id="mw-mf-main-menu-button"
       href={this.getLocalUrl( 'Special:MobileMenu' )}
       onClick={actionOpenPrimaryNav}/>;
-    var shield = state.isMenuOpen ? <TransparentShield /> : null;
+    var shield = this.props.store.isMenuOpen ? <TransparentShield /> : null;
 
     var toast, secondaryIcon,
-      isRTL = state.isRTL,
       overlay = state.isOverlayEnabled ? state.overlay : null;
 
     if ( overlay ) {
@@ -362,10 +231,13 @@ class App extends React.Component {
       <Icon glyph="search" onClick={actionClickSearch}/>,
       secondaryIcon
     ];
+    var page = state.page ? [
+      state.page
+    ] : props.children;
 
     return (
       <div id="mw-mf-viewport" className={navigationClasses}
-        lang={this.props.lang} dir={isRTL ? 'rtl' : 'ltr'}>
+        lang={this.props.lang} dir={isCurrentPageRTL ? 'rtl' : 'ltr'}>
         <nav id="mw-mf-page-left">
         <MainMenu {...this.props} onClickInternalLink={actionClickLink}
             onLogoutClick={actionOnUpdateLoginStatus}
@@ -376,7 +248,10 @@ class App extends React.Component {
           <ChromeHeader {...props} primaryIcon={icon}
             includeSiteBranding={true}
             search={search} secondaryIcon={secondaryIcon}/>
-          {state.children}
+          {
+            state.devTools && (<DevTools />)
+          }
+          {passPropsToChildren( page, childProps )}
           {shield}
         </div>
         { overlay }
@@ -409,5 +284,5 @@ App.defaultProps = {
   isOverlayFullScreen: true,
   isOverlayEnabled: false
 };
-export default App;
-  
+
+export default observer(App);
