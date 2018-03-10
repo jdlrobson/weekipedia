@@ -22,7 +22,7 @@ export default createReactClass({
     config[name] = value;
     this.setState( { mobileOptions: config } );
     this.save( config );
-    this.props.showNotification( 'Setting saved. You will need to refresh your browser for the changes to go into effect.' );
+    this.props.store.setUserNotification( 'Setting saved. You will need to refresh your browser for the changes to go into effect.' );
   },
   componentDidMount() {
     this.save( this.getConfig() );

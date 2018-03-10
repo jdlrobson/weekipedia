@@ -17,7 +17,7 @@ class LanguageIcon extends Component {
       iconProps.className += ' disabled';
       iconProps.onClick = function ( ev ) {
         ev.stopPropagation();
-        props.showNotification( 'This page is not available in other languages.' );
+        props.store.setUserNotification( 'This page is not available in other languages.' );
       };
     } else {
       iconProps.href = '#/languages';

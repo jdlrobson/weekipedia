@@ -55,14 +55,13 @@ class App extends React.Component {
     }
   }
   componentDidMount() {
-    var showNotification = this.showNotification;
     var props = this.props;
     var msg = this.props.msg;
     var state = props.store;
     var renderCurrentRoute = this.renderCurrentRoute.bind( this )
     if ( this.props.offlineVersion ) {
       initOffline( function () {
-        showNotification( msg( 'offline-ready' ) );
+        state.setUserNotification( msg( 'offline-ready' ) );
       } );
     }
 
@@ -89,9 +88,6 @@ class App extends React.Component {
     ev.preventDefault();
     ev.stopPropagation();
   }
-  showNotification( msg ) {
-    this.props.store.setUserNotification( msg );
-  }
   onClickSearch(ev){
     this.props.router.navigateTo( '#/search' );
     ev.stopPropagation();
@@ -113,14 +109,13 @@ class App extends React.Component {
     var actionClosePrimaryNav = this.closePrimaryNav.bind(this);
     var actionClickLink = onClickInternalLink( props );
     var actionOnUpdateLoginStatus = this.clearSession.bind(this);
-    var actionShowNotification = this.showNotification.bind( this );
     var actionCloseCurrentOverlay = this.closeOverlay.bind( this );
     var actionShowOverlay = this.showOverlay.bind( this );
 
     // clone each child and pass them the notifier
     var childProps = typeof document !== 'undefined' ? {
+      store: props.store,
       onClickInternalLink: actionClickLink,
-      showNotification: actionShowNotification,
       showOverlay: actionShowOverlay,
       getLocalUrl: this.getLocalUrl.bind( this ),
       closeOverlay: actionCloseCurrentOverlay,

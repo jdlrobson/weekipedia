@@ -35,7 +35,7 @@ export default createReactClass({
         endpoint  = '/api/private/' + props.lang + '/collection/' + id;
         endpoint += col.member ? '/remove/' : '/add/';
         endpoint += encodeURIComponent( props.title );
-        props.showNotification( col.member ?
+        props.store.setUserNotification( col.member ?
           'Page removed from collection.' : 'Page added to collection.' );
 
         // do it

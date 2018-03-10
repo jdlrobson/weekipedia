@@ -52,7 +52,7 @@ class WatchIcon extends React.Component {
     // do it
     props.api.post( endpoint );
     props.api.clearCache();
-    props.showNotification( state.isWatched ?
+    props.store.setUserNotification( state.isWatched ?
       'Page removed from watchlist.' : 'Page added to watchlist.' );
   }
   dispatch( ev ) {

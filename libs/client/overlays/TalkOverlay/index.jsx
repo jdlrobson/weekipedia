@@ -65,7 +65,7 @@ export default createReactClass({
         lead: undefined,
         sections: undefined
       } );
-      props.showNotification( 'Your reply was added!' );
+      props.store.setUserNotification( 'Your reply was added!' );
       // hack to force a re-render
       history.back();
       setTimeout( function () {
@@ -87,7 +87,7 @@ export default createReactClass({
         lead: undefined,
         sections: undefined
       } );
-      props.showNotification( 'Your topic was added!' );
+      props.store.setUserNotification( 'Your topic was added!' );
       props.router.back();
     } );
   },

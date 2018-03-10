@@ -17,7 +17,7 @@ class PageActions extends Component {
     var props = this.props;
     var actions = [
       <LanguageIcon key="article-page-action-language"
-        showNotification={props.showNotification}
+        store={props.store}
         disabled={props.disableLanguages} />
     ];
 

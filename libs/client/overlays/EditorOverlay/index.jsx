@@ -83,7 +83,7 @@ export default createReactClass({
     props.api.edit( source, title, props.section, state.text || props.wikitext,
       state.summary || props.editSummary ).then( function ( resp ) {
       props.router.navigateTo( window.location.pathname + '?oldid=' + resp.edit.newrevid );
-      props.showNotification( 'Your edit was successful!' );
+      props.store.setUserNotification( 'Your edit was successful!' );
     } ).catch( function () {
       self.showPreview();
     } );

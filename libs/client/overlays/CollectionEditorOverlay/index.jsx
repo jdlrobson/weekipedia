@@ -89,10 +89,10 @@ export default createReactClass({
           props.api.clearCache();
           props.router.navigateTo( { pathname: window.location.pathname,
             search: 'c=' + Math.random(), hash: '' }, null, true );
-          props.showNotification( msg );
+          props.store.setUserNotification( msg );
         }, 5000 );
       } else {
-        props.showNotification( 'An error occurred while saving the collection' );
+        props.store.setUserNotification( 'An error occurred while saving the collection' );
         self.setState( { waiting: false } );
       }
     } );

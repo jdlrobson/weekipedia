@@ -88,7 +88,7 @@ class WeekipediaCardList extends React.Component {
       collection: props.collection,
       language_project: props.language_project,
       unordered: props.unordered,
-      showNotification: props.showNotification,
+      store: props.store,
       CardClass: props.CardClass,
       isDiffCardList: props.isDiffCardList,
       emptyMessage: props.emptyMessage,
