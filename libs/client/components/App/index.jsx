@@ -18,29 +18,25 @@ import initOffline from './../../offline'
 
 import SVGFilter from './SVGFilter.jsx'
 
+import withInterAppLinks from './../../pages/withInterAppLinks.jsx'
+import { onClickInternalLink } from './../../pages/utils.jsx'
+
 const passPropsToChildren = ( children, propsToSend ) => {
   return React.Children.map( children, ( child ) => React.cloneElement( child, propsToSend ) );
+};
+
+const mergeFunctions = (actions) => {
+  return function () {
+    actions.forEach((action) => {
+      action.apply( action, arguments );
+    });
+  }
 };
 
 // Main component
 class App extends React.Component {
   constructor(props){
     super(props);
-  }
-  hijackLinks( container ){
-    container = container || ReactDOM.findDOMNode( this );
-
-    var links = container.querySelectorAll( 'a' );
-    var self = this;
-
-    function navigateTo( ev ) {
-      self.onClickInternalLink( ev );
-    }
-
-    container.setAttribute( 'data-hijacked-prev', 1 );
-    Array.prototype.forEach.call( links, function ( link ) {
-      link.addEventListener( 'click', navigateTo.bind( self ) );
-    } );
   }
   clearSession() {
     this.props.store.clearSession( this.props.storage );
@@ -76,68 +72,11 @@ class App extends React.Component {
       props.router.on( 'onreplacestate', renderCurrentRoute );
     }
 
-    state.setLanguage( props.lang );
+    state.setPage( props.title, props.lang, null );
     state.loadSession( props.api, props.storage );
   }
   showOverlay( overlay ) {
     this.props.store.showOverlay( overlay );
-  }
-  onClickInternalLink( ev ) {
-    var href, parts, match, refId, title, path;
-    var link = ev.currentTarget;
-    var childNode = link.firstChild;
-    var parentNode = link.parentNode;
-    var props = this.props;
-    var state = this.props.store;
-    var allowForeignProjects = props.siteoptions.allowForeignProjects;
-
-    if ( parentNode.className === 'mw-ref' ) {
-      ev.preventDefault();
-      ev.stopPropagation();
-      refId = link.getAttribute( 'href' ).split( '#' )[1];
-      this.showOverlay( <ReferenceDrawer {...props} title={state.title}
-        refId={refId} hijackLinks={this.hijackLinks.bind(this)} /> );
-
-    } else if ( childNode && childNode.nodeName === 'IMG' ) {
-      href = link.getAttribute( 'href' ) || '';
-      match = href.match( /\.\/File\:(.*)|^File\:(.*)$/ );
-      if ( match ) {
-        ev.preventDefault();
-        ev.stopPropagation();
-        path = match[1] || match[2];
-        props.router.navigateTo( { hash: '#/media/' + path } );
-      }
-    } else {
-      href = link.getAttribute( 'href' ) || '';
-      title = link.getAttribute( 'title' ) || '';
-
-      if ( href.substr( 0, 5 ) !== '/auth' ) {
-        if ( href.indexOf( '//' ) === -1 ) {
-          parts = href.split( '?' );
-          props.router.navigateTo( {
-            pathname: parts[0],
-            search: parts[1]
-          }, title );
-          ev.preventDefault();
-        } else if ( allowForeignProjects ){
-          props.supportedProjects.forEach( function( project ) {
-            var reg = new RegExp( '\/\/([a-z\-]*)\.' + project + '\.org\/wiki\/(.*)|\/\/' + project + '\.wikimedia\.org\/wiki\/(.*)|\/\/' );
-            var m = href.match( reg );
-            if ( m && m[1] && m[2] ) {
-              props.router.navigateTo( {
-                pathname: '/' + m[1] + '.' + project + '/' + m[2]
-              }, m[2] );
-              ev.preventDefault();
-            } else if ( m && m[3] ) {
-              props.router.navigateTo( {
-                pathname: '/' + props.lang + '.' + project + '/' + m[3]
-              }, m[2] );
-              ev.preventDefault();
-            }
-          } );
-        }
-      }
-    }
   }
   closeOverlay() {
     this.props.store.hideOverlays();
@@ -171,23 +110,21 @@ class App extends React.Component {
     var actionClickSearch = this.onClickSearch.bind(this);
     var actionOpenPrimaryNav = this.openPrimaryNav.bind(this);
     var actionClosePrimaryNav = this.closePrimaryNav.bind(this);
-    var actionClickLink = this.onClickInternalLink.bind(this);
+    var actionClickLink = onClickInternalLink( props );
     var actionOnUpdateLoginStatus = this.clearSession.bind(this);
     var actionShowNotification = this.showNotification.bind( this );
     var actionCloseCurrentOverlay = this.closeOverlay.bind( this );
     var actionShowOverlay = this.showOverlay.bind( this );
-    var actionClickLink = this.onClickInternalLink.bind(this);
 
     // clone each child and pass them the notifier
     var childProps = typeof document !== 'undefined' ? {
+      onClickInternalLink: actionClickLink,
       showNotification: actionShowNotification,
       showOverlay: actionShowOverlay,
       getLocalUrl: this.getLocalUrl.bind( this ),
       closeOverlay: actionCloseCurrentOverlay,
-      hijackLinks: this.hijackLinks.bind( this ),
       isRTL: isCurrentPageRTL,
-      session: state.session,
-      onClickInternalLink: actionClickLink
+      session: state.session
     } : {};
     if ( state.pageviews === 0 ) {
       Object.assign( childProps, props.fallbackProps || {} );
@@ -241,10 +178,11 @@ class App extends React.Component {
       <div id="mw-mf-viewport" className={navigationClasses}
         lang={this.props.lang} dir={isCurrentPageRTL ? 'rtl' : 'ltr'}>
         <nav id="mw-mf-page-left">
-        <MainMenu {...this.props} onClickInternalLink={actionClickLink}
+        <MainMenu {...this.props}
+            onItemClick={mergeFunctions([ actionClickLink, actionClosePrimaryNav ] )}
             onLogoutClick={actionOnUpdateLoginStatus}
             onLoginClick={actionOnUpdateLoginStatus}
-            onItemClick={actionClosePrimaryNav} session={state.session}/>
+            session={state.session}/>
         </nav>
         <div id="mw-mf-page-center" onClick={actionClosePrimaryNav}>
           <ChromeHeader {...props} primaryIcon={icon}

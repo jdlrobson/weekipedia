@@ -9,7 +9,6 @@ class MainMenu extends Component {
   onMenuItemClick( ev ){
     if ( this.props.onItemClick ) {
       this.props.onItemClick( ev );
-      this.props.onClickInternalLink( ev );
     }
   }
   onLoginClick(ev) {

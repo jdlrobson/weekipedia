@@ -22,9 +22,6 @@ export default createReactClass({
     this.props.api.getReference( this.props.title, this.props.language_project, refId )
       .then( function ( refHtml ) {
         self.setState( { text: refHtml, isLoading: false } );
-        if ( self.props.hijackLinks ) {
-          self.props.hijackLinks( ReactDOM.findDOMNode( self ) );
-        }
       } ).catch( function () {
         self.setState( { isError: true } );
       } );

@@ -6,6 +6,7 @@ import Content from './../../components/Content'
 import SectionContent from './../../components/SectionContent'
 
 import Overlay from './../Overlay'
+import withInterAppLinks from './../../pages/withInterAppLinks'
 
 import './styles.less'
 import './icons.less'
@@ -112,6 +113,9 @@ export default createReactClass({
     var content, overlayProps, action, previewPane,
       editSummary, warnings,
       props = this.props,
+      SectionContentWithInterAppLinks = withInterAppLinks(
+        SectionContent, props
+      ),
       license = props.siteinfo.license,
       state = this.state,
       backBtn = <Icon glyph='back' onClick={this.showEditor}
@@ -146,7 +150,7 @@ export default createReactClass({
         action = 'Previewing';
         overlayProps.primaryIcon = backBtn;
         previewPane = state.preview ?
-          <SectionContent text={state.preview} /> :
+          <SectionContentWithInterAppLinks text={state.preview} /> :
           <IntermediateState msg="Loading preview" />;
 
         if ( !props.editSummary ) {

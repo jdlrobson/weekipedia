@@ -7,10 +7,19 @@ import PageActions from './../../components/PageActions'
 
 import Content from './../../components/Content'
 
+import withInterAppLinks from './../withInterAppLinks'
+
 // Main component
 class ArticleHeader extends Component {
   render(){
     var ii,
+      props = this.props,
+      InfoboxWithInterAppLinks = withInterAppLinks(
+        Infobox, props
+      ),
+      SectionContentWithInterAppLinks = withInterAppLinks(
+        SectionContent, props
+      ),
       content = [],
       header = [],
       additionalClasses = [],
@@ -79,19 +88,19 @@ class ArticleHeader extends Component {
     }
 
     if ( lead.paragraph ) {
-      content.push( <SectionContent {...this.props}
+      content.push( <SectionContentWithInterAppLinks {...this.props}
         key="article-header-paragraph"
         className="lead-paragraph" text={lead.paragraph} /> );
     }
 
     if ( lead.infobox ) {
-      content.push( <Infobox {...this.props} text={lead.infobox}
+      content.push( <InfoboxWithInterAppLinks {...this.props} text={lead.infobox}
         key="article-header-infobox" /> );
     }
     return (
       <Content key="article-row-0" className={"pre-content " + additionalClasses.join( ' ' )}>
         {content}
-        <SectionContent {...this.props} className="lead-section" text={lead.text} />
+        <SectionContentWithInterAppLinks {...this.props} className="lead-section" text={lead.text} />
       </Content>
     )
   }

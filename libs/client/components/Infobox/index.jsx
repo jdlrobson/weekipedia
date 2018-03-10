@@ -3,17 +3,7 @@ import ReactDOM from 'react-dom'
 
 import './styles.less'
 
-class SectionContent extends Component {
-  componentDidMount(){
-    if ( this.props.text ) {
-      this.props.hijackLinks( ReactDOM.findDOMNode( this ) );
-    }
-  }
-  componentDidUpdate(){
-    if ( this.props.text ) {
-      this.props.hijackLinks( ReactDOM.findDOMNode( this ) );
-    }
-  }
+class Infobox extends Component {
   render(){
     return (
       <div className="infobox-container" dangerouslySetInnerHTML={{ __html: this.props.text}} />
@@ -21,4 +11,4 @@ class SectionContent extends Component {
   }
 }
 
-export default SectionContent
+export default Infobox;

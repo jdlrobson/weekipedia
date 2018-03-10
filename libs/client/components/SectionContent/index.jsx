@@ -4,18 +4,6 @@ import ReactDOM from 'react-dom'
 import './styles.less'
 
 class SectionContent extends Component {
-  componentDidMount(){
-    var props = this.props;
-    if ( props.text && props.hijackLinks ) {
-      props.hijackLinks( ReactDOM.findDOMNode( this ) );
-    }
-  }
-  componentDidUpdate(){
-    var props = this.props;
-    if ( props.text && this.state.contentChanged && props.hijackLinks ) {
-      props.hijackLinks( ReactDOM.findDOMNode( this ) );
-    }
-  }
   componentWillReceiveProps( nextProps ) {
     this.setState( { contentChanged: nextProps.text !== this.props.text } );
   }

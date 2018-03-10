@@ -5,6 +5,7 @@ import DOM from 'react-dom-factories';
 import { Icon, ErrorBox, IntermediateState } from 'wikipedia-react-components'
 import EditIcon from './../EditIcon'
 import SectionContent from './../SectionContent'
+import withInterAppLinks from './../../pages/withInterAppLinks'
 
 import { getSections } from './../../react-helpers'
 
@@ -74,6 +75,9 @@ class Section extends Component {
   }
   render(){
     var props = this.props;
+    var SectionContentWithInterAppLinks = withInterAppLinks(
+      SectionContent, props
+    );
     var state = this.state;
     var isCollapsible = this.props.isCollapsible;
     var hLevel = this.props.toclevel + 1;
@@ -115,7 +119,8 @@ class Section extends Component {
     return (
       <div className={ isExpanded ? 'section open-block' : 'section' }>
         {heading}
-        <SectionContent {...this.props} subsections={subsections} text={text}></SectionContent>
+        <SectionContentWithInterAppLinks {...this.props}
+          subsections={subsections} text={text}></SectionContentWithInterAppLinks>
         {body}
       </div>
     )

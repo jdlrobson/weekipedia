@@ -10,6 +10,8 @@ import Overlay from './../Overlay'
 
 import './styles.less'
 
+import withInterAppLinks from './../../pages/withInterAppLinks'
+
 export default createReactClass({
   getInitialState() {
     return {
@@ -105,6 +107,9 @@ export default createReactClass({
       props = this.props,
       sections = this.state.sections,
       license = props.siteinfo.license,
+      SectionContentWithInterAppLinks = withInterAppLinks(
+        SectionContent, props
+      ),
       state = this.state,
       action = state && state.action,
       saveTopic = <Button label="Add" isPrimary="1" onClick={this.saveTopic}
@@ -150,7 +155,7 @@ export default createReactClass({
         content = (
           <div className="scrollable">
             <Panel>
-              <SectionContent {...props} text={section.text} />
+              <SectionContentWithInterAppLinks {...props} text={section.text} />
             </Panel>
             <h3 className="list-header">Reply</h3>
             <Panel>
