@@ -14,7 +14,9 @@ class WatchIcon extends React.Component {
     };
   }
   componentWillMount() {
-    if ( this.props.session && this.props.isWatched === undefined ) {
+    var props = this.props;
+    var store = props.store;
+    if ( store.session && props.isWatched === undefined ) {
       this.loadWatchInfo();
     }
   }
@@ -78,7 +80,6 @@ class WatchIcon extends React.Component {
       label: 'Watch this page',
       title: props.title,
       language_project: props.language_project,
-      session: props.session,
       ctaMsg: props.msg( 'watch-cta' ),
       onLoginClick: this.dispatch.bind( this )
     };

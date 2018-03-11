@@ -109,8 +109,7 @@ class App extends React.Component {
       store: props.store,
       onClickInternalLink: actionClickLink,
       getLocalUrl: this.getLocalUrl.bind( this ),
-      isRTL: isCurrentPageRTL,
-      session: state.session
+      isRTL: isCurrentPageRTL
     } : {};
     if ( state.pageviews === 0 ) {
       Object.assign( childProps, props.fallbackProps || {} );

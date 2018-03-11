@@ -70,7 +70,8 @@ export default createReactClass({
   },
   getBody(){
     var props = this.props;
-    var session = props.session;
+    var store = props.store;
+    var session = store.session;
     var collections = props.collections || this.state.collections;
     var id = props.id || this.state.id;
     var msg = session ? <p><a href={'#/edit-collection/' + session.username + '/'}>Create your own collection</a></p>
@@ -110,12 +111,13 @@ export default createReactClass({
   render() {
     var tagline, userUrl, actions, label, suffix, tabs,
       props = this.props,
+      store = props.store,
       lang = this.props.lang,
       desc = this.state.description || props.description,
       username = this.state.username || props.owner,
       id = this.state.id || props.id,
       title = this.state.title || props.title,
-      session = this.props.session;
+      session = store.session;
 
     if ( username ) {
       if ( session && username === session.username ) {

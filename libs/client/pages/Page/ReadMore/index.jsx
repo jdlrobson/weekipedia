@@ -31,6 +31,7 @@ class ReadMore extends React.Component {
           <CardList unordered="1" apiEndpoint={endpoint} api={this.props.api} lang={lang}
           language_project={langProject} onEmpty={this.onEmpty}
             infiniteScroll={false}
+            store={props.store}
             router={this.props.router} />
         </div>
       );

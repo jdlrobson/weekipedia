@@ -86,7 +86,7 @@ export default createReactClass({
         {emptyMsg}
         <div className="collection-actions" key="collection-overlay-actions">
           <a key='edit-collection-create'
-            href={"#/edit-collection/" + props.session.username + '/'}>{props.msg('collection-create')}</a>
+            href={"#/edit-collection/" + store.session.username + '/'}>{props.msg('collection-create')}</a>
         </div>
         </Overlay>
       );

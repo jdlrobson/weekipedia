@@ -26,13 +26,14 @@ class MainMenu extends Component {
   getUserMenu() {
     var login, username, usertools,
       props = this.props,
+      store = props.store,
       msg = this.props.msg,
       prefix = this.getUrlPrefix(),
       onMenuItemClick = this.onMenuItemClick.bind(this);
 
     if ( this.props.canAuthenticate ) {
-      if ( this.props.session ) {
-        username = this.props.session.username;
+      if ( store.session ) {
+        username = store.session.username;
         login = [
           <Icon glyph="mf-profile" href={prefix + '/User:' + username }
             key="menu-item-profile"

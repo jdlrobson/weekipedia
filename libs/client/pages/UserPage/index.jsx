@@ -42,12 +42,13 @@ export default createReactClass({
     var registered,
       body = [],
       props = this.props,
+      store = props.store,
       lead = props.lead || {},
       leadHtml = lead.sections && lead.sections.length ? lead.sections[0].text : undefined;
 
     var user = props.title;
     var editUrl = "#/editor/0";
-    var isReaderOwner = props.session && props.session.username === props.titleSanPrefix;
+    var isReaderOwner = store.session && store.session.username === props.titleSanPrefix;
     var msg = isReaderOwner ? 'You don\'t have a user page yet' : 'No user page for ' + props.user;
     var pText = isReaderOwner ? 'You can describe yourself to fellow editors on your user page' :
       'This page should be created and edited by ' + user;

@@ -44,7 +44,7 @@ function getCards( data, props, keyPrefix ) {
         item.title = item.title.replace( /_/g, ' ' );
       }
 
-      var session = props.session;
+      var session = props.store.session;
       if ( session && props.collection && data.owner === session.username  && !props.unordered ) {
         item.indicator = <WatchIcon {...props}
           key={item.key + '-watch'}
@@ -83,7 +83,6 @@ class WeekipediaCardList extends React.Component {
     var onEmpty = props.onEmpty;
     var cardListProps = {
       lang: props.lang,
-      session: props.session,
       msg: props.msg,
       collection: props.collection,
       language_project: props.language_project,

@@ -13,7 +13,6 @@ export default class EditIcon extends React.Component {
       glyph: 'edit',
       label: 'Edit',
       href: '#',
-      session: props.session,
       store: props.store,
       className: 'component-edit-icon',
       router: props.router,
