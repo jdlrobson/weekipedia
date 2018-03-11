@@ -57,11 +57,11 @@ class App extends React.Component {
   componentDidMount() {
     var props = this.props;
     var msg = this.props.msg;
-    var state = props.store;
+    var store = props.store;
     var renderCurrentRoute = this.renderCurrentRoute.bind( this )
     if ( this.props.offlineVersion ) {
       initOffline( function () {
-        state.setUserNotification( msg( 'offline-ready' ) );
+        store.setUserNotification( msg( 'offline-ready' ) );
       } );
     }
 
@@ -71,8 +71,8 @@ class App extends React.Component {
       props.router.on( 'onreplacestate', renderCurrentRoute );
     }
 
-    state.setPage( props.title, props.lang, null );
-    state.loadSession( props.api, props.storage );
+    store.setPage( props.title, props.lang, null );
+    store.loadSession( props.api, props.storage );
   }
   closePrimaryNav() {
     this.props.store.closeMainMenu();
@@ -95,9 +95,8 @@ class App extends React.Component {
   }
   render(){
     var props = this.props;
-    var state = props.store;
+    var store = props.store;
     var secondaryIcons = [];
-    var isCurrentPageRTL = state.isRTL;
     var actionClickSearch = this.onClickSearch.bind(this);
     var actionOpenPrimaryNav = this.openPrimaryNav.bind(this);
     var actionClosePrimaryNav = this.closePrimaryNav.bind(this);
@@ -108,10 +107,9 @@ class App extends React.Component {
     var childProps = typeof document !== 'undefined' ? {
       store: props.store,
       onClickInternalLink: actionClickLink,
-      getLocalUrl: this.getLocalUrl.bind( this ),
-      isRTL: isCurrentPageRTL
+      getLocalUrl: this.getLocalUrl.bind( this )
     } : {};
-    if ( state.pageviews === 0 ) {
+    if ( store.pageviews === 0 ) {
       Object.assign( childProps, props.fallbackProps || {} );
     }
     
@@ -131,17 +129,17 @@ class App extends React.Component {
     var shield = this.props.store.isMenuOpen ? <TransparentShield /> : null;
 
     var toast,
-      overlay = state.isOverlayEnabled ? state.overlay : null;
+      overlay = store.isOverlayEnabled ? store.overlay : null;
 
     if ( overlay ) {
-      navigationClasses += state.isOverlayFullScreen ? 'overlay-enabled' : '';
+      navigationClasses += store.isOverlayFullScreen ? 'overlay-enabled' : '';
     }
 
-    if ( state.notification ) {
-     toast = <Toast>{state.notification}</Toast>;
+    if ( store.notification ) {
+     toast = <Toast>{store.notification}</Toast>;
     }
 
-    if ( state.session ) {
+    if ( store.session ) {
       secondaryIcons.push(
         <Icon glyph="notifications"
          onClick={actionClickLink}
@@ -156,26 +154,26 @@ class App extends React.Component {
     secondaryIcons.unshift(
       <Icon glyph="search" onClick={actionClickSearch}/>
     );
-    var page = state.page ? [
-      state.page
+    var page = store.page ? [
+      store.page
     ] : props.children;
 
     return (
       <div id="mw-mf-viewport" className={navigationClasses}
-        lang={this.props.lang} dir={isCurrentPageRTL ? 'rtl' : 'ltr'}>
+        lang={this.props.lang} dir={store.isRTL ? 'rtl' : 'ltr'}>
         <nav id="mw-mf-page-left">
         <MainMenu {...this.props}
             onItemClick={mergeFunctions([ actionClickLink, actionClosePrimaryNav ] )}
             onLogoutClick={actionOnUpdateLoginStatus}
             onLoginClick={actionOnUpdateLoginStatus}
-            session={state.session}/>
+            session={store.session}/>
         </nav>
         <div id="mw-mf-page-center" onClick={actionClosePrimaryNav}>
           <ChromeHeader {...props} primaryIcon={icon}
             includeSiteBranding={true}
             search={search} secondaryIcons={secondaryIcons}/>
           {
-            state.devTools && (<DevTools />)
+            store.devTools && (<DevTools />)
           }
           {passPropsToChildren( page, childProps )}
           {shield}

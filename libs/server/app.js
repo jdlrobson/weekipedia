@@ -249,7 +249,9 @@ app.get( '/:lang?/*', ( req, res ) => {
       image: image,
       description: desc,
       page_title: title,
-      isRTL: isRTL( req.params.lang ),
+      store: {
+        isRTL: isRTL( req.params.lang )
+      },
       config: JSON.stringify( config ),
       body: !req.user && SERVER_SIDE_RENDERING ?
         ReactDOMServer.renderToString(

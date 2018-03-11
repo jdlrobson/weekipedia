@@ -7,10 +7,11 @@ class EmptyCardList extends Component {
   render(){
     var img, cta,
       props = this.props,
+      store = props.store,
       path = props.image;
 
     if ( path ) {
-      path = props.isRTL ? path.replace( 'ltr', 'rtl' ) : path;
+      path = store.isRTL ? path.replace( 'ltr', 'rtl' ) : path;
       img = <img src={path} />;
     }
     if ( props.ctaMessage ) {
