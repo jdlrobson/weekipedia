@@ -16,7 +16,7 @@ export default class CtaIcon extends React.Component {
         props.onLoginClick( ev );
       }
     } else {
-      props.showOverlay( <CtaDrawer {...this.props} message={props.ctaMsg} /> );
+      props.store.showOverlay( <CtaDrawer {...props} message={props.ctaMsg} /> );
     }
   }
   render(){

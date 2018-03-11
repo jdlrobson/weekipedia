@@ -67,7 +67,7 @@ export default createReactClass({
     this.setState( { title: ev.currentTarget.value } );
   },
   exit() {
-    this.props.closeOverlay();
+    this.props.store.hideOverlays();
   },
   save() {
     var props = this.props;

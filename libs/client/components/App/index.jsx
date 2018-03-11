@@ -74,12 +74,6 @@ class App extends React.Component {
     state.setPage( props.title, props.lang, null );
     state.loadSession( props.api, props.storage );
   }
-  showOverlay( overlay ) {
-    this.props.store.showOverlay( overlay );
-  }
-  closeOverlay() {
-    this.props.store.hideOverlays();
-  }
   closePrimaryNav() {
     this.props.store.closeMainMenu();
   }
@@ -109,16 +103,12 @@ class App extends React.Component {
     var actionClosePrimaryNav = this.closePrimaryNav.bind(this);
     var actionClickLink = onClickInternalLink( props );
     var actionOnUpdateLoginStatus = this.clearSession.bind(this);
-    var actionCloseCurrentOverlay = this.closeOverlay.bind( this );
-    var actionShowOverlay = this.showOverlay.bind( this );
 
     // clone each child and pass them the notifier
     var childProps = typeof document !== 'undefined' ? {
       store: props.store,
       onClickInternalLink: actionClickLink,
-      showOverlay: actionShowOverlay,
       getLocalUrl: this.getLocalUrl.bind( this ),
-      closeOverlay: actionCloseCurrentOverlay,
       isRTL: isCurrentPageRTL,
       session: state.session
     } : {};

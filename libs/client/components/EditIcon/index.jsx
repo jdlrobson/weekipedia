@@ -14,7 +14,7 @@ export default class EditIcon extends React.Component {
       label: 'Edit',
       href: '#',
       session: props.session,
-      showOverlay: props.showOverlay,
+      store: props.store,
       className: 'component-edit-icon',
       router: props.router,
       title: props.title,

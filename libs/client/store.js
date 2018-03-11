@@ -21,8 +21,7 @@ const store = observable({
 store.showOverlay = function ( overlay, fullScreen = true ) {
   // In future we won't do this as part of this method.
   this.overlay = React.cloneElement( overlay, {
-    store: this,
-    closeOverlay: store.hideOverlays.bind( this )
+    store: this
   } );
   this.isOverlayEnabled = true;
   this.isOverlayFullScreen = fullScreen;

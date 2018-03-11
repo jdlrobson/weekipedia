@@ -58,6 +58,7 @@ export default createReactClass({
   render(){
     var watch = this.watch;
     var props = this.props;
+    var store = props.store;
     var collections = this.state.collections;
     var emptyMsg;
 
@@ -69,7 +70,7 @@ export default createReactClass({
         <Overlay {...props} className="collection-overlay" isDrawer={true}>
         <h2>{props.msg( 'collection-title' )}</h2>
         <a key='edit-collection-cancel' className="cancel"
-          onClick={props.closeOverlay}>Cancel</a>
+          onClick={store.hideOverlays}>Cancel</a>
         <ul key="collection-overlay-list">
           {
             collections.map( function ( collection, i ) {

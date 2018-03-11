@@ -61,7 +61,7 @@ class WatchIcon extends React.Component {
     var collections = this.state.collections;
 
     if ( !props.collection && collections.length > 1 || collectionsEnabled ) {
-      props.showOverlay( <CollectionOverlay {...props} /> );
+      props.store.showOverlay( <CollectionOverlay {...props} /> );
     } else {
       this.watch( ev );
     }
@@ -73,7 +73,7 @@ class WatchIcon extends React.Component {
 
     var iconProps = {
       key: 'watch',
-      showOverlay: props.showOverlay,
+      store: props.store,
       glyph: isWatched ? 'watched' : 'watch',
       label: 'Watch this page',
       title: props.title,
