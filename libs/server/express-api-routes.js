@@ -268,14 +268,18 @@ function initGetMethods( app ) {
     } );
   } );
 
-  app.get( '/api/page/:lang.:project/:title/:revision?', ( req, res ) => {
+  function loadPage( req, res ) {
     var proj = getProject( req );
+    var project = proj.project;
+    var lang = proj.lang;
     var params = req.params;
+    var title = params.title;
+    var revision = params.revision;
     cachedResponse( res, req.url, function () {
-      return page( params.title, proj.lang, proj.project, false, params.revision ).then( ( data ) => {
+      return page( title, lang, project, false, revision ).then( ( data ) => {
         const protocol = req.secure ? 'https' : 'http';
-        const project = data.project ? data.project : params.lang + '.' + params.project;
-        const newPath = '/api/page/' + project + '/' + data.title;
+        const langProject = data.project ? data.project : lang + '.' + project;
+        const newPath = '/api/page/' + langProject + '/' + data.title;
         if ( data.code && [301, 302].indexOf( data.code ) > -1 ) {
           res.redirect( protocol + '://' + req.headers.host + newPath );
           return false;
@@ -284,13 +288,15 @@ function initGetMethods( app ) {
         }
       } );
     } );
+  }
+
+  app.get( '/api/page/:lang.:project/:title/:revision?', ( req, res ) => {
+    loadPage( req, res );
   } );
 
   app.get( '/api/page/:lang/:title', ( req, res ) => {
-    var proj = getProject( req );
-    cachedResponse( res, req.url, function () {
-      return page( req.params.title, proj.lang, proj.project, false );
-    } );
+    console.log('This endpoint was deprecated', req.url, 'Please check the client');
+    loadPage( req, res );
   } );
 
   app.get( '/api/visits/:lang/', ( req, res ) => {
