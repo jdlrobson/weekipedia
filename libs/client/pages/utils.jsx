@@ -26,7 +26,7 @@ export const onClickInternalLink = ( {
         title={store.title}
         language_project={language_project}
         api={api}
-        refId={refId} /> );
+        refId={refId} />, false );
 
     } else if ( childNode && childNode.nodeName === 'IMG' ) {
       href = link.getAttribute( 'href' ) || '';
