@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { HorizontalList, Content } from 'wikipedia-react-components';
 import SectionContent from './../../components/SectionContent';
 import Infobox from './../../components/Infobox';
-import PageActions from './../../components/PageActions';
+import PageActions from './PageActions';
 
 import withInterAppLinks from './../withInterAppLinks';
 

@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 
 import LanguageIcon from './LanguageIcon';
-import EditIcon from './../../components/EditIcon';
-import WatchIcon from './../../components/WatchIcon';
+import EditIcon from './../../../components/EditIcon';
+import WatchIcon from './../../../components/WatchIcon';
 
 import { HorizontalList, Icon } from 'wikipedia-react-components';
 import './icons.less';

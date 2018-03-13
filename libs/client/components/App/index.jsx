@@ -6,9 +6,9 @@ import DevTools from 'mobx-react-devtools';
 import './styles.less';
 import './icons.less';
 
-import MainMenu from './../MainMenu';
-import TransparentShield from './../TransparentShield';
-import BrandingBox from './../BrandingBox';
+import MainMenu from './MainMenu';
+import TransparentShield from './TransparentShield';
+import BrandingBox from './BrandingBox';
 
 import initOffline from './../../offline';
 
