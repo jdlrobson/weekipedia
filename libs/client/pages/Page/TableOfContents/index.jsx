@@ -1,5 +1,4 @@
 import React from 'react';
-import createReactClass from 'create-react-class';
 
 import { Icon } from 'wikipedia-react-components';
 
@@ -26,22 +25,21 @@ function getListItems( sections, suffix ) {
 	} );
 }
 
-export default createReactClass( {
-	render() {
-		// FIXME: class `toc-mobile` is only added for consistency with MobileFrontend
-		return (
-			<details className="component-table-of-contents toc-mobile" id="table-toc">
-				<summary>
-					<Icon glyph="toc"/>
-					<Icon glyph="arrow" className="chevron"/>
-					<span>Contents</span>
-				</summary>
-				<div>
-					<ul>
-						{ getListItems( this.props.sections ) }
-					</ul>
-				</div>
-			</details>
-		);
-	}
-} );
+const TableOfContents = ( props ) => {
+	return (
+		<details className="component-table-of-contents toc-mobile" id="table-toc">
+			<summary>
+				<Icon glyph="toc"/>
+				<Icon glyph="arrow" className="chevron"/>
+				<span>Contents</span>
+			</summary>
+			<div>
+				<ul>
+					{ getListItems( props.sections ) }
+				</ul>
+			</div>
+		</details>
+	);
+};
+
+export default TableOfContents;
