@@ -1,40 +1,33 @@
 import React from 'react';
-import createReactClass from 'create-react-class';
 import { IntermediateState, LinkList, Panel, SearchInput, Content } from 'wikipedia-react-components';
 
 import Overlay from './../Overlay';
 
 import './styles.less';
 
-export default createReactClass( {
-	getInitialState() {
-		return {
+class LanguageOverlay extends React.Component {
+	constructor() {
+		super();
+		this.state = {
 			term: null,
 			isLoading: true,
 			preferred: {},
 			languages: []
 		};
-	},
-	getDefaultProps() {
-		return {
-			storage: null,
-			api: null,
-			lang: 'en'
-		};
-	},
+	}
 	componentWillMount() {
 		var prefs = this.props.storage.get( 'languages-preferred' );
 		if ( prefs ) {
 			this.setState( { preferred: JSON.parse( prefs ) } );
 		}
-	},
+	}
 	componentDidMount() {
 		var self = this;
 		var source = this.props.language_project || this.props.lang;
 		this.props.api.fetch( '/api/page-languages/' + source + '/' + this.props.title ).then( function ( languages ) {
 			self.setState( { isLoading: false, languages: languages } );
 		} );
-	},
+	}
 	navigateTo( ev ) {
 		var link = ev.currentTarget;
 		var href = link.getAttribute( 'href' ) || '';
@@ -50,10 +43,10 @@ export default createReactClass( {
 		this.props.storage.set( 'languages-preferred', JSON.stringify( pref ) );
 		this.setState( { preferred: pref } );
 		ev.preventDefault();
-	},
+	}
 	filterLanguages( value ) {
 		this.setState( { term: value } );
-	},
+	}
 	getLanguagesForDisplay( preferredOnly ) {
 		var langs = [];
 		var term = this.state.term || '';
@@ -80,7 +73,7 @@ export default createReactClass( {
 		}
 		// search
 		return langs.sort( sortFn );
-	},
+	}
 	render() {
 		var self = this;
 		var state = this.state;
@@ -126,15 +119,21 @@ export default createReactClass( {
 							onSearch={this.filterLanguages} placeholder="Search for a language" />
 					</Content>
 				</Panel>
-				<div className="overlay-content">
-					<Content>
-						{prefHeader}
-						{prefLang}
-						{listHeader}
-						{content}
-					</Content>
-				</div>
+				<Content>
+					{prefHeader}
+					{prefLang}
+					{listHeader}
+					{content}
+				</Content>
 			</Overlay>
 		);
 	}
-} );
+}
+
+LanguageOverlay.defaultProps = {
+	storage: null,
+	api: null,
+	lang: 'en'
+};
+
+export default LanguageOverlay;

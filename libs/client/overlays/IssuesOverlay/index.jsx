@@ -1,20 +1,18 @@
 import React from 'react';
-import createReactClass from 'create-react-class';
-import { Content,
+import { Header, Overlay,
 	Icon, IntermediateState, Panel } from 'wikipedia-react-components';
-
-import Overlay from './../Overlay';
 
 import './styles.less';
 import './icons.less';
 
-export default createReactClass( {
-	getInitialState() {
-		return {
+class IssuesOverlay extends React.Component {
+	constructor() {
+		super();
+		this.state = {
 			error: false,
 			issues: null
 		};
-	},
+	}
 	componentDidMount() {
 		var self = this;
 		var source = this.props.language_project || this.props.lang;
@@ -25,10 +23,14 @@ export default createReactClass( {
 				self.setState( { error: true } );
 			}
 		} );
-	},
+	}
 	render() {
 		var body;
+		var onExit = function () {
+			this.props.router.back();
+		}.bind( this );
 		var issues = this.state.issues;
+
 		if ( this.state.error ) {
 			body = <Panel>This page has no issues.</Panel>;
 		} else if ( issues ) {
@@ -44,12 +46,14 @@ export default createReactClass( {
 			body = <IntermediateState/>;
 		}
 		return (
-			<Overlay router={this.props.router} className="issues-overlay"
-				header={<h2><strong>Issues</strong></h2>}>
-				<Content className="overlay-content">
-					{body}
-				</Content>
+			<Overlay onExit={onExit} className="issues-overlay">
+				<Header>
+					<h2><strong>Issues</strong></h2>
+				</Header>
+				{body}
 			</Overlay>
 		);
 	}
-} );
+}
+
+export default IssuesOverlay;

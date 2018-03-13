@@ -1,5 +1,4 @@
-import React from 'react';
-import createReactClass from 'create-react-class';
+import React, { Component } from 'react';
 import { Icon, SearchForm, Panel } from 'wikipedia-react-components';
 
 import CardList from './../../components/CardList';
@@ -8,22 +7,15 @@ import Overlay from './../Overlay';
 
 import './styles.less';
 
-export default createReactClass( {
-	getInitialState() {
-		return {
+class SearchOverlay extends Component {
+	constructor() {
+		super();
+		this.state = {
 			isSearching: false,
 			term: '',
 			list: null
 		};
-	},
-	getDefaultProps() {
-		return {
-			emptyMessage: '',
-			loadingMessage: 'Searching',
-			api: null,
-			lang: 'en'
-		};
-	},
+	}
 	showResults( endpoint, project ) {
 		var self = this;
 		var props = this.props;
@@ -39,10 +31,10 @@ export default createReactClass( {
 				} );
 			} );
 		}, 200 );
-	},
+	}
 	onSearchWithinPages() {
 		this.onSearchSubmit( this.state.term );
-	},
+	}
 	onSearchSubmit( term ) {
 		var props = this.props;
 		var proj = props.lang + '.' + props.siteinfo.defaultProject;
@@ -51,7 +43,7 @@ export default createReactClass( {
 			pathname: '/' + proj + '/Special:Search/' + encodeURIComponent( term ),
 			search: ''
 		}, 'Search' );
-	},
+	}
 	onSearch( term ) {
 		var endpoint, lowerTerm;
 		var lang = this.props.lang;
@@ -71,14 +63,16 @@ export default createReactClass( {
 		} else {
 			this.setState( { cards: [] } );
 		}
-	},
+	}
 	render() {
 		var heading, panel, msg;
 		var props = this.props;
 		var search = <SearchForm
 			placeholder={props.msg( 'search' )}
 			defaultValue={props.defaultValue}
-			onSearch={this.onSearch} onSearchSubmit={this.onSearchSubmit} focusOnRender="1" />;
+			onSearch={this.onSearch.bind( this )}
+			onSearchSubmit={this.onSearchSubmit.bind( this )}
+			focusOnRender="1" />;
 
 		if ( this.state.term ) {
 			msg = this.state.noResults ?
@@ -87,7 +81,7 @@ export default createReactClass( {
 			panel = (
 				<Panel>
 					<Icon glyph="search-content"
-						onClick={this.onSearchWithinPages}
+						onClick={this.onSearchWithinPages.bind( this )}
 						type="before" label={msg} className="without-results" />
 				</Panel>
 			);
@@ -102,11 +96,18 @@ export default createReactClass( {
 				siteoptions={props.siteoptions}
 				chromeHeader={true}
 				className="component-search-overlay search-overlay">
-				<div className="overlay-content">
-					{panel}
-					{this.state.list}
-				</div>
+				{panel}
+				{this.state.list}
 			</Overlay>
 		);
 	}
-} );
+}
+
+SearchOverlay.defaultProps = {
+	emptyMessage: '',
+	loadingMessage: 'Searching',
+	api: null,
+	lang: 'en'
+};
+
+export default SearchOverlay;

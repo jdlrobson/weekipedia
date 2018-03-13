@@ -160,7 +160,7 @@ export default createReactClass( {
 			content = <ErrorBox msg="There was a problem displaying the image." />;
 		}
 		return (
-			<Overlay router={this.props.router} isLightBox="1">
+			<Overlay router={this.props.router} isLightBox={true}>
 				{leftGutter}
 				<div className="image-wrapper">
 					<div>{content}</div>

@@ -1,5 +1,4 @@
 import React from 'react';
-import createReactClass from 'create-react-class';
 
 import Overlay from './../Overlay';
 import { Icon } from 'wikipedia-react-components';
@@ -7,24 +6,20 @@ import { Icon } from 'wikipedia-react-components';
 import './styles.less';
 import './icons.less';
 
-export default createReactClass( {
-	getDefaultProps() {
-		return {
-
-		};
-	},
-	getInitialState() {
-		return {
+class CollectionOverlay extends React.Component {
+	constructor() {
+		super();
+		this.state = {
 			collections: null
 		};
-	},
+	}
 	componentDidMount() {
 		var self = this;
 		var endpoint = '/api/private/' + this.props.lang + '/collection/all/with/' + this.props.title;
 		this.props.api.fetch( endpoint ).then( function ( data ) {
 			self.setState( data );
 		} );
-	},
+	}
 	toggleCollectionState( id ) {
 		var endpoint;
 		var props = this.props;
@@ -48,15 +43,15 @@ export default createReactClass( {
 		} );
 		props.api.clearCache();
 		this.setState( collections );
-	},
+	}
 	watch( ev ) {
 		var id = ev.currentTarget.getAttribute( 'data-id' );
 
 		ev.stopPropagation();
 		this.toggleCollectionState( id );
-	},
+	}
 	render() {
-		var watch = this.watch;
+		var watch = this.watch.bind( this );
 		var props = this.props;
 		var store = props.store;
 		var collections = this.state.collections;
@@ -94,4 +89,6 @@ export default createReactClass( {
 			return <div style={{ display: 'none' }} />;
 		}
 	}
-} );
+}
+
+export default CollectionOverlay;
