@@ -12,7 +12,7 @@ export default createReactClass( {
 	getConfig() {
 		var config = mwStorage.get( 'mobile-options' );
 		if ( !config ) {
-			return this.props.siteoptions;
+			return this.props.store.siteoptions;
 		} else {
 			return JSON.parse( config );
 		}
@@ -22,7 +22,7 @@ export default createReactClass( {
 		config[ name ] = value;
 		this.setState( { mobileOptions: config } );
 		this.save( config );
-		this.props.store.setUserNotification( 'Setting saved. You will need to refresh your browser for the changes to go into effect.' );
+		this.props.store.setUserNotification( 'Setting saved.' );
 	},
 	componentDidMount() {
 		this.save( this.getConfig() );
@@ -31,6 +31,7 @@ export default createReactClass( {
 		this.setState( {
 			mobileOptions: config
 		} );
+		this.props.store.loadSiteOptions( config );
 		mwStorage.set( 'mobile-options', JSON.stringify( config ) );
 	},
 	render() {

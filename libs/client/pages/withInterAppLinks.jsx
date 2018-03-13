@@ -5,14 +5,13 @@ import { onClickInternalLink } from './utils.jsx';
 
 const withInterAppLinks = (
 	Component, {
-		// FIXME: Simplify parameters this needs
-		router, supportedProjects, allowForeignProjects, lang, store, api, language_project
+		router, store, api
 	}
 ) => {
 
 	const clickInternalLink = onClickInternalLink(
 		{
-			router, supportedProjects, allowForeignProjects, lang, store, api, language_project
+			router, store, api
 		}
 	);
 

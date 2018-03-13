@@ -58,7 +58,8 @@ export default createReactClass( {
 	},
 	checkExpandedState() {
 		var expandQuery = this.props.query && this.props.query.expanded;
-		if ( expandQuery || this.props.siteoptions.expandArticlesByDefault ) {
+		var store = this.props.store;
+		if ( expandQuery || store.isFeatureEnabled( 'expandArticlesByDefault' ) ) {
 			this.setState( { isExpanded: true } );
 		}
 	},
@@ -151,7 +152,7 @@ export default createReactClass( {
 			wikiPageProps = {},
 			props = this.props,
 			state = this.state,
-			siteOptions = props.siteoptions,
+			store = props.store,
 			sections = [],
 			secondaryActions = [],
 			title = this.props.title,
@@ -171,7 +172,7 @@ export default createReactClass( {
 		if ( leadHtml !== undefined ) {
 			if ( this.state.isExpanded ) {
 				toc = <TableOfContents sections={remainingSections} />;
-				if ( remainingSections.length && siteOptions.includeTableOfContents ) {
+				if ( remainingSections.length && store.isFeatureEnabled( 'includeTableOfContents' ) ) {
 					sections.push( toc );
 				}
 				sections = sections.concat( remainingSections );
@@ -191,7 +192,7 @@ export default createReactClass( {
 			}
 		}
 
-		if ( ns === 0 && siteOptions.showTalkToAnons ) {
+		if ( ns === 0 && store.isFeatureEnabled( 'showTalkToAnons' ) ) {
 			secondaryActions.push( <Button className="talk"
 				key="article-talk" href={ state.jsEnabled ? '#/talk' : this.getLocalUrl( 'Talk:' + title ) }
 				label="Talk" /> );

@@ -77,10 +77,10 @@ class MainMenu extends Component {
 		var collectionMenuItem, nearbyMenuItem, settingsMenuItem,
 			props = this.props,
 			langPrefix = this.getUrlPrefix(),
-			options = props.siteoptions,
+			store = props.store,
 			msg = props.msg;
 
-		if ( options.collectionsEnabled ) {
+		if ( store.isFeatureEnabled( 'collectionsEnabled' ) ) {
 			collectionMenuItem = (
 				<li>
 					<Icon glyph="mf-collections" href={langPrefix + '/Special:Collections/' }
@@ -88,7 +88,7 @@ class MainMenu extends Component {
 				</li>
 			);
 		}
-		if ( options.nearby ) {
+		if ( store.isFeatureEnabled( 'options.nearby' ) ) {
 			nearbyMenuItem = (
 				<li>
 					<Icon glyph="mf-nearby" href={langPrefix + '/Special:Nearby'}
@@ -97,7 +97,7 @@ class MainMenu extends Component {
 				</li>
 			);
 		}
-		if ( options.settingsEnabled ) {
+		if ( store.isFeatureEnabled( 'settingsEnabled' ) ) {
 			settingsMenuItem = (
 				<li>
 					<Icon glyph="mf-settings" href={langPrefix + '/Special:MobileOptions' }

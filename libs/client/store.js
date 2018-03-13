@@ -6,6 +6,8 @@ import isRTL from './is-rtl';
 const APP_SESSION_KEY = 'app-session';
 
 const store = observable( {
+	siteoptions: {},
+	projects: [],
 	devTools: true,
 	pageviews: 0,
 	page: null,
@@ -19,6 +21,18 @@ const store = observable( {
 } );
 
 let loginRequest;
+
+store.isFeatureEnabled = function ( featureName ) {
+	return this.siteoptions && this.siteoptions[ featureName ];
+};
+
+store.addProjects = function ( projects ) {
+	this.projects = projects;
+};
+
+store.loadSiteOptions = function ( options ) {
+	this.siteoptions = options;
+};
 
 store.showOverlay = function ( overlay, fullScreen = true ) {
 	// In future we won't do this as part of this method.
@@ -92,15 +106,30 @@ store.loadSession = function ( api, storage ) {
 	}
 };
 
+store.getLangProject = function () {
+	if ( !this.project ) {
+		throw new Error( 'Project not set' );
+	}
+	if ( !this.lang ) {
+		throw new Error( 'Language not set' );
+	}
+	return this.lang + '.' + this.project;
+};
+
+store.setProject = function ( project ) {
+	this.project = project;
+};
+
 store.setLanguage = function ( langCode ) {
 	this.lang = langCode;
 	this.isRTL = isRTL( langCode );
 };
 
-store.setPage = function ( title, langCode, page ) {
+store.setPage = function ( title, langCode, project, page ) {
 	this.hideOverlays();
 	this.title = title;
 	this.setLanguage( langCode );
+	this.setProject( project );
 	this.page = page;
 	this.pageviews++;
 };

@@ -46,7 +46,7 @@ class App extends React.Component {
 		if ( route.overlay ) {
 			store.showOverlay( route.overlay );
 		} else {
-			store.setPage( route.title, route.language, route.children[ 0 ] );
+			store.setPage( route.title, route.language, route.project, route.children[ 0 ] );
 		}
 	}
 	componentDidMount() {
@@ -66,7 +66,7 @@ class App extends React.Component {
 			props.router.on( 'onreplacestate', renderCurrentRoute );
 		}
 
-		store.setPage( props.title, props.lang, null );
+		store.setPage( props.title, props.lang, props.project, null );
 		store.loadSession( props.api, props.storage );
 	}
 	closePrimaryNav() {

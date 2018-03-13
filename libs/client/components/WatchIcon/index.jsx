@@ -59,7 +59,7 @@ class WatchIcon extends React.Component {
 	}
 	dispatch( ev ) {
 		var props = this.props;
-		var collectionsEnabled = props.siteoptions && props.siteoptions.collectionsEnabled;
+		var collectionsEnabled = props.store.isFeatureEnabled( 'collectionsEnabled' );
 		var collections = this.state.collections;
 
 		if ( !props.collection && collections.length > 1 || collectionsEnabled ) {

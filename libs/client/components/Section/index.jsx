@@ -22,13 +22,14 @@ class Section extends Component {
 	}
 	componentWillMount() {
 		var isOpen,
-			props = this.props;
+			props = this.props,
+			store = props.store;
 
 		if ( props.isExpandedByDefault ) {
 			isOpen = true;
-		} else if ( !props.siteoptions.isExpandedByDefaultTablet ) {
+		} else if ( !store.isFeatureEnabled( 'isExpandedByDefaultTablet' ) ) {
 			isOpen = !props.isCollapsible ? !props.isCollapsible :
-				( props.siteoptions.expandSectionsByDefault && !props.isReferenceSection );
+				( store.isFeatureEnabled( 'expandSectionsByDefault' ) && !props.isReferenceSection );
 		}
 
 		this.setState( {
@@ -61,8 +62,9 @@ class Section extends Component {
 		}
 	}
 	componentDidMount() {
+		var store = this.props.store;
 		this.setState( { jsEnabled: true } );
-		if ( this.props.siteoptions.expandSectionsByDefaultTablet && window.innerWidth > 768 ) {
+		if ( store.isFeatureEnabled( 'expandSectionsByDefaultTablet' ) && window.innerWidth > 768 ) {
 			this.setState( {
 				isOpen: true
 			} );

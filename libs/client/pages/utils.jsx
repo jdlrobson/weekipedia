@@ -4,16 +4,19 @@ import ReferenceDrawer from './../overlays/ReferenceDrawer';
 import withInterAppLinks from './withInterAppLinks';
 
 export const onClickInternalLink = ( {
-	router, supportedProjects, allowForeignProjects, lang, store, api, language_project
+	router, store, api
 } ) => {
 	return ( ev ) => {
 		var href, parts, match, refId, title, path;
+		var lang = store.lang;
+		var supportedProjects = store.projects;
+		var allowForeignProjects = store.isFeatureEnabled( 'allowForeignProjects' );
 		var link = ev.currentTarget;
 		var childNode = link.firstChild;
 		var parentNode = link.parentNode;
 		var HijackedRefDrawer = withInterAppLinks(
 			ReferenceDrawer, {
-				router, supportedProjects, allowForeignProjects, lang, store, api, language_project
+				router, store, api
 			}
 		);
 
@@ -23,7 +26,7 @@ export const onClickInternalLink = ( {
 			refId = link.getAttribute( 'href' ).split( '#' )[ 1 ];
 			store.showOverlay( <HijackedRefDrawer
 				title={store.title}
-				language_project={language_project}
+				language_project={store.getLangProject()}
 				api={api}
 				refId={refId} />, false );
 

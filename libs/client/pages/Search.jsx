@@ -20,27 +20,28 @@ export default createReactClass( {
 	},
 	getTabs() {
 		var proj = this.props.project;
+		var store = this.props.store;
 		var term = this.getTerm();
-		var siteoptions = this.props.siteoptions;
 		var self = this;
 		var prefix = '/' + this.props.lang + '.';
-		return siteoptions.allowForeignProjects ? this.props.supportedProjects.map( function ( project, i ) {
-			return <a key={'search-tab' + i}
-				onClick={self.navigateTo}
-				className={proj === project ? 'active' : ''}
-				title={'Search ' + project + ' for ' + term}
-				href={prefix + project + '/Special:Search/' + term}>{project}</a>;
-		} ) : [];
+		return store.isFeatureEnabled( 'allowForeignProjects' ) ?
+			store.projects.map( function ( project, i ) {
+				return <a key={'search-tab' + i}
+					onClick={self.navigateTo}
+					className={proj === project ? 'active' : ''}
+					title={'Search ' + project + ' for ' + term}
+					href={prefix + project + '/Special:Search/' + term}>{project}</a>;
+			} ) : [];
 	},
 	render() {
 		var emptyProps = {
 			msg: 'No pages matched your search query for this project. Why not try one of our other projects?'
 		};
 		var props = this.props;
-		var siteoptions = props.siteoptions;
+		var store = props.store;
 		var term = this.getTerm();
 		var endpoint = '/api/search-full/' + props.language_project + '/' + encodeURIComponent( term );
-		var suffix = siteoptions.allowForeignProjects ?
+		var suffix = store.isFeatureEnabled( 'allowForeignProjects' ) ?
 			[ ' on ', <strong key="search-strong-project">{props.project}</strong> ] : '';
 		var termUrl = '/' + props.language_project + '/' + term;
 		var tagline = <p>Showing you all search results for <strong><a href={termUrl}>{decodeURIComponent( term )}</a></strong>{suffix}</p>;

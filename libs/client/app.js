@@ -26,7 +26,11 @@ if ( config.fallbackPath ) {
 }
 var query = shared.router.queryStringToObject( window.location.search );
 config.uselang = query.uselang || 'en';
+store.loadSiteOptions( config.siteoptions );
+store.addProjects( config.supportedProjects );
 config.store = store;
+delete config.siteoptions;
+delete config.supportedProjects;
 shared.init( config, overlayRoutes );
 
 document.body.className += ' client-js';

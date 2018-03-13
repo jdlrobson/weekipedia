@@ -27,6 +27,7 @@ function getListItems( sections, suffix ) {
 
 const TableOfContents = ( props ) => {
 	return (
+		// FIXME: class `toc-mobile` is only added for consistency with MobileFrontend
 		<details className="component-table-of-contents toc-mobile" id="table-toc">
 			<summary>
 				<Icon glyph="toc"/>

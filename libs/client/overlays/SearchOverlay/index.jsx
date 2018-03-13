@@ -93,7 +93,6 @@ class SearchOverlay extends Component {
 				siteinfo={props.siteinfo}
 				onExit={props.onExit}
 				primaryIcon={false}
-				siteoptions={props.siteoptions}
 				chromeHeader={true}
 				className="component-search-overlay search-overlay">
 				{panel}
