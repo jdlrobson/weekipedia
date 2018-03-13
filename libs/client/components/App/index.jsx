@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { Icon, SearchForm } from 'wikipedia-react-components';
+import { Icon, SearchForm, Header, Toast } from 'wikipedia-react-components';
 import { observer } from 'mobx-react';
 import DevTools from 'mobx-react-devtools';
 
@@ -9,10 +9,9 @@ import './icons.less'
 
 import MainMenu from './../MainMenu'
 import TransparentShield from './../TransparentShield'
-import ChromeHeader from './../ChromeHeader'
+import BrandingBox from './../BrandingBox'
 
 import ReferenceDrawer from './../../overlays/ReferenceDrawer'
-import Toast from './../../overlays/Toast'
 
 import initOffline from './../../offline'
 
@@ -169,9 +168,11 @@ class App extends React.Component {
             session={store.session}/>
         </nav>
         <div id="mw-mf-page-center" onClick={actionClosePrimaryNav}>
-          <ChromeHeader {...props} primaryIcon={icon}
-            includeSiteBranding={true}
-            search={search} secondaryIcons={secondaryIcons}/>
+          <Header {...props} primaryIcon={icon}
+            className="chrome-header"secondaryIcons={secondaryIcons}>
+            {<BrandingBox {...props} />}
+            {search}
+          </Header>
           {
             store.devTools && (<DevTools />)
           }

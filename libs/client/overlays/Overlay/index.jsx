@@ -1,74 +1,47 @@
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
 
-import './styles.less'
+import { Icon, Header, Overlay } from 'wikipedia-react-components'
+import BrandingBox from './../../components/BrandingBox'
 
-import { Icon, Header } from 'wikipedia-react-components'
-import ChromeHeader from './../../components/ChromeHeader'
+import './styles.less'
 
 // Main component
 
-class Overlay extends Component {
-  onClose(ev){
-    if ( this.props.onExit ) {
-      this.props.onExit(ev);
-    } else {
-      this.props.router.back();
-    }
-  }
-  componentDidMount() {
-    var node = ReactDOM.findDOMNode( this );
-    setTimeout( function () {
-      node.className += ' visible';
-    }, 0 );
-  }
+class WOverlay extends Component {
   render(){
-    var header, icon, secondaryIcons;
-    var headerProps = {};
+    var headerProps, secondaryIcons, header;
     var props = this.props;
-    var baseClass = this.props.isDrawer ? 'drawer' : 'overlay visible'
-    var overlayClass = baseClass +
-      ( this.props.className ? ' ' + this.props.className : '' );
-    var closeIconGray = <Icon glyph='close-gray'
-      className="close" onClick={this.onClose.bind(this)}/>;
+    var headerChildren = [];
+    var onExit = props.onExit || function () {
+      this.props.router.back();
+    }.bind( this );
+    var closeIcon= <Icon glyph='close'
+      className="close" onClick={onExit}/>;
 
-    if ( this.props.isDrawer ) {
-      header = null;
-    } else if ( this.props.isLightBox ) {
-      header = (
-        <div className="lightbox-header">
-         {closeIconGray}
-        </div>);
-      overlayClass += ' lightbox';
-    } else {
-      icon = (<Icon glyph='close' onClick={this.onClose.bind(this)} className="cancel" />);
-      secondaryIcons = props.secondaryIcon ? [ props.secondaryIcon ] : [];
-      if ( !secondaryIcons && !props.primaryIcon && props.primaryIcon !== undefined ) {
-        secondaryIcons = [ icon ];
-      }
+    if ( !props.isDrawer && !props.isLightBox ) {
       headerProps = {
         fixed: true,
-        primaryIcon: props.primaryIcon !== undefined ? props.primaryIcon : icon,
-        router: props.router,
-        siteoptions: props.siteoptions,
-        siteinfo: props.siteinfo,
-        search: props.search,
-        includeSiteBranding: false,
-        secondaryIcons: secondaryIcons,
-        main: props.header
+        secondaryIcons: props.secondaryIcon ? [ props.secondaryIcon ] : [],
+        className: props.chromeHeader ? 'chrome-header' : ''
       };
       if ( props.chromeHeader ) {
-        header = <ChromeHeader {...headerProps} />
-      } else {
-        header = <Header {...headerProps} />
+        headerProps.secondaryIcons = [ closeIcon ]
+        headerChildren.push( props.search );
       }
+      headerChildren.push( props.header );
+      header = (
+        <Header {...headerProps}>
+          {headerChildren}
+        </Header>
+      );
     }
 
     return (
-      <div className={overlayClass}>
+      <Overlay className={props.className} onExit={onExit}>
         {header}
         {this.props.children}
-      </div>
+      </Overlay>
     )
   }
 }
@@ -77,4 +50,4 @@ Overlay.defaultProps = {
   isDrawer: false
 };
 
-export default Overlay
+export default WOverlay

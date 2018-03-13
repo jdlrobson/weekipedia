@@ -1,14 +1,13 @@
 import React from 'react'
 
-import Overlay from './../Overlay'
-import { Button } from 'wikipedia-react-components'
+import { Button, Overlay } from 'wikipedia-react-components'
 
 class CtaDrawer extends React.Component {
   render(){
     var props = this.props;
     var loginUrl = '/' + props.language_project + '/Special:UserLogin?returnto=' + encodeURIComponent( props.title );
     return (
-      <Overlay {...props} isDrawer="1">
+      <Overlay>
         <p>{props.message}</p>
         <div>
           <Button label='Log in' href={loginUrl} isPrimary="1" />

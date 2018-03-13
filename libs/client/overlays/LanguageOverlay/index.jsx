@@ -126,14 +126,12 @@ export default createReactClass({
               onSearch={this.filterLanguages} placeholder="Search for a language" />
           </Content>
         </Panel>
-        <div className="overlay-content">
-          <Content>
-            {prefHeader}
-            {prefLang}
-            {listHeader}
-            {content}
-          </Content>
-        </div>
+        <Content>
+          {prefHeader}
+          {prefLang}
+          {listHeader}
+          {content}
+        </Content>
       </Overlay>
     )
   }

@@ -101,6 +101,7 @@ class WeekipediaCardList extends React.Component {
         onEmpty();
       }
     } ).catch( function ( error ) {
+      console.log('got', error);
       if ( error.message.indexOf( 'Failed to fetch' ) > -1 ) {
         self.setState({ errorMsg: OFFLINE_ERROR });
       }

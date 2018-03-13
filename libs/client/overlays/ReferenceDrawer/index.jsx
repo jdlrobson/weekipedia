@@ -1,22 +1,20 @@
 import React from 'react'
-import createReactClass from 'create-react-class'
 import ReactDOM from 'react-dom'
 
-import { ErrorBox, Icon, IntermediateState } from 'wikipedia-react-components'
-
-import Overlay from './../Overlay'
+import { ErrorBox, Icon, IntermediateState, Overlay } from 'wikipedia-react-components'
 
 import './styles.less'
 import './icons.less'
 
-export default createReactClass({
-  getInitialState() {
-    return {
+class ReferenceDrawer extends React.Component {
+  constructor() {
+    super();
+    this.state = {
       isLoading: true,
       isError: false,
       text: null
-    }
-  },
+    };
+  }
   loadReference( refId ) {
     var self = this;
     this.props.api.getReference( this.props.title, this.props.language_project, refId )
@@ -25,15 +23,19 @@ export default createReactClass({
       } ).catch( function () {
         self.setState( { isError: true } );
       } );
-  },
+  }
   componentDidMount() {
     this.loadReference( this.props.refId );
-  },
+  }
   componentWillReceiveProps( nextProps ) {
     this.loadReference( nextProps.refId );
-  },
+  }
   render(){
-    var children;
+    var children = [
+        <div className="cite">
+          <Icon type="before" glyph="citation" label="Citation" className="text"/>
+        </div>
+    ];
 
     if ( this.state.isError ) {
       children = [
@@ -52,13 +54,11 @@ export default createReactClass({
     // FIXME: references class name should not be necessary and is only added for consistency
     // with MobileFrontend output
     return (
-      <Overlay {...this.props} className="references-drawer references" isDrawer="1">
-        <div className="cite">
-          <Icon type="before" glyph="citation" label="Citation" className="text"/>
-        </div>
+      <Overlay className="references-drawer references">
         {children}
       </Overlay>
     )
   }
-} )
+}
 
+export default ReferenceDrawer;
