@@ -1,7 +1,9 @@
 {
   "scripts": {
     "start": "npm run compile-prod & npm run node-server",
-    "test": "grunt test && mocha --compilers js:babel-core/register tests/*/*/**",
+    "lint:fix": "eslint . --ext .jsx --ext .js  --fix",
+    "lint": "grunt test && eslint . --ext .jsx --ext .js",
+    "test": "npm run lint && mocha --compilers js:babel-core/register tests/*/*/**",
     "dev": "npm run compile:watch & npm run node-server-dev",
     "node-server": "node weekipedia.js",
     "node-server-dev": "NODE_ENV=development node weekipedia.js",
@@ -30,6 +32,8 @@
     "domino": "^1.0.25",
     "es6-map": "^0.1.4",
     "es6-promise-polyfill": "^1.2.0",
+    "eslint": "^4.18.2",
+    "eslint-plugin-react": "^7.7.0",
     "events": "^1.1.1",
     "express": "^4.14.0",
     "express-session": "^1.14.0",

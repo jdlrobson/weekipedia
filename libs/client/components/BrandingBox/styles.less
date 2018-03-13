@@ -1,0 +1,93 @@
+// See https://phabricator.wikimedia.org/T146408
+@originalSize: 35px;
+
+.chrome-header {
+  .branding-box h1 {
+    margin-top: 0;
+    margin-left: 5px;
+    text-align: left;
+  }
+
+  .search-form {
+    display: none;
+  }
+}
+
+.toolbar > div > div.branding-box {
+  padding-top: 0;
+}
+
+.project-icon {
+  background-image: url(project-sprites.png);
+  position: absolute;
+  right: 8px;
+  top: 8px;
+  width: @originalSize;
+  height: @originalSize;
+  text-indent: -999px;
+  overflow: hidden;
+  background-repeat: no-repeat;
+  background-position: -100px 0;
+
+  &.project-meta {
+    background-position: 0 -181px;
+  }
+  &.project-species {
+    background-position: 0 -364px;
+    height: 40px;
+  }
+  &.project-commons {
+    top: 0;
+    height: 48px;
+    background-position: 0 -446px;
+  }
+  &.project-wiktionary {
+    background-position: 0 (-216px);
+  }
+  &.project-wikivoyage {
+    background-position: 0 (-111px);
+  }
+  &.project-wikiquote {
+    height: 40px;
+    background-position: 0 (-405px);
+  }
+  &.project-wikiversity {
+    height: 28px;
+    background-position: 0 (-52px);
+  }
+  &.project-wikibooks {
+    background-position: 0 (-146px);
+  }
+  &.project-wikinews {
+    width: 48px;
+    background-position: 0 9px;
+  }
+  &.project-wikisource {
+    background-position: 0 (-287px);
+  }
+  &.project-wikipedia {
+    background-position: 0 (498px);
+  }
+}
+
+@media (min-width: 720px) {
+  .header {
+    .branding-box,
+    .search-form {
+      vertical-align: middle;
+      display: table-cell;
+    }
+
+    .branding-box {
+      width: 11.0625em;
+    }
+
+    .search-form {
+      width: auto;
+
+      .search {
+        width: 23.4375em;
+      }
+    }
+  }
+}

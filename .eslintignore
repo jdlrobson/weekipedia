@@ -1,0 +1,6 @@
+node_modules/
+i18n/
+/mydb
+wet/
+tests/
+public/

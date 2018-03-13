@@ -1,0 +1,33 @@
+{
+  "extends": "wikimedia",
+  "plugins": [
+    "react"
+  ],
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true,
+      "modules": true
+     },
+     "sourceType": "module",
+     "ecmaVersion": "5"
+  },
+  "globals": {
+    "Image": false,
+    "document": false,
+    "navigator": false,
+    "atob": false,
+    "clearTimeout": false,
+    "setTimeout": false,
+    "window": false,
+    "history": false
+  },
+  "rules": {
+    "camelcase": 0,
+    "no-underscore-dangle": 0,
+    "no-useless-escape": 0,
+    "one-var": 0,
+    "vars-on-top": 0,
+    "react/jsx-uses-vars": 1,
+    "react/jsx-uses-react": 1
+  }
+}

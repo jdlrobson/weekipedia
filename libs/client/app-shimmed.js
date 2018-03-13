@@ -6,4 +6,3 @@ window.Promise = require( 'es6-promise-polyfill' ).Promise;
 
 // run like normal
 require( './app' );
-

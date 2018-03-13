@@ -1,0 +1,25 @@
+{
+  "extends": "wikimedia",
+  "parserOptions": {
+    "ecmaVersion": 6,
+    "sourceType": "module"
+  },
+  "plugins": [
+    "react"
+  ],
+  "globals": {
+    "Request": false,
+    "require": false,
+    "module": false,
+    "fetch": false,
+    "Promise": false,
+    "window": false,
+    "history": false
+  },
+  "rules": {
+    "camelcase": 0,
+    "no-useless-escape": 0,
+    "one-var": 0,
+    "vars-on-top": 0
+  }
+}

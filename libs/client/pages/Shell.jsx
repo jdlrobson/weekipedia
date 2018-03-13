@@ -1,15 +1,14 @@
-import React from 'react'
-import createReactClass from 'create-react-class'
+import React from 'react';
+import createReactClass from 'create-react-class';
 
-import WikiPage from './WikiPage'
+import WikiPage from './WikiPage';
 
-import { IntermediateState } from 'wikipedia-react-components'
+import { IntermediateState } from 'wikipedia-react-components';
 
-export default createReactClass({
-  render(){
-    return (
-      <WikiPage body={<IntermediateState />} />
-    )
-  }
-})
-
+export default createReactClass( {
+	render() {
+		return (
+			<WikiPage body={<IntermediateState />} />
+		);
+	}
+} );
