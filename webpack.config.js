@@ -23,7 +23,7 @@ module.exports = {
       publicPath: "/"
     },
     plugins: [
-      new ExtractTextPlugin( { filename: 'styles.css', allChunks: true } ),
+      new ExtractTextPlugin( { filename: 'style.css', allChunks: true } ),
       new webpack.DefinePlugin({
         'process.env': {
           OFFLINE_STRATEGY: `"${OFFLINE_STRATEGY}"`,
