@@ -16,13 +16,80 @@ function queryStringToObject( search ) {
 	return query;
 }
 
+function goBack() {
+	window.history.back();
+}
+
+function navigateTo( pathOrLocation, hashOrTitle, useReplaceState ) {
+	var path, hash, search, title, url;
+	if ( !pathOrLocation || typeof pathOrLocation === 'string' ) {
+		path = pathOrLocation;
+		hash = hashOrTitle;
+		search = window.location.search;
+	} else {
+		hash = pathOrLocation.hash;
+		path = pathOrLocation.pathname;
+		search = pathOrLocation.search;
+		title = hashOrTitle;
+	}
+
+	var currentPath = window.location.pathname,
+		state = {
+			scrollY: window.scrollY
+		};
+
+	if ( search && search.indexOf( '?' ) !== 0 ) {
+		search = '?' + search;
+	}
+
+	if ( search ) {
+		currentPath += search;
+	}
+	if ( hash === undefined ) {
+		hash = path.split( '#' );
+		path = hash[ 0 ];
+		hash = hash[ 1 ] ? '#' + hash[ 1 ] : '';
+	}
+	if ( path ) {
+		url = search ? path + search : path;
+
+		if ( useReplaceState ) {
+			// TODO: older browser support
+			history.replaceState( {}, null, url );
+		} else {
+			// replace the existing state with information about the scroll position
+			history.replaceState( state, null, currentPath + window.location.hash );
+			// navigate to new page
+			history.pushState( {}, null, url );
+		}
+		events.emit( 'onpushstate' );
+	}
+	if ( hash ) {
+		if ( window.location.hash ) {
+			history.replaceState( {}, null, hash );
+			events.emit( 'onreplacestate' );
+		} else {
+			// record the scroll position in current path
+			history.replaceState( state, null, window.location.pathname );
+			window.location.hash = hash;
+		}
+	}
+	if ( title && typeof document !== undefined ) {
+		document.title = title;
+	}
+}
+
 function matchRouteInternal( routes, path, props, query ) {
 	var chosenRoute;
 	props = props || {};
-	props.router = router;
 	routes.some( function ( route ) {
 		var res = path.match( route[ 0 ] );
 		if ( res ) {
+			const publicRouter = {
+				back: goBack,
+				navigateTo: navigateTo
+			};
+			res.router = publicRouter;
 			chosenRoute = route[ 1 ]( res, props, query );
 			return true;
 		}
@@ -58,72 +125,13 @@ router = {
 	on: function ( eventName, handler ) {
 		events.on( eventName, handler );
 	},
-	back: function () {
-		window.history.back();
-	},
+	back: goBack,
 	addRoute: function ( regExp, handler ) {
 		// new routes get added to front
 		routes.unshift( [ regExp, handler ] );
 	},
 	matchRoute: matchRoute,
-	navigateTo: function ( pathOrLocation, hashOrTitle, useReplaceState ) {
-		var path, hash, search, title, url;
-		if ( !pathOrLocation || typeof pathOrLocation === 'string' ) {
-			path = pathOrLocation;
-			hash = hashOrTitle;
-			search = window.location.search;
-		} else {
-			hash = pathOrLocation.hash;
-			path = pathOrLocation.pathname;
-			search = pathOrLocation.search;
-			title = hashOrTitle;
-		}
-
-		var currentPath = window.location.pathname,
-			state = {
-				scrollY: window.scrollY
-			};
-
-		if ( search && search.indexOf( '?' ) !== 0 ) {
-			search = '?' + search;
-		}
-
-		if ( search ) {
-			currentPath += search;
-		}
-		if ( hash === undefined ) {
-			hash = path.split( '#' );
-			path = hash[ 0 ];
-			hash = hash[ 1 ] ? '#' + hash[ 1 ] : '';
-		}
-		if ( path ) {
-			url = search ? path + search : path;
-
-			if ( useReplaceState ) {
-				// TODO: older browser support
-				history.replaceState( {}, null, url );
-			} else {
-				// replace the existing state with information about the scroll position
-				history.replaceState( state, null, currentPath + window.location.hash );
-				// navigate to new page
-				history.pushState( {}, null, url );
-			}
-			events.emit( 'onpushstate' );
-		}
-		if ( hash ) {
-			if ( window.location.hash ) {
-				history.replaceState( {}, null, hash );
-				events.emit( 'onreplacestate' );
-			} else {
-				// record the scroll position in current path
-				history.replaceState( state, null, window.location.pathname );
-				window.location.hash = hash;
-			}
-		}
-		if ( title && typeof document !== undefined ) {
-			document.title = title;
-		}
-	}
+	navigateTo: navigateTo
 };
 
 export default router;
