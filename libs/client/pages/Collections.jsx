@@ -59,7 +59,7 @@ export default class Collections extends React.Component {
 		} else if ( args.length === 0 || !args[ 0 ] ) {
 			this.setState( { defaultView: true, username: false, endpoint: endpointPrefix } );
 		} else {
-			props.router.navigateTo( '/' + props.lang + '/wiki/Special:Collections', null, true );
+			throw new Error( 'Collections error state. What happened?' );
 		}
 	}
 	componentWillMount() {
@@ -101,13 +101,6 @@ export default class Collections extends React.Component {
 			return <IntermediateState />;
 		}
 	}
-	navigateTo( ev ) {
-		var href = ReactDOM.findDOMNode( this ).querySelector( 'a' ).getAttribute( 'href' );
-		if ( href ) {
-			ev.preventDefault();
-			this.props.router.navigateTo( href );
-		}
-	}
 	render() {
 		var tagline, userUrl, actions, label, suffix, tabs,
 			props = this.props,
@@ -130,7 +123,9 @@ export default class Collections extends React.Component {
 			tagline = (
 				<div>
 					<div>by <a href={userUrl}
-						onClick={this.navigateTo.bind( this )}>{username}</a></div>
+						onClick={function () {
+							props.onUserClick( username );
+						}}>{username}</a></div>
 					{desc}&nbsp;
 					<div>{actions}</div>
 				</div>

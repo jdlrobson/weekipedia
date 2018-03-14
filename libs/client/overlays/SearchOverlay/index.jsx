@@ -37,12 +37,7 @@ class SearchOverlay extends Component {
 	}
 	onSearchSubmit( term ) {
 		var props = this.props;
-		var proj = props.lang + '.' + props.siteinfo.defaultProject;
-		props.router.navigateTo( null, '#' );
-		props.router.navigateTo( {
-			pathname: '/' + proj + '/Special:Search/' + encodeURIComponent( term ),
-			search: ''
-		}, 'Search' );
+		props.onSearchSubmit( term );
 	}
 	onSearch( term ) {
 		var endpoint, lowerTerm;
@@ -59,7 +54,7 @@ class SearchOverlay extends Component {
 			}
 			endpoint = '/api/search/' + lang + '.' + project + '/' + encodeURIComponent( term );
 			this.showResults( endpoint, project );
-			this.props.router.navigateTo( null, '#/search/' + term, true );
+			this.props.onSearch( term );
 		} else {
 			this.setState( { cards: [] } );
 		}
@@ -71,7 +66,7 @@ class SearchOverlay extends Component {
 			placeholder={props.msg( 'search' )}
 			defaultValue={props.defaultValue}
 			onSearch={this.onSearch.bind( this )}
-			onSearchSubmit={this.onSearchSubmit.bind( this )}
+			onSearchSubmit={props.onSearchSubmit}
 			focusOnRender="1" />;
 
 		if ( this.state.term ) {
@@ -81,7 +76,7 @@ class SearchOverlay extends Component {
 			panel = (
 				<Panel>
 					<Icon glyph="search-content"
-						onClick={this.onSearchWithinPages.bind( this )}
+						onClick={props.onSearchSubmit}
 						type="before" label={msg} className="without-results" />
 				</Panel>
 			);
@@ -89,7 +84,7 @@ class SearchOverlay extends Component {
 
 		// FIXME: search-overlay class is added only for consistency with MobileFrontend
 		return (
-			<Overlay router={props.router} header={heading} search={search}
+			<Overlay header={heading} search={search}
 				siteinfo={props.siteinfo}
 				onExit={props.onExit}
 				primaryIcon={false}

@@ -36,37 +36,15 @@ class App extends React.Component {
 	clearSession() {
 		this.props.store.clearSession( this.props.storage );
 	}
-	renderCurrentRoute() {
-		var store = this.props.store;
-		var path = window.location.pathname;
-		var hash = window.location.hash;
-		var route = this.props.router.matchRoute( path, hash,
-			Object.assign( {}, this.props ) );
-
-		if ( route.overlay ) {
-			store.showOverlay( route.overlay );
-		} else {
-			store.setPage( route.title, route.language, route.project, route.children[ 0 ] );
-		}
-	}
 	componentDidMount() {
 		var props = this.props;
 		var msg = this.props.msg;
 		var store = props.store;
-		var renderCurrentRoute = this.renderCurrentRoute.bind( this );
 		if ( this.props.offlineVersion ) {
 			initOffline( function () {
 				store.setUserNotification( msg( 'offline-ready' ) );
 			} );
 		}
-
-		if ( 'onpopstate' in window ) {
-			window.onpopstate = renderCurrentRoute;
-			props.router.on( 'onpushstate', renderCurrentRoute );
-			props.router.on( 'onreplacestate', renderCurrentRoute );
-		}
-
-		store.setPage( props.title, props.lang, props.project, null );
 		store.loadSession( props.api, props.storage );
 	}
 	closePrimaryNav() {

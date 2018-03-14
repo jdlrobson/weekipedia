@@ -7,7 +7,6 @@ import './icons.less';
 export default class EditIcon extends React.Component {
 	render() {
 		var props = this.props;
-		var section = props.section;
 		var iconProps = {
 			key: 'edit',
 			glyph: 'edit',
@@ -15,10 +14,9 @@ export default class EditIcon extends React.Component {
 			href: '#',
 			store: props.store,
 			className: 'component-edit-icon',
-			router: props.router,
-			title: props.title,
-			language_project: props.language_project,
-			onLoginUrl: section !== undefined ? '#/editor/' + section : '#/editor/',
+			onClick: function ( ev ) {
+				props.router.navigateTo( '#/editor/' + props.section );
+			},
 			ctaMsg: props.msg( 'edit-cta' )
 		};
 

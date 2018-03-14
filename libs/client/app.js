@@ -24,14 +24,20 @@ config.api = api;
 if ( config.fallbackPath ) {
 	api.prefetch( config.fallbackPath, config.fallbackProps );
 }
-var query = shared.router.queryStringToObject( window.location.search );
+var router = shared.router;
+var query = router.queryStringToObject( window.location.search );
 config.uselang = query.uselang || 'en';
 store.loadSiteOptions( config.siteoptions );
 store.addProjects( config.supportedProjects );
+
 config.store = store;
+
+var props = shared.init( config, overlayRoutes );
+
+// Cleanup
+delete config.i18n;
 delete config.siteoptions;
 delete config.supportedProjects;
-shared.init( config, overlayRoutes );
 
 document.body.className += ' client-js';
 
@@ -39,3 +45,27 @@ render(
 	shared.render( window.location.pathname, window.location.hash ),
 	document.getElementById( 'app' )
 );
+
+const renderCurrentRoute = () => {
+	var path = window.location.pathname;
+	var hash = window.location.hash;
+	var route = router.matchRoute( path, hash,
+		Object.assign( {}, props, {
+			api: api,
+			store: store
+		} )
+	);
+
+	store.setPage( route.title, route.lang, route.project, route.children[ 0 ] );
+	if ( route.overlay ) {
+		store.showOverlay( route.overlay );
+	}
+};
+
+if ( 'onpopstate' in window ) {
+	window.onpopstate = renderCurrentRoute;
+	router.on( 'onpushstate', renderCurrentRoute );
+	router.on( 'onreplacestate', renderCurrentRoute );
+}
+renderCurrentRoute();
+

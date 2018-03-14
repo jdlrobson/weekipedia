@@ -8,13 +8,29 @@ import SearchOverlay from './overlays/SearchOverlay';
 import TalkOverlay from './overlays/TalkOverlay';
 import IssuesOverlay from './overlays/IssuesOverlay';
 
+import store from './store';
+
+function onExit( router ) {
+	return () => {
+		console.log('go nac', router);
+		router.back();
+	};
+}
+
 export default [
 	// Talk Overlay
 	[
 		/^#\/talk\/?([^\/]*)$/,
 		function ( info, props ) {
+			console.log('talk', info[1]);
+			var section = info[ 1 ];
 			var overlayProps = Object.assign( {}, props, {
-				section: info[ 1 ]
+				section: section,
+				onExit: onExit( info.router ),
+				onSaveComplete: () => {
+					store.setUserNotification( 'Your topic was added!' );
+					info.router.back();
+				}
 			} );
 			return {
 				overlay: React.createElement( TalkOverlay, overlayProps )
@@ -26,6 +42,11 @@ export default [
 		/^#\/editor\/?([^\/]*)\/?(.*)$/,
 		function ( info, props ) {
 			var overlayProps = Object.assign( {}, props, {
+				onExit: onExit( info.router ),
+				onEditSave: function ( newrevid ) {
+					info.router.navigateTo( window.location.pathname + '?oldid=' + newrevid );
+					store.setUserNotification( 'Your edit was successful!' );
+				},
 				section: info[ 1 ]
 			} );
 			if ( info[ 2 ] ) {
@@ -41,7 +62,11 @@ export default [
 		/^#\/media\/(.*)$/,
 		function ( info, props ) {
 			var overlayProps = Object.assign( {}, props, {
-				image: info[ 1 ]
+				image: info[ 1 ],
+				onExit: onExit( info.router ),
+				onLoadImage: ( path ) => {
+					info.router.navigateTo( { hash: '#/media/' + path }, null, true );
+				}
 			} );
 			return {
 				overlay: React.createElement( ImageOverlay, overlayProps )
@@ -54,7 +79,15 @@ export default [
 		function ( info, props ) {
 			var overlayProps = Object.assign( {}, props, {
 				username: info[ 1 ],
-				id: info[ 2 ]
+				id: info[ 2 ],
+				onExit: onExit( info.router ),
+				onCollectionSave: ( id ) => {
+					var msg = id ? 'Collection was successfully updated' :
+						'Collection was successfully created.';
+					info.router.navigateTo( { pathname: window.location.pathname,
+						search: 'c=' + Math.random(), hash: '' }, null, true );
+					store.setUserNotification( msg );
+				}
 			} );
 			return {
 				overlay: React.createElement( CollectionEditorOverlay, overlayProps )
@@ -64,9 +97,16 @@ export default [
 	// Languages
 	[
 		/^#\/languages$/,
-		function ( info, props ) {
+		function ( info, props, query, router ) {
+			const languageProps = Object.assign( {}, props, {
+				onExit: onExit( info.router ),
+				onChooseLanguage: function ( ev, code, href ) {
+					info.router.navigateTo( href );
+					ev.preventDefault();
+				}
+			} );
 			return {
-				overlay: React.createElement( LanguageOverlay, props )
+				overlay: React.createElement( LanguageOverlay, languageProps )
 			};
 		}
 	],
@@ -75,7 +115,11 @@ export default [
 		/^#\/issues$/,
 		function ( info, props ) {
 			return {
-				overlay: React.createElement( IssuesOverlay, props )
+				overlay: React.createElement( IssuesOverlay,
+					Object.assign( {}, props, {
+						onExit: onExit( info.router )
+					} )
+				)
 			};
 		}
 	],
@@ -83,8 +127,27 @@ export default [
 	[
 		/^#\/search\/?(.*)$/,
 		function ( info, props ) {
+			var router = info.router;
 			return {
-				overlay: React.createElement( SearchOverlay, Object.assign( props, { defaultValue: info[ 1 ] } ) )
+				overlay: React.createElement( SearchOverlay, Object.assign( props,
+					{
+						onExit: onExit( info.router ),
+						defaultValue: info[ 1 ],
+						onSwitchProject: function ( project, term ) {
+							router.navigateTo( {
+								pathname: langProject + '/Special:Search/' + term
+							} );
+						},
+						onSearchSubmit: function ( term ) {
+							router.navigateTo( {
+								pathname: '/' + store.getLangProject() + '/Special:Search/' + encodeURIComponent( term ),
+								search: ''
+							}, 'Search' );
+						},
+						onSearch: function ( term ) {
+							router.navigateTo( null, '#/search/' + term, true );
+						}
+					} ) )
 			};
 		}
 	]

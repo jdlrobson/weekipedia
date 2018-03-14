@@ -30,8 +30,7 @@ function getCards( data, props, keyPrefix ) {
 				var href = link.getAttribute( 'href' );
 				var title = link.getAttribute( 'title' );
 				if ( href ) {
-					ev.preventDefault();
-					props.router.navigateTo( { pathname: href }, title );
+					props.onCardClick( ev, { pathname: href }, title );
 				}
 			};
 			if ( item.revid ) {
@@ -89,9 +88,9 @@ class WeekipediaCardList extends React.Component {
 			unordered: props.unordered,
 			store: props.store,
 			CardClass: props.CardClass,
+			onCardClick: props.onCardClick,
 			isDiffCardList: props.isDiffCardList,
 			emptyMessage: props.emptyMessage,
-			router: props.router,
 			api: api
 		};
 		this.setState( { list: null } );

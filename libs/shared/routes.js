@@ -23,6 +23,20 @@ import Uploads from './../client/pages/Uploads';
 
 import utils from './utils';
 
+function getCardClickHandler( router ) {
+	return ( ev, href, title ) => {
+		var target;
+		ev.preventDefault();
+		// This can be used as on an onClick handler
+		if ( !href ) {
+			target = ev.currentTarget;
+			href = target.getAttribute( 'href' );
+			title = target.getAttribute( 'title' );
+		}
+		router.navigateTo( href, title );
+	};
+}
+
 var routes = [
 	// 404
 	[
@@ -90,6 +104,17 @@ var routes = [
 				props.children = [
 					React.createElement( View,
 						Object.assign( {}, props, {
+							onClickLink: getCardClickHandler( info.router ),
+							onExpand: function () {
+								var qs = window.location.search;
+								qs = !qs ? qs + '?expanded=1' : qs + '&expanded=1';
+								info.router.navigateTo( {
+									pathname: window.location.pathname,
+									search: qs
+								}, '', true );
+							},
+							// FIXME: Needed because of withInterAppLinks
+							router: info.router,
 							key: 'page-' + title,
 							titleSansPrefix: titleSansPrefix,
 							title: titleDecoded
@@ -120,6 +145,7 @@ function addSpecialPage( title, Class, handler ) {
 			var suffix = params ? '/' + params : '';
 			var langProject = lang + '.' + project;
 			var key = 'page-special-' + lang + '-' + project + '-' + title;
+			props = handler ? handler( info, props ) : props;
 
 			Object.assign( props, {
 				project: project,
@@ -144,7 +170,7 @@ function addSpecialPage( title, Class, handler ) {
 				)
 			];
 
-			return handler ? handler( info, props ) : props;
+			return props;
 		}
 	] );
 }
@@ -166,6 +192,7 @@ function initSpecialPages() {
 	addSpecialPage( 'Random', Random, function ( info, props ) {
 		props.fallback = '/api/random/' + props.lang;
 		props.noIndex = false;
+		props.onCardClick = getCardClickHandler( info.router );
 		return props;
 	} );
 	addSpecialPage( 'Search', Search, function ( info, props ) {
@@ -173,6 +200,7 @@ function initSpecialPages() {
 		if ( query ) {
 			props.fallback = '/api/search-full/' + props.language_project + '/' + query;
 		}
+		props.onLinkClick = getCardClickHandler( info.router );
 		return props;
 	} );
 	addSpecialPage( 'Shell', Shell );
@@ -184,6 +212,7 @@ function initSpecialPages() {
 	addSpecialPage( 'UserLogin', UserLogin );
 	addSpecialPage( 'Collections', Collections, function ( info, props ) {
 		props.fallback = '/api/' + props.lang + '/collection/';
+		props.onCardClick = getCardClickHandler( info.router );
 		props.noIndex = false;
 		if ( props.params ) {
 			props.fallback += props.params;

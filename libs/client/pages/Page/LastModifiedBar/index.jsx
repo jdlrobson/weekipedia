@@ -5,7 +5,7 @@ import { Icon, TruncatedText, Content } from 'wikipedia-react-components';
 import './styles.less';
 import './icons.less';
 
-export default ( { editor, language_project, lang, title, timestamp, onClickInternalLink } ) => {
+export default ( { editor, language_project, lang, title, timestamp, onClickLink } ) => {
 	const isAnon = !( editor && editor.name );
 	const source = language_project || lang + '/wiki';
 	const historyUrl = '/' + source + '/Special:History/' + title;
@@ -35,7 +35,7 @@ export default ( { editor, language_project, lang, title, timestamp, onClickInte
 	if ( editor ) {
 		editorLabel = isAnon ? 'an anonymous user' : editor.name;
 		editorElement = isAnon ? <span key={key + '-editor'}>{editorLabel}</span> :
-			<a href={prefix + editor.name} onClick={onClickInternalLink}
+			<a href={prefix + editor.name} onClick={onClickLink}
 				key={key + '-editor'}>{editorLabel}</a>;
 		text = ' by ';
 	}
@@ -43,7 +43,7 @@ export default ( { editor, language_project, lang, title, timestamp, onClickInte
 	var modifierTagline = (
 		<TruncatedText>
 			<a href={historyUrl} key={key + '-link'}
-				onClick={onClickInternalLink}>{historyText}</a> {text} {editorElement}
+				onClick={onClickLink}>{historyText}</a> {text} {editorElement}
 			<Icon key={key + '-label'}
 				small={true} glyph={'arrow' + iconVariant} className='indicator' />
 		</TruncatedText>

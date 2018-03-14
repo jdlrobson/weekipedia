@@ -39,10 +39,11 @@ class LanguageOverlay extends React.Component {
 			pref[ code ] = 1;
 		}
 
-		this.props.router.navigateTo( href, '' );
+		if ( this.props.onChooseLanguage ) {
+			this.props.onChooseLanguage( ev, code, href );
+		}
 		this.props.storage.set( 'languages-preferred', JSON.stringify( pref ) );
 		this.setState( { preferred: pref } );
-		ev.preventDefault();
 	}
 	filterLanguages( value ) {
 		this.setState( { term: value } );
@@ -87,7 +88,7 @@ class LanguageOverlay extends React.Component {
 			return (
 				<a href={'/' + source + language.title.replace( /\//gi, '%2F' ) }
 					key={'lang-item-' + code}
-					onClick={self.navigateTo.bind( this )}
+					onClick={self.navigateTo.bind( self )}
 					hrefLang={language.lang} lang={language.lang}>
 					<strong className="autonym">{language.autonym}</strong>
 					<span className="title">{language.title}</span>
@@ -111,7 +112,7 @@ class LanguageOverlay extends React.Component {
 		var listHeader = this.state.term ? null : <h3 className="list-header">All languages <span>{count}</span></h3>;
 
 		return (
-			<Overlay router={this.props.router} className="language-overlay"
+			<Overlay className="language-overlay" onExit={props.onExit}
 				header={<h2><strong>Languages</strong></h2>}>
 				<Panel>
 					<Content>

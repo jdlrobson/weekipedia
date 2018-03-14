@@ -11,11 +11,7 @@ import './icons.less';
 import './styles.less';
 
 // Pages
-export default class Thing extends React.Component {
-	onTalkClick( ev ) {
-		ev.preventDefault();
-		this.props.router.navigateTo( '#/talk/' );
-	}
+export default class UserPage extends React.Component {
 	getTabs() {
 		var props = this.props,
 			onClickInternalLink = props.onClickInternalLink,
@@ -24,16 +20,16 @@ export default class Thing extends React.Component {
 
 		return [
 			<a href={getLocalUrl( 'User talk:' + titleSansPrefix )}
-				onClick={this.onTalkClick}
+				onClick={props.onLinkClick}
 				key="page-talk-tab">Talk</a>,
 			<a href={getLocalUrl( 'Special:Collections', 'by/' + titleSansPrefix )}
-				onClick={onClickInternalLink}
+				onClick={props.onLinkClick}
 				key="page-collections-tab">{props.msg( 'menu-collections' )}</a>,
 			<a href={getLocalUrl( 'Special:Contributions', titleSansPrefix )}
-				onClick={onClickInternalLink}
+				onClick={props.onLinkClick}
 				key="page-contrib-tab">Contributions</a>,
 			<a href={getLocalUrl( 'Special:Uploads', titleSansPrefix )}
-				onClick={onClickInternalLink}
+				onClick={props.onLinkClick}
 				key="page-upload-tab">Uploads</a>
 		];
 	}

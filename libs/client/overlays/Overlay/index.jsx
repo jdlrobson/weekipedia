@@ -11,11 +11,8 @@ class WOverlay extends Component {
 		var headerProps, header;
 		var props = this.props;
 		var headerChildren = [];
-		var onExit = props.onExit || function () {
-			this.props.router.back();
-		}.bind( this );
 		var closeIcon = <Icon glyph='close'
-			className="close" onClick={onExit}/>;
+			className="close" onClick={props.onExit}/>;
 
 		if ( !props.isDrawer && !props.isLightBox ) {
 			headerProps = {
@@ -37,15 +34,17 @@ class WOverlay extends Component {
 		}
 
 		return (
-			<Overlay className={props.className} onExit={onExit} isLightBox={props.isLightBox}>
+			<Overlay className={props.className}
+				onExit={props.onExit} isLightBox={props.isLightBox}>
 				{header}
 				{this.props.children}
 			</Overlay>
 		);
 	}
 }
+
 WOverlay.defaultProps = {
-	isLightBox: false,
+	isLightbox: false,
 	isDrawer: false
 };
 

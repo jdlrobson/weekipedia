@@ -17,7 +17,7 @@ const OFFLINE_ERROR_MESSAGE = 'You need an internet connection to view this page
 const NOT_FOUND_MESSAGE = 'This page does not exist.';
 
 // Pages
-export default class Thing extends React.Component {
+class Page extends React.Component {
 	constructor() {
 		super();
 		this.state = {
@@ -87,12 +87,7 @@ export default class Thing extends React.Component {
 		} );
 	}
 	expand() {
-		var qs = window.location.search;
-		qs = !qs ? qs + '?expanded=1' : qs + '&expanded=1';
-		this.props.router.navigateTo( {
-			pathname: window.location.pathname,
-			search: qs
-		}, '', true );
+		this.props.onExpand();
 		this.setState( {
 			isExpanded: true
 		} );
@@ -114,13 +109,15 @@ export default class Thing extends React.Component {
 			footer = [
 				<LastModifiedBar editor={lead.lastmodifier} lang={props.lang}
 					language_project={props.language_project}
-					onClickInternalLink={props.onClickInternalLink}
+					onClickLink={props.onClickLink}
 					title={props.title} timestamp={lead.lastmodified} key="page-last-modified" />
 			];
 			if ( ns === 0 ) {
 				footer.push( (
 					<Content key="page-read-more">
-						<ReadMore {...props} namespace={ns} key="page-read-more" />
+						<ReadMore {...props} namespace={ns} key="page-read-more"
+							onCardClick={props.onClickLink}
+						/>
 					</Content>
 				) );
 			}
@@ -171,7 +168,7 @@ export default class Thing extends React.Component {
 				}
 				sections = sections.concat( remainingSections );
 			} else {
-				sections.push( <Button key="article-expand" label="Expand" onClick={this.expand} /> );
+				sections.push( <Button key="article-expand" label="Expand" onClick={this.expand.bind(this)} /> );
 			}
 		} else {
 			if ( this.state.error ) {
@@ -209,7 +206,9 @@ export default class Thing extends React.Component {
 		}
 	}
 }
-Thing.defaultProps = {
+Page.defaultProps = {
 	api: null,
 	lang: 'en'
 };
+
+export default Page;

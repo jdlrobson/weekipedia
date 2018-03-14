@@ -79,7 +79,6 @@ export default class Feed extends React.Component {
 	}
 }
 Feed.defaultProps = {
-	router: null,
 	wiki: 'enwiki',
 	params: '',
 	halflife: HALF_LIFE_DAYS

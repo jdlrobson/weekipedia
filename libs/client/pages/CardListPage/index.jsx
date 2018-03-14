@@ -37,6 +37,7 @@ class CardListPage extends React.Component {
 		}
 		body.push( <CardList key={key} {...props}
 			title={undefined}
+			onCardClick={props.onCardClick}
 			onEmpty={this.onEmpty}/> );
 		body = body.concat( props.children );
 

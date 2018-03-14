@@ -46,9 +46,9 @@ function init( config, routes ) {
 	// register global config
 	globalProps = Object.assign( {}, config, {
 		msg: msg,
-		router: router,
 		messages: messages
 	} );
+	return globalProps;
 }
 
 function render( path, hash, props, query ) {
@@ -56,7 +56,12 @@ function render( path, hash, props, query ) {
 	hash = hash || '#';
 
 	return React.createElement( App,
-		router.matchRoute( path, hash, Object.assign( {}, globalProps, props ), query )
+		Object.assign( {},
+			router.matchRoute( path, hash, Object.assign( {}, globalProps, props ), query ),
+			{
+				router
+			}
+		)
 	);
 }
 

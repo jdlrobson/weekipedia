@@ -87,8 +87,7 @@ export default class Thing extends React.Component {
 				lead: undefined,
 				sections: undefined
 			} );
-			props.store.setUserNotification( 'Your topic was added!' );
-			props.router.back();
+			props.onSaveComplete();
 		} );
 	}
 	setReplyBody( ev ) {
@@ -187,8 +186,8 @@ export default class Thing extends React.Component {
 		}
 
 		overlayProps = {
+			onExit: props.onExit,
 			header: <h2><TruncatedText><strong>{heading}</strong></TruncatedText></h2>,
-			router: props.router,
 			secondaryIcon: secondaryIcon,
 			className: 'component-editor-overlay'
 		};

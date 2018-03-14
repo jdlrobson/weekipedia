@@ -59,11 +59,13 @@ class WatchIcon extends React.Component {
 	}
 	dispatch( ev ) {
 		var props = this.props;
+		var store = props.store;
 		var collectionsEnabled = props.store.isFeatureEnabled( 'collectionsEnabled' );
-		var collections = this.state.collections;
+		var collections = this.state.collections || [];
 
 		if ( !props.collection && collections.length > 1 || collectionsEnabled ) {
-			props.store.showOverlay( <CollectionOverlay {...props} /> );
+			props.store.showOverlay( <CollectionOverlay {...props}
+				onExit={store.hideOverlays.bind(store)} /> );
 		} else {
 			this.watch( ev );
 		}
@@ -81,7 +83,7 @@ class WatchIcon extends React.Component {
 			title: props.title,
 			language_project: props.language_project,
 			ctaMsg: props.msg( 'watch-cta' ),
-			onLoginClick: this.dispatch.bind( this )
+			onClick: this.dispatch.bind( this )
 		};
 
 		if ( this.state.isError ) {

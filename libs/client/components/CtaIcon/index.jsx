@@ -11,11 +11,7 @@ export default class CtaIcon extends React.Component {
 		ev.stopPropagation();
 		ev.preventDefault();
 		if ( store.session ) {
-			if ( props.onLoginUrl ) {
-				props.router.navigateTo( null, props.onLoginUrl );
-			} else if ( props.onLoginClick ) {
-				props.onLoginClick( ev );
-			}
+			props.onClick( ev );
 		} else {
 			store.showOverlay( <CtaDrawer {...props} message={props.ctaMsg} />, false );
 		}

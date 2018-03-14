@@ -65,7 +65,7 @@ class CollectionOverlay extends React.Component {
 				<Overlay {...props} className="collection-overlay" isDrawer={true}>
 					<h2>{props.msg( 'collection-title' )}</h2>
 					<a key='edit-collection-cancel' className="cancel"
-						onClick={store.hideOverlays}>Cancel</a>
+						onClick={props.onExit}>Cancel</a>
 					<ul key="collection-overlay-list">
 						{
 							collections.map( function ( collection, i ) {

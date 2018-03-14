@@ -92,13 +92,11 @@ export default class Thing extends React.Component {
 	}
 	previousImage() {
 		this.findImage( this.props.image, -1 )
-			.then( ( path ) => this.props.router.navigateTo( { hash: '#/media/' + path },
-				null, true ) );
+			.then( ( path ) => this.props.onLoadImage( path ) );
 	}
 	nextImage() {
 		this.findImage( this.props.image, 1 )
-			.then( ( path ) => this.props.router.navigateTo( { hash: '#/media/' + path },
-				null, true ) );
+			.then( ( path ) => this.props.onLoadImage( path ) );
 	}
 	render() {
 		var content, footer, meta,
@@ -154,7 +152,7 @@ export default class Thing extends React.Component {
 			content = <ErrorBox msg="There was a problem displaying the image." />;
 		}
 		return (
-			<Overlay router={this.props.router} isLightBox={true}>
+			<Overlay isLightBox={true} onExit={props.onExit}>
 				{leftGutter}
 				<div className="image-wrapper">
 					<div>{content}</div>

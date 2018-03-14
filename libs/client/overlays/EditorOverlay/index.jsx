@@ -71,8 +71,7 @@ class EditorOverlay extends React.Component {
 		this.setState( { step: SAVE_STEP } );
 		props.api.edit( source, title, props.section, state.text || props.wikitext,
 			state.summary || props.editSummary ).then( function ( resp ) {
-			props.router.navigateTo( window.location.pathname + '?oldid=' + resp.edit.newrevid );
-			props.store.setUserNotification( 'Your edit was successful!' );
+			props.onEditSave( resp.edit.newrevid );
 		} ).catch( function () {
 			self.showPreview();
 		} );

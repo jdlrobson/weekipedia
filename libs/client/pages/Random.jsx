@@ -3,7 +3,7 @@ import React from 'react';
 import CardListPage from './CardListPage';
 
 // Pages
-export default class Thing extends React.Component {
+class Random extends React.Component {
 	constructor() {
 		super();
 		this.state = {
@@ -19,7 +19,9 @@ export default class Thing extends React.Component {
 	}
 }
 
-Thing.defaultProps = {
+Random.defaultProps = {
 	api: null,
 	lang: 'en'
 };
+
+export default Random;

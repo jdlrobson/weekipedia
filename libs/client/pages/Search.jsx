@@ -3,21 +3,13 @@ import React from 'react';
 import CardListPage from './CardListPage';
 
 // Pages
-export default class Thing extends React.Component {
-	navigateTo( ev ) {
-		var link = ev.currentTarget;
-		var href = link.getAttribute( 'href' );
-		var title = link.getAttribute( 'title' );
-		if ( href ) {
-			ev.preventDefault();
-			this.props.router.navigateTo( { pathname: href }, title );
-		}
-	}
+export default class Search extends React.Component {
 	getTerm() {
 		var props = this.props;
 		return props.query.search ? props.query.search : props.params;
 	}
 	getTabs() {
+		var props = this.props;
 		var proj = this.props.project;
 		var store = this.props.store;
 		var term = this.getTerm();
@@ -26,7 +18,7 @@ export default class Thing extends React.Component {
 		return store.isFeatureEnabled( 'allowForeignProjects' ) ?
 			store.projects.map( function ( project, i ) {
 				return <a key={'search-tab' + i}
-					onClick={self.navigateTo.bind( this )}
+					onClick={onClickLink}
 					className={proj === project ? 'active' : ''}
 					title={'Search ' + project + ' for ' + term}
 					href={prefix + project + '/Special:Search/' + term}>{project}</a>;

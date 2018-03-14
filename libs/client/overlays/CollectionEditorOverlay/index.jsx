@@ -7,7 +7,7 @@ import Overlay from './../Overlay';
 
 import './styles.less';
 
-export default class Thing extends React.Component {
+export default class CollectionEditorOverlay extends React.Component {
 	constructor() {
 		super();
 		this.state = {
@@ -67,14 +67,12 @@ export default class Thing extends React.Component {
 		this.setState( { title: ev.currentTarget.value } );
 	}
 	exit() {
-		this.props.store.hideOverlays();
+		this.props.onExit();
 	}
 	save() {
 		var props = this.props;
 		var endpoint = '/api/private/' + props.lang + '/collection/';
 		var self = this;
-		var msg = props.id ? 'Collection was successfully updated' :
-			'Collection was successfully created.';
 
 		endpoint += props.id ? props.id + '/edit' : '_/create';
 		this.setState( { waiting: true } );
@@ -87,9 +85,7 @@ export default class Thing extends React.Component {
 				// Annoyingly this timeout doesn't always seem to be enough.
 				setTimeout( function () {
 					props.api.clearCache();
-					props.router.navigateTo( { pathname: window.location.pathname,
-						search: 'c=' + Math.random(), hash: '' }, null, true );
-					props.store.setUserNotification( msg );
+					props.onCollectionSave( props.id );
 				}, 5000 );
 			} else {
 				props.store.setUserNotification( 'An error occurred while saving the collection' );

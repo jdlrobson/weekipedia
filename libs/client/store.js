@@ -36,6 +36,8 @@ store.loadSiteOptions = function ( options ) {
 
 store.showOverlay = function ( overlay, fullScreen = true ) {
 	// In future we won't do this as part of this method.
+	this.overlay = false;
+	this.isOverlayEnabled = false;
 	this.overlay = React.cloneElement( overlay, {
 		store: this
 	} );
