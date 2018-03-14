@@ -28,7 +28,7 @@ class PageActions extends Component {
 		// If available add the share icon
 		if ( typeof window !== 'undefined' && window.navigator && window.navigator.share ) {
 			actions.push( <Icon {...props} key="page-action-share" glyph='share'
-				onClick={this.share} /> );
+				onClick={this.share.bind( this )} /> );
 		}
 
 		return (

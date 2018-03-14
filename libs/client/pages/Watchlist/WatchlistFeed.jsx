@@ -1,12 +1,11 @@
 import React from 'react';
-import createReactClass from 'create-react-class';
 
 import { CardDiff } from 'wikipedia-react-components';
 
 import CardListPage from './../CardListPage';
 
 // Pages
-export default createReactClass( {
+export default class Thing extends React.Component {
 	render() {
 		var ns;
 		var emptyProps = {
@@ -28,4 +27,4 @@ export default createReactClass( {
 				CardClass={CardDiff} isDiffCardList={true} />
 		);
 	}
-} );
+}

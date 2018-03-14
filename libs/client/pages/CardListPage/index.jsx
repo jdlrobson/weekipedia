@@ -1,5 +1,4 @@
 import React from 'react';
-import createReactClass from 'create-react-class';
 
 import { CardWithLocation } from 'wikipedia-react-components';
 
@@ -12,31 +11,22 @@ import Article from './../Article';
 import './styles.less';
 
 // Pages
-export default createReactClass( {
-	getDefaultProps: function () {
-		return {
-			CardClass: CardWithLocation,
-			api: null,
-			apiEndpoint: null,
-			title: null,
-			tagline: null,
-			lang: 'en'
-		};
-	},
+class CardListPage extends React.Component {
 	onEmpty() {
 		this.setState( { isEmpty: true } );
-	},
-	getInitialState() {
-		return {
+	}
+	constructor() {
+		super();
+		this.state = {
 			isEmpty: false,
 			errorMsg: 'Something went wrong when trying to render the list. Please refresh and try again.',
 			error: false,
 			list: null
 		};
-	},
+	}
 	componentWillReceiveProps() {
 		this.setState( { isEmpty: false } );
-	},
+	}
 	render() {
 		var props = this.props;
 		// api endpoint may change...
@@ -57,4 +47,15 @@ export default createReactClass( {
 			<Article {...this.props} isSpecialPage="1" body={body} />
 		);
 	}
-} );
+}
+
+CardListPage.defaultProps = {
+	CardClass: CardWithLocation,
+	api: null,
+	apiEndpoint: null,
+	title: null,
+	tagline: null,
+	lang: 'en'
+};
+
+export default CardListPage;

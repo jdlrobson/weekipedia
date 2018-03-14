@@ -1,11 +1,10 @@
 import React from 'react';
-import createReactClass from 'create-react-class';
 
 import WatchListEdit from './WatchlistEdit';
 import WatchListFeed from './WatchlistFeed';
 
 // Pages
-export default createReactClass( {
+export default class Thing extends React.Component {
 	render() {
 		var props = this.props;
 		var isEditWatchlist = props.title === 'EditWatchlist';
@@ -35,4 +34,4 @@ export default createReactClass( {
 			return ( <WatchListFeed {...newProps} /> );
 		}
 	}
-} );
+}

@@ -1,11 +1,9 @@
 import React from 'react';
-import createReactClass from 'create-react-class';
 
 // Pages
-export default createReactClass( {
-	render() {
-		return (
-			<div>How can you see me?</div>
-		);
-	}
-} );
+const MobileMenu = () => {
+	return (
+		<div>How can you see me?</div>
+	);
+};
+export default MobileMenu;

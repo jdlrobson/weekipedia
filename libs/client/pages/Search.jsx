@@ -1,10 +1,9 @@
 import React from 'react';
-import createReactClass from 'create-react-class';
 
 import CardListPage from './CardListPage';
 
 // Pages
-export default createReactClass( {
+export default class Thing extends React.Component {
 	navigateTo( ev ) {
 		var link = ev.currentTarget;
 		var href = link.getAttribute( 'href' );
@@ -13,11 +12,11 @@ export default createReactClass( {
 			ev.preventDefault();
 			this.props.router.navigateTo( { pathname: href }, title );
 		}
-	},
+	}
 	getTerm() {
 		var props = this.props;
 		return props.query.search ? props.query.search : props.params;
-	},
+	}
 	getTabs() {
 		var proj = this.props.project;
 		var store = this.props.store;
@@ -27,12 +26,12 @@ export default createReactClass( {
 		return store.isFeatureEnabled( 'allowForeignProjects' ) ?
 			store.projects.map( function ( project, i ) {
 				return <a key={'search-tab' + i}
-					onClick={self.navigateTo}
+					onClick={self.navigateTo.bind( this )}
 					className={proj === project ? 'active' : ''}
 					title={'Search ' + project + ' for ' + term}
 					href={prefix + project + '/Special:Search/' + term}>{project}</a>;
 			} ) : [];
-	},
+	}
 	render() {
 		var emptyProps = {
 			msg: 'No pages matched your search query for this project. Why not try one of our other projects?'
@@ -56,4 +55,4 @@ export default createReactClass( {
 				title='Search' />
 		);
 	}
-} );
+}

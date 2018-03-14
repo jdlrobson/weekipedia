@@ -1,18 +1,10 @@
 import React from 'react';
-import createReactClass from 'create-react-class';
 
 import { Content } from 'wikipedia-react-components';
 import Article from './../Article';
 
 // Pages
-export default createReactClass( {
-	getDefaultProps: function () {
-		return {
-			title: null,
-			lang: null,
-			children: null
-		};
-	},
+export default class Thing extends React.Component {
 	render() {
 		var url = this.props.mobileUrl;
 		var children = (
@@ -29,4 +21,9 @@ export default createReactClass( {
 			<Article {...this.props} title={this.props.title} isSpecialPage='yes' body={body} />
 		);
 	}
-} );
+}
+Thing.defaultProps = {
+	title: null,
+	lang: null,
+	children: null
+};

@@ -1,5 +1,4 @@
 import React from 'react';
-import createReactClass from 'create-react-class';
 import { Button, Input, IntermediateState } from 'wikipedia-react-components';
 
 import CollectionCard from './../../components/CollectionCard';
@@ -8,15 +7,16 @@ import Overlay from './../Overlay';
 
 import './styles.less';
 
-export default createReactClass( {
-	getInitialState() {
-		return {
+export default class Thing extends React.Component {
+	constructor() {
+		super();
+		this.state = {
 			waiting: true,
 			title: null,
 			thumbnail: null,
 			description: null
 		};
-	},
+	}
 	componentDidMount() {
 		var props = this.props;
 		if ( props.id ) {
@@ -25,7 +25,7 @@ export default createReactClass( {
 			this.setState( { title: '', description: '', waiting: false } );
 			this.loadImage( props );
 		}
-	},
+	}
 	loadImage( props ) {
 		var self = this;
 		props.api.getPage( props.title, props.language_project ).then( function ( data ) {
@@ -35,7 +35,7 @@ export default createReactClass( {
 				self.setState( { thumbnail: { source: image.urls[ '320' ], title: 'File:' + image.file } } );
 			}
 		} );
-	},
+	}
 	loadCollection( props ) {
 		var self = this;
 		var endpoint = '/api/' + props.lang + '/collection/by/' + props.username + '/' + props.id;
@@ -59,16 +59,16 @@ export default createReactClass( {
 		} ).catch( function () {
 			props.router.back();
 		} );
-	},
+	}
 	updateDescription( ev ) {
 		this.setState( { description: ev.currentTarget.value } );
-	},
+	}
 	updateTitle( ev ) {
 		this.setState( { title: ev.currentTarget.value } );
-	},
+	}
 	exit() {
 		this.props.store.hideOverlays();
-	},
+	}
 	save() {
 		var props = this.props;
 		var endpoint = '/api/private/' + props.lang + '/collection/';
@@ -96,7 +96,7 @@ export default createReactClass( {
 				self.setState( { waiting: false } );
 			}
 		} );
-	},
+	}
 	updateThumbnail() {
 		if ( this.state._thumbnails && this.state._index !== undefined ) {
 			var index = this.state._index + 1;
@@ -105,21 +105,21 @@ export default createReactClass( {
 			}
 			this.setState( { thumbnail: this.state._thumbnails[ index ], _index: index } );
 		}
-	},
+	}
 	render() {
 		var body;
 		if ( !this.state.waiting && this.state.title !== undefined ) {
 			body = (
 				<div>
 					<CollectionCard key="collection-editor-overlay-preview"
-						onClick={this.updateThumbnail}
+						onClick={this.updateThumbnail.bind( this )}
 						thumbnail={this.state.thumbnail} title={this.state.title} description={this.state.description}/>
 					<label>Name</label>
-					<Input defaultValue={this.state.title} onInput={this.updateTitle} />
+					<Input defaultValue={this.state.title} onInput={this.updateTitle.bind( this )} />
 					<label>Description</label>
-					<Input defaultValue={this.state.description} onInput={this.updateDescription} />
-					<Button label="Save" isPrimary={true} onClick={this.save} />
-					<Button label="Cancel" onClick={this.exit} />
+					<Input defaultValue={this.state.description} onInput={this.updateDescription.bind( this )} />
+					<Button label="Save" isPrimary={true} onClick={this.save.bind( this )} />
+					<Button label="Cancel" onClick={this.exit.bind( this )} />
 				</div>
 			);
 		} else {
@@ -131,4 +131,4 @@ export default createReactClass( {
 			</Overlay>
 		);
 	}
-} );
+}

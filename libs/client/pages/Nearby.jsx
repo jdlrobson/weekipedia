@@ -1,31 +1,25 @@
 import React from 'react';
-import createReactClass from 'create-react-class';
 import { ErrorBox, HorizontalList, IntermediateState, Content } from 'wikipedia-react-components';
 
 import Article from './Article';
 import CardListPage from './CardListPage';
 
 // Pages
-export default createReactClass( {
-	getDefaultProps: function () {
-		return {
-			api: null,
-			lang: 'en'
-		};
-	},
-	getInitialState() {
-		return {
+export default class Nearby extends React.Component {
+	constructor() {
+		super();
+		this.state = {
 			error: false,
 			cards: null
 		};
-	},
+	}
 	componentWillReceiveProps( props ) {
 		this.loadCoords( props.params || '' );
-	},
+	}
 	// You want to load subscriptions not only when the component update but also when it gets mounted.
 	componentDidMount() {
 		this.loadCoords( this.props.params || '' );
-	},
+	}
 	loadCoords( params ) {
 		var coords = params.split( ',' );
 		if ( coords.length === 2 ) {
@@ -36,7 +30,7 @@ export default createReactClass( {
 		} else {
 			this.requestCoords();
 		}
-	},
+	}
 	requestCoords() {
 		var self = this;
 		navigator.geolocation.getCurrentPosition( function ( geo ) {
@@ -60,7 +54,7 @@ export default createReactClass( {
 			timeout: 10000,
 			enableHighAccuracy: true
 		} );
-	},
+	}
 	render() {
 		var lat = this.state.latitude;
 		var lng = this.state.longitude;
@@ -108,4 +102,4 @@ export default createReactClass( {
 			return ( <Article isSpecialPage='1' {...this.props} body={body} /> );
 		}
 	}
-} );
+}

@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import createReactClass from 'create-react-class';
 
 import CardList from './../components/CardList';
 import CollectionCard from './../components/CollectionCard';
@@ -11,9 +10,10 @@ import Article from './Article';
 const COLLECTIONS_ARE_NOT_ORDERED = true;
 
 // Pages
-export default createReactClass( {
-	getInitialState() {
-		return {
+export default class Collections extends React.Component {
+	constructor() {
+		super();
+		this.state = {
 			defaultView: false,
 			error: false,
 			endpoint: null,
@@ -23,7 +23,7 @@ export default createReactClass( {
 			username: null,
 			id: null
 		};
-	},
+	}
 	load( props ) {
 		var self = this;
 		var args = props.params ? props.params.split( '/' ) : [];
@@ -61,13 +61,13 @@ export default createReactClass( {
 		} else {
 			props.router.navigateTo( '/' + props.lang + '/wiki/Special:Collections', null, true );
 		}
-	},
+	}
 	componentWillMount() {
 		this.load( this.props );
-	},
+	}
 	componentWillReceiveProps( props ) {
 		this.load( props );
-	},
+	}
 	getBody() {
 		var props = this.props;
 		var store = props.store;
@@ -100,14 +100,14 @@ export default createReactClass( {
 		} else {
 			return <IntermediateState />;
 		}
-	},
+	}
 	navigateTo( ev ) {
 		var href = ReactDOM.findDOMNode( this ).querySelector( 'a' ).getAttribute( 'href' );
 		if ( href ) {
 			ev.preventDefault();
 			this.props.router.navigateTo( href );
 		}
-	},
+	}
 	render() {
 		var tagline, userUrl, actions, label, suffix, tabs,
 			props = this.props,
@@ -129,7 +129,8 @@ export default createReactClass( {
 			// The api request is cached at this point
 			tagline = (
 				<div>
-					<div>by <a href={userUrl} onClick={this.navigateTo}>{username}</a></div>
+					<div>by <a href={userUrl}
+						onClick={this.navigateTo.bind( this )}>{username}</a></div>
 					{desc}&nbsp;
 					<div>{actions}</div>
 				</div>
@@ -177,4 +178,4 @@ export default createReactClass( {
 			</Article>
 		);
 	}
-} );
+}

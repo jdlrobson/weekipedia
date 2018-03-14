@@ -1,5 +1,4 @@
 import React from 'react';
-import createReactClass from 'create-react-class';
 
 import { Button, ErrorBox, IntermediateState, Content } from 'wikipedia-react-components';
 import LastModifiedBar from './LastModifiedBar';
@@ -18,15 +17,10 @@ const OFFLINE_ERROR_MESSAGE = 'You need an internet connection to view this page
 const NOT_FOUND_MESSAGE = 'This page does not exist.';
 
 // Pages
-export default createReactClass( {
-	getDefaultProps: function () {
-		return {
-			api: null,
-			lang: 'en'
-		};
-	},
-	getInitialState() {
-		return {
+export default class Thing extends React.Component {
+	constructor() {
+		super();
+		this.state = {
 			jsEnabled: false,
 			fragment: null,
 			isExpanded: false,
@@ -36,7 +30,7 @@ export default createReactClass( {
 			error: false,
 			remaining: null
 		};
-	},
+	}
 	// You want to load subscriptions not only when the component update but also when it gets mounted.
 	componentDidMount() {
 		var fragment = window.location.hash;
@@ -45,24 +39,24 @@ export default createReactClass( {
 			this.setState( { fragment: fragment.replace( / /i, '_' ).substr( 1 ) } );
 		}
 		this.setState( { jsEnabled: true } );
-	},
+	}
 	componentWillUnmount() {
 		this.setState( { lead: null } );
-	},
+	}
 	componentWillMount() {
 		this.setState( this.props );
 		this.checkExpandedState();
-	},
+	}
 	componentWillReceiveProps( nextProps ) {
 		this.load( nextProps.title, nextProps.lang, nextProps.revision );
-	},
+	}
 	checkExpandedState() {
 		var expandQuery = this.props.query && this.props.query.expanded;
 		var store = this.props.store;
 		if ( expandQuery || store.isFeatureEnabled( 'expandArticlesByDefault' ) ) {
 			this.setState( { isExpanded: true } );
 		}
-	},
+	}
 	load( title, lang, revision ) {
 		var source, project,
 			rev = revision || this.props.revision,
@@ -91,7 +85,7 @@ export default createReactClass( {
 			}
 			self.setState( { error: true, errorMsg: msg } );
 		} );
-	},
+	}
 	expand() {
 		var qs = window.location.search;
 		qs = !qs ? qs + '?expanded=1' : qs + '&expanded=1';
@@ -102,14 +96,14 @@ export default createReactClass( {
 		this.setState( {
 			isExpanded: true
 		} );
-	},
+	}
 	getLocalUrl( title, params ) {
 		var source = this.props.language_project || this.props.lang + '/wiki';
 		title = title ? encodeURIComponent( title ).replace( '%3A', ':' ) : '';
 		params = params ? '/' + encodeURIComponent( params ) : '';
 
 		return '/' + source + '/' + title + params;
-	},
+	}
 	getFooter( lead ) {
 		var footer = [];
 		var props = this.props;
@@ -132,7 +126,7 @@ export default createReactClass( {
 			}
 			return footer;
 		}
-	},
+	}
 	render() {
 		var lead = this.state.lead || this.props.lead || {};
 		if ( this.state && this.state.error ) {
@@ -146,7 +140,7 @@ export default createReactClass( {
 		} else {
 			return this.renderPage();
 		}
-	},
+	}
 	renderPage() {
 		var leadHtml, toc,
 			wikiPageProps = {},
@@ -214,4 +208,8 @@ export default createReactClass( {
 			);
 		}
 	}
-} );
+}
+Thing.defaultProps = {
+	api: null,
+	lang: 'en'
+};

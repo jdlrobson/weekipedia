@@ -1,10 +1,9 @@
 import React from 'react';
-import createReactClass from 'create-react-class';
 
 import CardListPage from './../CardListPage';
 
 // Pages
-export default createReactClass( {
+export default class Thing extends React.Component {
 	render() {
 		var emptyProps = {
 			ctaMessage: 'Back home',
@@ -19,4 +18,4 @@ export default createReactClass( {
 				unordered="1" apiEndpoint={'/api/private/watchlist/' + this.props.lang} />
 		);
 	}
-} );
+}

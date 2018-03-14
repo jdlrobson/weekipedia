@@ -1,12 +1,11 @@
 import React from 'react';
-import createReactClass from 'create-react-class';
 
 import CardListPage from './CardListPage';
 
 import { Icon, CardDiff } from 'wikipedia-react-components';
 
 // Pages
-export default createReactClass( {
+export default class Contributions extends React.Component {
 	render() {
 		var title, lead, tagline,
 			source = this.props.language_project || this.props.lang,
@@ -36,4 +35,4 @@ export default createReactClass( {
 				title={title} tagline={tagline} CardClass={CardDiff} lead={lead} />
 		);
 	}
-} );
+}

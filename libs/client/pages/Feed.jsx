@@ -1,5 +1,4 @@
 import React from 'react';
-import createReactClass from 'create-react-class';
 
 import TrendingCard from './../components/TrendingCard';
 import PushButton from './../components/PushButton';
@@ -11,21 +10,14 @@ const HALF_LIFE_DAYS = '24';
 const HALF_LIFE_WEEKS = '84';
 
 // Pages
-export default createReactClass( {
-	getDefaultProps: function () {
-		return {
-			router: null,
-			wiki: 'enwiki',
-			params: '',
-			halflife: HALF_LIFE_DAYS
-		};
-	},
-	getInitialState() {
-		return {
+export default class Feed extends React.Component {
+	constructor() {
+		super();
+		this.state = {
 			error: false,
 			cardList: null
 		};
-	},
+	}
 	render() {
 		// show intermediate state if still loading, otherwise show list
 		var push;
@@ -85,4 +77,10 @@ export default createReactClass( {
 				title='Hot' tagline="The wiki in real time" preamble={push}></CardListPage>
 		);
 	}
-} );
+}
+Feed.defaultProps = {
+	router: null,
+	wiki: 'enwiki',
+	params: '',
+	halflife: HALF_LIFE_DAYS
+};

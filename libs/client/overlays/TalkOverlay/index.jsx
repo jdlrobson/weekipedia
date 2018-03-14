@@ -1,5 +1,4 @@
 import React from 'react';
-import createReactClass from 'create-react-class';
 import { Button, ErrorBox, Icon, Input, Content,
 	IntermediateState, LinkList, Panel, TruncatedText } from 'wikipedia-react-components';
 
@@ -11,28 +10,29 @@ import './styles.less';
 
 import withInterAppLinks from './../../pages/withInterAppLinks';
 
-export default createReactClass( {
-	getInitialState() {
-		return {
+export default class Thing extends React.Component {
+	constructor() {
+		super();
+		this.state = {
 			indent: 2,
 			isLoading: true
 		};
-	},
+	}
 	getTalkPageTitle() {
 		if ( this.props.title.indexOf( ':' ) === -1 ) {
 			return 'Talk:' + this.props.title;
 		} else {
 			return this.props.title.replace( ':', ' talk:' );
 		}
-	},
+	}
 	componentWillReceiveProps() {
 		this.loadTopics();
 		window.scrollTo( 0, 0 );
-	},
+	}
 	componentDidMount() {
 		this.loadTopics();
 		window.scrollTo( 0, 0 );
-	},
+	}
 	loadTopics() {
 		var self = this;
 		var props = this.props;
@@ -46,10 +46,10 @@ export default createReactClass( {
 		} ).catch( function () {
 			self.setState( { isLoading: false } );
 		} );
-	},
+	}
 	goBack() {
 		window.history.back();
-	},
+	}
 	saveReply() {
 		var self = this;
 		var props = this.props;
@@ -72,7 +72,7 @@ export default createReactClass( {
 				window.location.hash = hash;
 			}, 0 );
 		} );
-	},
+	}
 	saveTopic() {
 		var self = this;
 		var props = this.props;
@@ -90,16 +90,16 @@ export default createReactClass( {
 			props.store.setUserNotification( 'Your topic was added!' );
 			props.router.back();
 		} );
-	},
+	}
 	setReplyBody( ev ) {
 		this.setState( { replyBody: ev.currentTarget.value } );
-	},
+	}
 	setBody( ev ) {
 		this.setState( { body: ev.currentTarget.value } );
-	},
+	}
 	setSubject( ev ) {
 		this.setState( { subject: ev.currentTarget.value } );
-	},
+	}
 	render() {
 		var overlayProps, content, licenseText, primaryIcon, secondaryIcon, section,
 			heading = 'Talk',
@@ -111,14 +111,14 @@ export default createReactClass( {
 			),
 			state = this.state,
 			action = state && state.action,
-			saveTopic = <Button label="Add" isPrimary="1" onClick={this.saveTopic}
+			saveTopic = <Button label="Add" isPrimary="1" onClick={this.saveTopic.bind( this )}
 				disabled={!state.body || !state.subject} />,
-			saveReply = <Button label="Reply" isPrimary="1" onClick={this.saveReply}
+			saveReply = <Button label="Reply" isPrimary="1" onClick={this.saveReply.bind( this )}
 				disabled={!state.replyBody} />,
 			addDiscussionBtn = <Button label="Add discussion" isPrimary="1"
 				href="#/talk/new" />,
 			backBtn = <Icon glyph='back'
-				onClick={this.goBack} />;
+				onClick={this.goBack.bind( this )} />;
 
 		if ( license ) {
 			licenseText = (
@@ -139,8 +139,10 @@ export default createReactClass( {
 			secondaryIcon = saveTopic;
 			content = [
 				licenseText,
-				<Panel><Input placeholder="Subject" onInput={this.setSubject}/></Panel>,
-				<Panel><Input placeholder="What is on your mind?" textarea={true} onInput={this.setBody}/></Panel>
+				<Panel><Input placeholder="Subject"
+					onInput={this.setSubject.bind( this )}/></Panel>,
+				<Panel><Input placeholder="What is on your mind?" textarea={true}
+					onInput={this.setBody.bind( this )}/></Panel>
 			];
 		} else if ( props.section ) {
 			// Look up the section (since the sections do not include the lead we subtract 1)
@@ -159,7 +161,7 @@ export default createReactClass( {
 						<h3 className="list-header">Reply</h3>
 						<Panel>
 							<Input placeholder="What is your opinion?" textarea={true} key="reply"
-								onInput={this.setReplyBody} />
+								onInput={this.setReplyBody.bind( this )} />
 						</Panel>
 						{licenseText}
 					</div>
@@ -202,4 +204,4 @@ export default createReactClass( {
 			</Overlay>
 		);
 	}
-} );
+}

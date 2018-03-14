@@ -1,22 +1,17 @@
 import React from 'react';
-import createReactClass from 'create-react-class';
 
 import { CardDiff } from 'wikipedia-react-components';
 
 import CardListPage from './CardListPage';
 
 // Pages
-export default createReactClass( {
-	getDefaultProps: function () {
-		return {
-			api: null
-		};
-	},
-	getInitialState() {
-		return {
+export default class History extends React.Component {
+	constructor() {
+		super();
+		this.state = {
 			error: false
 		};
-	},
+	}
 	render() {
 		var langProject = this.props.language_project;
 		var lang = this.props.lang;
@@ -39,4 +34,4 @@ export default createReactClass( {
 			<CardListPage {...props} />
 		);
 	}
-} );
+}

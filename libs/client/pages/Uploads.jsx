@@ -1,10 +1,9 @@
 import React from 'react';
-import createReactClass from 'create-react-class';
 
 import CardListPage from './CardListPage';
 
 // Pages
-export default createReactClass( {
+export default class Thing extends React.Component {
 	render() {
 		var props = this.props;
 		var username = props.params;
@@ -22,4 +21,4 @@ export default createReactClass( {
 				title='Uploads' tagline={tagline}/>
 		);
 	}
-} );
+}

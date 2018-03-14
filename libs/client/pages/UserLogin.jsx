@@ -1,12 +1,11 @@
 import React from 'react';
-import createReactClass from 'create-react-class';
 
 import { Button, Content } from 'wikipedia-react-components';
 
 import Article from './Article';
 
 // Pages
-export default createReactClass( {
+export default class Thing extends React.Component {
 	render() {
 		var props = this.props;
 		var createAccountUrl = 'https://meta.wikimedia.org/wiki/Special:CreateAccount?campaign=weekipedia';
@@ -33,4 +32,4 @@ export default createReactClass( {
 			</Article>
 		);
 	}
-} );
+}

@@ -87,7 +87,7 @@ class LanguageOverlay extends React.Component {
 			return (
 				<a href={'/' + source + language.title.replace( /\//gi, '%2F' ) }
 					key={'lang-item-' + code}
-					onClick={self.navigateTo}
+					onClick={self.navigateTo.bind( this )}
 					hrefLang={language.lang} lang={language.lang}>
 					<strong className="autonym">{language.autonym}</strong>
 					<span className="title">{language.title}</span>

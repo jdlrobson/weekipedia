@@ -1,5 +1,4 @@
 import React from 'react';
-import createReactClass from 'create-react-class';
 import { Button, HorizontalList, IntermediateState, TruncatedText, Icon,
 	ErrorBox } from 'wikipedia-react-components';
 
@@ -7,21 +6,16 @@ import './styles.less';
 
 import Overlay from './../Overlay';
 
-export default createReactClass( {
-	getInitialState() {
-		return {
+export default class Thing extends React.Component {
+	constructor() {
+		super();
+		this.state = {
 			width: window.innerWidth,
 			height: window.innerHeight,
 			images: null,
 			img: null
 		};
-	},
-	getDefaultProps() {
-		return {
-			api: null,
-			lang: 'en'
-		};
-	},
+	}
 	componentDidMount() {
 		var self = this;
 		var w = this.state.width;
@@ -49,10 +43,10 @@ export default createReactClass( {
 				self.loadCurrentImage( props.image );
 			} );
 		} );
-	},
+	}
 	componentWillReceiveProps( newProps ) {
 		this.loadCurrentImage( newProps.image );
-	},
+	}
 	loadCurrentImage( image ) {
 		var imgData,
 			self = this,
@@ -74,7 +68,7 @@ export default createReactClass( {
 			// If bad image is given jump to first image.
 			this.setState( { error: true } );
 		}
-	},
+	}
 	loadGallery() {
 		var props = this.props;
 		return props.api.getPage( props.title,
@@ -82,8 +76,8 @@ export default createReactClass( {
 		).then( function ( page ) {
 			return page.lead.media || [];
 		} );
-	},
-	findImage: function ( image, offset ) {
+	}
+	findImage( image, offset ) {
 		return this.loadGallery().then( function ( media ) {
 			var index = media.indexOf( 'File:' + image );
 			var newIndex = index + offset;
@@ -95,17 +89,17 @@ export default createReactClass( {
 			}
 			return media[ newIndex ].replace( 'File:', '' );
 		} );
-	},
+	}
 	previousImage() {
 		this.findImage( this.props.image, -1 )
 			.then( ( path ) => this.props.router.navigateTo( { hash: '#/media/' + path },
 				null, true ) );
-	},
+	}
 	nextImage() {
 		this.findImage( this.props.image, 1 )
 			.then( ( path ) => this.props.router.navigateTo( { hash: '#/media/' + path },
 				null, true ) );
-	},
+	}
 	render() {
 		var content, footer, meta,
 			leftGutter, rightGutter, url,
@@ -147,12 +141,12 @@ export default createReactClass( {
 		if ( this.state.media ) {
 			leftGutter = (
 				<div className="gutter">
-					<Icon glyph="arrow-invert" onClick={this.previousImage} />
+					<Icon glyph="arrow-invert" onClick={this.previousImage.bind( this )} />
 				</div>
 			);
 			rightGutter = (
 				<div className="gutter">
-					<Icon glyph="arrow-invert" onClick={this.nextImage}/>
+					<Icon glyph="arrow-invert" onClick={this.nextImage.bind( this )}/>
 				</div>
 			);
 		}
@@ -170,4 +164,4 @@ export default createReactClass( {
 			</Overlay>
 		);
 	}
-} );
+}

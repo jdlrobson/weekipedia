@@ -26,7 +26,6 @@
     "babel-preset-react": "^6.11.1",
     "body-parser": "^1.15.2",
     "connect-memcached": "^0.2.0",
-    "create-react-class": "^15.6.0",
     "css-loader": "^0.26.1",
     "diff": "^3.0.0",
     "domino": "^1.0.25",

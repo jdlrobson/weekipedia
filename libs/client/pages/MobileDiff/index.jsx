@@ -1,5 +1,4 @@
 import React from 'react';
-import createReactClass from 'create-react-class';
 import timeago from 'timeago';
 import { HorizontalList, Icon, IntermediateState, Content } from 'wikipedia-react-components';
 
@@ -10,18 +9,19 @@ import './styles.less';
 const IGNORED_GROUPS = [ 'user', 'autoconfirmed', '*' ];
 
 // Pages
-export default createReactClass( {
-	getInitialState() {
-		return {
+export default class Thing extends React.Component {
+	constructor() {
+		super();
+		this.state = {
 			diff: null
 		};
-	},
+	}
 	componentDidMount() {
 		this.load( this.props.params );
-	},
+	}
 	componentWillReceiveProps( nextProps ) {
 		this.load( nextProps.params );
-	},
+	}
 	load( revId ) {
 		var self = this;
 		var props = this.props;
@@ -31,7 +31,7 @@ export default createReactClass( {
 			self.setState( { diff: diff } );
 			window.scrollTo( 0, 0 );
 		} );
-	},
+	}
 	render() {
 		var body, title, footer, link,
 			userGroups, editorTagline,
@@ -99,4 +99,4 @@ export default createReactClass( {
 				isSpecialPage='yes' body={body} />
 		);
 	}
-} );
+}

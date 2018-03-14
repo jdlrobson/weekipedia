@@ -1,5 +1,4 @@
 import React from 'react';
-import createReactClass from 'create-react-class';
 
 import mwStorage from './../mediawiki-storage';
 
@@ -8,7 +7,7 @@ import Article from './Article';
 import { IntermediateState, Checkbox } from 'wikipedia-react-components';
 
 // Pages
-export default createReactClass( {
+export default class Thing extends React.Component {
 	getConfig() {
 		var config = mwStorage.get( 'mobile-options' );
 		if ( !config ) {
@@ -16,24 +15,24 @@ export default createReactClass( {
 		} else {
 			return JSON.parse( config );
 		}
-	},
+	}
 	updateSetting( name, value ) {
 		var config = this.state.mobileOptions;
 		config[ name ] = value;
 		this.setState( { mobileOptions: config } );
 		this.save( config );
 		this.props.store.setUserNotification( 'Setting saved.' );
-	},
+	}
 	componentDidMount() {
 		this.save( this.getConfig() );
-	},
+	}
 	save( config ) {
 		this.setState( {
 			mobileOptions: config
 		} );
 		this.props.store.loadSiteOptions( config );
 		mwStorage.set( 'mobile-options', JSON.stringify( config ) );
-	},
+	}
 	render() {
 		var self = this;
 		var state = this.state;
@@ -57,7 +56,7 @@ export default createReactClass( {
 							<Checkbox key={'mobile-option-' + i}
 								name={name}
 								checked={state.mobileOptions[ name ]}
-								onToggle={self.updateSetting}
+								onToggle={self.updateSetting.bind(self)}
 								label={desc} />
 						);
 					} )
@@ -69,4 +68,4 @@ export default createReactClass( {
 			<Article {...this.props} isSpecialPage='yes' title={'Settings'} body={form} />
 		);
 	}
-} );
+}

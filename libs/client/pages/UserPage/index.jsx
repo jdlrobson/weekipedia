@@ -1,5 +1,4 @@
 import React from 'react';
-import createReactClass from 'create-react-class';
 
 import { Icon, Button } from 'wikipedia-react-components';
 
@@ -12,11 +11,11 @@ import './icons.less';
 import './styles.less';
 
 // Pages
-export default createReactClass( {
+export default class Thing extends React.Component {
 	onTalkClick( ev ) {
 		ev.preventDefault();
 		this.props.router.navigateTo( '#/talk/' );
-	},
+	}
 	getTabs() {
 		var props = this.props,
 			onClickInternalLink = props.onClickInternalLink,
@@ -37,7 +36,7 @@ export default createReactClass( {
 				onClick={onClickInternalLink}
 				key="page-upload-tab">Uploads</a>
 		];
-	},
+	}
 	render() {
 		var registered,
 			body = [],
@@ -79,4 +78,4 @@ export default createReactClass( {
 			<WikiPage {...props} body={body} tabs={this.getTabs()} />
 		);
 	}
-} );
+}
