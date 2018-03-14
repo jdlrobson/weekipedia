@@ -26,8 +26,12 @@ if ( config.fallbackPath ) {
 }
 var router = shared.router;
 var query = router.queryStringToObject( window.location.search );
+var userOptions = JSON.parse( mwStorage.get( 'mobile-options' ) || '{}' );
+
 config.uselang = query.uselang || 'en';
-store.loadSiteOptions( config.siteoptions );
+store.loadSiteOptions(
+	Object.assign( {}, config.siteoptions, userOptions )
+);
 store.addProjects( config.supportedProjects );
 
 config.store = store;

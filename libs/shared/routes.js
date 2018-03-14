@@ -164,6 +164,8 @@ function addSpecialPage( title, Class, handler ) {
 					Object.assign( {}, props, {
 						title: title,
 						key: key,
+						// FIXME: Needed because of withInterAppLinks
+						router: info.router,
 						params: params ? decodeURIComponent( params ).replace( /%2F/gi, '/' ) : params,
 						children: []
 					} )
