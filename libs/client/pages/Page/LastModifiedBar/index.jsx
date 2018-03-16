@@ -6,7 +6,7 @@ import './styles.less';
 import './icons.less';
 
 export default ( { editor, language_project, lang, title, timestamp, onClickLink } ) => {
-	const isAnon = !( editor && editor.name );
+	const isAnon = !( editor && editor.user );
 	const source = language_project || lang + '/wiki';
 	const historyUrl = '/' + source + '/Special:History/' + title;
 	const prefix = '/wiki/User:';
@@ -33,9 +33,9 @@ export default ( { editor, language_project, lang, title, timestamp, onClickLink
 
 	// Cached pages may not have this available.
 	if ( editor ) {
-		editorLabel = isAnon ? 'an anonymous user' : editor.name;
+		editorLabel = isAnon ? 'an anonymous user' : editor.user;
 		editorElement = isAnon ? <span key={key + '-editor'}>{editorLabel}</span> :
-			<a href={prefix + editor.name} onClick={onClickLink}
+			<a href={prefix + editor.user} onClick={onClickLink}
 				key={key + '-editor'}>{editorLabel}</a>;
 		text = ' by ';
 	}
