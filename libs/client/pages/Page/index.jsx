@@ -161,7 +161,7 @@ class Page extends React.Component {
 
 		if ( leadHtml !== undefined ) {
 			if ( this.state.isExpanded ) {
-				toc = <TableOfContents sections={remainingSections} />;
+				toc = <TableOfContents sections={remainingSections} key="page-toc" />;
 				if ( remainingSections.length && store.isFeatureEnabled( 'includeTableOfContents' ) ) {
 					sections.push( toc );
 				}
