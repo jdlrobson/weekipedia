@@ -57,7 +57,7 @@ export default class Thing extends React.Component {
 							<Checkbox key={'mobile-option-' + i}
 								name={name}
 								checked={state.mobileOptions[ name ]}
-								onToggle={self.updateSetting.bind(self)}
+								onToggle={self.updateSetting.bind( self )}
 								label={desc} />
 						);
 					} )

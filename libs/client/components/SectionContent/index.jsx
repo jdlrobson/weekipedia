@@ -3,9 +3,6 @@ import React, { Component } from 'react';
 import './styles.less';
 
 class SectionContent extends Component {
-	componentWillReceiveProps( nextProps ) {
-		this.setState( { contentChanged: nextProps.text !== this.props.text } );
-	}
 	render() {
 		var divId;
 		var id = this.props.id;

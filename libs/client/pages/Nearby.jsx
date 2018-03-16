@@ -9,8 +9,7 @@ export default class Nearby extends React.Component {
 	constructor() {
 		super();
 		this.state = {
-			error: false,
-			cards: null
+			error: false
 		};
 	}
 	componentWillReceiveProps( props ) {

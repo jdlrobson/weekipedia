@@ -72,4 +72,3 @@ if ( 'onpopstate' in window ) {
 	router.on( 'onreplacestate', renderCurrentRoute );
 }
 renderCurrentRoute();
-

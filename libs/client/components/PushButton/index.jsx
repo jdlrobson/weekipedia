@@ -36,8 +36,6 @@ class PushButton extends React.Component {
 		this.state = {
 			serviceWorkerRegistration: null,
 			subscription: null,
-			isLoading: true,
-			isSupported: true,
 			isError: false,
 			isBlocked: false,
 			isEnabled: null
@@ -50,7 +48,7 @@ class PushButton extends React.Component {
 		).then( function ( serviceWorkerRegistration ) {
 			self.setState( { serviceWorkerRegistration: serviceWorkerRegistration } );
 			serviceWorkerRegistration.pushManager.getSubscription().then( function ( subscription ) {
-				self.setState( { isEnabled: !!subscription, isLoading: false, subscription: subscription } );
+				self.setState( { isEnabled: !!subscription, subscription: subscription } );
 			} );
 		} );
 	}
@@ -81,7 +79,7 @@ class PushButton extends React.Component {
 			browser: provider,
 			feature: this.props.serviceName
 		} ).then( function () {
-			self.setState( { isLoading: false, isEnabled: action === 'subscribe' } );
+			self.setState( { isEnabled: action === 'subscribe' } );
 		} ).catch( function ( e ) {
 			self.setState( { isError: true, isSubscriptionError: true, errorMsg: e } );
 		} );
@@ -89,7 +87,6 @@ class PushButton extends React.Component {
 	toggle() {
 		var self = this;
 
-		this.setState( { isLoading: true } );
 		if ( this.state.isEnabled ) {
 			this.state.subscription.unsubscribe().then( function ( success ) {
 				if ( success ) {

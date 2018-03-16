@@ -12,7 +12,6 @@ import store from './store';
 
 function onExit( router ) {
 	return () => {
-		console.log('go nac', router);
 		router.back();
 	};
 }
@@ -22,7 +21,6 @@ export default [
 	[
 		/^#\/talk\/?([^\/]*)$/,
 		function ( info, props ) {
-			console.log('talk', info[1]);
 			var section = info[ 1 ];
 			var overlayProps = Object.assign( {}, props, {
 				section: section,
@@ -97,7 +95,7 @@ export default [
 	// Languages
 	[
 		/^#\/languages$/,
-		function ( info, props, query, router ) {
+		function ( info, props ) {
 			const languageProps = Object.assign( {}, props, {
 				onExit: onExit( info.router ),
 				onChooseLanguage: function ( ev, code, href ) {
@@ -133,11 +131,6 @@ export default [
 					{
 						onExit: onExit( info.router ),
 						defaultValue: info[ 1 ],
-						onSwitchProject: function ( project, term ) {
-							router.navigateTo( {
-								pathname: langProject + '/Special:Search/' + term
-							} );
-						},
 						onSearchSubmit: function ( term ) {
 							router.navigateTo( {
 								pathname: '/' + store.getLangProject() + '/Special:Search/' + encodeURIComponent( term ),

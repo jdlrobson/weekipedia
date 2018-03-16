@@ -65,7 +65,7 @@ class WatchIcon extends React.Component {
 
 		if ( !props.collection && collections.length > 1 || collectionsEnabled ) {
 			props.store.showOverlay( <CollectionOverlay {...props}
-				onExit={store.hideOverlays.bind(store)} /> );
+				onExit={store.hideOverlays.bind( store )} /> );
 		} else {
 			this.watch( ev );
 		}

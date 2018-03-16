@@ -11,13 +11,6 @@ const HALF_LIFE_WEEKS = '84';
 
 // Pages
 export default class Feed extends React.Component {
-	constructor() {
-		super();
-		this.state = {
-			error: false,
-			cardList: null
-		};
-	}
 	render() {
 		// show intermediate state if still loading, otherwise show list
 		var push;

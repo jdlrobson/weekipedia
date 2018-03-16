@@ -6,10 +6,6 @@ import CardListPage from './CardListPage';
 class Random extends React.Component {
 	constructor() {
 		super();
-		this.state = {
-			error: false,
-			cards: null
-		};
 	}
 	render() {
 		return (

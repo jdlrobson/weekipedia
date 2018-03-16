@@ -18,10 +18,7 @@ class CardListPage extends React.Component {
 	constructor() {
 		super();
 		this.state = {
-			isEmpty: false,
-			errorMsg: 'Something went wrong when trying to render the list. Please refresh and try again.',
-			error: false,
-			list: null
+			isEmpty: false
 		};
 	}
 	componentWillReceiveProps() {

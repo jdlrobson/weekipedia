@@ -25,7 +25,6 @@ class Page extends React.Component {
 			fragment: null,
 			isExpanded: false,
 			lead: null,
-			user: {},
 			errorMsg: NOT_FOUND_MESSAGE,
 			error: false,
 			remaining: null
@@ -168,7 +167,7 @@ class Page extends React.Component {
 				}
 				sections = sections.concat( remainingSections );
 			} else {
-				sections.push( <Button key="article-expand" label="Expand" onClick={this.expand.bind(this)} /> );
+				sections.push( <Button key="article-expand" label="Expand" onClick={this.expand.bind( this )} /> );
 			}
 		} else {
 			if ( this.state.error ) {

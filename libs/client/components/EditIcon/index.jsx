@@ -14,7 +14,7 @@ export default class EditIcon extends React.Component {
 			href: '#',
 			store: props.store,
 			className: 'component-edit-icon',
-			onClick: function ( ev ) {
+			onClick: function () {
 				props.router.navigateTo( '#/editor/' + props.section );
 			},
 			ctaMsg: props.msg( 'edit-cta' )

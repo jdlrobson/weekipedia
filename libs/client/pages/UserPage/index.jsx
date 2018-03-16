@@ -14,7 +14,6 @@ import './styles.less';
 export default class UserPage extends React.Component {
 	getTabs() {
 		var props = this.props,
-			onClickInternalLink = props.onClickInternalLink,
 			titleSansPrefix = props.titleSansPrefix,
 			getLocalUrl = props.getLocalUrl;
 

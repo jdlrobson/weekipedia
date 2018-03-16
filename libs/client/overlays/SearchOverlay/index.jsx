@@ -11,7 +11,6 @@ class SearchOverlay extends Component {
 	constructor() {
 		super();
 		this.state = {
-			isSearching: false,
 			term: '',
 			list: null
 		};
@@ -46,7 +45,6 @@ class SearchOverlay extends Component {
 		this.setState( { term: term } );
 
 		if ( term ) {
-			this.setState( { isSearching: true } );
 			lowerTerm = term.toLowerCase();
 			if ( lowerTerm.indexOf( 'define:' ) === 0 ) {
 				project = 'wiktionary';
@@ -55,8 +53,6 @@ class SearchOverlay extends Component {
 			endpoint = '/api/search/' + lang + '.' + project + '/' + encodeURIComponent( term );
 			this.showResults( endpoint, project );
 			this.props.onSearch( term );
-		} else {
-			this.setState( { cards: [] } );
 		}
 	}
 	render() {

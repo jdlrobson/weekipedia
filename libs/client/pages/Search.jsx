@@ -10,15 +10,14 @@ export default class Search extends React.Component {
 	}
 	getTabs() {
 		var props = this.props;
-		var proj = this.props.project;
-		var store = this.props.store;
+		var proj = props.project;
+		var store = props.store;
 		var term = this.getTerm();
-		var self = this;
-		var prefix = '/' + this.props.lang + '.';
+		var prefix = '/' + props.lang + '.';
 		return store.isFeatureEnabled( 'allowForeignProjects' ) ?
 			store.projects.map( function ( project, i ) {
 				return <a key={'search-tab' + i}
-					onClick={onClickLink}
+					onClick={props.onClickLink}
 					className={proj === project ? 'active' : ''}
 					title={'Search ' + project + ' for ' + term}
 					href={prefix + project + '/Special:Search/' + term}>{project}</a>;

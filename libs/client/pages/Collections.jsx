@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 
 import CardList from './../components/CardList';
 import CollectionCard from './../components/CollectionCard';
@@ -18,7 +17,6 @@ export default class Collections extends React.Component {
 			error: false,
 			endpoint: null,
 			description: null,
-			cards: null,
 			title: null,
 			username: null,
 			id: null
@@ -32,7 +30,6 @@ export default class Collections extends React.Component {
 
 		// reset
 		this.setState( { description: null, title: null, error: false, id: null,
-			owner: null,
 			defaultView: null, collections: null,
 			endpoint: null, username: null } );
 		if ( args.length === 3 ) {

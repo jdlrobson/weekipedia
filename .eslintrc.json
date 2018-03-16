@@ -17,6 +17,8 @@
     "history": false
   },
   "rules": {
+    "react/no-unused-state": 1,
+    "react/no-unused-prop-types": 1,
     "camelcase": 0,
     "no-useless-escape": 0,
     "one-var": 0,

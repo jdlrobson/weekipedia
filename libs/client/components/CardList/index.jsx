@@ -59,7 +59,6 @@ class WeekipediaCardList extends React.Component {
 	constructor( props ) {
 		super( props );
 		this.state = {
-			loadingMessage: 'Loading list',
 			errorMsg: 'Something went wrong when trying to render the list. Please refresh and try again.',
 			error: null,
 			isPending: false,
@@ -93,7 +92,6 @@ class WeekipediaCardList extends React.Component {
 			emptyMessage: props.emptyMessage,
 			api: api
 		};
-		this.setState( { list: null } );
 		this.fetchCardListProps( apiEndpoint, cardListProps ).then( function ( state ) {
 			self.setState( state );
 			if ( state.cards.length === 0 && props.onEmpty ) {
