@@ -177,6 +177,11 @@ function addSpecialPage( title, Class, handler ) {
 	] );
 }
 
+function getContributionProps( info, props ) {
+	props.onCardClick = getCardClickHandler( info.router );
+	return props;
+}
+
 function initSpecialPages() {
 	addSpecialPage( 'Categories', Categories );
 	addSpecialPage( 'Feed', Feed, ( info, props ) => {
@@ -184,8 +189,8 @@ function initSpecialPages() {
 		return props;
 	} );
 	addSpecialPage( 'History', History );
-	addSpecialPage( 'RecentChanges', Contributions );
-	addSpecialPage( 'Contributions', Contributions );
+	addSpecialPage( 'RecentChanges', Contributions, getContributionProps );
+	addSpecialPage( 'Contributions', Contributions, getContributionProps );
 	addSpecialPage( 'Watchlist', Watchlist );
 	addSpecialPage( 'EditWatchlist', Watchlist );
 	addSpecialPage( 'MobileDiff', MobileDiff );
