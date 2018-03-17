@@ -16,6 +16,20 @@ function onExit( router ) {
 	};
 }
 
+function getCardClickHandler( router ) {
+	return ( ev, href, title ) => {
+		var target;
+		ev.preventDefault();
+		// This can be used as on an onClick handler
+		if ( !href ) {
+			target = ev.currentTarget;
+			href = target.getAttribute( 'href' );
+			title = target.getAttribute( 'title' );
+		}
+		router.navigateTo( href, title );
+	};
+}
+
 export default [
 	// Talk Overlay
 	[
@@ -131,6 +145,7 @@ export default [
 					{
 						onExit: onExit( info.router ),
 						defaultValue: info[ 1 ],
+						onCardClick: getCardClickHandler( info.router ),
 						onSearchSubmit: function ( term ) {
 							router.navigateTo( {
 								pathname: '/' + store.getLangProject() + '/Special:Search/' + encodeURIComponent( term ),
