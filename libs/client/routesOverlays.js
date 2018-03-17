@@ -136,9 +136,6 @@ export default [
 								pathname: '/' + store.getLangProject() + '/Special:Search/' + encodeURIComponent( term ),
 								search: ''
 							}, 'Search' );
-						},
-						onSearch: function ( term ) {
-							router.navigateTo( null, '#/search/' + term, true );
 						}
 					} ) )
 			};

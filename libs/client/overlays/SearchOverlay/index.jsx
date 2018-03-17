@@ -52,7 +52,9 @@ class SearchOverlay extends Component {
 			}
 			endpoint = '/api/search/' + lang + '.' + project + '/' + encodeURIComponent( term );
 			this.showResults( endpoint, project );
-			this.props.onSearch( term );
+			if ( this.props.onSearch ) {
+				this.props.onSearch( term );
+			}
 		}
 	}
 	render() {
