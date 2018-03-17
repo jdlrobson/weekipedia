@@ -177,54 +177,51 @@ function addSpecialPage( title, Class, handler ) {
 	] );
 }
 
-function getContributionProps( info, props ) {
+function addCardClickHandler( info, props ) {
 	props.onCardClick = getCardClickHandler( info.router );
 	return props;
 }
 
 function initSpecialPages() {
-	addSpecialPage( 'Categories', Categories );
+	addSpecialPage( 'Categories', Categories, addCardClickHandler );
 	addSpecialPage( 'Feed', Feed, ( info, props ) => {
 		props.noIndex = false;
-		return props;
+		return addCardClickHandler( info, props );
 	} );
-	addSpecialPage( 'History', History );
-	addSpecialPage( 'RecentChanges', Contributions, getContributionProps );
-	addSpecialPage( 'Contributions', Contributions, getContributionProps );
-	addSpecialPage( 'Watchlist', Watchlist );
-	addSpecialPage( 'EditWatchlist', Watchlist );
+	addSpecialPage( 'History', History, addCardClickHandler );
+	addSpecialPage( 'RecentChanges', Contributions, addCardClickHandler );
+	addSpecialPage( 'Contributions', Contributions, addCardClickHandler );
+	addSpecialPage( 'Watchlist', Watchlist, addCardClickHandler );
+	addSpecialPage( 'EditWatchlist', Watchlist, addCardClickHandler );
 	addSpecialPage( 'MobileDiff', MobileDiff );
 	addSpecialPage( 'MobileOptions', MobileOptions );
-	addSpecialPage( 'MostRead', MostRead );
+	addSpecialPage( 'MostRead', MostRead, addCardClickHandler );
 	addSpecialPage( 'Random', Random, function ( info, props ) {
 		props.fallback = '/api/random/' + props.lang;
 		props.noIndex = false;
-		props.onCardClick = getCardClickHandler( info.router );
-		return props;
+		return addCardClickHandler( info, props );
 	} );
 	addSpecialPage( 'Search', Search, function ( info, props ) {
 		var query = props.query.search;
 		if ( query ) {
 			props.fallback = '/api/search-full/' + props.language_project + '/' + query;
 		}
-		props.onLinkClick = getCardClickHandler( info.router );
-		return props;
+		return addCardClickHandler( info, props );
 	} );
 	addSpecialPage( 'Shell', Shell );
 	addSpecialPage( 'MobileMenu', MobileMenu, function ( info, props ) {
 		props.showMenuNoJavaScript = true;
 		return props;
 	} );
-	addSpecialPage( 'Nearby', Nearby );
+	addSpecialPage( 'Nearby', Nearby, addCardClickHandler );
 	addSpecialPage( 'UserLogin', UserLogin );
 	addSpecialPage( 'Collections', Collections, function ( info, props ) {
 		props.fallback = '/api/' + props.lang + '/collection/';
-		props.onCardClick = getCardClickHandler( info.router );
 		props.noIndex = false;
 		if ( props.params ) {
 			props.fallback += props.params;
 		}
-		return props;
+		return addCardClickHandler( info, props );
 	} );
 	addSpecialPage( 'Uploads', Uploads );
 }
