@@ -8,7 +8,8 @@ const APP_SESSION_KEY = 'app-session';
 const store = observable( {
 	siteoptions: {},
 	projects: [],
-	devTools: true,
+	// Developers can enable this for debugging
+	devTools: false,
 	pageviews: 0,
 	page: null,
 	isMenuOpen: false,
