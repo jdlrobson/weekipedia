@@ -37,6 +37,7 @@ export default class Thing extends React.Component {
 		var self = this;
 		var state = this.state;
 		var options = [
+			[ 'nearby', 'Enable Nearby in the main menu' ],
 			[ 'showTalkToAnons', 'Show talk' ],
 			[ 'expandArticlesByDefault', 'Expand all articles by default' ],
 			[ 'expandSectionsByDefault', 'Expand all sections by default' ],

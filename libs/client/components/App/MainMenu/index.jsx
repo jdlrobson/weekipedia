@@ -88,7 +88,7 @@ class MainMenu extends Component {
 				</li>
 			);
 		}
-		if ( store.isFeatureEnabled( 'options.nearby' ) ) {
+		if ( store.isFeatureEnabled( 'nearby' ) ) {
 			nearbyMenuItem = (
 				<li>
 					<Icon glyph="mf-nearby" href={langPrefix + '/Special:Nearby'}
