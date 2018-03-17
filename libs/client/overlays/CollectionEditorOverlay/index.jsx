@@ -57,7 +57,7 @@ export default class CollectionEditorOverlay extends React.Component {
 				}
 			}
 		} ).catch( function () {
-			props.router.back();
+			self.exit();
 		} );
 	}
 	updateDescription( ev ) {

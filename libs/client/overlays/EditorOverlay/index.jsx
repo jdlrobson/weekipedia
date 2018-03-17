@@ -106,9 +106,7 @@ class EditorOverlay extends React.Component {
 			),
 			license = props.siteinfo.license,
 			state = this.state,
-			onExit = props.onExit || function () {
-				this.props.router.back();
-			}.bind( this ),
+			onExit = props.onExit,
 			backBtn = <Icon glyph='back' onClick={this.showEditor.bind( this )}
 				className={state.step === SAVE_STEP ? 'disabled' : ''}/>,
 			closeBtn = <Icon glyph='close' onClick={onExit} />,

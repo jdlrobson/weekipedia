@@ -26,9 +26,6 @@ class IssuesOverlay extends React.Component {
 	}
 	render() {
 		var body;
-		var onExit = function () {
-			this.props.router.back();
-		}.bind( this );
 		var issues = this.state.issues;
 
 		if ( this.state.error ) {
@@ -46,7 +43,7 @@ class IssuesOverlay extends React.Component {
 			body = <IntermediateState/>;
 		}
 		return (
-			<Overlay onExit={onExit} className="issues-overlay">
+			<Overlay onExit={this.props.onExit} className="issues-overlay">
 				<Header>
 					<h2><strong>Issues</strong></h2>
 				</Header>
