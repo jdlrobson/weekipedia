@@ -61,6 +61,7 @@ class SearchOverlay extends Component {
 		var heading, panel, msg;
 		var props = this.props;
 		var search = <SearchForm
+			key="search-overlay-form"
 			placeholder={props.msg( 'search' )}
 			defaultValue={props.defaultValue}
 			onSearch={this.onSearch.bind( this )}
@@ -72,7 +73,7 @@ class SearchOverlay extends Component {
 				<span>No page with this title. <strong>Search within pages</strong> to see if this phrase appears anywhere.</span> :
 				'Search within pages';
 			panel = (
-				<Panel>
+				<Panel key="search-overlay-content-panel">
 					<Icon glyph="search-content"
 						onClick={props.onSearchSubmit}
 						type="before" label={msg} className="without-results" />
