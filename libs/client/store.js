@@ -137,6 +137,16 @@ store.setPage = function ( title, langCode, project, page ) {
 	this.pageviews++;
 };
 
+store.getLocalUrl = function ( title, params ) {
+	var project = this.project;
+	var lang = this.lang;
+	var source = project && lang ? lang + '.' + project : lang + '/wiki';
+	title = title ? encodeURIComponent( title ).replace( '%3A', ':' ) : '';
+	params = params ? '/' + encodeURIComponent( params ).replace( /%2F/g, '/' ) : '';
+
+	return '/' + source + '/' + title + params;
+};
+
 store.login = function ( api, storage ) {
 	var self = this;
 	if ( !loginRequest ) {

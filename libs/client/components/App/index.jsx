@@ -59,13 +59,6 @@ class App extends React.Component {
 		this.props.router.navigateTo( '#/search' );
 		ev.stopPropagation();
 	}
-	getLocalUrl( title, params ) {
-		var source = this.props.language_project || this.props.lang + '/wiki';
-		title = title ? encodeURIComponent( title ).replace( '%3A', ':' ) : '';
-		params = params ? '/' + encodeURIComponent( params ).replace( /%2F/g, '/' ) : '';
-
-		return '/' + source + '/' + title + params;
-	}
 	render() {
 		var props = this.props;
 		var store = props.store;
@@ -79,8 +72,7 @@ class App extends React.Component {
 		// clone each child and pass them the notifier
 		var childProps = typeof document !== 'undefined' ? {
 			store: props.store,
-			onClickInternalLink: actionClickLink,
-			getLocalUrl: this.getLocalUrl.bind( this )
+			onClickInternalLink: actionClickLink
 		} : {};
 		if ( store.pageviews === 0 ) {
 			Object.assign( childProps, props.fallbackProps || {} );
@@ -97,7 +89,7 @@ class App extends React.Component {
 		// FIXME: link should point to Special:MobileMenu
 		var icon = <Icon glyph="mainmenu" label="Home"
 			id="mw-mf-main-menu-button"
-			href={this.getLocalUrl( 'Special:MobileMenu' )}
+			href={store.getLocalUrl( 'Special:MobileMenu' )}
 			onClick={actionOpenPrimaryNav}/>;
 		var shield = this.props.store.isMenuOpen ? <TransparentShield /> : null;
 

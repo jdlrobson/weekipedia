@@ -91,13 +91,6 @@ class Page extends React.Component {
 			isExpanded: true
 		} );
 	}
-	getLocalUrl( title, params ) {
-		var source = this.props.language_project || this.props.lang + '/wiki';
-		title = title ? encodeURIComponent( title ).replace( '%3A', ':' ) : '';
-		params = params ? '/' + encodeURIComponent( params ) : '';
-
-		return '/' + source + '/' + title + params;
-	}
 	getFooter( lead ) {
 		var footer = [];
 		var props = this.props;
@@ -175,7 +168,7 @@ class Page extends React.Component {
 				sections.push( (
 					<p key="404-search">Why not search for <a
 						onClick={this.props.onClickInternalLink}
-						href={this.getLocalUrl( 'Special:Search', title )}>{title}</a>?</p>
+						href={store.getLocalUrl( 'Special:Search', title )}>{title}</a>?</p>
 				) );
 			} else {
 				sections.push( <IntermediateState key="article-loading" /> );
@@ -184,7 +177,7 @@ class Page extends React.Component {
 
 		if ( ns === 0 && store.isFeatureEnabled( 'showTalkToAnons' ) ) {
 			secondaryActions.push( <Button className="talk"
-				key="article-talk" href={ state.jsEnabled ? '#/talk' : this.getLocalUrl( 'Talk:' + title ) }
+				key="article-talk" href={ state.jsEnabled ? '#/talk' : store.getLocalUrl( 'Talk:' + title ) }
 				label="Talk" /> );
 		}
 

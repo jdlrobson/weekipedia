@@ -14,21 +14,21 @@ import './styles.less';
 export default class UserPage extends React.Component {
 	getTabs() {
 		var props = this.props,
-			titleSansPrefix = props.titleSansPrefix,
-			getLocalUrl = props.getLocalUrl;
+			store = props.store,
+			titleSansPrefix = props.titleSansPrefix;
 
 		return [
-			<a href={getLocalUrl( 'User talk:' + titleSansPrefix )}
-				onClick={props.onLinkClick}
+			<a href={store.getLocalUrl( 'User talk:' + titleSansPrefix )}
+				onClick={props.onClickLink}
 				key="page-talk-tab">Talk</a>,
-			<a href={getLocalUrl( 'Special:Collections', 'by/' + titleSansPrefix )}
-				onClick={props.onLinkClick}
+			<a href={store.getLocalUrl( 'Special:Collections', 'by/' + titleSansPrefix )}
+				onClick={props.onClickLink}
 				key="page-collections-tab">{props.msg( 'menu-collections' )}</a>,
-			<a href={getLocalUrl( 'Special:Contributions', titleSansPrefix )}
-				onClick={props.onLinkClick}
+			<a href={store.getLocalUrl( 'Special:Contributions', titleSansPrefix )}
+				onClick={props.onClickLink}
 				key="page-contrib-tab">Contributions</a>,
-			<a href={getLocalUrl( 'Special:Uploads', titleSansPrefix )}
-				onClick={props.onLinkClick}
+			<a href={store.getLocalUrl( 'Special:Uploads', titleSansPrefix )}
+				onClick={props.onClickLink}
 				key="page-upload-tab">Uploads</a>
 		];
 	}
