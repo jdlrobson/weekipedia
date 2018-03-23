@@ -1,6 +1,6 @@
 import React from 'react';
 import { Icon, SearchForm, Header, Toast } from 'wikipedia-react-components';
-import { observer } from 'mobx-react';
+import { observer, inject } from 'mobx-react';
 import DevTools from 'mobx-react-devtools';
 
 import './styles.less';
@@ -14,8 +14,6 @@ import initOffline from './../../offline';
 
 import SVGFilter from './SVGFilter.jsx';
 
-import { onClickInternalLink } from './../../pages/utils.jsx';
-
 const passPropsToChildren = ( children, propsToSend ) => {
 	return React.Children.map( children, ( child ) => React.cloneElement( child, propsToSend ) );
 };
@@ -23,7 +21,7 @@ const passPropsToChildren = ( children, propsToSend ) => {
 const mergeFunctions = ( actions ) => {
 	return function () {
 		actions.forEach( ( action ) => {
-			action.apply( action, arguments );
+			action.apply( null, arguments );
 		} );
 	};
 };
@@ -63,19 +61,14 @@ class App extends React.Component {
 		var props = this.props;
 		var store = props.store;
 		var secondaryIcons = [];
+		var onClickInternalLink = props.onClickInternalLink;
 		var actionClickSearch = this.onClickSearch.bind( this );
 		var actionOpenPrimaryNav = this.openPrimaryNav.bind( this );
 		var actionClosePrimaryNav = this.closePrimaryNav.bind( this );
-		var actionClickLink = onClickInternalLink( props );
 		var actionOnUpdateLoginStatus = this.clearSession.bind( this );
 
-		// clone each child and pass them the notifier
-		var childProps = typeof document !== 'undefined' ? {
-			store: props.store,
-			onClickInternalLink: actionClickLink
-		} : {};
 		if ( store.pageviews === 0 ) {
-			Object.assign( childProps, props.fallbackProps || {} );
+			Object.assign( {}, props.fallbackProps || {} );
 		}
 
 		var search = ( <SearchForm key="chrome-search-form"
@@ -107,7 +100,7 @@ class App extends React.Component {
 		if ( store.session ) {
 			secondaryIcons.push(
 				<Icon glyph="notifications"
-					onClick={actionClickLink}
+					onClick={onClickInternalLink}
 					href={'/' + this.props.language_project + '/Special:Notifications'}/>
 			);
 		}
@@ -128,7 +121,7 @@ class App extends React.Component {
 				lang={this.props.lang} dir={store.isRTL ? 'rtl' : 'ltr'}>
 				<nav id="mw-mf-page-left">
 					<MainMenu {...this.props}
-						onItemClick={mergeFunctions( [ actionClickLink, actionClosePrimaryNav ] )}
+						onItemClick={mergeFunctions( [ onClickInternalLink, actionClosePrimaryNav ] )}
 						onLogoutClick={actionOnUpdateLoginStatus}
 						onLoginClick={actionOnUpdateLoginStatus}
 						session={store.session}/>
@@ -142,7 +135,7 @@ class App extends React.Component {
 					{
 						store.devTools && ( <DevTools /> )
 					}
-					{passPropsToChildren( page, childProps )}
+					{passPropsToChildren( page, { store, onClickInternalLink } )}
 					{shield}
 				</div>
 				{ overlay }
@@ -159,4 +152,10 @@ App.defaultProps = {
 	isOverlayEnabled: false
 };
 
-export default observer( App );
+export default inject( function( stores ){
+	return {
+		onClickInternalLink: stores.onClickInternalLink,
+		api: stores.api,
+		store: stores.store,
+	};
+} )(observer( App ));

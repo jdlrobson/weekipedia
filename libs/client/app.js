@@ -1,4 +1,7 @@
 import { render } from 'react-dom';
+import { Provider } from 'mobx-react';
+import React from 'react';
+import { onClickInternalLink as onClickInternalLinkMaker } from './pages/utils.jsx';
 
 import 'reset-css/reset.less';
 import './main.less';
@@ -45,20 +48,20 @@ delete config.supportedProjects;
 
 document.body.className += ' client-js';
 
+const onClickInternalLink = onClickInternalLinkMaker( { router, store, api } );
+
 render(
-	shared.render( window.location.pathname, window.location.hash ),
+	// Setup a Provider with the store
+	React.createElement( Provider, { api, store, a: 1,  onClickInternalLink },
+		shared.render( window.location.pathname, window.location.hash )
+	),
 	document.getElementById( 'app' )
 );
 
 const renderCurrentRoute = () => {
 	var path = window.location.pathname;
 	var hash = window.location.hash;
-	var route = router.matchRoute( path, hash,
-		Object.assign( {}, props, {
-			api: api,
-			store: store
-		} )
-	);
+	var route = router.matchRoute( path, hash, props );
 
 	store.setPage( route.title, route.lang, route.project, route.children[ 0 ] );
 	if ( route.overlay ) {
