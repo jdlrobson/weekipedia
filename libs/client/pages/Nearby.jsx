@@ -49,10 +49,10 @@ export default class Nearby extends React.Component {
 				error: err
 			} );
 		},
-		{
-			timeout: 10000,
-			enableHighAccuracy: true
-		} );
+			{
+				timeout: 10000,
+				enableHighAccuracy: true
+			} );
 	}
 	render() {
 		var lat = this.state.latitude;
