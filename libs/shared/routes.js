@@ -78,7 +78,6 @@ var routes = [
 			titleSansPrefix = titleParts[ 0 ];
 			props.project = project || props.project;
 			props.language_project = lang + '.' + props.project;
-			props.mobileUrl = utils.getAbsoluteUrl( title, lang, props.project, true );
 			props.desktopUrl = utils.getAbsoluteUrl( title, lang, props.project );
 			props.revision = query.oldid;
 
@@ -104,6 +103,8 @@ var routes = [
 				props.children = [
 					React.createElement( View,
 						Object.assign( {}, props, {
+							i18n: undefined,
+							siteinfo: undefined,
 							onClickLink: getCardClickHandler( info.router ),
 							onExpand: function () {
 								var qs = window.location.search;

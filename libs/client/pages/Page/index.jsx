@@ -185,7 +185,6 @@ class Page extends React.Component {
 
 		wikiPageProps = Object.assign( {}, this.props, {
 			lead: lead,
-			toc: toc,
 			body: sections,
 			secondaryActions: secondaryActions,
 			footer: footer

@@ -31,20 +31,22 @@ var router = shared.router;
 var query = router.queryStringToObject( window.location.search );
 var userOptions = JSON.parse( mwStorage.get( 'mobile-options' ) || '{}' );
 
-config.uselang = query.uselang || 'en';
 store.loadSiteOptions(
 	Object.assign( {}, config.siteoptions, userOptions )
 );
+
 store.addProjects( config.supportedProjects );
 
 config.store = store;
+
+// Config will be passed down as properties so remove things that are not needed before that happens
+delete config.siteoptions;
+delete config.supportedProjects;
 
 var props = shared.init( config, overlayRoutes );
 
 // Cleanup
 delete config.i18n;
-delete config.siteoptions;
-delete config.supportedProjects;
 
 document.body.className += ' client-js';
 
