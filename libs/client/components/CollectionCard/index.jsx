@@ -6,17 +6,19 @@ class CollectionCard extends Component {
 	render() {
 		var props = this.props;
 		var owner = props.owner;
-		var base = '/' + props.language_project + '/Special:Collections/by/' + props.owner + '/';
-		var url = base + props.id;
+		var store = props.store;
+		var base = 'Special:Collections';
+		var userPage = 'by/' + props.owner + '/';
+		var collectionPage = userPage + props.id;
 		var extracts = [
 			props.description
 		];
 		if ( owner ) {
 			extracts.push( <Icon glyph="user" type="before" label={owner} className="mw-mf-user"
-				href={base} /> );
+				href={store.getLocalUrl(base, userPage)} /> );
 		}
 
-		return <Card {...props} url={url} extracts={extracts} />;
+		return <Card {...props} url={store.getLocalUrl(base, collectionPage)} extracts={extracts} />;
 	}
 }
 

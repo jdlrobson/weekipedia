@@ -137,14 +137,19 @@ store.setPage = function ( title, langCode, project, page ) {
 	this.pageviews++;
 };
 
-store.getLocalUrl = function ( title, params ) {
+store.getLocalUrl = function ( title, params, query = {} ) {
 	var project = this.project;
 	var lang = this.lang;
 	var source = project && lang ? lang + '.' + project : lang + '/wiki';
 	title = title ? encodeURIComponent( title ).replace( '%3A', ':' ) : '';
 	params = params ? '/' + encodeURIComponent( params ).replace( /%2F/g, '/' ) : '';
+	var qs = Object.keys( query )
+		.map((key) => `${key}=${encodeURIComponent(query[key])}`).join( '&' );
+	if ( qs ) {
+		qs = '?' + qs;
+	}
 
-	return '/' + source + '/' + title + params;
+	return '/' + source + '/' + title + params + qs;
 };
 
 store.login = function ( api, storage ) {

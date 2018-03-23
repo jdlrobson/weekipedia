@@ -5,11 +5,8 @@ import { Icon, TruncatedText, Content } from 'wikipedia-react-components';
 import './styles.less';
 import './icons.less';
 
-export default ( { editor, language_project, lang, title, timestamp, onClickLink } ) => {
+const LastModifiedBar = ( { editor, historyUrl, editorUrl, timestamp, onClickLink } ) => {
 	const isAnon = !( editor && editor.user );
-	const source = language_project || lang + '/wiki';
-	const historyUrl = '/' + source + '/Special:History/' + title;
-	const prefix = '/wiki/User:';
 	const now = Math.round( new Date().getTime() / 1000 );
 
 	var editorElement, text = '', editorLabel, tsAsDate, historyText,
@@ -35,7 +32,7 @@ export default ( { editor, language_project, lang, title, timestamp, onClickLink
 	if ( editor ) {
 		editorLabel = isAnon ? 'an anonymous user' : editor.user;
 		editorElement = isAnon ? <span key={key + '-editor'}>{editorLabel}</span> :
-			<a href={prefix + editor.user} onClick={onClickLink}
+			<a href={editorUrl} onClick={onClickLink}
 				key={key + '-editor'}>{editorLabel}</a>;
 		text = ' by ';
 	}
@@ -58,3 +55,5 @@ export default ( { editor, language_project, lang, title, timestamp, onClickLink
 		</div>
 	);
 };
+
+export default LastModifiedBar;

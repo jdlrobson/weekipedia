@@ -100,13 +100,13 @@ export default class Thing extends React.Component {
 	}
 	render() {
 		var content, footer, meta,
-			leftGutter, rightGutter, url,
+			leftGutter, rightGutter,
 			props = this.props,
+			store = props.store,
 			licenseUrl = '', licenseName = '',
 			description = '', artist = '',
 			img = this.state.img;
 		if ( img ) {
-			url = '/' + props.language_project + '/File:' + props.image;
 			var imgStyle = {
 				maxHeight: this.state.height,
 				maxWidth: this.state.width,
@@ -124,7 +124,7 @@ export default class Thing extends React.Component {
 
 			footer = (
 				<div className="details">
-					<Button isPrimary="1" label="Details" href={url}/>
+					<Button isPrimary="1" label="Details" href={store.getLocalUrl('File:' + props.image)}/>
 					<TruncatedText><p dangerouslySetInnerHTML={{ __html: description }}></p></TruncatedText>
 					<HorizontalList isSeparated="1" className="license">
 						<span dangerouslySetInnerHTML= {{ __html: artist }}></span>

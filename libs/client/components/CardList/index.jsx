@@ -11,9 +11,8 @@ const MONTHS = [ 'January', 'February', 'March', 'April', 'May', 'June',
 	'July', 'August', 'September', 'October', 'November', 'December' ];
 
 function getCards( data, props, keyPrefix ) {
-	var source = props.language_project ||
-    ( props.language && props.project ? props.language + '.' + props.project : '/wiki' );
 	var cards = [],
+		store = props.store,
 		CardClass = props.CardClass;
 
 	if ( data.collections ) {
@@ -23,7 +22,7 @@ function getCards( data, props, keyPrefix ) {
 	if ( data.pages && data.pages.length ) {
 		data.pages.forEach( function ( item, i ) {
 			var id = item.revid || item.pageid || item.id;
-			item.key = keyPrefix + 'card-' + i + '-' + id + '-' + props.language_project;
+			item.key = keyPrefix + 'card-' + i + '-' + id;
 			item.onClick = function ( ev ) {
 				var node = ev.currentTarget;
 				var link = node.tagName === 'A' ? node : node.querySelector( 'a' );
@@ -34,9 +33,9 @@ function getCards( data, props, keyPrefix ) {
 				}
 			};
 			if ( item.revid ) {
-				item.url = '/' + source + '/Special:MobileDiff/' + item.revid;
+				item.url = store.getLocalUrl('Special:MobileDiff/' + item.revid);
 			} else if ( !item.url && item.title ) {
-				item.url = '/' + source + '/' + encodeURIComponent( item.title );
+				item.url = store.getLocalUrl(item.title);
 			}
 			// some endpoints e.g. related endpoint return titles with `_`
 			if ( item.title ) {
@@ -177,7 +176,7 @@ class WeekipediaCardList extends React.Component {
 					ts = new Date( card.props.timestamp );
 					if ( !lastTs || ( ts.getDate() !== lastTs.getDate() ) ) {
 						header = (
-							<ListHeader key={'card-list-header-' + i + '-' + props.language_project}>
+							<ListHeader key={'card-list-header-' + i}>
 								{ts.getDate()} {MONTHS[ ts.getMonth() ]} {ts.getFullYear()}
 							</ListHeader>
 						);

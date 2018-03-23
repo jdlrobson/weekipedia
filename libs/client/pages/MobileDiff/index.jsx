@@ -38,13 +38,13 @@ export default class Thing extends React.Component {
 			groups = [],
 			links = [],
 			props = this.props,
-			urlPrefix = props.language_project ? '/' + props.language_project + '/' : '/' + this.props.lang + '/wiki/',
+			store = props.store,
 			diff = this.state.diff;
 
 		if ( diff ) {
 			title = diff.title;
 			links = [
-				<a href={urlPrefix + 'Special:MobileDiff/' + diff.parent}
+				<a href={store.getLocalUrl('Special:MobileDiff/' + diff.parent)}
 					key="mobile-diff-prev-link"
 					onClick={this.props.onClickInternalLink}>← Previous edit</a>
 			];
@@ -52,7 +52,7 @@ export default class Thing extends React.Component {
 				<Content key="special-page-row-1" className="content">
 					<div className="diff-header">
 						<h2>
-							<a href={urlPrefix + title}
+							<a href={store.getLocalUrl(title)}
 								onClick={this.props.onClickInternalLink}>{title}</a>
 						</h2>
 						<div>edited {timeago( new Date( diff.timestamp ) )}</div>
@@ -75,9 +75,9 @@ export default class Thing extends React.Component {
 
 			if ( diff.anon ) {
 				link = <span>Anonymous user</span>;
-				editorTagline = <a href={urlPrefix + 'Special:Contributions/' + diff.user.name}>{diff.user.name}</a>;
+				editorTagline = <a href={store.getLocalUrl('Special:Contributions/' + diff.user.name)}>{diff.user.name}</a>;
 			} else {
-				link = <a href={urlPrefix + 'User:' + diff.user.name}
+				link = <a href={store.getLocalUrl('User:' + diff.user.name)}
 					onClick={this.props.onClickInternalLink}>{diff.user.name}</a>;
 				editorTagline = <div className="edit-count"><div>{diff.user.editcount}</div> edits</div>;
 			}

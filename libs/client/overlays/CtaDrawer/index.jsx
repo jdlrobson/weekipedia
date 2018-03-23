@@ -5,7 +5,10 @@ import { Button, Overlay } from 'wikipedia-react-components';
 class CtaDrawer extends React.Component {
 	render() {
 		var props = this.props;
-		var loginUrl = '/' + props.language_project + '/Special:UserLogin?returnto=' + encodeURIComponent( props.title );
+		var store = props.store;
+		var loginUrl = store.getLocalUrl('Special:UserLogin', null, {
+			returnto: store.title
+		});
 		return (
 			<Overlay>
 				<p>{props.message}</p>

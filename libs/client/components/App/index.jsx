@@ -73,7 +73,6 @@ class App extends React.Component {
 
 		var search = ( <SearchForm key="chrome-search-form"
 			placeholder={props.msg( 'search' )}
-			language_project={props.language_project}
 			onClickSearch={actionClickSearch} /> );
 
 		var navigationClasses = this.props.store.isMenuOpen ?
@@ -101,7 +100,7 @@ class App extends React.Component {
 			secondaryIcons.push(
 				<Icon glyph="notifications"
 					onClick={onClickInternalLink}
-					href={'/' + this.props.language_project + '/Special:Notifications'}/>
+					href={store.getLocalUrl('Special:Notifications')}/>
 			);
 		}
 

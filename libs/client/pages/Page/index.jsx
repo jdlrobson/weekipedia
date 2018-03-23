@@ -94,13 +94,15 @@ class Page extends React.Component {
 	getFooter( lead ) {
 		var footer = [];
 		var props = this.props;
+		var store = props.store;
 		var ns = lead.ns;
 		if ( !lead ) {
 			return footer;
 		} else {
 			footer = [
-				<LastModifiedBar editor={lead.lastmodifier} lang={props.lang}
-					language_project={props.language_project}
+				<LastModifiedBar editor={lead.lastmodifier}
+					editorUrl={lead.lastmodifier ? store.getLocalUrl('User:' + lead.lastmodifier.user) : false}
+					historyUrl={store.getLocalUrl('Special:History', store.title)}
 					onClickLink={props.onClickLink}
 					title={props.title} timestamp={lead.lastmodified} key="page-last-modified" />
 			];

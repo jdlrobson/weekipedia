@@ -33,7 +33,7 @@ export default class Search extends React.Component {
 		var endpoint = '/api/search-full/' + props.language_project + '/' + encodeURIComponent( term );
 		var suffix = store.isFeatureEnabled( 'allowForeignProjects' ) ?
 			[ ' on ', <strong key="search-strong-project">{props.project}</strong> ] : '';
-		var termUrl = '/' + props.language_project + '/' + term;
+		var termUrl = store.getLocalUrl(term);
 		var tagline = <p>Showing you all search results for <strong><a href={termUrl}>{decodeURIComponent( term )}</a></strong>{suffix}</p>;
 
 		// mw-search-results class added for consistency with MediaWiki

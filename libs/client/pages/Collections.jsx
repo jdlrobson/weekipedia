@@ -99,7 +99,7 @@ export default class Collections extends React.Component {
 		}
 	}
 	render() {
-		var tagline, userUrl, actions, label, suffix, tabs,
+		var tagline, actions, label, suffix, tabs,
 			props = this.props,
 			store = props.store,
 			lang = this.props.lang,
@@ -115,14 +115,11 @@ export default class Collections extends React.Component {
 				suffix = id ? '/' + id : '/';
 				actions = <Button label={label} href={'#/edit-collection/' + username + suffix } isPrimary={true}/>;
 			}
-			userUrl = '/' + this.props.lang + '/wiki/Special:Collections/by/' + username;
 			// The api request is cached at this point
 			tagline = (
 				<div>
-					<div>by <a href={userUrl}
-						onClick={function () {
-							props.onUserClick( username );
-						}}>{username}</a></div>
+					<div>by <a href={store.getLocalUrl('Special:Collections', 'by/'+username)}
+						onClick={props.onClickInternalLink}>{username}</a></div>
 					{desc}&nbsp;
 					<div>{actions}</div>
 				</div>
@@ -132,14 +129,14 @@ export default class Collections extends React.Component {
 		}
 
 		tabs = [
-			<a key="collection-tab-1" href={'/' + lang + '/wiki/Special:Collections/'}
-				onClick={this.props.onClickInternalLink}
+			<a key="collection-tab-1" href={store.getLocalUrl('Special:Collections')}
+				onClick={props.onClickInternalLink}
 				className={!username ? 'active' : ''}>All</a>
 		];
 		if ( username ) {
 			tabs.push(
-				<a key="collection-tab-2" href={'/' + lang + '/wiki/Special:Collections/by/' + username}
-					onClick={this.props.onClickInternalLink}
+				<a key="collection-tab-2" href={store.getLocalUrl('Special:Collections', 'by/' + username)}
+					onClick={props.onClickInternalLink}
 					className={!id ? 'active' : ''}>{username}</a>
 			);
 
@@ -151,8 +148,8 @@ export default class Collections extends React.Component {
 			}
 		} else {
 			tabs.push(
-				<a key="collection-tab-2" href={'/' + lang + '/wiki/Special:Collections/by/~anonymous'}
-					onClick={this.props.onClickInternalLink}
+				<a key="collection-tab-2" href={store.getLocalUrl('Special:Collections', 'by/~anonymous')}
+					onClick={props.onClickInternalLink}
 					className={username === '~anonymous' && !title ? 'active' : ''}>By you</a>
 			);
 
