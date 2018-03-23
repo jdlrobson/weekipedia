@@ -117,7 +117,7 @@ class LanguageOverlay extends React.Component {
 				<Panel>
 					<Content>
 						<SearchInput value={this.state.term}
-							onSearch={this.filterLanguages} placeholder="Search for a language" />
+							onSearch={this.filterLanguages.bind(this)} placeholder="Search for a language" />
 					</Content>
 				</Panel>
 				<Content>
