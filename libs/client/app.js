@@ -19,7 +19,7 @@ if ( config.settingsEnabled ) {
 	Object.assign( config.siteoptions, JSON.parse( mwStorage.get( 'mobile-options' ) || '{}' ) );
 }
 
-var api = new Api( config.siteinfo.apiPath );
+var api = new Api( config.siteinfo.apiPath, store );
 
 // Add client side specific properties.
 config.storage = mwStorage;
@@ -31,6 +31,7 @@ var router = shared.router;
 var query = router.queryStringToObject( window.location.search );
 var userOptions = JSON.parse( mwStorage.get( 'mobile-options' ) || '{}' );
 
+store.setProject(config.project);
 store.loadSiteOptions(
 	Object.assign( {}, config.siteoptions, userOptions )
 );
@@ -41,6 +42,7 @@ config.store = store;
 
 // Config will be passed down as properties so remove things that are not needed before that happens
 delete config.siteoptions;
+delete config.project;
 delete config.supportedProjects;
 
 var props = shared.init( config, overlayRoutes );

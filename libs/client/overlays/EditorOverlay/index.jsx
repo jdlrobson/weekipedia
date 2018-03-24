@@ -46,16 +46,16 @@ class EditorOverlay extends React.Component {
 	loadPreview() {
 		var self = this,
 			props = this.props,
-			source = props.language_project || props.lang + '.' + props.project,
+			api = props.api,
 			title = props.title,
-			endpoint = '/api/' + source + '.org/rest_v1/transform/wikitext/to/html/' + encodeURIComponent( title ),
+			endpoint = api.getEndpoint( 'transform/wikitext/to/html/' + encodeURIComponent( title ), true ),
 			data = {
 				body_only: true,
 				title: title,
 				wikitext: this.state.text || props.wikitext
 			};
 
-		this.props.api.post( endpoint, data ).then( function ( data ) {
+		api.post( endpoint, data ).then( function ( data ) {
 			self.setState( { preview: data.text } );
 		} );
 	}
@@ -65,11 +65,10 @@ class EditorOverlay extends React.Component {
 			self = this,
 			props = this.props,
 			state = this.state,
-			source = props.language_project || props.lang,
 			title = props.normalizedtitle || props.title;
 
 		this.setState( { step: SAVE_STEP } );
-		props.api.edit( source, title, props.section, state.text || props.wikitext,
+		props.api.edit( title, props.section, state.text || props.wikitext,
 			state.summary || props.editSummary ).then( function ( resp ) {
 				props.onEditSave( resp.edit.newrevid );
 			} ).catch( function () {
@@ -78,13 +77,13 @@ class EditorOverlay extends React.Component {
 	}
 	loadWikiText() {
 		var self = this,
-			source = this.props.language_project || this.props.lang,
-			endpoint = '/api/wikitext/' + source + '/' + encodeURIComponent( this.props.title );
+			api = this.props.api,
+			path = 'wikitext/' + encodeURIComponent( this.props.title );
 
 		if ( this.props.section ) {
-			endpoint += '/' + this.props.section;
+			path += '/' + this.props.section;
 		}
-		this.props.api.fetch( endpoint ).then( function ( data ) {
+		api.fetch( api.getEndpoint( path ) ).then( function ( data ) {
 			var text,
 				page = data.pages[ 0 ];
 

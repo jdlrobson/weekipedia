@@ -20,7 +20,7 @@ export default class Thing extends React.Component {
 		var self = this;
 		var w = this.state.width;
 		var props = this.props;
-		var route = '/api/' + this.props.language_project + '.org/api.php';
+		var route = props.api.getMwEndpoint();
 		if ( w > 600 ) {
 			w = 600;
 		}
@@ -71,9 +71,7 @@ export default class Thing extends React.Component {
 	}
 	loadGallery() {
 		var props = this.props;
-		return props.api.getPage( props.title,
-			props.language_project
-		).then( function ( page ) {
+		return props.api.getPage( props.title ).then( function ( page ) {
 			return page.lead.media || [];
 		} );
 	}

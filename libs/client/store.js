@@ -137,6 +137,12 @@ store.setPage = function ( title, langCode, project, page ) {
 	this.pageviews++;
 };
 
+store.getForeignUrl = function ( title, lang ) {
+	var project = this.project;
+	var source = lang + '.' + project;
+	return '/' + source + '/' + title;
+};
+
 store.getLocalUrl = function ( title, params, query = {} ) {
 	var project = this.project;
 	var lang = this.lang;

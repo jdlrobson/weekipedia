@@ -23,8 +23,10 @@ class LanguageOverlay extends React.Component {
 	}
 	componentDidMount() {
 		var self = this;
-		var source = this.props.language_project || this.props.lang;
-		this.props.api.fetch( '/api/page-languages/' + source + '/' + this.props.title ).then( function ( languages ) {
+		var props = this.props;
+		var api = this.props.api;
+		var endpoint = api.getEndpoint( 'page-languages/' + props.title );
+		api.fetch( endpoint ).then( function ( languages ) {
 			self.setState( { isLoading: false, languages: languages } );
 		} );
 	}
@@ -79,6 +81,7 @@ class LanguageOverlay extends React.Component {
 		var self = this;
 		var state = this.state;
 		var props = this.props;
+		var store = props.store;
 		var content, prefLang, preferredLangs, otherLangs;
 
 		function mapLanguage( language ) {
@@ -86,7 +89,7 @@ class LanguageOverlay extends React.Component {
 			var source = props.project ? code + '.' + props.project + '/' : code + '/wiki/';
 
 			return (
-				<a href={'/' + source + language.title.replace( /\//gi, '%2F' ) }
+				<a href={store.getForeignUrl(language.title.replace( /\//gi, '%2F' ), code )}
 					key={'lang-item-' + code}
 					onClick={self.navigateTo.bind( self )}
 					hrefLang={language.lang} lang={language.lang}>

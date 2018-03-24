@@ -15,8 +15,8 @@ class IssuesOverlay extends React.Component {
 	}
 	componentDidMount() {
 		var self = this;
-		var source = this.props.language_project || this.props.lang;
-		this.props.api.fetch( '/api/page/' + source + '/' + this.props.title ).then( function ( page ) {
+		var api = this.props.api;
+		api.getPage( this.props.title ).then( function ( page ) {
 			if ( page.lead.issues ) {
 				self.setState( { issues: page.lead.issues } );
 			} else {

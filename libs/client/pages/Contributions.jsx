@@ -8,8 +8,9 @@ import { Icon, CardDiff } from 'wikipedia-react-components';
 export default class Contributions extends React.Component {
 	render() {
 		var title, lead, tagline,
-			source = this.props.language_project || this.props.lang,
-			endpoint = '/api/contributions/' + source + '/0/',
+			api = this.props.api,
+			store = this.props.store,
+			path = 'contributions/0/',
 			username = this.props.params;
 
 		if ( username ) {
@@ -17,12 +18,12 @@ export default class Contributions extends React.Component {
 			tagline = (
 				<h2>
 					<Icon glyph='user'
-						href={'/' + this.props.lang + '/wiki/User:' + username}
+						href={store.getLocalUrl('User:' + username)}
 						type="before"
 						onClick={this.props.onClickInternalLink} label={username} />
 				</h2>
 			);
-			endpoint += username;
+			path += username;
 		} else {
 			title = 'Recent Changes';
 			lead = {
@@ -31,7 +32,7 @@ export default class Contributions extends React.Component {
 		}
 
 		return (
-			<CardListPage {...this.props} apiEndpoint={endpoint} isDiffCardList={true}
+			<CardListPage {...this.props} apiEndpoint={api.getEndpoint(path)} isDiffCardList={true}
 				title={title} tagline={tagline} CardClass={CardDiff} lead={lead} />
 		);
 	}

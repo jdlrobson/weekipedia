@@ -8,7 +8,8 @@ export default class Thing extends React.Component {
 		var props = this.props;
 		var store = props.store;
 		var username = props.params;
-		var endpoint = '/api/uploads/' + props.language_project + '/' + username;
+		var api = props.api;
+		var endpoint = api.getEndpoint('uploads/' + username);
 
 		var tagline = (
 			<p>

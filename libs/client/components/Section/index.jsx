@@ -45,7 +45,7 @@ class Section extends Component {
 		if ( this.state.isOpen && props.text === undefined && !this.state.isLoading ) {
 			this.setState( { isLoading: true } );
 			if ( props.isReferenceSection ) {
-				props.api.getReferenceSections( props.title, props.language_project ).then( function ( json ) {
+				props.api.getReferenceSections( props.title ).then( function ( json ) {
 					var sectionComponents = getSections( json.references.sections, props );
 					sectionComponents.forEach( function ( section ) {
 						if ( section.props.id === id ) {

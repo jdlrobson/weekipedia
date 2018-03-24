@@ -33,7 +33,7 @@ function getCards( data, props, keyPrefix ) {
 				}
 			};
 			if ( item.revid ) {
-				item.url = store.getLocalUrl('Special:MobileDiff/' + item.revid);
+				item.url = store.getLocalUrl('Special:MobileDiff', item.revid);
 			} else if ( !item.url && item.title ) {
 				item.url = store.getLocalUrl(item.title);
 			}
@@ -82,7 +82,6 @@ class WeekipediaCardList extends React.Component {
 			lang: props.lang,
 			msg: props.msg,
 			collection: props.collection,
-			language_project: props.language_project,
 			unordered: props.unordered,
 			store: props.store,
 			CardClass: props.CardClass,

@@ -26,7 +26,6 @@ export const onClickInternalLink = ( {
 			refId = link.getAttribute( 'href' ).split( '#' )[ 1 ];
 			store.showOverlay( <HijackedRefDrawer
 				title={store.title}
-				language_project={store.getLangProject()}
 				api={api}
 				refId={refId} />, false );
 

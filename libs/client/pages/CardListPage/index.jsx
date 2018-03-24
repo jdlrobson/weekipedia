@@ -27,7 +27,7 @@ class CardListPage extends React.Component {
 	render() {
 		var props = this.props;
 		// api endpoint may change...
-		var key = 'card-list-page-card-list-' + props.language_project + '-' + props.apiEndpoint;
+		var key = 'card-list-page-card-list-' + props.apiEndpoint;
 		var body = [];
 		if ( props.preamble ) {
 			body.push( props.preamble );

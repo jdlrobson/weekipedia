@@ -57,17 +57,15 @@ class Page extends React.Component {
 		}
 	}
 	load( title, lang, revision ) {
-		var source, project,
+		var
 			rev = revision || this.props.revision,
 			self = this;
 
 		title = title || this.props.title;
 		lang = lang || this.props.lang;
-		project = this.props.project;
-		source = project ? lang + '.' + project : lang;
 
 		this.checkExpandedState();
-		this.props.api.getPage( title, source, null, rev ).then( function ( data ) {
+		this.props.api.getPage( title, null, rev ).then( function ( data ) {
 			var ns = data.lead.ns;
 
 			// If talk page or user page auto expand

@@ -10,8 +10,8 @@ export default class Search extends React.Component {
 	}
 	getTabs() {
 		var props = this.props;
-		var proj = props.project;
 		var store = props.store;
+		var proj = store.project;
 		var term = this.getTerm();
 		var prefix = '/' + props.lang + '.';
 		return store.isFeatureEnabled( 'allowForeignProjects' ) ?
@@ -28,9 +28,10 @@ export default class Search extends React.Component {
 			msg: 'No pages matched your search query for this project. Why not try one of our other projects?'
 		};
 		var props = this.props;
+		var api = props.api;
 		var store = props.store;
 		var term = this.getTerm();
-		var endpoint = '/api/search-full/' + props.language_project + '/' + encodeURIComponent( term );
+		var endpoint = api.getEndpoint('search-full/' + encodeURIComponent( term ));
 		var suffix = store.isFeatureEnabled( 'allowForeignProjects' ) ?
 			[ ' on ', <strong key="search-strong-project">{props.project}</strong> ] : '';
 		var termUrl = store.getLocalUrl(term);

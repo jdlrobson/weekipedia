@@ -254,7 +254,7 @@ function initGetMethods( app ) {
 		} );
 	} );
 
-	app.get( '/api/diff/:lang/:revId', ( req, res ) => {
+	app.get( '/api/:lang/diff/:revId', ( req, res ) => {
 		cachedResponse( res, req.url, function () {
 			var p = getProject( req );
 			return diff( p.lang, req.params.revId, p.project );
@@ -305,7 +305,7 @@ function initGetMethods( app ) {
 		} );
 	} );
 
-	app.get( '/api/page-languages/:lang/:title', ( req, res ) => {
+	app.get( '/api/:lang/page-languages/:title', ( req, res ) => {
 		var proj = getProject( req );
 		cachedResponse( res, req.url, function () {
 			return languages( req.params.title, proj.lang, proj.project );
@@ -338,7 +338,7 @@ function initGetMethods( app ) {
 		} );
 	} );
 
-	app.get( '/api/contributions/:lang/:ns/:username?', ( req, res ) => {
+	app.get( '/api/:lang/contributions/:ns/:username?', ( req, res ) => {
 		cachedResponse( res, req.url, function () {
 			var p = req.params;
 			var pr = getProject( req );
@@ -346,14 +346,14 @@ function initGetMethods( app ) {
 		} );
 	} );
 
-	app.get( '/api/uploads/:language_project/:username', ( req, res ) => {
+	app.get( '/api/:language_project/uploads/:username', ( req, res ) => {
 		cachedResponse( res, req.url, function () {
 			var p = req.params;
 			return uploads( p.language_project, p.username, req.query );
 		} );
 	} );
 
-	app.get( '/api/pagehistory/:lang/:title', ( req, res ) => {
+	app.get( '/api/:lang/pagehistory/:title', ( req, res ) => {
 		cachedResponse( res, req.url, function () {
 			var proj = getProject( req );
 			var p = req.params;
@@ -365,7 +365,7 @@ function initGetMethods( app ) {
 		cachedResponse( res, req.url, webPushTrend );
 	} );
 
-	app.get( '/api/wikitext/:lang/:title/:section?', ( req, res ) => {
+	app.get( '/api/:lang/wikitext/:title/:section?', ( req, res ) => {
 		var p = req.params;
 		var proj = getProject( req );
 		respond( res, function () {

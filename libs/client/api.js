@@ -1,9 +1,10 @@
 import fetch from 'isomorphic-fetch';
 
-function Api( basePath ) {
+function Api( basePath, store ) {
 	this.cache = {};
 	this.refCache = {};
 	this.path = basePath || '/api/';
+	this.store = store;
 }
 
 Api.prototype = {
@@ -32,8 +33,9 @@ Api.prototype = {
 		}
 		return array.join( '&' );
 	},
-	edit: function ( source, title, section, text, summary, appendText ) {
+	edit: function ( title, section, text, summary, appendText ) {
 		var data;
+		var source = this.store.getLangProject();
 		var action = appendText ? 'edit-append' : 'edit';
 		var self = this;
 		var endpoint = '/api/private/' + action + '/' + source + '/' + encodeURIComponent( title );
@@ -100,8 +102,20 @@ Api.prototype = {
 			return promise;
 		}
 	},
-	getPage: function ( title, langOrLanguageProject, sections, revision ) {
-		langOrLanguageProject = langOrLanguageProject || 'en';
+	getMwEndpoint: function () {
+		var source = this.store.getLangProject();
+		return '/api/' + source + '.org/api.php';
+	},
+	getEndpoint: function ( path, isRest ) {
+		var source = this.store.getLangProject();
+		if ( isRest ) {
+			source += '.org/rest_v1';
+		}
+		console.log( 'api:', '/api/' + source + '/' + path);
+		return '/api/' + source + '/' + path;
+	},
+	getPage: function ( title, sections, revision ) {
+		var langOrLanguageProject = this.store.getLangProject();
 		var suffix = '';
 		var route = sections ? sections + '/' : '';
 		route += langOrLanguageProject + '/';
@@ -113,8 +127,8 @@ Api.prototype = {
 
 		return this.fetch( this.path + 'page/' + route + title + suffix );
 	},
-	getReference: function ( title, langOrLanguageProject, refId ) {
-		return this.getReferences( title, langOrLanguageProject ).then( function ( refs ) {
+	getReference: function ( title, refId ) {
+		return this.getReferences( title ).then( function ( refs ) {
 			if ( refs[ refId ] ) {
 				return refs[ refId ];
 			} else {
@@ -122,10 +136,11 @@ Api.prototype = {
 			}
 		} );
 	},
-	getReferenceSections: function ( title, langOrLanguageProject ) {
-		return this.getPage( title, langOrLanguageProject, 'references' );
+	getReferenceSections: function ( title ) {
+		return this.getPage( title, 'references' );
 	},
-	getReferences: function ( title, langOrLanguageProject ) {
+	getReferences: function ( title ) {
+		var langOrLanguageProject = this.store.getLangProject();
 		var promise;
 		var reflist = {};
 		var cache = this.refCache;
@@ -134,7 +149,7 @@ Api.prototype = {
 		if ( cache[ cacheKey ] ) {
 			return cache[ cacheKey ];
 		} else {
-			promise = this.getReferenceSections( title, langOrLanguageProject ).then( function ( json ) {
+			promise = this.getReferenceSections( title ).then( function ( json ) {
 				var container = document.createElement( 'div' );
 
 				json.references.sections.forEach( function ( section ) {

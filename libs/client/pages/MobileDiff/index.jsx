@@ -25,9 +25,9 @@ export default class Thing extends React.Component {
 	load( revId ) {
 		var self = this;
 		var props = this.props;
-		var source = props.language_project ? props.language_project : props.lang;
-		var endpoint = '/api/diff/' + source + '/' + revId;
-		this.props.api.fetch( endpoint ).then( function ( diff ) {
+		var api = props.api;
+		var endpoint = api.getEndpoint('diff/' + revId);
+		api.fetch( endpoint ).then( function ( diff ) {
 			self.setState( { diff: diff } );
 			window.scrollTo( 0, 0 );
 		} );
@@ -44,7 +44,7 @@ export default class Thing extends React.Component {
 		if ( diff ) {
 			title = diff.title;
 			links = [
-				<a href={store.getLocalUrl('Special:MobileDiff/' + diff.parent)}
+				<a href={store.getLocalUrl('Special:MobileDiff', diff.parent)}
 					key="mobile-diff-prev-link"
 					onClick={this.props.onClickInternalLink}>← Previous edit</a>
 			];

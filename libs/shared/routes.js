@@ -205,7 +205,7 @@ function initSpecialPages() {
 	addSpecialPage( 'Search', Search, function ( info, props ) {
 		var query = props.query.search;
 		if ( query ) {
-			props.fallback = '/api/search-full/' + props.language_project + '/' + query;
+			props.fallback = props.api.getEndpoint('search-full/' + query);
 		}
 		return addCardClickHandler( info, props );
 	} );
@@ -215,9 +215,21 @@ function initSpecialPages() {
 		return props;
 	} );
 	addSpecialPage( 'Nearby', Nearby, addCardClickHandler );
-	addSpecialPage( 'UserLogin', UserLogin );
+	addSpecialPage( 'UserLogin', UserLogin, function ( info, props ) {
+		var lang = info[4];
+		var project = info[5];
+		var suffix = lang && project ? 'project=' + lang + '.' + project + '&' : '';
+		if ( props.query.returnto ) {
+			suffix += 'returnto=' + props.query.returnto;
+		}
+		if ( suffix ) {
+			suffix = '?' + suffix;
+		}
+		props.url = '/auth/mediawiki' + suffix;
+		return props;
+	} );
 	addSpecialPage( 'Collections', Collections, function ( info, props ) {
-		props.fallback = '/api/' + props.lang + '/collection/';
+		props.fallback = props.api.getEndpoint('/collection/');
 		props.noIndex = false;
 		if ( props.params ) {
 			props.fallback += props.params;

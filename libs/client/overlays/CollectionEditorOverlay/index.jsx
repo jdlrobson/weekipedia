@@ -28,7 +28,7 @@ export default class CollectionEditorOverlay extends React.Component {
 	}
 	loadImage( props ) {
 		var self = this;
-		props.api.getPage( props.title, props.language_project ).then( function ( data ) {
+		props.api.getPage( props.title ).then( function ( data ) {
 			var image;
 			if ( data.lead && data.lead.image ) {
 				image = data.lead.image;

@@ -81,7 +81,6 @@ class WatchIcon extends React.Component {
 			glyph: isWatched ? 'watched' : 'watch',
 			label: 'Watch this page',
 			title: props.title,
-			language_project: props.language_project,
 			ctaMsg: props.msg( 'watch-cta' ),
 			onClick: this.dispatch.bind( this )
 		};

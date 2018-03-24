@@ -25,7 +25,7 @@ class SearchOverlay extends Component {
 			props.api.fetch( endpoint ).then( function ( data ) {
 				self.setState( {
 					noResults: data.pages.length === 0,
-					list: <CardList {...props} language_project={language_proj}
+					list: <CardList {...props}
 						apiEndpoint={endpoint} infiniteScroll={false} />
 				} );
 			} );

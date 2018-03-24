@@ -16,7 +16,7 @@ class ReferenceDrawer extends React.Component {
 	}
 	loadReference( refId ) {
 		var self = this;
-		this.props.api.getReference( this.props.title, this.props.language_project, refId )
+		this.props.api.getReference( this.props.title, refId )
 			.then( function ( refHtml ) {
 				self.setState( { text: refHtml, isLoading: false } );
 			} ).catch( function () {

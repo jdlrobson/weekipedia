@@ -5,11 +5,11 @@ import { Button, Content } from 'wikipedia-react-components';
 import Article from './Article';
 
 // Pages
-export default class Thing extends React.Component {
+class UserLogin extends React.Component {
 	render() {
 		var props = this.props;
 		var createAccountUrl = 'https://meta.wikimedia.org/wiki/Special:CreateAccount?campaign=weekipedia';
-		var url = '/auth/mediawiki?project=' + props.language_project + '&returnto=' + props.query.returnto;
+		var url = props.url;
 
 		var body = (
 			<Content className="content">
@@ -33,3 +33,4 @@ export default class Thing extends React.Component {
 		);
 	}
 }
+export default UserLogin;

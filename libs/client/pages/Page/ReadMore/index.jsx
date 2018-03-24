@@ -14,11 +14,8 @@ class ReadMore extends React.Component {
 	}
 	render() {
 		var props = this.props;
-		var langProject = props.language_project;
-		var lang = props.lang;
-		var source = langProject || lang;
-		var endpoint = '/api/' + source + '.org/rest_v1/page/related/' +
-      encodeURIComponent( props.title.replace( / /g, '_' ) );
+		var endpoint = props.api.getEndpoint( 'page/related/' +
+			encodeURIComponent( props.title.replace( / /g, '_' ) ), true );
 
 		if ( this.state.isEmpty ) {
 			return (
@@ -28,8 +25,8 @@ class ReadMore extends React.Component {
 			return (
 				<div className="container-read-more">
 					<h2>Read more</h2>
-					<CardList unordered="1" apiEndpoint={endpoint} api={this.props.api} lang={lang}
-						language_project={langProject} onEmpty={this.onEmpty}
+					<CardList unordered="1" apiEndpoint={endpoint} api={this.props.api}
+						onEmpty={this.onEmpty}
 						infiniteScroll={false}
 						onCardClick={props.onCardClick}
 						store={props.store} />

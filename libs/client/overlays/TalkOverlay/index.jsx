@@ -37,7 +37,7 @@ export default class Thing extends React.Component {
 		var self = this;
 		var props = this.props;
 
-		props.api.getPage( this.getTalkPageTitle(), props.language_project ).then( function ( data ) {
+		props.api.getPage( this.getTalkPageTitle() ).then( function ( data ) {
 			self.setState( {
 				isLoading: false,
 				lead: data.lead,
@@ -56,7 +56,7 @@ export default class Thing extends React.Component {
 		var indent = this.state.indent;
 		var hash = window.location.hash;
 		this.setState( { isLoading: true, action: 'Saving reply' } );
-		this.props.api.edit( props.language_project, this.getTalkPageTitle(),
+		this.props.api.edit( this.getTalkPageTitle(),
 			props.section, '\n\n' + Array( indent + 1 ).join( ':' ) + this.state.replyBody, 'reply to topic', true
 		).then( function () {
 			self.setState( {
@@ -78,7 +78,7 @@ export default class Thing extends React.Component {
 		var props = this.props;
 		var text = '==' + this.state.subject + '==\n\n' + this.state.body;
 		this.setState( { isLoading: true, action: 'Adding new topic' } );
-		this.props.api.edit( props.language_project, this.getTalkPageTitle(),
+		this.props.api.edit( this.getTalkPageTitle(),
 			'new', text, 'Add topic'
 		).then( function () {
 			self.setState( {
