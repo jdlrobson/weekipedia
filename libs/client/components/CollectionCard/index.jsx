@@ -1,3 +1,4 @@
+import { observer, inject } from 'mobx-react';
 import React, { Component } from 'react';
 
 import { Card, Icon } from 'wikipedia-react-components';
@@ -22,4 +23,8 @@ class CollectionCard extends Component {
 	}
 }
 
-export default CollectionCard;
+export default inject( function ( stores ) {
+	return {
+		store: stores.store
+	};
+} )( observer( CollectionCard ) );
