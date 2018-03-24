@@ -76,7 +76,6 @@ var routes = [
 			props.lang = lang;
 			titleSansPrefix = titleParts[ 0 ];
 			props.project = project || props.project;
-			props.language_project = lang + '.' + props.project;
 			props.desktopUrl = utils.getAbsoluteUrl( title, lang, props.project );
 			props.revision = query.oldid;
 

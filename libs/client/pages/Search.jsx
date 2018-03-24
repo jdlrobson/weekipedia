@@ -13,14 +13,13 @@ export default class Search extends React.Component {
 		var store = props.store;
 		var proj = store.project;
 		var term = this.getTerm();
-		var prefix = '/' + props.lang + '.';
 		return store.isFeatureEnabled( 'allowForeignProjects' ) ?
 			store.projects.map( function ( project, i ) {
 				return <a key={'search-tab' + i}
 					onClick={props.onClickLink}
 					className={proj === project ? 'active' : ''}
 					title={'Search ' + project + ' for ' + term}
-					href={prefix + project + '/Special:Search/' + term}>{project}</a>;
+					href={store.getLocalUrl('Special:Search/' + term)}>{project}</a>;
 			} ) : [];
 	}
 	render() {

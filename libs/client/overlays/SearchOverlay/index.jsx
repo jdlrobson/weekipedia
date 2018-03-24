@@ -39,7 +39,7 @@ class SearchOverlay extends Component {
 	}
 	onSearch( term ) {
 		var endpoint, lowerTerm;
-		var lang = this.props.lang;
+		var api = this.props.api;
 		var project = this.props.siteinfo.defaultProject;
 		this.setState( { term: term } );
 
@@ -49,7 +49,7 @@ class SearchOverlay extends Component {
 				project = 'wiktionary';
 				term = lowerTerm.split( ':' )[ 1 ];
 			}
-			endpoint = '/api/search/' + lang + '.' + project + '/' + encodeURIComponent( term );
+			endpoint = api.getEndpoint('search/' + encodeURIComponent( term ));
 			this.showResults( endpoint, project );
 			if ( this.props.onSearch ) {
 				this.props.onSearch( term );

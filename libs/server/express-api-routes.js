@@ -114,7 +114,7 @@ function initLoginRoutes( app ) {
 		return doEdit( req, res, 'appendtext' );
 	} );
 
-	app.get( '/api/private/watchlist-feed/:lang/:ns?', ensureAuthenticated, function ( req, res ) {
+	app.get( '/api/:lang/private/watchlist-feed/:ns?', ensureAuthenticated, function ( req, res ) {
 		var callback = function ( data ) {
 			res.setHeader( 'Content-Type', 'application/json' );
 			res.status( 200 );
@@ -123,7 +123,7 @@ function initLoginRoutes( app ) {
 		watchlistfeed( req.params.lang, DEFAULT_PROJECT, req.params.ns, req.user, req.query ).then( callback );
 	} );
 
-	app.all( '/api/private/:lang/collection/:id/:action/:title?', ensureAuthenticated, function ( req, res ) {
+	app.all( '/api/:lang/private/collection/:id/:action/:title?', ensureAuthenticated, function ( req, res ) {
 		var id = parseInt( req.params.id, 10 ) || 0;
 		var action = req.params.action;
 		var lang = req.params.lang;
@@ -146,7 +146,7 @@ function initLoginRoutes( app ) {
 		} );
 	} );
 
-	app.get( '/api/private/watchlist/:lang/:title?', ensureAuthenticated, function ( req, res ) {
+	app.get( '/api/:lang/private/watchlist/:title?', ensureAuthenticated, function ( req, res ) {
 		var callback = function ( data ) {
 			res.setHeader( 'Content-Type', 'application/json' );
 			res.status( 200 );
@@ -215,7 +215,7 @@ function initGetMethods( app ) {
 		} );
 	} );
 
-	app.get( '/api/random/:lang/', ( req, res ) => {
+	app.get( '/api/:lang/random', ( req, res ) => {
 		return cachedResponse( res, null, function () {
 			var param,
 				params = {};
@@ -229,14 +229,14 @@ function initGetMethods( app ) {
 		} );
 	} );
 
-	app.get( '/api/categories/:lang/:title?/', ( req, res ) => {
+	app.get( '/api/:lang/categories/:title?/', ( req, res ) => {
 		return cachedResponse( res, null, function () {
 			var p = req.params;
 			return categories( p.lang, p.title, DEFAULT_PROJECT, req.query );
 		} );
 	} );
 
-	app.get( '/api/search/:lang/:term', ( req, res ) => {
+	app.get( '/api/:lang/search/:term', ( req, res ) => {
 		return cachedResponse( res, null, function () {
 			return search( req.params.lang, req.params.term, 0, DEFAULT_PROJECT );
 		} );
@@ -248,7 +248,7 @@ function initGetMethods( app ) {
 		} );
 	} );
 
-	app.get( '/api/nearby/:lang/:latitude,:longitude', ( req, res ) => {
+	app.get( '/api/:lang/nearby/:latitude,:longitude', ( req, res ) => {
 		return cachedResponse( res, req.url, function () {
 			return nearby( req.params.latitude, req.params.longitude, req.params.lang, 0, DEFAULT_PROJECT );
 		} );
@@ -299,7 +299,7 @@ function initGetMethods( app ) {
 		loadPage( req, res );
 	} );
 
-	app.get( '/api/visits/:lang/', ( req, res ) => {
+	app.get( '/api/:lang/visits', ( req, res ) => {
 		cachedResponse( res, req.url, function () {
 			return visits( req.params.lang, DEFAULT_PROJECT );
 		} );

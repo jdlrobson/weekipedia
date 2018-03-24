@@ -120,7 +120,11 @@ store.getLangProject = function () {
 };
 
 store.setProject = function ( project ) {
-	this.project = project;
+	if ( project ) {
+		this.project = project;
+	} else {
+		console.log( 'Attempt to set project as undefined' );
+	}
 };
 
 store.setLanguage = function ( langCode ) {

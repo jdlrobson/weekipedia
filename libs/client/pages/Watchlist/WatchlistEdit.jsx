@@ -15,7 +15,7 @@ export default class Thing extends React.Component {
 		return (
 			<CardListPage {...this.props}
 				emptyProps={emptyProps}
-				unordered="1" apiEndpoint={'/api/private/watchlist/' + this.props.lang} />
+				unordered="1" apiEndpoint={props.api.getEndpoint('private/watchlist')} />
 		);
 	}
 }

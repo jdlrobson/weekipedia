@@ -15,7 +15,7 @@ class CollectionOverlay extends React.Component {
 	}
 	componentDidMount() {
 		var self = this;
-		var endpoint = '/api/private/' + this.props.lang + '/collection/all/with/' + this.props.title;
+		var endpoint = this.props.api.getEndpoint('private/collection/all/with/' + this.props.title);
 		this.props.api.fetch( endpoint ).then( function ( data ) {
 			self.setState( data );
 		} );
@@ -27,7 +27,7 @@ class CollectionOverlay extends React.Component {
 
 		collections.forEach( function ( col ) {
 			if ( col.id === parseInt( id, 10 ) ) {
-				endpoint = '/api/private/' + props.lang + '/collection/' + id;
+				endpoint = 'private/collection/' + id;
 				endpoint += col.member ? '/remove/' : '/add/';
 				endpoint += encodeURIComponent( props.title );
 				props.store.setUserNotification( col.member ?
@@ -35,7 +35,7 @@ class CollectionOverlay extends React.Component {
 
 				// do it
 				col.member = !col.member;
-				props.api.post( endpoint ).then( function () {
+				props.api.post( props.api.getEndpoint( endpoint ) ).then( function () {
 					props.api.clearCache();
 				} );
 				props.api.clearCache();

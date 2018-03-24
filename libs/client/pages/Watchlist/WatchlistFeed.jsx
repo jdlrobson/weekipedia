@@ -12,7 +12,7 @@ export default class Thing extends React.Component {
 			msg: 'There are no pages with recent changes.',
 			image: ''
 		};
-		var endpoint = '/api/private/watchlist-feed/' + this.props.lang + '/';
+		var endpoint = 'private/watchlist-feed/';
 
 		if ( this.props.query && this.props.query.filter ) {
 			ns = this.props.query.filter;
@@ -23,7 +23,7 @@ export default class Thing extends React.Component {
 		}
 
 		return (
-			<CardListPage {...this.props} apiEndpoint={endpoint} emptyProps={emptyProps}
+			<CardListPage {...this.props} apiEndpoint={props.api.getEndpoint(endpoint)} emptyProps={emptyProps}
 				CardClass={CardDiff} isDiffCardList={true} />
 		);
 	}

@@ -47,7 +47,7 @@ class Page extends React.Component {
 		this.checkExpandedState();
 	}
 	componentWillReceiveProps( nextProps ) {
-		this.load( nextProps.title, nextProps.lang, nextProps.revision );
+		this.load( nextProps.title, nextProps.revision );
 	}
 	checkExpandedState() {
 		var expandQuery = this.props.query && this.props.query.expanded;
@@ -56,13 +56,12 @@ class Page extends React.Component {
 			this.setState( { isExpanded: true } );
 		}
 	}
-	load( title, lang, revision ) {
+	load( title, revision ) {
 		var
 			rev = revision || this.props.revision,
 			self = this;
 
 		title = title || this.props.title;
-		lang = lang || this.props.lang;
 
 		this.checkExpandedState();
 		this.props.api.getPage( title, null, rev ).then( function ( data ) {

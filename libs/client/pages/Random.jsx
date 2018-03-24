@@ -8,8 +8,9 @@ class Random extends React.Component {
 		super();
 	}
 	render() {
+		var endpoint = this.props.api.getEndpoint( 'random' );
 		return (
-			<CardListPage {...this.props} unordered="1" apiEndpoint={'/api/random/' + this.props.lang}
+			<CardListPage {...this.props} unordered="1" apiEndpoint={endpoint}
 				title='Random' tagline="Random pages from across the wiki" />
 		);
 	}

@@ -79,7 +79,6 @@ class WeekipediaCardList extends React.Component {
 		var props = this.props;
 		var onEmpty = props.onEmpty;
 		var cardListProps = {
-			lang: props.lang,
 			msg: props.msg,
 			collection: props.collection,
 			unordered: props.unordered,

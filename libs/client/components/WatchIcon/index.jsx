@@ -29,7 +29,7 @@ class WatchIcon extends React.Component {
 		var props = this.props;
 		var title = props.title;
 		var self = this;
-		var endpoint = '/api/private/' + this.props.lang + '/collection/all/with/' + this.props.title;
+		var endpoint = props.api.getEndpoint('private/collection/all/with/' + this.props.title);
 		this.props.api.fetch( endpoint ).then( function ( data ) {
 			var isWatched = false;
 			var collections = data.collections;
@@ -47,12 +47,12 @@ class WatchIcon extends React.Component {
 
 		ev.stopPropagation();
 		this.setState( { isWatched: !state.isWatched } );
-		endpoint = '/api/private/' + props.lang + '/collection/' + props.collection;
+		endpoint = 'private/collection/' + props.collection;
 		endpoint += state.isWatched ? '/remove/' : '/add/';
 		endpoint += encodeURIComponent( props.title );
 
 		// do it
-		props.api.post( endpoint );
+		props.api.post( props.api.getEndpoint(endpoint) );
 		props.api.clearCache();
 		props.store.setUserNotification( state.isWatched ?
 			'Page removed from watchlist.' : 'Page added to watchlist.' );
