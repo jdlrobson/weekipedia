@@ -39,7 +39,7 @@ export default class CollectionEditorOverlay extends React.Component {
 	loadCollection( props ) {
 		var self = this;
 		var api = props.api;
-		var endpoint = api.getEndpoint('collection/by/' + props.username + '/' + props.id);
+		var endpoint = api.getEndpoint( 'collection/by/' + props.username + '/' + props.id );
 		props.api.fetch( endpoint ).then( function ( data ) {
 			var thumbnail = data.thumbnail;
 			var thumbnails = [];
@@ -72,7 +72,7 @@ export default class CollectionEditorOverlay extends React.Component {
 	}
 	save() {
 		var props = this.props;
-		var endpoint = props.api.getEndpoint('private/collection');
+		var endpoint = props.api.getEndpoint( 'private/collection' );
 		var self = this;
 
 		endpoint += props.id ? props.id + '/edit' : '_/create';

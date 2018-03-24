@@ -49,7 +49,7 @@ class SearchOverlay extends Component {
 				project = 'wiktionary';
 				term = lowerTerm.split( ':' )[ 1 ];
 			}
-			endpoint = api.getEndpoint('search/' + encodeURIComponent( term ));
+			endpoint = api.getEndpoint( 'search/' + encodeURIComponent( term ) );
 			this.showResults( endpoint, project );
 			if ( this.props.onSearch ) {
 				this.props.onSearch( term );

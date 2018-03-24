@@ -19,7 +19,7 @@ export default class Search extends React.Component {
 					onClick={props.onClickLink}
 					className={proj === project ? 'active' : ''}
 					title={'Search ' + project + ' for ' + term}
-					href={store.getLocalUrl('Special:Search/' + term)}>{project}</a>;
+					href={store.getLocalUrl( 'Special:Search/' + term )}>{project}</a>;
 			} ) : [];
 	}
 	render() {

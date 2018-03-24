@@ -63,14 +63,14 @@ export default class Nearby extends React.Component {
 		if ( this.state.error ) {
 			return ( <Content><ErrorBox msg="Something went wrong when trying to get your location."></ErrorBox></Content> );
 		} else if ( lat !== undefined ) {
-			var endpoint = props.api.getEndpont('nearby/' + lat + ',' + lng);
+			var endpoint = props.api.getEndpoint( 'nearby/' + lat + ',' + lng );
 
 			// Each degree of latitude is approximately 69 miles
 			var north = lat + 1 / 69;
 			var south = lat - 1 / 69;
 			var east = lng + 1 / 69;
 			var west = lng - 1 / 69;
-			var baseUrl = store.getLocalUrl('Special:Nearby');
+			var baseUrl = store.getLocalUrl( 'Special:Nearby' );
 
 			var emptyProps = {
 				msg: 'There is nothing near you.'

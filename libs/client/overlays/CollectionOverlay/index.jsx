@@ -15,7 +15,7 @@ class CollectionOverlay extends React.Component {
 	}
 	componentDidMount() {
 		var self = this;
-		var endpoint = this.props.api.getEndpoint('private/collection/all/with/' + this.props.title);
+		var endpoint = this.props.api.getEndpoint( 'private/collection/all/with/' + this.props.title );
 		this.props.api.fetch( endpoint ).then( function ( data ) {
 			self.setState( data );
 		} );

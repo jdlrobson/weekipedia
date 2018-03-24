@@ -1,3 +1,4 @@
+/* global console */
 import React from 'react';
 import { observable } from 'mobx';
 
@@ -123,7 +124,9 @@ store.setProject = function ( project ) {
 	if ( project ) {
 		this.project = project;
 	} else {
+		/* eslint-disable no-console */
 		console.log( 'Attempt to set project as undefined' );
+		/* eslint-enable no-console */
 	}
 };
 

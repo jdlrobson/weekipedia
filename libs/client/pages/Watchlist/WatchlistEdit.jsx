@@ -5,6 +5,7 @@ import CardListPage from './../CardListPage';
 // Pages
 export default class Thing extends React.Component {
 	render() {
+		var props = this.props;
 		var emptyProps = {
 			ctaMessage: 'Back home',
 			ctaLink: '/',
@@ -15,7 +16,7 @@ export default class Thing extends React.Component {
 		return (
 			<CardListPage {...this.props}
 				emptyProps={emptyProps}
-				unordered="1" apiEndpoint={props.api.getEndpoint('private/watchlist')} />
+				unordered="1" apiEndpoint={props.api.getEndpoint( 'private/watchlist' )} />
 		);
 	}
 }

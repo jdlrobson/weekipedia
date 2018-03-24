@@ -8,6 +8,7 @@ import CardListPage from './../CardListPage';
 export default class Thing extends React.Component {
 	render() {
 		var ns;
+		var props = this.props;
 		var emptyProps = {
 			msg: 'There are no pages with recent changes.',
 			image: ''
@@ -23,7 +24,7 @@ export default class Thing extends React.Component {
 		}
 
 		return (
-			<CardListPage {...this.props} apiEndpoint={props.api.getEndpoint(endpoint)} emptyProps={emptyProps}
+			<CardListPage {...props} apiEndpoint={props.api.getEndpoint( endpoint )} emptyProps={emptyProps}
 				CardClass={CardDiff} isDiffCardList={true} />
 		);
 	}

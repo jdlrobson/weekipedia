@@ -20,7 +20,7 @@ export default class Categories extends React.Component {
 		this.load( props );
 	}
 	load( props ) {
-		var endpoint = props.getEndpoint('categories')
+		var endpoint = props.getEndpoint( 'categories' );
 		if ( props.params ) {
 			endpoint += props.params;
 		}

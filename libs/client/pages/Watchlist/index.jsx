@@ -14,13 +14,13 @@ export default class Thing extends React.Component {
 			key="watchlist-list-tab"
 			className={isEditWatchlist ? 'active' : '' }
 			onClick={props.onClickInternalLink}
-			href={store.getLocalUrl('Special:EditWatchlist')}>List</a>;
+			href={store.getLocalUrl( 'Special:EditWatchlist' )}>List</a>;
 
 		var modLink = <a
 			key="watchlist-modifier-tab"
 			className={isEditWatchlist ? '' : 'active' }
 			onClick={props.onClickInternalLink}
-			href={store.getLocalUrl('Special:Watchlist')}>Modified</a>;
+			href={store.getLocalUrl( 'Special:Watchlist' )}>Modified</a>;
 
 		var newProps = Object.assign( {}, props, {
 			tabs: [ editLink, modLink ],
