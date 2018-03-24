@@ -1,49 +1,57 @@
 import React from 'react';
+import { observer, inject } from 'mobx-react';
 
 import CardListPage from './CardListPage';
 
-// Pages
-export default class Search extends React.Component {
-	getTerm() {
-		var props = this.props;
-		return props.query.search ? props.query.search : props.params;
-	}
-	getTabs() {
-		var props = this.props;
-		var store = props.store;
-		var proj = store.project;
-		var term = this.getTerm();
-		return store.isFeatureEnabled( 'allowForeignProjects' ) ?
-			store.projects.map( function ( project, i ) {
-				return <a key={'search-tab' + i}
-					onClick={props.onClickLink}
-					className={proj === project ? 'active' : ''}
-					title={'Search ' + project + ' for ' + term}
-					href={store.getLocalUrl( 'Special:Search/' + term )}>{project}</a>;
-			} ) : [];
-	}
+class Search extends React.Component {
 	render() {
 		var emptyProps = {
 			msg: 'No pages matched your search query for this project. Why not try one of our other projects?'
 		};
-		var props = this.props;
-		var api = props.api;
-		var store = props.store;
-		var term = this.getTerm();
-		var endpoint = api.getEndpoint( 'search-full/' + encodeURIComponent( term ) );
-		var suffix = store.isFeatureEnabled( 'allowForeignProjects' ) ?
-			[ ' on ', <strong key="search-strong-project">{props.project}</strong> ] : '';
-		var termUrl = store.getLocalUrl( term );
-		var tagline = <p>Showing you all search results for <strong><a href={termUrl}>{decodeURIComponent( term )}</a></strong>{suffix}</p>;
 
 		// mw-search-results class added for consistency with MediaWiki
 		return (
-			<CardListPage {...this.props} apiEndpoint={endpoint}
+			<CardListPage {...this.props}
 				className="mw-search-results"
 				emptyProps={emptyProps}
-				tabs={this.getTabs()}
-				tagline={tagline}
 				title='Search' />
 		);
 	}
 }
+
+Search.defaultProps = {
+	otherProjects: []
+};
+
+export default inject( ( { api, store }, props ) => {
+	const term = props.query.search ? props.query.search : props.params;
+	const proj = store.project;
+	const enabled = store.isFeatureEnabled( 'allowForeignProjects' );
+
+	let tabs = [];
+
+	if ( enabled ) {
+		tabs = store.projects.map( function ( project, i ) {
+			return <a key={'search-tab' + i}
+				onClick={props.onClickLink}
+				className={proj === project ? 'active' : ''}
+				title={'Search ' + project + ' for ' + term}
+				href={store.getForeignUrl( 'Special:Search/' + term, store.lang, project )}>{project}</a>;
+		} );
+	}
+
+	const apiEndpoint = api.getEndpoint( 'search-full/' + encodeURIComponent( term ) );
+	const termUrl = store.getLocalUrl( term );
+	const suffix = enabled ?
+		[ ' on ', <strong key="search-strong-project">{props.project}</strong> ] : '';
+	const tagline = <p>Showing you all search results for <strong>
+		<a href={termUrl}>{decodeURIComponent( term )}</a></strong>{suffix}</p>;
+
+	return {
+		tagline,
+		tabs,
+		apiEndpoint
+	};
+} )(
+	observer( Search )
+);

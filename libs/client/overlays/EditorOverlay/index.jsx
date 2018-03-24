@@ -1,4 +1,5 @@
 import React from 'react';
+import { observer, inject } from 'mobx-react';
 import { Button, Icon, Input, IntermediateState, Panel,
 	TruncatedText, Overlay, Header } from 'wikipedia-react-components';
 
@@ -70,10 +71,10 @@ class EditorOverlay extends React.Component {
 		this.setState( { step: SAVE_STEP } );
 		props.api.edit( title, props.section, state.text || props.wikitext,
 			state.summary || props.editSummary ).then( function ( resp ) {
-				props.onEditSave( resp.edit.newrevid );
-			} ).catch( function () {
-				self.showPreview();
-			} );
+			props.onEditSave( resp.edit.newrevid );
+		} ).catch( function () {
+			self.showPreview();
+		} );
 	}
 	loadWikiText() {
 		var self = this,
@@ -184,8 +185,11 @@ EditorOverlay.defaultProps = {
 	placeholder: 'A new page begins here. Start typing!',
 	emptyMessage: '',
 	loadingMessage: 'Searching',
-	api: null,
 	lang: 'en'
 };
 
-export default EditorOverlay;
+export default inject( ( { api } ) => (
+	{ api }
+) )(
+	observer( EditorOverlay )
+);

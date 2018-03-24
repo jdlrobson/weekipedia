@@ -1,4 +1,5 @@
 import React from 'react';
+import { observer, inject } from 'mobx-react';
 import { Header, Overlay,
 	Icon, IntermediateState, Panel } from 'wikipedia-react-components';
 
@@ -14,15 +15,7 @@ class IssuesOverlay extends React.Component {
 		};
 	}
 	componentDidMount() {
-		var self = this;
-		var api = this.props.api;
-		api.getPage( this.props.title ).then( function ( page ) {
-			if ( page.lead.issues ) {
-				self.setState( { issues: page.lead.issues } );
-			} else {
-				self.setState( { error: true } );
-			}
-		} );
+		this.props.getAsyncState().then( ( state ) => this.setState( state ) );
 	}
 	render() {
 		var body;
@@ -31,9 +24,9 @@ class IssuesOverlay extends React.Component {
 		if ( this.state.error ) {
 			body = <Panel>This page has no issues.</Panel>;
 		} else if ( issues ) {
-			body = issues.map( function ( issue ) {
+			body = issues.map( function ( issue, i ) {
 				return (
-					<Panel>
+					<Panel key={'issue-' + i}>
 						<Icon glyph="issue" className="issue-notice"/>
 						<div dangerouslySetInnerHTML={{ __html: issue.text }} />
 					</Panel>
@@ -53,4 +46,16 @@ class IssuesOverlay extends React.Component {
 	}
 }
 
-export default IssuesOverlay;
+export default inject( ( { api }, { title } ) => {
+	return {
+		getAsyncState: () => {
+			return api.getPage( title ).then( function ( page ) {
+				if ( page.lead.issues ) {
+					return { issues: page.lead.issues };
+				} else {
+					return { error: true };
+				}
+			} );
+		}
+	};
+} )( observer( IssuesOverlay ) );

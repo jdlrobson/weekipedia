@@ -1,4 +1,5 @@
 import React from 'react';
+import { observer, inject } from 'mobx-react';
 
 import { ErrorBox, Icon, IntermediateState, Overlay } from 'wikipedia-react-components';
 
@@ -14,20 +15,20 @@ class ReferenceDrawer extends React.Component {
 			text: null
 		};
 	}
-	loadReference( refId ) {
-		var self = this;
-		this.props.api.getReference( this.props.title, refId )
-			.then( function ( refHtml ) {
-				self.setState( { text: refHtml, isLoading: false } );
-			} ).catch( function () {
-				self.setState( { isError: true } );
-			} );
+	loadReference() {
+		this.props.getAsyncState().then( ( state ) =>
+			this.setState(
+				Object.assign( {}, state, { isLoading: false } )
+			)
+		).catch( () => {
+			this.setState( { isError: true } );
+		} );
 	}
 	componentDidMount() {
-		this.loadReference( this.props.refId );
+		this.loadReference();
 	}
-	componentWillReceiveProps( nextProps ) {
-		this.loadReference( nextProps.refId );
+	componentWillReceiveProps() {
+		this.loadReference();
 	}
 	render() {
 		var children = [
@@ -60,4 +61,13 @@ class ReferenceDrawer extends React.Component {
 	}
 }
 
-export default ReferenceDrawer;
+export default inject( function ( { api }, { title, refId } ) {
+	return {
+		getAsyncState: function () {
+			return api.getReference( title, refId )
+				.then( function ( text ) {
+					return { text };
+				} );
+		}
+	};
+} )( observer( ReferenceDrawer ) );

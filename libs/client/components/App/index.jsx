@@ -14,10 +14,6 @@ import initOffline from './../../offline';
 
 import SVGFilter from './SVGFilter.jsx';
 
-const passPropsToChildren = ( children, propsToSend ) => {
-	return React.Children.map( children, ( child ) => React.cloneElement( child, propsToSend ) );
-};
-
 const mergeFunctions = ( actions ) => {
 	return function () {
 		actions.forEach( ( action ) => {
@@ -92,8 +88,8 @@ class App extends React.Component {
 			navigationClasses += store.isOverlayFullScreen ? 'overlay-enabled' : '';
 		}
 
-		if ( store.notification ) {
-			toast = <Toast>{store.notification}</Toast>;
+		if ( props.notification ) {
+			toast = <Toast>{props.notification}</Toast>;
 		}
 
 		if ( store.session ) {
@@ -134,7 +130,7 @@ class App extends React.Component {
 					{
 						store.devTools && ( <DevTools /> )
 					}
-					{passPropsToChildren( page, { store, onClickInternalLink } )}
+					{page}
 					{shield}
 				</div>
 				{ overlay }
@@ -151,10 +147,11 @@ App.defaultProps = {
 	isOverlayEnabled: false
 };
 
-export default inject( function ( stores ) {
+export default inject( function ( { onClickInternalLink, api, store } ) {
 	return {
-		onClickInternalLink: stores.onClickInternalLink,
-		api: stores.api,
-		store: stores.store
+		onClickInternalLink,
+		notification: store.notification,
+		api,
+		store
 	};
 } )( observer( App ) );

@@ -1,5 +1,4 @@
 import React from 'react';
-
 import CtaIcon from './../CtaIcon';
 
 import './icons.less';
@@ -12,7 +11,6 @@ export default class EditIcon extends React.Component {
 			glyph: 'edit',
 			label: 'Edit',
 			href: '#',
-			store: props.store,
 			className: 'component-edit-icon',
 			onClick: function () {
 				props.router.navigateTo( '#/editor/' + props.section );

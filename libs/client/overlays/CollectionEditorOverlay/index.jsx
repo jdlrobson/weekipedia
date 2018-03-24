@@ -1,4 +1,5 @@
 import React from 'react';
+import { observer, inject } from 'mobx-react';
 import { Button, Input, IntermediateState } from 'wikipedia-react-components';
 
 import CollectionCard from './../../components/CollectionCard';
@@ -7,7 +8,7 @@ import Overlay from './../Overlay';
 
 import './styles.less';
 
-export default class CollectionEditorOverlay extends React.Component {
+class CollectionEditorOverlay extends React.Component {
 	constructor() {
 		super();
 		this.state = {
@@ -71,27 +72,12 @@ export default class CollectionEditorOverlay extends React.Component {
 		this.props.onExit();
 	}
 	save() {
-		var props = this.props;
-		var endpoint = props.api.getEndpoint( 'private/collection' );
-		var self = this;
-
-		endpoint += props.id ? props.id + '/edit' : '_/create';
+		const self = this;
+		const title = this.props.title;
+		const thumb = this.state.thumbnail ? this.state.thumbnail.title : null;
 		this.setState( { waiting: true } );
-		props.api.post( endpoint, {
-			title: this.state.title,
-			image: this.state.thumbnail ? this.state.thumbnail.title : null,
-			description: this.state.description
-		} ).then( function ( json ) {
-			if ( json && json.edit && json.edit.result === 'Success' ) {
-				// Annoyingly this timeout doesn't always seem to be enough.
-				setTimeout( function () {
-					props.api.clearCache();
-					props.onCollectionSave( props.id );
-				}, 5000 );
-			} else {
-				props.store.setUserNotification( 'An error occurred while saving the collection' );
-				self.setState( { waiting: false } );
-			}
+		this.props.onSaveCollection( title, thumb, this.state.description ).then( () => {
+			self.setState( { waiting: false } );
 		} );
 	}
 	updateThumbnail() {
@@ -129,3 +115,30 @@ export default class CollectionEditorOverlay extends React.Component {
 		);
 	}
 }
+
+export default inject( ( { api, store }, { id, onCollectionSave } ) => (
+	{
+		api,
+		onSaveCollection: function ( title, thumbnail, description ) {
+			let path = 'private/collection';
+			path += id ? '/' + id + '/edit' : '_/create';
+			return api.post( api.getEndpoint( path ), {
+				title: title,
+				image: thumbnail,
+				description
+			} ).then( function ( json ) {
+				if ( json && json.edit && json.edit.result === 'Success' ) {
+					// Annoyingly this timeout doesn't always seem to be enough.
+					setTimeout( function () {
+						api.clearCache();
+						onCollectionSave( id );
+					}, 5000 );
+				} else {
+					store.setUserNotification( 'An error occurred while saving the collection' );
+				}
+			} );
+		}
+	}
+) )(
+	observer( CollectionEditorOverlay )
+);

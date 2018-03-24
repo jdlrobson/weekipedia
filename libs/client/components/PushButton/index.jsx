@@ -2,6 +2,7 @@
 /* eslint-disable no-throw-literal */
 /* eslint-disable no-use-before-define */
 import React from 'react';
+import { observer, inject } from 'mobx-react';
 import { Button, ErrorBox, Panel } from 'wikipedia-react-components';
 import './styles.less';
 
@@ -71,14 +72,11 @@ class PushButton extends React.Component {
 	}
 	doAction( action ) {
 		var self = this;
+		var props = this.props;
 		var subscription = this.state.subscription;
 		var id = getSubscriptionId( subscription );
 		var provider = getPushProvider( subscription.endpoint );
-		this.props.api.post( '/api/web-push/' + action, {
-			token: id,
-			browser: provider,
-			feature: this.props.serviceName
-		} ).then( function () {
+		props.onAction( action, id, provider, props.serviceName ).then( function () {
 			self.setState( { isEnabled: action === 'subscribe' } );
 		} ).catch( function ( e ) {
 			self.setState( { isError: true, isSubscriptionError: true, errorMsg: e } );
@@ -138,9 +136,20 @@ class PushButton extends React.Component {
 }
 
 PushButton.defaultProps = {
-	api: null,
 	serviceName: 'trending',
 	serviceWorker: '/push-bundle.js'
 };
 
-export default PushButton;
+export default inject( ( { api } ) => (
+	{
+		onAction: ( action, token, provider, feature ) => {
+			return api.post( '/api/web-push/' + action, {
+				token,
+				browser: provider,
+				feature
+			} );
+		}
+	}
+) )(
+	observer( PushButton )
+);

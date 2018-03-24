@@ -40,9 +40,7 @@ store.showOverlay = function ( overlay, fullScreen = true ) {
 	// In future we won't do this as part of this method.
 	this.overlay = false;
 	this.isOverlayEnabled = false;
-	this.overlay = React.cloneElement( overlay, {
-		store: this
-	} );
+	this.overlay = React.cloneElement( overlay );
 	this.isOverlayEnabled = true;
 	this.isOverlayFullScreen = fullScreen;
 };
@@ -131,8 +129,14 @@ store.setProject = function ( project ) {
 };
 
 store.setLanguage = function ( langCode ) {
-	this.lang = langCode;
-	this.isRTL = isRTL( langCode );
+	if ( langCode ) {
+		this.lang = langCode;
+		this.isRTL = isRTL( langCode );
+	} else {
+		/* eslint-disable no-console */
+		console.log( 'Attempt to set lang as undefined' );
+		/* eslint-enable no-console */
+	}
 };
 
 store.setPage = function ( title, langCode, project, page ) {
@@ -144,8 +148,8 @@ store.setPage = function ( title, langCode, project, page ) {
 	this.pageviews++;
 };
 
-store.getForeignUrl = function ( title, lang ) {
-	var project = this.project;
+store.getForeignUrl = function ( title, lang, project ) {
+	project = project || this.project;
 	var source = lang + '.' + project;
 	return '/' + source + '/' + title;
 };

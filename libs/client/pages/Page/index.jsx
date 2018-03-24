@@ -1,4 +1,5 @@
 import React from 'react';
+import { observer, inject } from 'mobx-react';
 
 import { Button, ErrorBox, IntermediateState, Content } from 'wikipedia-react-components';
 import LastModifiedBar from './LastModifiedBar';
@@ -196,9 +197,6 @@ class Page extends React.Component {
 		}
 	}
 }
-Page.defaultProps = {
-	api: null,
-	lang: 'en'
-};
 
-export default Page;
+export default inject( ( { api, store, onClickInternalLink } ) => (
+	{ api, store, onClickInternalLink } ) )( observer( Page ) );

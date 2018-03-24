@@ -1,4 +1,5 @@
 import React from 'react';
+import { observer, inject } from 'mobx-react';
 import { Button, HorizontalList, IntermediateState, TruncatedText, Icon,
 	ErrorBox } from 'wikipedia-react-components';
 
@@ -6,7 +7,7 @@ import './styles.less';
 
 import Overlay from './../Overlay';
 
-export default class Thing extends React.Component {
+class ImageOverlay extends React.Component {
 	constructor() {
 		super();
 		this.state = {
@@ -20,14 +21,14 @@ export default class Thing extends React.Component {
 		var self = this;
 		var w = this.state.width;
 		var props = this.props;
-		var route = props.api.getMwEndpoint();
+		var api = props.api;
 		if ( w > 600 ) {
 			w = 600;
 		}
 
 		this.loadGallery().then( ( media ) => {
 			self.setState( { media: media } );
-			props.api.fetch( route, {
+			api.fetch( api.getMwEndpoint(), {
 				query: {
 					titles: media.join( '|' ),
 					prop: 'imageinfo',
@@ -100,7 +101,6 @@ export default class Thing extends React.Component {
 		var content, footer, meta,
 			leftGutter, rightGutter,
 			props = this.props,
-			store = props.store,
 			licenseUrl = '', licenseName = '',
 			description = '', artist = '',
 			img = this.state.img;
@@ -122,7 +122,7 @@ export default class Thing extends React.Component {
 
 			footer = (
 				<div className="details">
-					<Button isPrimary="1" label="Details" href={store.getLocalUrl( 'File:' + props.image )}/>
+					<Button isPrimary="1" label="Details" href={props.fileUrl}/>
 					<TruncatedText><p dangerouslySetInnerHTML={{ __html: description }}></p></TruncatedText>
 					<HorizontalList isSeparated="1" className="license">
 						<span dangerouslySetInnerHTML= {{ __html: artist }}></span>
@@ -161,3 +161,12 @@ export default class Thing extends React.Component {
 		);
 	}
 }
+
+export default inject( ( { api, store }, { image } ) => (
+	{
+		fileUrl: store.getLocalUrl( 'File:' + image ),
+		api
+	}
+) )(
+	observer( ImageOverlay )
+);

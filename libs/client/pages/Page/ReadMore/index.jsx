@@ -1,4 +1,5 @@
 import React from 'react';
+import { observer, inject } from 'mobx-react';
 
 import CardList from './../../../components/CardList';
 
@@ -14,8 +15,6 @@ class ReadMore extends React.Component {
 	}
 	render() {
 		var props = this.props;
-		var endpoint = props.api.getEndpoint( 'page/related/' +
-			encodeURIComponent( props.title.replace( / /g, '_' ) ), true );
 
 		if ( this.state.isEmpty ) {
 			return (
@@ -25,15 +24,23 @@ class ReadMore extends React.Component {
 			return (
 				<div className="container-read-more">
 					<h2>Read more</h2>
-					<CardList unordered="1" apiEndpoint={endpoint} api={this.props.api}
+					<CardList unordered="1"
 						onEmpty={this.onEmpty}
 						infiniteScroll={false}
-						onCardClick={props.onCardClick}
-						store={props.store} />
+						apiEndpoint={props.apiEndpoint}
+						onCardClick={props.onCardClick} />
 				</div>
 			);
 		}
 	}
 }
 
-export default ReadMore;
+export default inject( ( { api }, props ) => {
+	const apiEndpoint = api.getEndpoint( 'page/related/' +
+		encodeURIComponent( props.title.replace( / /g, '_' ) ), true );
+	return {
+		apiEndpoint
+	};
+} )(
+	observer( ReadMore )
+);

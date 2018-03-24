@@ -1,11 +1,11 @@
 import React from 'react';
+import { observer, inject } from 'mobx-react';
 import { ErrorBox, HorizontalList, IntermediateState, Content } from 'wikipedia-react-components';
 
 import Article from './Article';
 import CardListPage from './CardListPage';
 
-// Pages
-export default class Nearby extends React.Component {
+class Nearby extends React.Component {
 	constructor() {
 		super();
 		this.state = {
@@ -49,16 +49,15 @@ export default class Nearby extends React.Component {
 				error: err
 			} );
 		},
-			{
-				timeout: 10000,
-				enableHighAccuracy: true
-			} );
+		{
+			timeout: 10000,
+			enableHighAccuracy: true
+		} );
 	}
 	render() {
 		var lat = this.state.latitude;
 		var lng = this.state.longitude;
 		var props = this.props;
-		var store = props.store;
 
 		if ( this.state.error ) {
 			return ( <Content><ErrorBox msg="Something went wrong when trying to get your location."></ErrorBox></Content> );
@@ -70,7 +69,7 @@ export default class Nearby extends React.Component {
 			var south = lat - 1 / 69;
 			var east = lng + 1 / 69;
 			var west = lng - 1 / 69;
-			var baseUrl = store.getLocalUrl( 'Special:Nearby' );
+			var baseUrl = props.baseUrl;
 
 			var emptyProps = {
 				msg: 'There is nothing near you.'
@@ -102,3 +101,13 @@ export default class Nearby extends React.Component {
 		}
 	}
 }
+
+export default inject( ( { store, api, onClickInternalLink } ) => {
+	return {
+		onClickInternalLink,
+		baseUrl: store.getLocalUrl( 'Special:Nearby' ),
+		api
+	};
+} )(
+	observer( Nearby )
+);

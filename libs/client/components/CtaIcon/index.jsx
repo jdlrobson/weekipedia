@@ -1,19 +1,19 @@
 import React from 'react';
+import { observer, inject } from 'mobx-react';
 
 import { Icon } from 'wikipedia-react-components';
 
 import CtaDrawer from './../../overlays/CtaDrawer';
 
-export default class CtaIcon extends React.Component {
+class CtaIcon extends React.Component {
 	dispatch( ev ) {
 		var props = this.props;
-		var store = props.store;
 		ev.stopPropagation();
 		ev.preventDefault();
-		if ( store.session ) {
+		if ( !props.showCta ) {
 			props.onClick( ev );
 		} else {
-			store.showOverlay( <CtaDrawer {...props} message={props.ctaMsg} />, false );
+			props.showCta( props );
 		}
 	}
 	render() {
@@ -22,3 +22,23 @@ export default class CtaIcon extends React.Component {
 		);
 	}
 }
+
+export default inject( ( { store } ) => {
+	if ( !store.session ) {
+		return {
+			showCta: ( props ) => {
+				const loginUrl = store.getLocalUrl( 'Special:UserLogin', null, {
+					returnto: store.title
+				} );
+				store.showOverlay(
+					<CtaDrawer {...props} message={props.ctaMsg}
+						loginUrl={loginUrl} />, false
+				);
+			}
+		};
+	} else {
+		return {};
+	}
+} )(
+	observer( CtaIcon )
+);

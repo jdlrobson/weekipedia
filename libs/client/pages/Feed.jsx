@@ -1,4 +1,5 @@
 import React from 'react';
+import { observer, inject } from 'mobx-react';
 
 import TrendingCard from './../components/TrendingCard';
 import PushButton from './../components/PushButton';
@@ -9,8 +10,7 @@ const HALF_LIFE_HOURS = '3';
 const HALF_LIFE_DAYS = '24';
 const HALF_LIFE_WEEKS = '84';
 
-// Pages
-export default class Feed extends React.Component {
+class Feed extends React.Component {
 	render() {
 		// show intermediate state if still loading, otherwise show list
 		var push;
@@ -61,7 +61,7 @@ export default class Feed extends React.Component {
 		}
 
 		push = (
-			<PushButton api={this.props.api} key="home-push" />
+			<PushButton key="home-push" />
 		);
 
 		return (
@@ -76,3 +76,11 @@ Feed.defaultProps = {
 	params: '',
 	halflife: HALF_LIFE_DAYS
 };
+
+export default inject( ( { onClickInternalLink } ) => {
+	return {
+		onClickInternalLink
+	};
+} )(
+	observer( Feed )
+);

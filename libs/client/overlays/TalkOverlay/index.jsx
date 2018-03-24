@@ -1,4 +1,5 @@
 import React from 'react';
+import { observer, inject } from 'mobx-react';
 import { Button, ErrorBox, Icon, Input, Content,
 	IntermediateState, LinkList, Panel, TruncatedText } from 'wikipedia-react-components';
 
@@ -10,20 +11,21 @@ import './styles.less';
 
 import withInterAppLinks from './../../pages/withInterAppLinks';
 
-export default class Thing extends React.Component {
+function getTalkPageTitle( title ) {
+	if ( title.indexOf( ':' ) === -1 ) {
+		return 'Talk:' + title;
+	} else {
+		return title.replace( ':', ' talk:' );
+	}
+}
+
+class TalkOverlay extends React.Component {
 	constructor() {
 		super();
 		this.state = {
 			indent: 2,
 			isLoading: true
 		};
-	}
-	getTalkPageTitle() {
-		if ( this.props.title.indexOf( ':' ) === -1 ) {
-			return 'Talk:' + this.props.title;
-		} else {
-			return this.props.title.replace( ':', ' talk:' );
-		}
 	}
 	componentWillReceiveProps() {
 		this.loadTopics();
@@ -34,18 +36,10 @@ export default class Thing extends React.Component {
 		window.scrollTo( 0, 0 );
 	}
 	loadTopics() {
-		var self = this;
 		var props = this.props;
-
-		props.api.getPage( this.getTalkPageTitle() ).then( function ( data ) {
-			self.setState( {
-				isLoading: false,
-				lead: data.lead,
-				sections: data.remaining.sections
-			} );
-		} ).catch( function () {
-			self.setState( { isLoading: false } );
-		} );
+		var title = getTalkPageTitle( props.title );
+		props.loadTopics( title ).then( ( state ) => this.setState( state ) )
+			.catch( ()=>this.setState( { isLoading: false } ) );
 	}
 	goBack() {
 		window.history.back();
@@ -55,17 +49,16 @@ export default class Thing extends React.Component {
 		var props = this.props;
 		var indent = this.state.indent;
 		var hash = window.location.hash;
+		var title = getTalkPageTitle( props.title );
+		var text = '\n\n' + Array( indent + 1 ).join( ':' ) + this.state.replyBody;
 		this.setState( { isLoading: true, action: 'Saving reply' } );
-		this.props.api.edit( this.getTalkPageTitle(),
-			props.section, '\n\n' + Array( indent + 1 ).join( ':' ) + this.state.replyBody, 'reply to topic', true
-		).then( function () {
+		props.saveReply( title, props.section, text ).then( function () {
 			self.setState( {
 				isLoading: true,
 				action: undefined,
 				lead: undefined,
 				sections: undefined
 			} );
-			props.store.setUserNotification( 'Your reply was added!' );
 			// hack to force a re-render
 			history.back();
 			setTimeout( function () {
@@ -76,11 +69,10 @@ export default class Thing extends React.Component {
 	saveTopic() {
 		var self = this;
 		var props = this.props;
+		var title = getTalkPageTitle( props.title );
 		var text = '==' + this.state.subject + '==\n\n' + this.state.body;
 		this.setState( { isLoading: true, action: 'Adding new topic' } );
-		this.props.api.edit( this.getTalkPageTitle(),
-			'new', text, 'Add topic'
-		).then( function () {
+		props.saveTopic( title, text ).then( function () {
 			self.setState( {
 				isLoading: true,
 				action: undefined,
@@ -103,7 +95,7 @@ export default class Thing extends React.Component {
 		var overlayProps, content, licenseText, primaryIcon, secondaryIcon, section,
 			heading = 'Talk',
 			props = this.props,
-			sections = this.state.sections,
+			sections = this.state.sections || [],
 			license = props.siteinfo.license,
 			SectionContentWithInterAppLinks = withInterAppLinks(
 				SectionContent, props
@@ -169,10 +161,13 @@ export default class Thing extends React.Component {
 				content = <ErrorBox msg="Unable to load discussion" />;
 			}
 		} else {
+			const msg = sections.length > 0 ? 'The following conversations are currently active' :
+				'There are no active conversations.';
+
 			secondaryIcon = addDiscussionBtn;
 			content = [
 				<Panel isHeading={true} key="active-header-panel">
-          The following conversations are currently active
+					{msg}
 				</Panel>
 			].concat(
 				<LinkList className="scrollable" key="talk-topics-list">
@@ -204,3 +199,29 @@ export default class Thing extends React.Component {
 		);
 	}
 }
+
+export default inject( function ( { store, api } ) {
+	return {
+		loadTopics: function ( title ) {
+			return api.getPage( title ).then( function ( data ) {
+				return {
+					isLoading: false,
+					lead: data.lead,
+					sections: data.remaining.sections || []
+				};
+			} );
+		},
+		saveTopic: function ( title, text ) {
+			return api.edit( title,
+				'new', text, 'Add topic'
+			);
+		},
+		saveReply: function ( title, section, text ) {
+			return api.edit( title,
+				section, text, 'reply to topic', true
+			).then( () => {
+				store.setUserNotification( 'Your reply was added!' );
+			} );
+		}
+	};
+} )( observer( TalkOverlay ) );

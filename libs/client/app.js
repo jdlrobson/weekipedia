@@ -23,7 +23,6 @@ var api = new Api( config.siteinfo.apiPath, store );
 
 // Add client side specific properties.
 config.storage = mwStorage;
-config.api = api;
 if ( config.fallbackPath ) {
 	api.prefetch( config.fallbackPath, config.fallbackProps );
 }
@@ -37,8 +36,6 @@ store.loadSiteOptions(
 );
 
 store.addProjects( config.supportedProjects );
-
-config.store = store;
 
 // Config will be passed down as properties so remove things that are not needed before that happens
 delete config.siteoptions;

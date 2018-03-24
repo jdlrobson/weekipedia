@@ -49,7 +49,6 @@ class CardListPage extends React.Component {
 
 CardListPage.defaultProps = {
 	CardClass: CardWithLocation,
-	api: null,
 	apiEndpoint: null,
 	title: null,
 	tagline: null,

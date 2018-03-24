@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { observer, inject } from 'mobx-react';
 import CtaIcon from '../CtaIcon';
 
 import CollectionOverlay from './../../overlays/CollectionOverlay';
@@ -15,8 +16,7 @@ class WatchIcon extends React.Component {
 	}
 	componentWillMount() {
 		var props = this.props;
-		var store = props.store;
-		if ( store.session && props.isWatched === undefined ) {
+		if ( props.isLoggedIn && props.isWatched === undefined ) {
 			this.loadWatchInfo();
 		}
 	}
@@ -26,46 +26,23 @@ class WatchIcon extends React.Component {
 		}
 	}
 	loadWatchInfo() {
-		var props = this.props;
-		var title = props.title;
-		var self = this;
-		var endpoint = props.api.getEndpoint( 'private/collection/all/with/' + this.props.title );
-		this.props.api.fetch( endpoint ).then( function ( data ) {
-			var isWatched = false;
-			var collections = data.collections;
-			collections.forEach( ( collection ) => { isWatched = isWatched || collection.member; } );
-			title = decodeURIComponent( title );
-			self.setState( { collections: collections, isWatched: isWatched } );
-		} ).catch( function () {
-			self.setState( { isError: true } );
-		} );
+		this.props.getAsyncState().then( ( state )=>this.setState( state ) )
+			.catch( () => this.setState( { isError: true } ) );
 	}
 	watch( ev ) {
-		var endpoint;
 		var props = this.props;
 		var state = this.state;
 
 		ev.stopPropagation();
 		this.setState( { isWatched: !state.isWatched } );
-		endpoint = 'private/collection/' + props.collection;
-		endpoint += state.isWatched ? '/remove/' : '/add/';
-		endpoint += encodeURIComponent( props.title );
-
-		// do it
-		props.api.post( props.api.getEndpoint( endpoint ) );
-		props.api.clearCache();
-		props.store.setUserNotification( state.isWatched ?
-			'Page removed from watchlist.' : 'Page added to watchlist.' );
+		this.props.onWatch( props.collection, props.title, state.isWatched );
 	}
 	dispatch( ev ) {
 		var props = this.props;
-		var store = props.store;
-		var collectionsEnabled = props.store.isFeatureEnabled( 'collectionsEnabled' );
 		var collections = this.state.collections || [];
 
-		if ( !props.collection && collections.length > 1 || collectionsEnabled ) {
-			props.store.showOverlay( <CollectionOverlay {...props}
-				onExit={store.hideOverlays.bind( store )} /> );
+		if ( !props.collection && collections.length > 1 && props.onAddToCollection ) {
+			props.onAddToCollection();
 		} else {
 			this.watch( ev );
 		}
@@ -77,7 +54,6 @@ class WatchIcon extends React.Component {
 
 		var iconProps = {
 			key: 'watch',
-			store: props.store,
 			glyph: isWatched ? 'watched' : 'watch',
 			label: 'Watch this page',
 			title: props.title,
@@ -99,4 +75,35 @@ WatchIcon.defaultProps = {
 	collection: 0
 };
 
-export default WatchIcon;
+export default inject( ( { api, store }, props ) => (
+	{
+		isLoggedIn: !!store.session,
+		onAddToCollection: store.isFeatureEnabled( 'collectionsEnabled' ) ? () => {
+			store.showOverlay( <CollectionOverlay {...props}
+				onExit={store.hideOverlays.bind( store )} /> );
+		} : undefined,
+		onWatch: ( collection, title, isWatched ) => {
+			let endpoint = 'private/collection/' + collection;
+			endpoint += isWatched ? '/remove/' : '/add/';
+			endpoint += encodeURIComponent( title );
+
+			// do it
+			api.post( api.getEndpoint( endpoint ) );
+			api.clearCache();
+			store.setUserNotification( isWatched ?
+				'Page removed from watchlist.' : 'Page added to watchlist.' );
+		},
+		getAsyncState: () => {
+			const title = props.title;
+			const endpoint = api.getEndpoint( 'private/collection/all/with/' + encodeURIComponent( title ) );
+			return api.fetch( endpoint ).then( function ( data ) {
+				var isWatched = false;
+				var collections = data.collections;
+				collections.forEach( ( collection ) => { isWatched = isWatched || collection.member; } );
+				return { collections: collections, isWatched: isWatched };
+			} );
+		}
+	}
+) )(
+	observer( WatchIcon )
+);

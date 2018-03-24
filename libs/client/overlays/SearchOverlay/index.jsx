@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { observer, inject } from 'mobx-react';
 import { Icon, SearchForm, Panel } from 'wikipedia-react-components';
 
 import CardList from './../../components/CardList';
@@ -98,8 +99,11 @@ class SearchOverlay extends Component {
 SearchOverlay.defaultProps = {
 	emptyMessage: '',
 	loadingMessage: 'Searching',
-	api: null,
 	lang: 'en'
 };
 
-export default SearchOverlay;
+export default inject( ( { api } ) => (
+	{ api }
+) )(
+	observer( SearchOverlay )
+);

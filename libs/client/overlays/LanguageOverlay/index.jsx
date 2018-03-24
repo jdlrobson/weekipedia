@@ -1,4 +1,5 @@
 import React from 'react';
+import { observer, inject } from 'mobx-react';
 import { IntermediateState, LinkList, Panel, SearchInput, Content } from 'wikipedia-react-components';
 
 import Overlay from './../Overlay';
@@ -22,13 +23,7 @@ class LanguageOverlay extends React.Component {
 		}
 	}
 	componentDidMount() {
-		var self = this;
-		var props = this.props;
-		var api = this.props.api;
-		var endpoint = api.getEndpoint( 'page-languages/' + props.title );
-		api.fetch( endpoint ).then( function ( languages ) {
-			self.setState( { isLoading: false, languages: languages } );
-		} );
+		this.props.getAsyncState().then( ( state ) => this.setState( state ) );
 	}
 	navigateTo( ev ) {
 		var link = ev.currentTarget;
@@ -59,7 +54,7 @@ class LanguageOverlay extends React.Component {
 			if (
 				Boolean( prefs[ lang.lang ] ) === Boolean( preferredOnly ) && (
 					( lang.langname && lang.langname.indexOf( term ) > -1 ) ||
-          ( lang.autonym && lang.autonym.indexOf( term ) > -1 )
+					( lang.autonym && lang.autonym.indexOf( term ) > -1 )
 				)
 			) {
 				langs.push( lang );
@@ -81,13 +76,12 @@ class LanguageOverlay extends React.Component {
 		var self = this;
 		var state = this.state;
 		var props = this.props;
-		var store = props.store;
 		var content, prefLang, preferredLangs, otherLangs;
 
 		function mapLanguage( language ) {
 			var code = language.lang;
 			return (
-				<a href={store.getForeignUrl( language.title.replace( /\//gi, '%2F' ), code )}
+				<a href={props.getLanguageUrl( language.title.replace( /\//gi, '%2F' ), code )}
 					key={'lang-item-' + code}
 					onClick={self.navigateTo.bind( self )}
 					hrefLang={code} lang={code}>
@@ -134,8 +128,20 @@ class LanguageOverlay extends React.Component {
 
 LanguageOverlay.defaultProps = {
 	storage: null,
-	api: null,
 	lang: 'en'
 };
 
-export default LanguageOverlay;
+export default inject( ( { api, store }, { title } ) => {
+	return {
+		getLanguageUrl: function ( title, langCode ) {
+			return store.getForeignUrl( title, langCode );
+		},
+		getAsyncState: function () {
+			return api.fetch( api.getEndpoint( 'page-languages/' + title ) ).then( function ( languages ) {
+				return { isLoading: false, languages };
+			} );
+		}
+	};
+} )(
+	observer( LanguageOverlay )
+);

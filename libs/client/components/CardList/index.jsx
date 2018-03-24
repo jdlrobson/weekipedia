@@ -1,4 +1,5 @@
 import React from 'react';
+import { observer, inject } from 'mobx-react';
 import { ErrorBox, IntermediateState, ListHeader,
 	CardWithLocation, CardList, Content } from 'wikipedia-react-components';
 
@@ -43,7 +44,7 @@ function getCards( data, props, keyPrefix ) {
 			}
 
 			var session = props.store.session;
-			if ( session && props.collection && data.owner === session.username && !props.unordered ) {
+			if ( session && props.collection && data.owner === session.username && props.isWatchable ) {
 				item.indicator = <WatchIcon {...props}
 					key={item.key + '-watch'}
 					title={item.title} collection={props.collection} isWatched={true} />;
@@ -75,19 +76,18 @@ class WeekipediaCardList extends React.Component {
 	}
 	load( apiEndpoint ) {
 		var self = this;
-		var api = this.props.api;
 		var props = this.props;
 		var onEmpty = props.onEmpty;
 		var cardListProps = {
+			isWatchable: props.isWatchable,
 			msg: props.msg,
+			store: props.store,
 			collection: props.collection,
 			unordered: props.unordered,
-			store: props.store,
 			CardClass: props.CardClass,
 			onCardClick: props.onCardClick,
 			isDiffCardList: props.isDiffCardList,
-			emptyMessage: props.emptyMessage,
-			api: api
+			emptyMessage: props.emptyMessage
 		};
 		this.fetchCardListProps( apiEndpoint, cardListProps ).then( function ( state ) {
 			self.setState( state );
@@ -200,8 +200,13 @@ WeekipediaCardList.defaultProps = {
 	infiniteScroll: true,
 	isDiffCardList: false,
 	endpoint: null,
+	isWatchable: false,
 	'continue': null,
 	emptyMessage: 'The list is disappointedly empty.'
 };
 
-export default WeekipediaCardList;
+export default inject( ( { api, store } ) => (
+	{ api, store }
+) )(
+	observer( WeekipediaCardList )
+);

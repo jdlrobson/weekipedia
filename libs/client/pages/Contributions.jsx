@@ -1,16 +1,14 @@
 import React from 'react';
+import { observer, inject } from 'mobx-react';
 
 import CardListPage from './CardListPage';
 
 import { Icon, CardDiff } from 'wikipedia-react-components';
 
-// Pages
-export default class Contributions extends React.Component {
+class Contributions extends React.Component {
 	render() {
 		var title, lead, tagline,
-			api = this.props.api,
-			store = this.props.store,
-			path = 'contributions/0/',
+			props = this.props,
 			username = this.props.params;
 
 		if ( username ) {
@@ -18,12 +16,11 @@ export default class Contributions extends React.Component {
 			tagline = (
 				<h2>
 					<Icon glyph='user'
-						href={store.getLocalUrl( 'User:' + username )}
+						href={props.userUrl}
 						type="before"
 						onClick={this.props.onClickInternalLink} label={username} />
 				</h2>
 			);
-			path += username;
 		} else {
 			title = 'Recent Changes';
 			lead = {
@@ -32,8 +29,23 @@ export default class Contributions extends React.Component {
 		}
 
 		return (
-			<CardListPage {...this.props} apiEndpoint={api.getEndpoint( path )} isDiffCardList={true}
+			<CardListPage {...this.props} isDiffCardList={true}
 				title={title} tagline={tagline} CardClass={CardDiff} lead={lead} />
 		);
 	}
 }
+
+export default inject( ( { api, store, onClickInternalLink }, props ) => {
+	const username = props.params;
+	let path = 'contributions/0/';
+	if ( username ) {
+		path += username;
+	}
+	return {
+		onClickInternalLink,
+		apiEndpoint: api.getEndpoint( path ),
+		userUrl: store.getLocalUrl( 'User:' + username )
+	};
+} )(
+	observer( Contributions )
+);

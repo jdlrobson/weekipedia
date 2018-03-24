@@ -1,5 +1,5 @@
 import React from 'react';
-
+import { observer, inject } from 'mobx-react';
 import CardList from './../components/CardList';
 import CollectionCard from './../components/CollectionCard';
 import { ErrorBox, Button, IntermediateState, TruncatedText } from 'wikipedia-react-components';
@@ -8,8 +8,7 @@ import Article from './Article';
 
 const COLLECTIONS_ARE_NOT_ORDERED = true;
 
-// Pages
-export default class Collections extends React.Component {
+class Collections extends React.Component {
 	constructor() {
 		super();
 		this.state = {
@@ -77,7 +76,7 @@ export default class Collections extends React.Component {
 
 		if ( id ) {
 			return <CardList key="collection-list" {...this.props} unordered={COLLECTIONS_ARE_NOT_ORDERED}
-				collection={id}
+				collection={id} isWatchable={true}
 				apiEndpoint={this.state.endpoint} pages={props.pages} />;
 		} else if ( collections ) {
 			return <CardList key="collections-list"
@@ -168,3 +167,13 @@ export default class Collections extends React.Component {
 		);
 	}
 }
+
+export default inject( ( { api, store, onClickInternalLink } ) => {
+	return {
+		store,
+		onClickInternalLink,
+		api
+	};
+} )(
+	observer( Collections )
+);

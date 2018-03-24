@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { observer, inject } from 'mobx-react';
 import PropTypes from 'prop-types';
 import DOM from 'react-dom-factories';
 
@@ -22,14 +23,13 @@ class Section extends Component {
 	}
 	componentWillMount() {
 		var isOpen,
-			props = this.props,
-			store = props.store;
+			props = this.props;
 
 		if ( props.isExpandedByDefault ) {
 			isOpen = true;
-		} else if ( !store.isFeatureEnabled( 'isExpandedByDefaultTablet' ) ) {
+		} else if ( !props.isExpandedByDefaultTablet ) {
 			isOpen = !props.isCollapsible ? !props.isCollapsible :
-				( store.isFeatureEnabled( 'expandSectionsByDefault' ) && !props.isReferenceSection );
+				( props.isExpandedByDefault && !props.isReferenceSection );
 		}
 
 		this.setState( {
@@ -62,9 +62,8 @@ class Section extends Component {
 		}
 	}
 	componentDidMount() {
-		var store = this.props.store;
 		this.setState( { jsEnabled: true } );
-		if ( store.isFeatureEnabled( 'expandSectionsByDefaultTablet' ) && window.innerWidth > 768 ) {
+		if ( this.props.isExpandedByDefaultTablet && window.innerWidth > 768 ) {
 			this.setState( {
 				isOpen: true
 			} );
@@ -140,4 +139,12 @@ Section.defaultProps = {
 	subsections: []
 };
 
-export default Section;
+export default inject( ( { api, store } ) => {
+	return {
+		api,
+		isExpandedByDefault: store.isFeatureEnabled( 'expandSectionsByDefault' ),
+		isExpandedByDefaultTablet: store.isFeatureEnabled( 'isExpandedByDefaultTablet' )
+	};
+} )(
+	observer( Section )
+);

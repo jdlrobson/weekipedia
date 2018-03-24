@@ -10,7 +10,7 @@ function getListItems( sections, suffix ) {
 
 	return sections.map( function ( section, i ) {
 		var childListItems, children,
-			subSections = section.props.subsections;
+			subSections = section.props.subsections || [];
 
 		if ( subSections.length ) {
 			childListItems = getListItems( subSections, '-c' );

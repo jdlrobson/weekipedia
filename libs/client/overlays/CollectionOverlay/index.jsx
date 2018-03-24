@@ -1,4 +1,5 @@
 import React from 'react';
+import { observer, inject } from 'mobx-react';
 
 import Overlay from './../Overlay';
 import { Icon } from 'wikipedia-react-components';
@@ -14,34 +15,19 @@ class CollectionOverlay extends React.Component {
 		};
 	}
 	componentDidMount() {
-		var self = this;
-		var endpoint = this.props.api.getEndpoint( 'private/collection/all/with/' + this.props.title );
-		this.props.api.fetch( endpoint ).then( function ( data ) {
-			self.setState( data );
-		} );
+		this.props.getAsyncState().then( ( state ) => this.setState( state ) );
 	}
 	toggleCollectionState( id ) {
-		var endpoint;
 		var props = this.props;
 		var collections = this.state.collections;
 
 		collections.forEach( function ( col ) {
 			if ( col.id === parseInt( id, 10 ) ) {
-				endpoint = 'private/collection/' + id;
-				endpoint += col.member ? '/remove/' : '/add/';
-				endpoint += encodeURIComponent( props.title );
-				props.store.setUserNotification( col.member ?
-					'Page removed from collection.' : 'Page added to collection.' );
-
-				// do it
+				props.onToggleMember( id, props.title, col.member );
+				// update local state
 				col.member = !col.member;
-				props.api.post( props.api.getEndpoint( endpoint ) ).then( function () {
-					props.api.clearCache();
-				} );
-				props.api.clearCache();
 			}
 		} );
-		props.api.clearCache();
 		this.setState( collections );
 	}
 	watch( ev ) {
@@ -53,7 +39,6 @@ class CollectionOverlay extends React.Component {
 	render() {
 		var watch = this.watch.bind( this );
 		var props = this.props;
-		var store = props.store;
 		var collections = this.state.collections;
 		var emptyMsg;
 
@@ -81,7 +66,7 @@ class CollectionOverlay extends React.Component {
 					{emptyMsg}
 					<div className="collection-actions" key="collection-overlay-actions">
 						<a key='edit-collection-create'
-							href={'#/edit-collection/' + store.session.username + '/'}>{props.msg( 'collection-create' )}</a>
+							href={'#/edit-collection/' + props.username + '/'}>{props.msg( 'collection-create' )}</a>
 					</div>
 				</Overlay>
 			);
@@ -91,4 +76,25 @@ class CollectionOverlay extends React.Component {
 	}
 }
 
-export default CollectionOverlay;
+export default inject( function ( { api, store }, { title } ) {
+	const username = store.session.username;
+
+	return {
+		username,
+		getAsyncState: function () {
+			var endpoint = api.getEndpoint( 'private/collection/all/with/' + title );
+			return api.fetch( endpoint );
+		},
+		onToggleMember: function ( collectionId, title, isMember ) {
+			let endpoint = 'private/collection/' + collectionId;
+			endpoint += isMember ? '/remove/' : '/add/';
+			endpoint += encodeURIComponent( title );
+			store.setUserNotification( isMember ?
+				'Page removed from collection.' : 'Page added to collection.' );
+			api.post( api.getEndpoint( endpoint ) ).then( function () {
+				api.clearCache();
+			} );
+			api.clearCache();
+		}
+	};
+} )( observer( CollectionOverlay ) );

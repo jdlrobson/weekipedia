@@ -1,10 +1,20 @@
 import React, { Component } from 'react';
+import { observer, inject } from 'mobx-react';
 
 import { Icon, HorizontalList } from 'wikipedia-react-components';
 
 import './styles.less';
 import './icons.less';
 
+function menuItem( { id, href }, { onMenuItemClick, msg } ) {
+	return (
+		<li key={'menu-item-' + id}>
+			<Icon glyph={'mf-' + id} href={href}
+				onClick={onMenuItemClick}
+				label={msg( 'menu-' + id )} type="before"/>
+		</li>
+	);
+}
 class MainMenu extends Component {
 	onMenuItemClick( ev ) {
 		if ( this.props.onItemClick ) {
@@ -23,101 +33,47 @@ class MainMenu extends Component {
 		}
 		this.onMenuItemClick( ev );
 	}
-	getUserMenu() {
-		var login, username, usertools,
-			props = this.props,
-			store = props.store,
+	getLoginItem() {
+		var props = this.props,
 			msg = this.props.msg,
 			onMenuItemClick = this.onMenuItemClick.bind( this );
 
 		if ( this.props.canAuthenticate ) {
-			if ( store.session ) {
-				username = store.session.username;
-				login = [
-					<Icon glyph="mf-profile" href={store.getLocalUrl( 'User:' + username )}
+			if ( props.userPage ) {
+				return [
+					<Icon glyph="mf-profile" href={props.userPage.href}
 						key="menu-item-profile"
-						label={username} type="before" onClick={onMenuItemClick} />,
-					<Icon glyph="mf-logout" href='/auth/logout'
+						label={props.userPage.name} type="before" onClick={onMenuItemClick} />,
+					<Icon glyph="mf-logout" href={props.logoutUrl}
 						key="menu-item-logout"
 						label={msg( 'menu-logout' )} onClick={this.onLogoutClick.bind( this )} />
 				];
-				usertools = [
-					<li key="menu-item-watchlist">
-						<Icon glyph="mf-watchlist" href={store.getLocalUrl( 'Special:Watchlist' )}
-							label={msg( 'menu-watchlist' )} type="before" onClick={onMenuItemClick} />
-					</li>,
-					<li key="menu-item-contribs">
-						<Icon glyph="mf-contributions" href={store.getLocalUrl( 'Special:Contributions/' + username )}
-							label={msg( 'menu-contributions' )} type="before" onClick={onMenuItemClick} />
-					</li>
-				];
 			} else {
-				login = <Icon glyph="mf-anonymous"
-					href={store.getLocalUrl( 'Special:UserLogin?returnto=' + props.title )}
+				return <Icon glyph="mf-anonymous"
+					href={props.loginUrl}
 					label={msg( 'menu-login' )} type="before" onClick={this.onLoginClick.bind( this )} />;
 			}
-			return (
-				<ul>
-					<li>
-						{login}
-					</li>
-					{usertools}
-				</ul>
-			);
 		} else {
 			return null;
 		}
 	}
 	render() {
 		var onMenuItemClick = this.onMenuItemClick.bind( this );
-		var collectionMenuItem, nearbyMenuItem, settingsMenuItem,
-			props = this.props,
-			store = props.store,
+		var props = this.props,
 			msg = props.msg;
 
-		if ( store.isFeatureEnabled( 'collectionsEnabled' ) ) {
-			collectionMenuItem = (
-				<li>
-					<Icon glyph="mf-collections" href={store.getLocalUrl( 'Special:Collections' )}
-						label={msg( 'menu-collections' )} type="before" onClick={onMenuItemClick} />
-				</li>
-			);
-		}
-		if ( store.isFeatureEnabled( 'nearby' ) ) {
-			nearbyMenuItem = (
-				<li>
-					<Icon glyph="mf-nearby" href={store.getLocalUrl( 'Special:Nearby' )}
-						onClick={onMenuItemClick}
-						label={msg( 'menu-nearby' )} type="before"/>
-				</li>
-			);
-		}
-		if ( store.isFeatureEnabled( 'settingsEnabled' ) ) {
-			settingsMenuItem = (
-				<li>
-					<Icon glyph="mf-settings" href={store.getLocalUrl( 'Special:MobileOptions' )}
-						label={msg( 'menu-settings' )} type="before" onClick={onMenuItemClick} />
-				</li>
-			);
-		}
+		const menuItemProps = { msg, onMenuItemClick };
 		return (
 			<div className="component-main-menu menu">
 				<ul>
-					<li>
-						<Icon glyph="mf-home" href="/" label={msg( 'menu-home' )} type="before"
-							onClick={onMenuItemClick} />
-					</li>
-					<li>
-						<Icon glyph="mf-random" href={store.getLocalUrl( 'Special:Random' )}
-							onClick={onMenuItemClick}
-							label={msg( 'menu-random' )} type="before"/>
-					</li>
-					{nearbyMenuItem}
-					{collectionMenuItem}
+					{props.explore.map( ( data )=>menuItem( data, menuItemProps ) )}
 				</ul>
-				{this.getUserMenu()}
 				<ul>
-					{settingsMenuItem}
+					<li>{this.getLoginItem()}</li>
+					{props.usertools.map( ( data )=>menuItem( data, menuItemProps ) )}
+				</ul>
+				<ul>
+					{menuItem( props.settings, menuItemProps )}
 				</ul>
 				<HorizontalList>
 					<a href="//github.com/jdlrobson/weekipedia">{msg( 'menu-about' )}</a>
@@ -131,4 +87,45 @@ MainMenu.defaultProps = {
 	lang: 'en'
 };
 
-export default MainMenu;
+export default inject( ( { store }, { title, canAuthenticate } ) => {
+	let settings;
+	let usertools = [];
+	let loginUrl;
+	let userPage;
+	let explore = [
+		{ href: '/', id: 'home' },
+		{ href: store.getLocalUrl( 'Special:Random' ), id: 'random' }
+	];
+	if ( store.isFeatureEnabled( 'collectionsEnabled' ) ) {
+		explore.push( { href: store.getLocalUrl( 'Special:Collections' ), id: 'collections' } );
+	}
+	if ( store.isFeatureEnabled( 'settingsEnabled' ) ) {
+		settings = { href: store.getLocalUrl( 'Special:MobileOptions' ), id: 'settings' };
+	}
+	if ( store.isFeatureEnabled( 'nearby' ) ) {
+		explore.push( { href: store.getLocalUrl( 'Special:Nearby' ), id: 'nearby' } );
+	}
+	if ( canAuthenticate ) {
+		if ( store.session ) {
+			const username = store.session.username;
+			userPage = {
+				name: username,
+				href: store.getLocalUrl( 'User:' + username )
+			};
+			usertools = usertools.concat( [
+				{ id: 'watchlist', href: store.getLocalUrl( 'Special:Watchlist' ) },
+				{ id: 'contributions', href: store.getLocalUrl( 'Special:Contributions/' + username ) }
+			] );
+		} else {
+			loginUrl = store.getLocalUrl( 'Special:UserLogin?returnto=' + title );
+		}
+	}
+	return {
+		userPage,
+		usertools,
+		loginUrl,
+		logoutUrl: '/auth/logout',
+		settings,
+		explore
+	};
+} )( observer( MainMenu ) );

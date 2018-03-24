@@ -1,4 +1,5 @@
 import React from 'react';
+import { observer, inject } from 'mobx-react';
 
 import { Icon, Button } from 'wikipedia-react-components';
 
@@ -10,24 +11,21 @@ const MONTHS = [ 'January', 'February', 'March', 'April', 'May', 'June',
 import './icons.less';
 import './styles.less';
 
-// Pages
-export default class UserPage extends React.Component {
+class UserPage extends React.Component {
 	getTabs() {
-		var props = this.props,
-			store = props.store,
-			titleSansPrefix = props.titleSansPrefix;
+		var props = this.props;
 
 		return [
-			<a href={store.getLocalUrl( 'User talk:' + titleSansPrefix )}
+			<a href={props.userTalkUrl}
 				onClick={props.onClickLink}
 				key="page-talk-tab">Talk</a>,
-			<a href={store.getLocalUrl( 'Special:Collections', 'by/' + titleSansPrefix )}
+			<a href={props.userCollectionUrl}
 				onClick={props.onClickLink}
 				key="page-collections-tab">{props.msg( 'menu-collections' )}</a>,
-			<a href={store.getLocalUrl( 'Special:Contributions', titleSansPrefix )}
+			<a href={props.userContributionsUrl}
 				onClick={props.onClickLink}
 				key="page-contrib-tab">Contributions</a>,
-			<a href={store.getLocalUrl( 'Special:Uploads', titleSansPrefix )}
+			<a href={props.userUploadsUrl}
 				onClick={props.onClickLink}
 				key="page-upload-tab">Uploads</a>
 		];
@@ -36,13 +34,12 @@ export default class UserPage extends React.Component {
 		var registered,
 			body = [],
 			props = this.props,
-			store = props.store,
 			lead = props.lead || {},
 			leadHtml = lead.sections && lead.sections.length ? lead.sections[ 0 ].text : undefined;
 
 		var user = props.title;
 		var editUrl = '#/editor/0';
-		var isReaderOwner = store.session && store.session.username === props.titleSanPrefix;
+		var isReaderOwner = props.isUserPageOwner;
 		var msg = isReaderOwner ? 'You don\'t have a user page yet' : 'No user page for ' + props.user;
 		var pText = isReaderOwner ? 'You can describe yourself to fellow editors on your user page' :
 			'This page should be created and edited by ' + user;
@@ -74,3 +71,13 @@ export default class UserPage extends React.Component {
 		);
 	}
 }
+
+export default inject( ( { store }, { titleSansPrefix } ) => (
+	{
+		userUploadsUrl: store.getLocalUrl( 'Special:Uploads', titleSansPrefix ),
+		userContributionsUrl: store.getLocalUrl( 'Special:Contributions', titleSansPrefix ),
+		userCollectionUrl: store.getLocalUrl( 'Special:Collections', 'by/' + titleSansPrefix ),
+		userTalkUrl: store.getLocalUrl( 'User talk:' + titleSansPrefix ),
+		isUserPageOwner: store.session && store.session.username === titleSansPrefix
+	}
+) )( observer( UserPage ) );

@@ -1,5 +1,6 @@
 import React from 'react';
 import timeago from 'timeago';
+import { observer, inject } from 'mobx-react';
 import { HorizontalList, Icon, IntermediateState, Content } from 'wikipedia-react-components';
 
 import Article from './../Article';
@@ -8,8 +9,7 @@ import './styles.less';
 
 const IGNORED_GROUPS = [ 'user', 'autoconfirmed', '*' ];
 
-// Pages
-export default class Thing extends React.Component {
+class MobileDiff extends React.Component {
 	constructor() {
 		super();
 		this.state = {
@@ -22,12 +22,10 @@ export default class Thing extends React.Component {
 	componentWillReceiveProps( nextProps ) {
 		this.load( nextProps.params );
 	}
-	load( revId ) {
+	load() {
 		var self = this;
 		var props = this.props;
-		var api = props.api;
-		var endpoint = api.getEndpoint( 'diff/' + revId );
-		api.fetch( endpoint ).then( function ( diff ) {
+		props.api.fetch( props.apiEndpoint ).then( function ( diff ) {
 			self.setState( { diff: diff } );
 			window.scrollTo( 0, 0 );
 		} );
@@ -46,14 +44,14 @@ export default class Thing extends React.Component {
 			links = [
 				<a href={store.getLocalUrl( 'Special:MobileDiff', diff.parent )}
 					key="mobile-diff-prev-link"
-					onClick={this.props.onClickInternalLink}>← Previous edit</a>
+					onClick={props.onClickInternalLink}>← Previous edit</a>
 			];
 			body = (
 				<Content key="special-page-row-1" className="content">
 					<div className="diff-header">
 						<h2>
 							<a href={store.getLocalUrl( title )}
-								onClick={this.props.onClickInternalLink}>{title}</a>
+								onClick={props.onClickInternalLink}>{title}</a>
 						</h2>
 						<div>edited {timeago( new Date( diff.timestamp ) )}</div>
 					</div>
@@ -78,7 +76,7 @@ export default class Thing extends React.Component {
 				editorTagline = <a href={store.getLocalUrl( 'Special:Contributions/' + diff.user.name )}>{diff.user.name}</a>;
 			} else {
 				link = <a href={store.getLocalUrl( 'User:' + diff.user.name )}
-					onClick={this.props.onClickInternalLink}>{diff.user.name}</a>;
+					onClick={props.onClickInternalLink}>{diff.user.name}</a>;
 				editorTagline = <div className="edit-count"><div>{diff.user.editcount}</div> edits</div>;
 			}
 
@@ -100,3 +98,14 @@ export default class Thing extends React.Component {
 		);
 	}
 }
+
+export default inject( ( { api, store, onClickInternalLink }, { params } ) => {
+	return {
+		api,
+		onClickInternalLink,
+		apiEndpoint: api.getEndpoint( 'diff/' + params ),
+		store
+	};
+} )(
+	observer( MobileDiff )
+);

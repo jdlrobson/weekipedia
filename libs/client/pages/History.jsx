@@ -1,25 +1,14 @@
 import React from 'react';
-
+import { observer, inject } from 'mobx-react';
 import { CardDiff } from 'wikipedia-react-components';
 
 import CardListPage from './CardListPage';
 
-// Pages
-export default class History extends React.Component {
+class History extends React.Component {
 	render() {
-		var api = this.props.api;
-		var store = this.props.store;
-
-		var endpoint = api.getEndpoint( 'pagehistory/' + this.props.params );
-		var title = decodeURIComponent( this.props.params ).replace( /_/gi, ' ' );
-		var tagline = ( <h2><a href={store.getLocalUrl( title )}
-			onClick={this.props.onClickInternalLink}>{title}</a></h2> );
-
 		var props = Object.assign( {}, this.props, {
 			isDiffCardList: true,
-			apiEndpoint: endpoint,
 			title: 'Page History',
-			tagline: tagline,
 			CardClass: CardDiff
 		} );
 
@@ -28,3 +17,12 @@ export default class History extends React.Component {
 		);
 	}
 }
+
+export default inject( ( { api, store, onClickInternalLink }, { params } ) => {
+	const title = decodeURIComponent( params ).replace( /_/gi, ' ' );
+	return {
+		tagline: ( <h2><a href={store.getLocalUrl( title )}
+			onClick={onClickInternalLink}>{title}</a></h2> ),
+		apiEndpoint: api.getEndpoint( 'pagehistory/' + params )
+	};
+} )( observer( History ) );

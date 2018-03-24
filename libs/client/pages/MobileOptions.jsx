@@ -1,4 +1,5 @@
 import React from 'react';
+import { observer, inject } from 'mobx-react';
 
 import mwStorage from './../mediawiki-storage';
 
@@ -6,12 +7,11 @@ import Article from './Article';
 
 import { IntermediateState, Checkbox } from 'wikipedia-react-components';
 
-// Pages
-export default class Thing extends React.Component {
+class MobileOptions extends React.Component {
 	getConfig() {
 		var config = mwStorage.get( 'mobile-options' );
 		if ( !config ) {
-			return this.props.store.siteoptions;
+			return this.props.defaultOptions;
 		} else {
 			return JSON.parse( config );
 		}
@@ -21,7 +21,6 @@ export default class Thing extends React.Component {
 		config[ name ] = value;
 		this.setState( { mobileOptions: config } );
 		this.save( config );
-		this.props.store.setUserNotification( 'Setting saved.' );
 	}
 	componentDidMount() {
 		this.save( this.getConfig() );
@@ -30,8 +29,7 @@ export default class Thing extends React.Component {
 		this.setState( {
 			mobileOptions: config
 		} );
-		this.props.store.loadSiteOptions( config );
-		mwStorage.set( 'mobile-options', JSON.stringify( config ) );
+		this.props.onSave( config );
 	}
 	render() {
 		var self = this;
@@ -71,3 +69,16 @@ export default class Thing extends React.Component {
 		);
 	}
 }
+
+export default inject( ( { store } ) => (
+	{
+		defaultOptions: store.siteoptions,
+		onSave: function ( config ) {
+			store.loadSiteOptions( config );
+			mwStorage.set( 'mobile-options', JSON.stringify( config ) );
+			store.setUserNotification( 'Setting saved.' );
+		}
+	}
+) )(
+	observer( MobileOptions )
+);
