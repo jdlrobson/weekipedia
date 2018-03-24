@@ -33,9 +33,9 @@ function getCards( data, props, keyPrefix ) {
 				}
 			};
 			if ( item.revid ) {
-				item.url = store.getLocalUrl('Special:MobileDiff', item.revid);
+				item.url = store.getLocalUrl( 'Special:MobileDiff', item.revid );
 			} else if ( !item.url && item.title ) {
-				item.url = store.getLocalUrl(item.title);
+				item.url = store.getLocalUrl( item.title );
 			}
 			// some endpoints e.g. related endpoint return titles with `_`
 			if ( item.title ) {

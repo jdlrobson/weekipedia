@@ -122,7 +122,7 @@ export default class Thing extends React.Component {
 
 			footer = (
 				<div className="details">
-					<Button isPrimary="1" label="Details" href={store.getLocalUrl('File:' + props.image)}/>
+					<Button isPrimary="1" label="Details" href={store.getLocalUrl( 'File:' + props.image )}/>
 					<TruncatedText><p dangerouslySetInnerHTML={{ __html: description }}></p></TruncatedText>
 					<HorizontalList isSeparated="1" className="license">
 						<span dangerouslySetInnerHTML= {{ __html: artist }}></span>

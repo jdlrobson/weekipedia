@@ -9,11 +9,11 @@ export default class Thing extends React.Component {
 		var store = props.store;
 		var username = props.params;
 		var api = props.api;
-		var endpoint = api.getEndpoint('uploads/' + username);
+		var endpoint = api.getEndpoint( 'uploads/' + username );
 
 		var tagline = (
 			<p>
-        Files uploaded by <a href={store.getLocalUrl('User:' + username)}
+        Files uploaded by <a href={store.getLocalUrl( 'User:' + username )}
 					onClick={props.onClickInternalLink}>{username}</a>
 			</p>
 		);

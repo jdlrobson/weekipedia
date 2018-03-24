@@ -99,8 +99,8 @@ class Page extends React.Component {
 		} else {
 			footer = [
 				<LastModifiedBar editor={lead.lastmodifier}
-					editorUrl={lead.lastmodifier ? store.getLocalUrl('User:' + lead.lastmodifier.user) : false}
-					historyUrl={store.getLocalUrl('Special:History', store.title)}
+					editorUrl={lead.lastmodifier ? store.getLocalUrl( 'User:' + lead.lastmodifier.user ) : false}
+					historyUrl={store.getLocalUrl( 'Special:History', store.title )}
 					onClickLink={props.onClickLink}
 					title={props.title} timestamp={lead.lastmodified} key="page-last-modified" />
 			];

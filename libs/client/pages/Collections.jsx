@@ -26,7 +26,8 @@ export default class Collections extends React.Component {
 		var self = this;
 		var args = props.params ? props.params.split( '/' ) : [];
 		var endpoint, username, id,
-			endpointPrefix = '/api/' + props.lang + '/collection';
+			api = props.api,
+			endpointPrefix = api.getEndpoint( 'collection' );
 
 		// reset
 		this.setState( { description: null, title: null, error: false, id: null,
@@ -118,7 +119,7 @@ export default class Collections extends React.Component {
 			// The api request is cached at this point
 			tagline = (
 				<div>
-					<div>by <a href={store.getLocalUrl('Special:Collections', 'by/'+username)}
+					<div>by <a href={store.getLocalUrl( 'Special:Collections', 'by/' + username )}
 						onClick={props.onClickInternalLink}>{username}</a></div>
 					{desc}&nbsp;
 					<div>{actions}</div>
@@ -129,13 +130,13 @@ export default class Collections extends React.Component {
 		}
 
 		tabs = [
-			<a key="collection-tab-1" href={store.getLocalUrl('Special:Collections')}
+			<a key="collection-tab-1" href={store.getLocalUrl( 'Special:Collections' )}
 				onClick={props.onClickInternalLink}
 				className={!username ? 'active' : ''}>All</a>
 		];
 		if ( username ) {
 			tabs.push(
-				<a key="collection-tab-2" href={store.getLocalUrl('Special:Collections', 'by/' + username)}
+				<a key="collection-tab-2" href={store.getLocalUrl( 'Special:Collections', 'by/' + username )}
 					onClick={props.onClickInternalLink}
 					className={!id ? 'active' : ''}>{username}</a>
 			);
@@ -148,7 +149,7 @@ export default class Collections extends React.Component {
 			}
 		} else {
 			tabs.push(
-				<a key="collection-tab-2" href={store.getLocalUrl('Special:Collections', 'by/~anonymous')}
+				<a key="collection-tab-2" href={store.getLocalUrl( 'Special:Collections', 'by/~anonymous' )}
 					onClick={props.onClickInternalLink}
 					className={username === '~anonymous' && !title ? 'active' : ''}>By you</a>
 			);

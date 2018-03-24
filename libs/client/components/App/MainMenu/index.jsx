@@ -34,7 +34,7 @@ class MainMenu extends Component {
 			if ( store.session ) {
 				username = store.session.username;
 				login = [
-					<Icon glyph="mf-profile" href={store.getLocalUrl('User:' + username)}
+					<Icon glyph="mf-profile" href={store.getLocalUrl( 'User:' + username )}
 						key="menu-item-profile"
 						label={username} type="before" onClick={onMenuItemClick} />,
 					<Icon glyph="mf-logout" href='/auth/logout'
@@ -43,17 +43,17 @@ class MainMenu extends Component {
 				];
 				usertools = [
 					<li key="menu-item-watchlist">
-						<Icon glyph="mf-watchlist" href={store.getLocalUrl('Special:Watchlist')}
+						<Icon glyph="mf-watchlist" href={store.getLocalUrl( 'Special:Watchlist' )}
 							label={msg( 'menu-watchlist' )} type="before" onClick={onMenuItemClick} />
 					</li>,
 					<li key="menu-item-contribs">
-						<Icon glyph="mf-contributions" href={store.getLocalUrl('Special:Contributions/' + username)}
+						<Icon glyph="mf-contributions" href={store.getLocalUrl( 'Special:Contributions/' + username )}
 							label={msg( 'menu-contributions' )} type="before" onClick={onMenuItemClick} />
 					</li>
 				];
 			} else {
 				login = <Icon glyph="mf-anonymous"
-					href={store.getLocalUrl('Special:UserLogin?returnto=' + props.title)}
+					href={store.getLocalUrl( 'Special:UserLogin?returnto=' + props.title )}
 					label={msg( 'menu-login' )} type="before" onClick={this.onLoginClick.bind( this )} />;
 			}
 			return (
@@ -78,7 +78,7 @@ class MainMenu extends Component {
 		if ( store.isFeatureEnabled( 'collectionsEnabled' ) ) {
 			collectionMenuItem = (
 				<li>
-					<Icon glyph="mf-collections" href={store.getLocalUrl('Special:Collections')}
+					<Icon glyph="mf-collections" href={store.getLocalUrl( 'Special:Collections' )}
 						label={msg( 'menu-collections' )} type="before" onClick={onMenuItemClick} />
 				</li>
 			);
@@ -86,7 +86,7 @@ class MainMenu extends Component {
 		if ( store.isFeatureEnabled( 'nearby' ) ) {
 			nearbyMenuItem = (
 				<li>
-					<Icon glyph="mf-nearby" href={store.getLocalUrl('Special:Nearby')}
+					<Icon glyph="mf-nearby" href={store.getLocalUrl( 'Special:Nearby' )}
 						onClick={onMenuItemClick}
 						label={msg( 'menu-nearby' )} type="before"/>
 				</li>
@@ -95,7 +95,7 @@ class MainMenu extends Component {
 		if ( store.isFeatureEnabled( 'settingsEnabled' ) ) {
 			settingsMenuItem = (
 				<li>
-					<Icon glyph="mf-settings" href={store.getLocalUrl('Special:MobileOptions')}
+					<Icon glyph="mf-settings" href={store.getLocalUrl( 'Special:MobileOptions' )}
 						label={msg( 'menu-settings' )} type="before" onClick={onMenuItemClick} />
 				</li>
 			);
@@ -108,7 +108,7 @@ class MainMenu extends Component {
 							onClick={onMenuItemClick} />
 					</li>
 					<li>
-						<Icon glyph="mf-random" href={store.getLocalUrl('Special:Random')}
+						<Icon glyph="mf-random" href={store.getLocalUrl( 'Special:Random' )}
 							onClick={onMenuItemClick}
 							label={msg( 'menu-random' )} type="before"/>
 					</li>

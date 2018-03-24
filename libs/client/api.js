@@ -111,7 +111,6 @@ Api.prototype = {
 		if ( isRest ) {
 			source += '.org/rest_v1';
 		}
-		console.log( 'api:', '/api/' + source + '/' + path);
 		return '/api/' + source + '/' + path;
 	},
 	getPage: function ( title, sections, revision ) {

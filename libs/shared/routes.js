@@ -71,8 +71,7 @@ var routes = [
 				titleParts = titleSansPrefix.split( '/' ),
 				project = info[ 5 ],
 				action = props.query && props.query.action || 'view',
-				lang = info[ 1 ] || info[ 4 ] || 'en',
-				articleSource = project ? lang + '.' + project : lang;
+				lang = info[ 1 ] || info[ 4 ] || 'en';
 
 			props.lang = lang;
 			titleSansPrefix = titleParts[ 0 ];
@@ -99,7 +98,6 @@ var routes = [
 					View = Page;
 				}
 				props.title = titleDecoded;
-				props.fallback = '/api/page/' + articleSource + '/' + title;
 				props.children = [
 					React.createElement( View,
 						Object.assign( {}, props, {
@@ -198,15 +196,11 @@ function initSpecialPages() {
 	addSpecialPage( 'MobileOptions', MobileOptions );
 	addSpecialPage( 'MostRead', MostRead, addCardClickHandler );
 	addSpecialPage( 'Random', Random, function ( info, props ) {
-		props.fallback = '/api/random/' + props.lang;
 		props.noIndex = false;
 		return addCardClickHandler( info, props );
 	} );
 	addSpecialPage( 'Search', Search, function ( info, props ) {
 		var query = props.query.search;
-		if ( query ) {
-			props.fallback = props.api.getEndpoint('search-full/' + query);
-		}
 		return addCardClickHandler( info, props );
 	} );
 	addSpecialPage( 'Shell', Shell );
@@ -216,8 +210,8 @@ function initSpecialPages() {
 	} );
 	addSpecialPage( 'Nearby', Nearby, addCardClickHandler );
 	addSpecialPage( 'UserLogin', UserLogin, function ( info, props ) {
-		var lang = info[4];
-		var project = info[5];
+		var lang = info[ 4 ];
+		var project = info[ 5 ];
 		var suffix = lang && project ? 'project=' + lang + '.' + project + '&' : '';
 		if ( props.query.returnto ) {
 			suffix += 'returnto=' + props.query.returnto;
@@ -229,11 +223,7 @@ function initSpecialPages() {
 		return props;
 	} );
 	addSpecialPage( 'Collections', Collections, function ( info, props ) {
-		props.fallback = props.api.getEndpoint('/collection/');
 		props.noIndex = false;
-		if ( props.params ) {
-			props.fallback += props.params;
-		}
 		return addCardClickHandler( info, props );
 	} );
 	addSpecialPage( 'Uploads', Uploads );

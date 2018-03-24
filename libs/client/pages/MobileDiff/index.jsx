@@ -26,7 +26,7 @@ export default class Thing extends React.Component {
 		var self = this;
 		var props = this.props;
 		var api = props.api;
-		var endpoint = api.getEndpoint('diff/' + revId);
+		var endpoint = api.getEndpoint( 'diff/' + revId );
 		api.fetch( endpoint ).then( function ( diff ) {
 			self.setState( { diff: diff } );
 			window.scrollTo( 0, 0 );
@@ -44,7 +44,7 @@ export default class Thing extends React.Component {
 		if ( diff ) {
 			title = diff.title;
 			links = [
-				<a href={store.getLocalUrl('Special:MobileDiff', diff.parent)}
+				<a href={store.getLocalUrl( 'Special:MobileDiff', diff.parent )}
 					key="mobile-diff-prev-link"
 					onClick={this.props.onClickInternalLink}>← Previous edit</a>
 			];
@@ -52,7 +52,7 @@ export default class Thing extends React.Component {
 				<Content key="special-page-row-1" className="content">
 					<div className="diff-header">
 						<h2>
-							<a href={store.getLocalUrl(title)}
+							<a href={store.getLocalUrl( title )}
 								onClick={this.props.onClickInternalLink}>{title}</a>
 						</h2>
 						<div>edited {timeago( new Date( diff.timestamp ) )}</div>
@@ -75,9 +75,9 @@ export default class Thing extends React.Component {
 
 			if ( diff.anon ) {
 				link = <span>Anonymous user</span>;
-				editorTagline = <a href={store.getLocalUrl('Special:Contributions/' + diff.user.name)}>{diff.user.name}</a>;
+				editorTagline = <a href={store.getLocalUrl( 'Special:Contributions/' + diff.user.name )}>{diff.user.name}</a>;
 			} else {
-				link = <a href={store.getLocalUrl('User:' + diff.user.name)}
+				link = <a href={store.getLocalUrl( 'User:' + diff.user.name )}
 					onClick={this.props.onClickInternalLink}>{diff.user.name}</a>;
 				editorTagline = <div className="edit-count"><div>{diff.user.editcount}</div> edits</div>;
 			}

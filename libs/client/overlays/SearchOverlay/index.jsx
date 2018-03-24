@@ -18,7 +18,6 @@ class SearchOverlay extends Component {
 	showResults( endpoint, project ) {
 		var self = this;
 		var props = this.props;
-		var language_proj = this.props.lang + '.' + project;
 		clearTimeout( this._timeout );
 		// account for fast key presses before firing off an api request
 		this._timeout = setTimeout( function () {

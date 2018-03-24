@@ -6,9 +6,9 @@ class CtaDrawer extends React.Component {
 	render() {
 		var props = this.props;
 		var store = props.store;
-		var loginUrl = store.getLocalUrl('Special:UserLogin', null, {
+		var loginUrl = store.getLocalUrl( 'Special:UserLogin', null, {
 			returnto: store.title
-		});
+		} );
 		return (
 			<Overlay>
 				<p>{props.message}</p>

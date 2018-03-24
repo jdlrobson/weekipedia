@@ -36,7 +36,7 @@ class App extends React.Component {
 	}
 	componentDidMount() {
 		var props = this.props;
-		var msg = this.props.msg;
+		var msg = this.props.store.msg;
 		var store = props.store;
 		if ( this.props.offlineVersion ) {
 			initOffline( function () {
@@ -100,7 +100,7 @@ class App extends React.Component {
 			secondaryIcons.push(
 				<Icon glyph="notifications"
 					onClick={onClickInternalLink}
-					href={store.getLocalUrl('Special:Notifications')}/>
+					href={store.getLocalUrl( 'Special:Notifications' )}/>
 			);
 		}
 
@@ -151,10 +151,10 @@ App.defaultProps = {
 	isOverlayEnabled: false
 };
 
-export default inject( function( stores ){
+export default inject( function ( stores ) {
 	return {
 		onClickInternalLink: stores.onClickInternalLink,
 		api: stores.api,
-		store: stores.store,
+		store: stores.store
 	};
-} )(observer( App ));
+} )( observer( App ) );

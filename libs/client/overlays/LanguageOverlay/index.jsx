@@ -86,13 +86,11 @@ class LanguageOverlay extends React.Component {
 
 		function mapLanguage( language ) {
 			var code = language.lang;
-			var source = props.project ? code + '.' + props.project + '/' : code + '/wiki/';
-
 			return (
-				<a href={store.getForeignUrl(language.title.replace( /\//gi, '%2F' ), code )}
+				<a href={store.getForeignUrl( language.title.replace( /\//gi, '%2F' ), code )}
 					key={'lang-item-' + code}
 					onClick={self.navigateTo.bind( self )}
-					hrefLang={language.lang} lang={language.lang}>
+					hrefLang={code} lang={code}>
 					<strong className="autonym">{language.autonym}</strong>
 					<span className="title">{language.title}</span>
 				</a>
@@ -120,7 +118,7 @@ class LanguageOverlay extends React.Component {
 				<Panel>
 					<Content>
 						<SearchInput value={this.state.term}
-							onSearch={this.filterLanguages.bind(this)} placeholder="Search for a language" />
+							onSearch={this.filterLanguages.bind( this )} placeholder="Search for a language" />
 					</Content>
 				</Panel>
 				<Content>

@@ -18,7 +18,7 @@ export default class Contributions extends React.Component {
 			tagline = (
 				<h2>
 					<Icon glyph='user'
-						href={store.getLocalUrl('User:' + username)}
+						href={store.getLocalUrl( 'User:' + username )}
 						type="before"
 						onClick={this.props.onClickInternalLink} label={username} />
 				</h2>
@@ -32,7 +32,7 @@ export default class Contributions extends React.Component {
 		}
 
 		return (
-			<CardListPage {...this.props} apiEndpoint={api.getEndpoint(path)} isDiffCardList={true}
+			<CardListPage {...this.props} apiEndpoint={api.getEndpoint( path )} isDiffCardList={true}
 				title={title} tagline={tagline} CardClass={CardDiff} lead={lead} />
 		);
 	}

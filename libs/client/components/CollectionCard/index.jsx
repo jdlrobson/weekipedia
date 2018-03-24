@@ -15,10 +15,10 @@ class CollectionCard extends Component {
 		];
 		if ( owner ) {
 			extracts.push( <Icon glyph="user" type="before" label={owner} className="mw-mf-user"
-				href={store.getLocalUrl(base, userPage)} /> );
+				href={store.getLocalUrl( base, userPage )} /> );
 		}
 
-		return <Card {...props} url={store.getLocalUrl(base, collectionPage)} extracts={extracts} />;
+		return <Card {...props} url={store.getLocalUrl( base, collectionPage )} extracts={extracts} />;
 	}
 }
 

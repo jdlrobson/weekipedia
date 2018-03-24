@@ -150,7 +150,7 @@ store.getLocalUrl = function ( title, params, query = {} ) {
 	title = title ? encodeURIComponent( title ).replace( '%3A', ':' ) : '';
 	params = params ? '/' + encodeURIComponent( params ).replace( /%2F/g, '/' ) : '';
 	var qs = Object.keys( query )
-		.map((key) => `${key}=${encodeURIComponent(query[key])}`).join( '&' );
+		.map( ( key ) => `${key}=${encodeURIComponent( query[ key ] )}` ).join( '&' );
 	if ( qs ) {
 		qs = '?' + qs;
 	}

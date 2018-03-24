@@ -31,7 +31,7 @@ var router = shared.router;
 var query = router.queryStringToObject( window.location.search );
 var userOptions = JSON.parse( mwStorage.get( 'mobile-options' ) || '{}' );
 
-store.setProject(config.project);
+store.setProject( config.project );
 store.loadSiteOptions(
 	Object.assign( {}, config.siteoptions, userOptions )
 );
@@ -56,8 +56,8 @@ const onClickInternalLink = onClickInternalLinkMaker( { router, store, api } );
 
 render(
 	// Setup a Provider with the store
-	React.createElement( Provider, { api, store, a: 1,  onClickInternalLink },
-		shared.render( window.location.pathname, window.location.hash )
+	React.createElement( Provider, { api, store, onClickInternalLink },
+		shared.render( window.location.pathname, window.location.hash, {}, query )
 	),
 	document.getElementById( 'app' )
 );
