@@ -15,7 +15,7 @@ class SearchOverlay extends Component {
 			list: null
 		};
 	}
-	showResults( endpoint, project ) {
+	showResults( endpoint ) {
 		var self = this;
 		var props = this.props;
 		clearTimeout( this._timeout );

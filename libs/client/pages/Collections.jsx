@@ -46,7 +46,7 @@ export default class Collections extends React.Component {
 			} );
 		} else if ( args.length === 2 && args[ 1 ] ) {
 			username = args[ 1 ];
-			endpoint = '/api/' + props.lang + '/collection/by/' + username;
+			endpoint = api.getEndpoint( 'collection/by/' + username );
 			this.setState( { endpoint: endpoint, username: username, id: id } );
 			props.api.fetch( endpoint ).then( function ( state ) {
 				self.setState( state );
@@ -103,7 +103,6 @@ export default class Collections extends React.Component {
 		var tagline, actions, label, suffix, tabs,
 			props = this.props,
 			store = props.store,
-			lang = this.props.lang,
 			desc = this.state.description || props.description,
 			username = this.state.username || props.owner,
 			id = this.state.id || props.id,

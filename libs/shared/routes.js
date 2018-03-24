@@ -200,7 +200,6 @@ function initSpecialPages() {
 		return addCardClickHandler( info, props );
 	} );
 	addSpecialPage( 'Search', Search, function ( info, props ) {
-		var query = props.query.search;
 		return addCardClickHandler( info, props );
 	} );
 	addSpecialPage( 'Shell', Shell );
