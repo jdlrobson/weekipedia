@@ -242,9 +242,9 @@ function initGetMethods( app ) {
 		} );
 	} );
 
-	app.get( '/api/search-full/:lang/:term', ( req, res ) => {
+	app.get( '/api/:lang.:project/search-full/:term', ( req, res ) => {
 		return cachedResponse( res, null, function () {
-			return search( req.params.lang, req.params.term, 0, DEFAULT_PROJECT, true );
+			return search( req.params.lang, req.params.term, 0, req.params.project, true );
 		} );
 	} );
 
@@ -299,9 +299,9 @@ function initGetMethods( app ) {
 		loadPage( req, res );
 	} );
 
-	app.get( '/api/:lang/visits', ( req, res ) => {
+	app.get( '/api/:lang.:project/visits', ( req, res ) => {
 		cachedResponse( res, req.url, function () {
-			return visits( req.params.lang, DEFAULT_PROJECT );
+			return visits( req.params.lang, req.params.project );
 		} );
 	} );
 
