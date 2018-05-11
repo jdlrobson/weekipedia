@@ -1,9 +1,7 @@
 import React from 'react';
 import { observer, inject } from 'mobx-react';
 
-import { Icon } from 'wikipedia-react-components';
-
-import CtaDrawer from './../../overlays/CtaDrawer';
+import { Icon, CtaDrawer } from 'wikipedia-react-components';
 
 class CtaIcon extends React.Component {
 	dispatch( ev ) {
