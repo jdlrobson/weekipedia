@@ -44,7 +44,8 @@ function getCards( data, props, keyPrefix ) {
 			}
 
 			var session = props.store.session;
-			if ( session && props.collection && data.owner === session.username && props.isWatchable ) {
+			var ownsCollection = session && ( data.owner === undefined || data.owner === session.username );
+			if ( ownsCollection && props.isWatchable ) {
 				item.indicator = <WatchIcon {...props}
 					key={item.key + '-watch'}
 					title={item.title} collection={props.collection} isWatched={true} />;

@@ -51,6 +51,7 @@ CardListPage.defaultProps = {
 	CardClass: CardWithLocation,
 	apiEndpoint: null,
 	title: null,
+	isWatchable: false,
 	tagline: null,
 	lang: 'en'
 };

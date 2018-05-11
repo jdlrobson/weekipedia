@@ -13,7 +13,7 @@ class WatchlistEdit extends React.Component {
 		};
 
 		return (
-			<CardListPage {...this.props}
+			<CardListPage {...this.props} isWatchable={true}
 				emptyProps={emptyProps}
 				unordered="1" />
 		);
