@@ -115,52 +115,63 @@ function initLoginRoutes( app ) {
 	} );
 
 	app.get( '/api/:lang/private/watchlist-feed/:ns?', ensureAuthenticated, function ( req, res ) {
+		var proj = getProject( req );
 		var callback = function ( data ) {
 			res.setHeader( 'Content-Type', 'application/json' );
 			res.status( 200 );
 			res.send( JSON.stringify( data ) );
 		};
-		watchlistfeed( req.params.lang, DEFAULT_PROJECT, req.params.ns, req.user, req.query ).then( callback );
+		watchlistfeed( proj.lang, proj.project, req.params.ns, req.user, req.query ).then( callback );
 	} );
 
 	app.all( '/api/:lang/private/collection/:id/:action/:title?', ensureAuthenticated, function ( req, res ) {
+		var proj = getProject( req );
 		var id = parseInt( req.params.id, 10 ) || 0;
 		var action = req.params.action;
-		var lang = req.params.lang;
+		var lang = proj.lang;
+		var project = proj.project;
 		var profile = req.user;
 		var title = req.params.title;
 
 		respond( res, function () {
 			if ( action === 'create' ) {
-				return collection.create( lang, DEFAULT_PROJECT, req.body.title, req.body.description, req.body.image, profile );
+				return collection.create( lang, project,
+					req.body.title, req.body.description, req.body.image, profile );
 			} if ( action === 'edit' ) {
-				return collection.edit( lang, DEFAULT_PROJECT, id, req.body.title,
+				return collection.edit( lang, req.params.project, id, req.body.title,
 					req.body.description, req.body.image, profile );
 			} else if ( action === 'with' ) {
-				return collection.includes( lang, DEFAULT_PROJECT, title, COLLECTIONS_INCLUDE_WATCHLIST, profile );
+				return collection.includes( lang, project,
+					title, COLLECTIONS_INCLUDE_WATCHLIST, profile );
 			} else if ( action === 'has' ) {
-				return collection.member( lang, DEFAULT_PROJECT, id, [ title ], profile );
+				return collection.member( lang, project, id, [ title ], profile );
 			} else {
-				return collection.update( lang, DEFAULT_PROJECT, id, [ title ], profile, action === 'remove' );
+				return collection.update( lang, project, id, [ title ], profile, action === 'remove' );
 			}
 		} );
 	} );
 
 	app.get( '/api/:lang/private/watchlist/:title?', ensureAuthenticated, function ( req, res ) {
+		var proj = getProject( req );
+		var lang = proj.lang;
+		var project = proj.project;
 		var callback = function ( data ) {
 			res.setHeader( 'Content-Type', 'application/json' );
 			res.status( 200 );
 			res.send( JSON.stringify( data ) );
 		};
 		if ( req.params.title ) {
-			watched( req.params.lang, DEFAULT_PROJECT, [ req.params.title ], req.user ).then( callback );
+			watched( lang, project, [ req.params.title ], req.user ).then( callback );
 		} else {
-			watchlist( req.params.lang, DEFAULT_PROJECT, 0, req.user, req.query ).then( callback );
+			watchlist( lang, project, 0, req.user, req.query ).then( callback );
 		}
 	} );
 
 	app.post( '/api/private/watch/:lang/:title', function ( req, res ) {
-		watch( req.params.lang, DEFAULT_PROJECT, [ req.params.title ], req.user ).then( function ( data ) {
+		var proj = getProject( req );
+		var lang = proj.lang;
+		var project = proj.project;
+		watch( lang, project, [ req.params.title ], req.user ).then( function ( data ) {
 			res.setHeader( 'Content-Type', 'application/json' );
 			res.status( 200 );
 			res.send( JSON.stringify( data ) );
@@ -168,7 +179,10 @@ function initLoginRoutes( app ) {
 	} );
 
 	app.post( '/api/private/unwatch/:lang/:title', function ( req, res ) {
-		watch( req.params.lang, DEFAULT_PROJECT, [ req.params.title ], req.user, true ).then( function ( data ) {
+		var proj = getProject( req );
+		var lang = proj.lang;
+		var project = proj.project;
+		watch( lang, project, [ req.params.title ], req.user, true ).then( function ( data ) {
 			res.setHeader( 'Content-Type', 'application/json' );
 			res.status( 200 );
 			res.send( JSON.stringify( data ) );
