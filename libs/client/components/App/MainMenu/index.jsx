@@ -117,7 +117,7 @@ export default inject( ( { store }, { title, canAuthenticate } ) => {
 				{ id: 'contributions', href: store.getLocalUrl( 'Special:Contributions/' + username ) }
 			] );
 		} else {
-			loginUrl = store.getLocalUrl( 'Special:UserLogin?returnto=' + title );
+			loginUrl = store.getLocalUrl( 'Special:UserLogin', null, { returnto: title } );
 		}
 	}
 	return {
