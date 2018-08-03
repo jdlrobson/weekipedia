@@ -77,16 +77,16 @@ class Nearby extends React.Component {
 
 			var content = (
 				<Content className="post-content">Explore 1 mile:
-				<HorizontalList>
-					<a href={baseUrl + lat + ',' + west}
-						onClick={props.onClickInternalLink}>west</a>
-					<a href={baseUrl + north + ',' + lng}
-						onClick={props.onClickInternalLink}>north</a>
-					<a href={baseUrl + lat + ',' + east}
-						onClick={props.onClickInternalLink}>east</a>
-					<a href={baseUrl + south + ',' + lng}
-						onClick={props.onClickInternalLink}>south</a>
-				</HorizontalList>
+					<HorizontalList>
+						<a href={baseUrl + lat + ',' + west}
+							onClick={props.onClickInternalLink}>west</a>
+						<a href={baseUrl + north + ',' + lng}
+							onClick={props.onClickInternalLink}>north</a>
+						<a href={baseUrl + lat + ',' + east}
+							onClick={props.onClickInternalLink}>east</a>
+						<a href={baseUrl + south + ',' + lng}
+							onClick={props.onClickInternalLink}>south</a>
+					</HorizontalList>
 				</Content>
 			);
 

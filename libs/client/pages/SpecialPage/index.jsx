@@ -9,7 +9,7 @@ export default class Thing extends React.Component {
 		var url = this.props.mobileUrl;
 		var children = (
 			<div>This special page is not currently available in the web app.
-			<br/>In the meantime you can <a href={url}>use Wikipedia</a>.</div>
+				<br/>In the meantime you can <a href={url}>use Wikipedia</a>.</div>
 		);
 		var body = (
 			<Content key="special-page-row-1" className="content">
