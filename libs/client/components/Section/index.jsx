@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { observer, inject } from 'mobx-react';
-import PropTypes from 'prop-types';
 import DOM from 'react-dom-factories';
 
 import { Icon, ErrorBox, IntermediateState } from 'wikipedia-react-components';
@@ -127,11 +126,6 @@ class Section extends Component {
 		);
 	}
 }
-
-Section.propTypes = {
-	isEditable: PropTypes.bool,
-	isCollapsible: PropTypes.bool
-};
 
 Section.defaultProps = {
 	isEditable: true,
