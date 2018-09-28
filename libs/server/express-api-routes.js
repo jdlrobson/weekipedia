@@ -17,15 +17,16 @@ import languages from './endpoints/languages';
 import edit from './endpoints/edit';
 import diff from './endpoints/diff';
 import contributions from './endpoints/contributions';
-import collection from './endpoints/collection';
 import categories from './endpoints/categories';
 
 import messages from './messages';
 import respond from './respond';
 import cachedResponses from './cached-response.js';
-import { DEFAULT_PROJECT, API_PATH, ALLOWED_PROJECTS, DUMMY_SESSION, COLLECTIONS_INCLUDE_WATCHLIST } from './config';
+import { DEFAULT_PROJECT, API_PATH, ALLOWED_PROJECTS,
+	DEFAULT_LANGUAGE, DUMMY_SESSION } from './config';
 
 import initApiProxy from 'express-wikimedia-api-proxy';
+import initCollections from 'express-wikimedia-collections';
 import oauthFetchJson from 'oauth-fetch-json';
 
 const TRENDING_HOST = 'http://wikipedia-trending.wmflabs.org';
@@ -122,33 +123,6 @@ function initLoginRoutes( app ) {
 			res.send( JSON.stringify( data ) );
 		};
 		watchlistfeed( proj.lang, proj.project, req.params.ns, req.user, req.query ).then( callback );
-	} );
-
-	app.all( '/api/:lang/private/collection/:id/:action/:title?', ensureAuthenticated, function ( req, res ) {
-		var proj = getProject( req );
-		var id = parseInt( req.params.id, 10 ) || 0;
-		var action = req.params.action;
-		var lang = proj.lang;
-		var project = proj.project;
-		var profile = req.user;
-		var title = req.params.title;
-
-		respond( res, function () {
-			if ( action === 'create' ) {
-				return collection.create( lang, project,
-					req.body.title, req.body.description, req.body.image, profile );
-			} if ( action === 'edit' ) {
-				return collection.edit( lang, req.params.project, id, req.body.title,
-					req.body.description, req.body.image, profile );
-			} else if ( action === 'with' ) {
-				return collection.includes( lang, project,
-					title, COLLECTIONS_INCLUDE_WATCHLIST, profile );
-			} else if ( action === 'has' ) {
-				return collection.member( lang, project, id, [ title ], profile );
-			} else {
-				return collection.update( lang, project, id, [ title ], profile, action === 'remove' );
-			}
-		} );
 	} );
 
 	app.get( '/api/:lang/private/watchlist/:title?', ensureAuthenticated, function ( req, res ) {
@@ -326,32 +300,6 @@ function initGetMethods( app ) {
 		} );
 	} );
 
-	app.get( '/api/:lang/collection/by/:user/:id?', function ( req, res ) {
-		var id;
-		var lang = req.params.lang;
-		var user = req.params.user;
-		if ( req.params.id ) {
-			id = parseInt( req.params.id, 10 );
-		}
-		if ( id === 0 ) {
-			res.status( 400 );
-			res.send( 'Not a valid public collection id.' );
-		}
-
-		respond( res, function () {
-			return id !== undefined ? collection.members( lang, DEFAULT_PROJECT, id, user, req.query ) :
-				collection.list( lang, DEFAULT_PROJECT, user, null, null, req.user );
-		} );
-	} );
-
-	app.get( '/api/:lang/collection/', function ( req, res ) {
-		var lang = req.params.lang;
-
-		respond( res, function () {
-			return collection.all( lang, DEFAULT_PROJECT, req.query );
-		} );
-	} );
-
 	app.get( '/api/:lang/contributions/:ns/:username?', ( req, res ) => {
 		cachedResponse( res, req.url, function () {
 			var p = req.params;
@@ -397,12 +345,17 @@ function initGetMethods( app ) {
 }
 
 function initRoutes( app, canLogin ) {
+	const lang = DEFAULT_LANGUAGE || 'en';
+	const project = DEFAULT_PROJECT || 'wikipedia';
+	const host = `${lang}.${project}`
 	if ( canLogin ) {
 		initLoginRoutes( app );
 	}
 	initPostMethods( app );
 	initGetMethods( app );
 	initApiProxy( app, '/api/' );
+	console.log(host);
+	initCollections( app, `/api/${host}/`, project, lang );
 }
 
 export default initRoutes;
