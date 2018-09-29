@@ -121,7 +121,7 @@ export default inject( ( { api, store }, { id, onCollectionSave } ) => (
 		api,
 		onSaveCollection: function ( title, thumbnail, description ) {
 			let path = 'private/collection';
-			path += id ? '/' + id + '/edit' : '_/create';
+			path += id ? '/' + id + '/edit' : '/_/create';
 			return api.post( api.getEndpoint( path ), {
 				title: title,
 				image: thumbnail,
