@@ -73,10 +73,11 @@ class CollectionEditorOverlay extends React.Component {
 	}
 	save() {
 		const self = this;
-		const title = this.props.title;
-		const thumb = this.state.thumbnail ? this.state.thumbnail.title : null;
+		const state = this.state;
+		const title = state.title;
+		const thumb = state.thumbnail ? state.thumbnail.title : null;
 		this.setState( { waiting: true } );
-		this.props.onSaveCollection( title, thumb, this.state.description ).then( () => {
+		this.props.onSaveCollection( title, thumb, state.description ).then( () => {
 			self.setState( { waiting: false } );
 		} );
 	}
