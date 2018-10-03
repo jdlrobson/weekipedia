@@ -347,14 +347,13 @@ function initGetMethods( app ) {
 function initRoutes( app, canLogin ) {
 	const lang = DEFAULT_LANGUAGE || 'en';
 	const project = DEFAULT_PROJECT || 'wikipedia';
-	const host = `${lang}.${project}`
+	const host = `${lang}.${project}`;
 	if ( canLogin ) {
 		initLoginRoutes( app );
 	}
 	initPostMethods( app );
 	initGetMethods( app );
 	initApiProxy( app, '/api/' );
-	console.log(host);
 	initCollections( app, `/api/${host}/`, project, lang );
 }
 
